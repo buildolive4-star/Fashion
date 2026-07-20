@@ -332,9 +332,9 @@
 
         /* ==================== 1. HOME SCREEN ==================== */
         
-        /* 16:9 Welcome Box */
+        /* 16:9 Welcome Box (Redesigned for dynamic welcome message sizing) */
         .welcome-16-9-box {
-            aspect-ratio: 16 / 9;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -344,8 +344,10 @@
             border: 1px solid var(--border-light);
             border-radius: 20px;
             margin: 15px 20px 20px 20px;
-            padding: 20px;
+            padding: 24px 20px;
             box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            word-wrap: break-word;
         }
         
         .dynamic-banner-16-9 {
@@ -1098,6 +1100,7 @@
             padding: 12px;
             box-shadow: var(--shadow-soft);
             margin-bottom: 20px;
+            position: relative;
         }
 
         .therapist-desc-img {
@@ -1106,6 +1109,54 @@
             background-size: cover;
             background-position: center;
             border-radius: 18px;
+        }
+
+        /* Premium Dynamic Therapist Multi-Image Slider styles */
+        .therapist-slider-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+        }
+
+        .therapist-slider-track {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .therapist-slider-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .therapist-slider-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slider-dot.active {
+            background: var(--primary-red);
+            width: 16px;
+            border-radius: 10px;
         }
 
         .therapist-desc-info-box {
@@ -1422,10 +1473,10 @@
                     </div>
                 </div>
 
-                <!-- 16:9 WELCOME BOX -->
+                <!-- 16:9 WELCOME BOX (Updated with auto wrapping and minimum height configuration) -->
                 <div class="welcome-16-9-box">
                     <h3 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary-red); margin-bottom: 8px; font-weight: 700;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
-                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.85rem; font-weight: 500; line-height: 1.5; padding: 0 10px;">
+                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.85rem; font-weight: 500; line-height: 1.6; padding: 0 10px;">
                         Loading exclusive message...
                     </p>
                 </div>
@@ -1665,7 +1716,7 @@
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                         <div class="faq-accord-body">
-                            <p data-en="All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions." data-hi="सभी चिकित्सकों का कड़ा पुलिस सत्यापन किया जाता है, और हम प्रत्येक सत्र के लिए उच्चतम गोपनीयता प्रोटोकॉल बनाए रखते हैं।">All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions.</p>
+                            <p data-en="All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions." data-hi="सभी चिकित्सकों का कड़ा पुलिस सत्यापन किया जाता, और हम प्रत्येक सत्र के लिए उच्चतम गोपनीयता प्रोटोकॉल बनाए रखते हैं।">All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions.</p>
                         </div>
                     </div>
                 </div>
@@ -1703,7 +1754,7 @@
             <div class="chat-app-body" id="chatAppBody">
                 <div class="chat-bubble agent" data-en="Welcome to OOOO luxury support. Please enter your inquiries below." data-hi="OOOO लक्जरी सपोर्ट में स्वागत है। पूछताछ नीचे दर्ज करें।">Welcome to OOOO luxury support. Please enter your inquiries below.</div>
             </div>
-            <div class="chat-app-footer">
+            <div class="chat-app-overlay-footer chat-app-footer">
                 <input type="text" id="chatAppInput" placeholder="Type a message...">
                 <button class="btn-luxury-app" style="width: auto; padding: 12px 20px; border-radius: 20px;" onclick="sendAppMessage()" data-en="Send" data-hi="भेजें">Send</button>
             </div>
@@ -1720,6 +1771,32 @@
                     <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1.1rem;" id="successBookingId">OOOO-654874</strong>
                 </div>
                 <button class="btn-luxury-app" style="width: 100%; border-radius: 12px;" onclick="closeSuccessOverlay()" data-en="Back to Home" data-hi="होम स्क्रीन पर जाएं">Back to Home</button>
+            </div>
+        </div>
+
+        <!-- NEW CONFIRMATION TIMER OVERLAY (Wait 3 Seconds with Custom Confirmation Graphic) -->
+        <div id="submitSplashOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(43, 10, 22, 0.98); backdrop-filter: blur(20px); z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center;">
+            <div style="width: 100%; max-width: 320px; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-strong); border: 2px solid var(--soft-pink); background: var(--bg-card); padding: 15px;">
+                <img src="https://i.ibb.co/zThXHMC0/file-000000005e20820ba4603cbea15bfa70.png" alt="Confirming" style="width: 100%; height: auto; border-radius: 16px; display: block; margin: 0 auto;">
+            </div>
+            <h3 style="font-family: 'Cinzel', serif; color: white; font-size: 1.3rem; margin-top: 25px; font-weight: 700; letter-spacing: 1px;" data-en="Processing Ritual Request..." data-hi="प्रक्रिया की जा रही है...">Processing Ritual Request...</h3>
+            <p style="color: var(--soft-pink); font-size: 0.85rem; margin-top: 8px; font-weight: 500;" data-en="Our systems are securing your premium slots..." data-hi="आपकी प्रीमियम स्लॉट सुरक्षित की जा रही है...">Our systems are securing your premium slots...</p>
+            
+            <div style="margin-top: 30px;">
+                <button id="splashOkBtn" class="btn-luxury-app" style="opacity: 0.5; cursor: not-allowed; min-width: 140px;" disabled onclick="dismissSubmitSplash()">
+                    <span id="splashTimerText">3s</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- NEW BOOKING PREMIUM INTRO OVERLAY MODAL (Large image displayed on initiating booking) -->
+        <div id="bookingWelcomeModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(17, 1, 6, 0.95); backdrop-filter: blur(15px); z-index: 4800; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center;">
+            <div style="background: var(--bg-card); border-radius: 28px; padding: 20px; width: 100%; max-width: 360px; box-shadow: var(--shadow-strong); border: 1px solid var(--border-light);">
+                <div style="width: 100%; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; margin-bottom: 20px; background-image: url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center;">
+                </div>
+                <h3 style="font-family: 'Cinzel', serif; color: var(--text-dark); font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;" data-en="PREMIUM RITUAL RESERVATION" data-hi="प्रीमियम उपचार आरक्षण">PREMIUM RITUAL RESERVATION</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; margin-bottom: 20px;" data-en="Enter India's most private and high-class home wellness experience. Continue to customize your treatment parameters." data-hi="भारत के सबसे सुरक्षित और उच्च श्रेणी के घरेलू कल्याण अनुभव में प्रवेश करें। आगे बढ़ने के लिए बटन दबाएं।">Enter India's most private and high-class home wellness experience. Continue to customize your treatment parameters.</p>
+                <button class="btn-luxury-app" style="width: 100%;" onclick="dismissBookingWelcome()"><span data-en="Configure Sanctuary" data-hi="आरक्षण शुरू करें">Configure Sanctuary</span></button>
             </div>
         </div>
 
@@ -1763,7 +1840,7 @@
 
             <!-- Scrollable Content -->
             <div class="therapist-desc-scrollable">
-                <div class="therapist-desc-img-card">
+                <div class="therapist-desc-img-card" id="descTherapistImgCard">
                     <div class="therapist-desc-img" id="descTherapistImg"></div>
                 </div>
                 
@@ -2168,6 +2245,9 @@
                     selectEl.value = t.name;
                 }
 
+                // Convert images list to clean JSON string safe for single attribute injection
+                const imagesEscaped = t.images ? JSON.stringify(t.images).replace(/"/g, '&quot;') : '';
+
                 // Populate Main Therapist Grid Screen
                 const card = document.createElement('div');
                 card.className = 'therapist-list-card';
@@ -2176,7 +2256,7 @@
                     <div class="therapist-list-body">
                         <h3>${t.name}</h3>
                         <div class="therapist-spec">${t.specialization}</div>
-                        <button class="btn-luxury-app" style="width: 100%; padding: 10px; font-size: 0.75rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${t.address || 'Location'}')">
+                        <button class="btn-luxury-app" style="width: 100%; padding: 10px; font-size: 0.75rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${t.address || 'Location'}', '${imagesEscaped}')">
                             <span data-en="View Profile" data-hi="प्रोफ़ाइल देखें">View Profile</span>
                         </button>
                     </div>
@@ -2247,6 +2327,11 @@
 
             appState.currentScreen = screenId;
             document.getElementById('appMain').scrollTop = 0;
+
+            // Trigger premium intro overlay popup when entering Booking Wizard Tab
+            if(screenId === 'book') {
+                document.getElementById('bookingWelcomeModal').style.display = 'flex';
+            }
         }
 
         function directSelectService(name, price, duration) {
@@ -2413,6 +2498,7 @@
             }
         }
 
+        // TRIGGER SUBMIT TIMER MODAL (Min 3 Seconds lock)
         function submitFinalReservation() {
             const randomId = "OOOO-" + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('successBookingId').innerText = randomId;
@@ -2437,7 +2523,32 @@
                     appState.activeBookingId = newBookingRef.key;
                     appState.activeBookingStatus = 'Pending Approval';
                     listenToActiveBookingStatus(newBookingRef.key);
-                    document.getElementById('successOverlay').style.display = 'flex';
+                    
+                    // Show custom submit wait overlay screen
+                    const splashOverlay = document.getElementById('submitSplashOverlay');
+                    const splashOk = document.getElementById('splashOkBtn');
+                    const timerText = document.getElementById('splashTimerText');
+                    
+                    splashOverlay.style.display = 'flex';
+                    splashOk.disabled = true;
+                    splashOk.style.opacity = "0.5";
+                    splashOk.style.cursor = "not-allowed";
+
+                    let countdown = 3;
+                    timerText.innerText = countdown + "s";
+
+                    const interval = setInterval(() => {
+                        countdown--;
+                        if (countdown > 0) {
+                            timerText.innerText = countdown + "s";
+                        } else {
+                            clearInterval(interval);
+                            timerText.innerText = "OK";
+                            splashOk.disabled = false;
+                            splashOk.style.opacity = "1";
+                            splashOk.style.cursor = "pointer";
+                        }
+                    }, 1000);
                 })
                 .catch(err => alert("Error saving reservation: " + err.message));
         }
@@ -2504,7 +2615,7 @@
                     statusText.innerText = appState.lang === 'en' ? "Arrived at location!" : "स्थान पर पहुँच गए!";
                     statusText.style.color = "#25d366";
                 } else {
-                    statusText.innerText = appState.lang === 'en' ? "Therapist on the way..." : "थेरेपिस्ट रास्ते में हैं...";
+                    statusText.innerText = appState.lang === 'en' ? "Therapist on the way..." : "थेरेपििस्ट रास्ते में हैं...";
                     statusText.style.color = "var(--primary-red)";
                 }
 
@@ -2567,14 +2678,43 @@
         let descMap = null;
         let descMarker = null;
 
-        function openTherapistDescOverlay(name, spec, exp, tag, imgUrl, lat, lng, address) {
+        function openTherapistDescOverlay(name, spec, exp, tag, imgUrl, lat, lng, address, imagesRaw) {
             currentActivePopupTherapist = { name, spec, exp, tag, imgUrl, lat, lng, address };
             
             document.getElementById('descTherapistName').innerText = name;
             document.getElementById('descTherapistTag').innerText = tag;
             document.getElementById('descTherapistSpec').innerText = spec;
             document.getElementById('descTherapistExp').innerText = exp;
-            document.getElementById('descTherapistImg').style.backgroundImage = `url('${imgUrl}')`;
+
+            let imagesList = [];
+            if(imagesRaw) {
+                try {
+                    imagesList = typeof imagesRaw === 'string' ? JSON.parse(imagesRaw) : imagesRaw;
+                } catch(e) {
+                    imagesList = [];
+                }
+            }
+
+            if(!Array.isArray(imagesList) || imagesList.length === 0) {
+                imagesList = [imgUrl];
+            }
+
+            // Generate multi-image sliding track with indicator dots if multiple images exist
+            const imgCard = document.getElementById('descTherapistImgCard');
+            if (imagesList.length > 1) {
+                imgCard.innerHTML = `
+                    <div class="therapist-slider-container">
+                        <div class="therapist-slider-track" id="popupSliderTrack" style="transform: translateX(0%);">
+                            ${imagesList.map(img => `<div class="therapist-slider-slide" style="background-image: url('${img}');"></div>`).join('')}
+                        </div>
+                        <div class="therapist-slider-dots">
+                            ${imagesList.map((_, i) => `<span class="slider-dot ${i === 0 ? 'active' : ''}" onclick="setPopupSlide(${i}, ${imagesList.length})"></span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                imgCard.innerHTML = `<div class="therapist-desc-img" id="descTherapistImg" style="background-image: url('${imgUrl}');"></div>`;
+            }
 
             const reserveBtn = document.getElementById('btnDescReserve');
             reserveBtn.onclick = function() {
@@ -2597,9 +2737,33 @@
             }, 300);
         }
 
+        window.setPopupSlide = function(index, total) {
+            const track = document.getElementById('popupSliderTrack');
+            if(track) {
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((dot, idx) => {
+                if(idx === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
         function closeTherapistDescOverlay() {
             document.getElementById('therapistDescOverlay').style.display = 'none';
             currentActivePopupTherapist = null;
+        }
+
+        function dismissBookingWelcome() {
+            document.getElementById('bookingWelcomeModal').style.display = 'none';
+        }
+
+        function dismissSubmitSplash() {
+            document.getElementById('submitSplashOverlay').style.display = 'none';
+            document.getElementById('successOverlay').style.display = 'flex';
         }
 
         function toggleFaq(header) {
@@ -2632,7 +2796,7 @@
                     agent.className = "chat-bubble agent";
                     agent.innerText = appState.lang === 'en' 
                         ? "Connecting you with our live support agent. Please hold..." 
-                        : "हम आपको सक्रिय लाइव सपोर्ट एजेंट से जोड़ रहे हैं। कृपया प्रतीक्षा करें...";
+                        : "हम आपको सक्रिय लाइव सपोर्ट एजेंट से जोड़ रहे हैं। कृपया प्रतीक्षा करें...";
                     body.appendChild(agent);
                     body.scrollTop = body.scrollHeight;
                 }, 1200);
@@ -2712,6 +2876,8 @@
         window.openTherapistDescOverlay = openTherapistDescOverlay;
         window.closeTherapistDescOverlay = closeTherapistDescOverlay;
         window.toggleReadMore = toggleReadMore;
+        window.dismissBookingWelcome = dismissBookingWelcome;
+        window.dismissSubmitSplash = dismissSubmitSplash;
     </script>
 </body>
 </html>
