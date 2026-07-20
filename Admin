@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOOO Spa - Executive Control Panel</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Iconographies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet Map CSS for Coordinates Picker -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        :root {
+            --bg-obsidian: #050505;
+            --bg-velvet: #0f0f0f;
+            --bg-elevated: #161616;
+            --rose-pink: #E8A7B7;
+            --rose-glow: rgba(232, 167, 183, 0.1);
+            --gold-metallic: #D4AF37;
+            --gold-gradient: linear-gradient(135deg, #E6C875 0%, #D4AF37 50%, #AA7C11 100%);
+            --white: #FDFBFB;
+            --text-muted: #A39F9E;
+            --border-glow: rgba(212, 175, 55, 0.2);
+            --border-light: rgba(255, 255, 255, 0.05);
+            --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Basic Layout System Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-obsidian);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-logo {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        /* login overlay gate */
+        #loginGateOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(5,5,5,0.98);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: var(--transition-premium);
+        }
+
+        .login-card {
+            background-color: var(--bg-velvet);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 45px 35px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.9), inset 0 0 30px rgba(212,175,55,0.05);
+        }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+            color: var(--gold-metallic);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .login-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        /* Input Controls Admin styling */
+        .glass-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .glass-input-wrapper label {
+            font-size: 0.7rem;
+            color: var(--gold-metallic);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .glass-input {
+            background-color: rgba(15,15,15,0.8);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: var(--white);
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: var(--transition-premium);
+        }
+
+        .glass-input:focus {
+            border-color: var(--gold-metallic);
+            background-color: rgba(20,20,20,0.95);
+            box-shadow: 0 0 15px rgba(212,175,55,0.15);
+        }
+
+        select.glass-input {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 15px top 50%;
+            background-size: 10px auto;
+        }
+
+        /* Admin Action Buttons */
+        .btn-luxury-admin {
+            background: var(--gold-gradient);
+            color: var(--bg-obsidian);
+            border: none;
+            padding: 16px 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            width: 100%;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(212,175,55,0.25);
+        }
+
+        .btn-luxury-admin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(212,175,55,0.4);
+        }
+
+        .btn-luxury-admin:active {
+            transform: translateY(0);
+        }
+
+        /* Dashboard Top Header Navigation Bar */
+        .admin-nav-header {
+            height: 95px;
+            background-color: var(--bg-velvet);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .admin-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: transparent;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            letter-spacing: 3.5px;
+            cursor: pointer;
+        }
+
+        .admin-logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            color: var(--white);
+            display: block;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-top: 4px;
+            text-shadow: none;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .system-status-badge {
+            background-color: rgba(37, 211, 102, 0.08);
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            color: #25d366;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #25d366;
+            border-radius: 50%;
+            animation: pulse-green 1.5s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        .btn-admin-logout {
+            background-color: rgba(217, 83, 79, 0.08);
+            border: 1px solid rgba(217, 83, 79, 0.3);
+            color: #d9534f;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            letter-spacing: 1px;
+        }
+
+        .btn-admin-logout:hover {
+            background-color: #d9534f;
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4);
+        }
+
+        /* Workspace Grid and Sidebar Tabs systems */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .dashboard-sidebar {
+            width: 280px;
+            background-color: var(--bg-velvet);
+            border-right: 1px solid var(--border-light);
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sidebar-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: left;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition-premium);
+        }
+
+        .sidebar-tab-btn i {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-tab-btn:hover, .sidebar-tab-btn.active {
+            color: var(--gold-metallic);
+            background-color: rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Workspace Panel Wrapper */
+        .dashboard-content-panel {
+            flex: 1;
+            padding: 45px 55px;
+            overflow-y: auto;
+            max-height: calc(100vh - 95px);
+            background: linear-gradient(135deg, var(--bg-obsidian) 0%, #0a0a0a 100%);
+        }
+        .dashboard-content-panel::-webkit-scrollbar { display: none; }
+
+        .dashboard-pane {
+            display: none;
+            animation: paneFadeIn 0.5s ease-out forwards;
+        }
+
+        .dashboard-pane.active {
+            display: block;
+        }
+
+        @keyframes paneFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pane-header-title {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .pane-header-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Overview Summary KPI Cards Grid */
+        .kpi-row-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 45px;
+        }
+
+        .kpi-metric-card {
+            background: linear-gradient(145deg, #121212 0%, #080808 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: var(--transition-premium);
+        }
+        .kpi-metric-card:hover {
+            border-color: var(--gold-metallic);
+            transform: translateY(-5px);
+        }
+
+        .kpi-left h5 {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .kpi-left .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold-metallic);
+            text-shadow: 0 2px 10px rgba(212,175,55,0.2);
+        }
+
+        .kpi-metric-card i {
+            font-size: 2.5rem;
+            color: var(--rose-pink);
+            opacity: 0.7;
+        }
+
+        /* Two Column Layout blocks */
+        .workspace-split-columns {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 45px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 1199px) {
+            .workspace-split-columns {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .dashboard-sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 15px 25px;
+            }
+            .sidebar-tab-btn {
+                white-space: nowrap;
+            }
+            .dashboard-content-panel {
+                padding: 30px;
+            }
+        }
+
+        .admin-glass-card {
+            background-color: var(--bg-velvet);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .card-inner-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--gold-metallic);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* drag-drop file uploader styling */
+        .drag-uploader-area {
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            background-color: rgba(5,5,5,0.5);
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .drag-uploader-area:hover {
+            border-color: var(--gold-metallic);
+            background-color: rgba(212, 175, 55, 0.05);
+        }
+
+        .drag-uploader-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .drag-uploader-area i {
+            color: var(--gold-metallic);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .drag-uploader-area p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Active Lists Display Grid */
+        .banners-thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .banner-manage-item {
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .banner-thumbnail-wrap {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner-manage-footer {
+            padding: 12px;
+            display: flex;
+            justify-content: flex-end;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .btn-delete-asset {
+            background: rgba(217, 83, 79, 0.1);
+            border: 1px solid rgba(217, 83, 79, 0.4);
+            color: #d9534f;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-premium);
+        }
+
+        .btn-delete-asset:hover {
+            background: #d9534f;
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.3);
+        }
+
+        /* 3-Column 9:16 Therapist Portrait Grid Configuration */
+        .therapist-portrait-3column-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .therapist-list-portrait-card {
+            background-color: rgba(10,10,10,0.8);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition-premium);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .therapist-list-portrait-card:hover {
+            border-color: var(--gold-metallic);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.15);
+        }
+
+        .therapist-9to16-img {
+            width: 100%;
+            aspect-ratio: 9 / 12; /* Square to Portrait logic */
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px;
+            position: relative;
+        }
+
+        .therapist-9to16-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .therapist-9to16-tag {
+            background-color: rgba(5, 5, 5, 0.9);
+            border: 1px solid var(--gold-metallic);
+            color: var(--gold-metallic);
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .therapist-pending-badge {
+            background-color: #F59E0B; /* Orange */
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+
+        .therapist-portrait-body {
+            padding: 25px;
+        }
+
+        .therapist-portrait-body h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .therapist-portrait-spec {
+            font-size: 0.85rem;
+            color: var(--rose-pink);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .therapist-portrait-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        /* Generic Admin List Items styling */
+        .generic-admin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .generic-admin-item {
+            background-color: rgba(10,10,10,0.8);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: var(--transition-premium);
+        }
+        .generic-admin-item:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Booking Approval list custom styling */
+        .booking-approval-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .booking-approval-card {
+            background-color: rgba(15,15,15,0.7);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .booking-approval-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }
+
+        .booking-status-badge {
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-pending {
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold-metallic);
+        }
+
+        .status-approved {
+            background-color: rgba(59, 130, 246, 0.1); /* Blue for approved/active */
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #3B82F6;
+        }
+
+        .status-completed {
+            background-color: rgba(16, 185, 129, 0.1); /* Green for completed */
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #10B981;
+        }
+
+        .booking-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .booking-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .booking-detail-item span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .booking-detail-item strong {
+            font-size: 0.95rem;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        /* Client Database List Styles */
+        .client-database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .client-card {
+            background: linear-gradient(145deg, #121212 0%, #0a0a0a 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            position: relative;
+            transition: var(--transition-premium);
+        }
+        .client-card:hover {
+            border-color: var(--gold-metallic);
+            transform: translateY(-3px);
+        }
+
+        .client-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+        }
+
+        .client-header h4 {
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .client-phone {
+            font-size: 0.85rem;
+            color: var(--gold-metallic);
+            font-weight: 500;
+        }
+
+        .client-info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .client-info-row i { color: var(--rose-pink); width: 16px; text-align: center; }
+
+        /* Custom System Toast Alert */
+        .admin-toast-box {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background-color: var(--bg-velvet);
+            border: 1px solid var(--gold-metallic);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 20px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 100000;
+            animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes toastSlide {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Live Loader Ring styling */
+        .luxury-loader-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: inherit;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            z-index: 50;
+        }
+
+        .spinner-luxury {
+            width: 45px;
+            height: 45px;
+            border: 3px solid rgba(212, 175, 55, 0.2);
+            border-top: 3px solid var(--gold-metallic);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* CSS for the Approve Therapist Button */
+        .btn-approve-therapist {
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid #25d366;
+            color: #25d366;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            margin-right: 10px;
+        }
+        .btn-approve-therapist:hover {
+            background: #25d366;
+            color: #000;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. AUTHENTICATION OVERLAY GATE -->
+    <div id="loginGateOverlay">
+        <div class="login-card">
+            <h2>OOOO EXECUTIVE</h2>
+            <p>Access limited to authorized luxury administrative personnel.</p>
+            
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="glass-input-wrapper">
+                    <label>Dashboard Passcode</label>
+                    <input type="password" id="passcodeInput" class="glass-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-luxury-admin">Verify Authorization</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Persistent Top Bar System Header -->
+    <header class="admin-nav-header">
+        <div class="admin-logo" onclick="switchPane('overview')">
+            OOOO
+            <span>EXECUTIVE CONTROL CENTER</span>
+        </div>
+        <div class="header-controls">
+            <div class="system-status-badge">
+                <div class="status-dot"></div>
+                <span>OOOO Active Node Connected</span>
+            </div>
+            <button class="btn-admin-logout" onclick="handleAdminLogout()">Logout <i class="fa-solid fa-arrow-right-from-bracket" style="margin-left: 5px;"></i></button>
+        </div>
+    </header>
+
+    <!-- Workspace Container with Sidebar Controls -->
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Menu Navigation tabs -->
+        <aside class="dashboard-sidebar">
+            <button class="sidebar-tab-btn active" id="tab-btn-overview" onclick="switchPane('overview')">
+                <i class="fa-solid fa-chart-line"></i>
+                System Overview
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-users" onclick="switchPane('users')">
+                <i class="fa-solid fa-users"></i>
+                Client Database
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-spa-menu" onclick="switchPane('spa-menu')">
+                <i class="fa-solid fa-spa"></i>
+                Spa Menu & Rules
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-banners" onclick="switchPane('banners')">
+                <i class="fa-solid fa-images"></i>
+                Manage Banners
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-memberships" onclick="switchPane('memberships')">
+                <i class="fa-solid fa-id-card-clip"></i>
+                Memberships
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-therapists" onclick="switchPane('therapists')">
+                <i class="fa-solid fa-user-doctor"></i>
+                Manage Experts
+            </button>
+            <button class="sidebar-tab-btn" id="tab-btn-bookings" onclick="switchPane('bookings')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Booking Approvals
+            </button>
+        </aside>
+
+        <!-- Main dashboard viewport panel wrapper -->
+        <main class="dashboard-content-panel">
+
+            <!-- PANE 1: SYSTEM OVERVIEW -->
+            <div class="dashboard-pane active" id="pane-overview">
+                <h1 class="pane-header-title">Oasis Controls Overview</h1>
+                <p class="pane-header-desc">Monitor Real-time database entities linked dynamically with OOOO client platform.</p>
+
+                <!-- Summary Row KPI Metrics -->
+                <div class="kpi-row-grid">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-left">
+                            <h5>Registered Clients</h5>
+                            <div class="kpi-value" id="kpi-users-count">0</div>
+                        </div>
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-left">
+                            <h5>Pending Bookings</h5>
+                            <div class="kpi-value" id="kpi-bookings-count">0</div>
+                        </div>
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-left">
+                            <h5>Dynamic Rituals</h5>
+                            <div class="kpi-value" id="kpi-rituals-count">0</div>
+                        </div>
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-left">
+                            <h5>Verified Therapists</h5>
+                            <div class="kpi-value" id="kpi-therapist-count">0</div>
+                        </div>
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-left">
+                            <h5>Live Banners</h5>
+                            <div class="kpi-value" id="kpi-banner-count">0</div>
+                        </div>
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                </div>
+
+                <div class="workspace-split-columns">
+                    
+                    <!-- Form block Left side: Welcome Message Manager -->
+                    <div class="admin-glass-card" style="position: relative;">
+                        <div class="card-inner-subtitle"><i class="fa-regular fa-comment-dots" style="margin-right: 10px;"></i> Welcome Message Manager</div>
+                        <form onsubmit="handleWelcomeMsgSubmit(event)">
+                            <div class="glass-input-wrapper">
+                                <label>English Welcome Message</label>
+                                <textarea id="welcomeMsgEn" class="glass-input" rows="4" style="resize:none;" placeholder="Write English Welcome text..." required></textarea>
+                            </div>
+                            <div class="glass-input-wrapper">
+                                <label>Hindi Welcome Message (हिंदी संदेश)</label>
+                                <textarea id="welcomeMsgHi" class="glass-input" rows="4" style="resize:none;" placeholder="हिंदी स्वागत संदेश लिखें..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-luxury-admin">Publish Welcome copy</button>
+                        </form>
+                    </div>
+
+                    <!-- Description block Right side -->
+                    <div class="admin-glass-card">
+                        <div class="card-inner-subtitle"><i class="fa-solid fa-shield-halved" style="margin-right: 10px;"></i> Administrative Control Protocol</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; font-weight: 300; margin-bottom: 20px;">All configurations published on this secure portal automatically propagate to client web viewports without latency. Please maintain absolute validation standards during live deploys.</p>
+                        <p style="font-size: 0.85rem; color: var(--gold-metallic); line-height: 1.8; font-weight: 500; font-style: italic;"><i class="fa-solid fa-cloud-arrow-up" style="margin-right: 5px;"></i> All images posted inside any form are directly integrated with high-speed ImgBB storage API.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANE 2: CLIENT DATABASE (USER MANAGEMENT) -->
+            <div class="dashboard-pane" id="pane-users">
+                <h1 class="pane-header-title">Client Database</h1>
+                <p class="pane-header-desc">Manage all registered users and onboarded clients from the OOOO App. View contact details and delete records.</p>
+                
+                <div class="admin-glass-card">
+                    <div class="card-inner-subtitle">
+                        <i class="fa-solid fa-address-book" style="margin-right: 10px;"></i> All Registered Users
+                    </div>
+                    
+                    <div class="client-database-grid" id="activeUsersList">
+                        <!-- Populated dynamically via Firebase Realtime Database -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 3: SPA MENU, CATEGORIES & RITUALS (SERVICES) MANAGER -->
+            <div class="dashboard-pane" id="pane-spa-menu">
+                <h1 class="pane-header-title">Spa Menu Configurations</h1>
+                <p class="pane-header-desc">Manage categories and publish premium spa rituals.</p>
+
+                <div class="workspace-split-columns">
+                    
+                    <!-- Left Column: Add Category & Add Ritual Form -->
+                    <div class="generic-admin-list">
+                        
+                        <!-- Category Form -->
+                        <div class="admin-glass-card">
+                            <div class="card-inner-subtitle">Add Massage Category</div>
+                            <form onsubmit="handleCategorySubmit(event)">
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Category Name (English)</label>
+                                    <input type="text" id="catNameEn" class="glass-input" placeholder="e.g. Massage Therapies" required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 25px;">
+                                    <label>Category Name (Hindi)</label>
+                                    <input type="text" id="catNameHi" class="glass-input" placeholder="e.g. मसाज थेरेपी" required>
+                                </div>
+                                <button type="submit" class="btn-luxury-admin">Create Category</button>
+                            </form>
+                        </div>
+
+                        <!-- Ritual Form -->
+                        <div class="admin-glass-card" style="position: relative;" id="ritualFormWrapper">
+                            <div class="luxury-loader-wrap" id="ritualLoader">
+                                <div class="spinner-luxury"></div>
+                                <span style="font-size:0.8rem; color: var(--gold-metallic); letter-spacing:1px; font-weight: 600;">Uploading Ritual...</span>
+                            </div>
+                            <div class="card-inner-subtitle">Publish Spa Ritual</div>
+                            <form onsubmit="handleRitualSubmit(event)">
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Ritual Title (English)</label>
+                                    <input type="text" id="ritualTitleEn" class="glass-input" placeholder="e.g. Full Body Swedish" required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Ritual Title (Hindi)</label>
+                                    <input type="text" id="ritualTitleHi" class="glass-input" placeholder="e.g. फुल बॉडी स्वीडिश" required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Price (INR)</label>
+                                    <input type="number" id="ritualPrice" class="glass-input" placeholder="e.g. 2999" required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Duration (Minutes)</label>
+                                    <input type="number" id="ritualDuration" class="glass-input" placeholder="e.g. 60" required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Ritual Description (English)</label>
+                                    <input type="text" id="ritualDescEn" class="glass-input" placeholder="e.g. Restorative full body therapy..." required>
+                                </div>
+                                <div class="glass-input-wrapper" style="margin-bottom: 16px;">
+                                    <label>Ritual Description (Hindi)</label>
+                                    <input type="text" id="ritualDescHi" class="glass-input" placeholder="e.g. तनाव दूर करने वाली थेरेपी..." required>
+                                </div>
+                                <div class="drag-uploader-area" style="padding: 25px 15px; margin-bottom: 25px;">
+                                    <i class="fa-solid fa-image"></i>
+                                    <p style="font-size:0.8rem; margin-bottom: 5px;">Upload Ritual Banner Card</p>
+                                    <span style="font-size: 0.65rem; color: var(--gold-metallic);">High Quality Image Required</span>
+                                    <input type="file" id="ritualFileSelect" required accept="image/*">
+                                </div>
+                                <button type="submit" class="btn-luxury-admin">Publish Ritual Card</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: View Active Lists -->
+                    <div class="generic-admin-list">
+                        
+                        <!-- Categories view -->
+                        <div class="admin-glass-card">
+                            <div class="card-inner-subtitle">Massage Categories</div>
+                            <div class="generic-admin-list" id="activeCategoriesList">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Rituals View -->
+                        <div class="admin-glass-card">
+                            <div class="card-inner-subtitle">Dynamic Spa Rituals</div>
+                            <div class="generic-admin-list" id="activeRitualsList">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANE 4: MANAGE BANNERS -->
+            <div class="dashboard-pane" id="pane-banners">
+                <h1 class="pane-header-title">Live Banner Manager</h1>
+                <p class="pane-header-desc">Manage 16:9 ratio live infinity slider images deployed across Home Screens. You can upload multiple files at once.</p>
+
+                <div class="workspace-split-columns">
+                    
+                    <!-- Form block Left side -->
+                    <div class="admin-glass-card" style="position: relative;" id="bannerFormWrapper">
+                        <div class="luxury-loader-wrap" id="bannerLoader">
+                            <div class="spinner-luxury"></div>
+                            <span style="font-size:0.8rem; color: var(--gold-metallic); letter-spacing:1px; font-weight:600;">Uploading Asset...</span>
+                        </div>
+
+                        <div class="card-inner-subtitle">Upload New Banners</div>
+                        <form onsubmit="handleBannerSubmit(event)">
+                            <div class="drag-uploader-area">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <p style="margin-bottom: 8px;">Drag and drop or select raw files (Multiple Allowed)</p>
+                                <span style="font-size: 0.7rem; color: var(--gold-metallic); display: block;">Supports PNG, JPG, JPEG</span>
+                                <input type="file" id="bannerFileSelect" required accept="image/*" multiple>
+                            </div>
+                            <button type="submit" class="btn-luxury-admin">Publish Live Slides</button>
+                        </form>
+                    </div>
+
+                    <!-- Display grid block Right side -->
+                    <div class="admin-glass-card">
+                        <div class="card-inner-subtitle">Currently Active Banners</div>
+                        <div class="banners-thumbnail-grid" id="activeBannersGrid">
+                            <!-- Populated dynamically via Firebase Realtime Database -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANE 5: MEMBERSHIP MANAGER -->
+            <div class="dashboard-pane" id="pane-memberships">
+                <h1 class="pane-header-title">Privilege Memberships Manager</h1>
+                <p class="pane-header-desc">Manage dynamic loyalty cards and reward privilege packages.</p>
+
+                <div class="workspace-split-columns">
+                    
+                    <!-- Left Form columns -->
+                    <div class="admin-glass-card">
+                        <div class="card-inner-subtitle">Create Privilege Card</div>
+                        <form onsubmit="handleMembershipSubmit(event)">
+                            <div class="glass-input-wrapper" style="margin-bottom:16px;">
+                                <label>Membership Title (English)</label>
+                                <input type="text" id="memberTitleEn" class="glass-input" placeholder="e.g. Gold Opulence" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:16px;">
+                                <label>Membership Title (Hindi)</label>
+                                <input type="text" id="memberTitleHi" class="glass-input" placeholder="e.g. गोल्ड ऑपुलेंस" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:16px;">
+                                <label>Price & Duration (English)</label>
+                                <input type="text" id="memberPriceEn" class="glass-input" placeholder="e.g. ₹9,999/mo" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:16px;">
+                                <label>Price & Duration (Hindi)</label>
+                                <input type="text" id="memberPriceHi" class="glass-input" placeholder="e.g. ₹9,999/माह" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:16px;">
+                                <label>Subscription Tier Level</label>
+                                <select id="memberTier" class="glass-input" required>
+                                    <option value="silver">Silver Tier</option>
+                                    <option value="gold">Gold Tier</option>
+                                    <option value="platinum">Platinum Tier</option>
+                                </select>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:24px;">
+                                <label>Privilege Benefits (English, Comma Separated)</label>
+                                <input type="text" id="memberBenefitsEn" class="glass-input" placeholder="Priority Scheduling, 15% discount, free upgrade" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom:25px;">
+                                <label>Privilege Benefits (Hindi, Comma Separated)</label>
+                                <input type="text" id="memberBenefitsHi" class="glass-input" placeholder="प्राथमिकता शेड्यूलिंग, 15% छूट, मुफ़्त अपग्रेड" required>
+                            </div>
+                            <button type="submit" class="btn-luxury-admin">Publish Card</button>
+                        </form>
+                    </div>
+
+                    <!-- Right view grid list columns -->
+                    <div class="admin-glass-card">
+                        <div class="card-inner-subtitle">Live Membership Cards</div>
+                        <div class="generic-admin-list" id="activeMembershipsList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANE 6: MANAGE THERAPISTS (WITH COORDINATES PICKER & APPROVALS) -->
+            <div class="dashboard-pane" id="pane-therapists">
+                <h1 class="pane-header-title">Certified Experts Manager</h1>
+                <p class="pane-header-desc">Approve pending therapists from Partner App, or add new therapists manually with localized maps parameters.</p>
+
+                <div class="workspace-split-columns">
+                    
+                    <!-- Form block Left side (Manual Add) -->
+                    <div class="admin-glass-card" style="position: relative;" id="therapistFormWrapper">
+                        <div class="luxury-loader-wrap" id="therapistLoader">
+                            <div class="spinner-luxury"></div>
+                            <span style="font-size:0.8rem; color: var(--gold-metallic); letter-spacing:1px; font-weight:600;">Uploading Profile...</span>
+                        </div>
+
+                        <div class="card-inner-subtitle">Add Expert Manually</div>
+                        <form onsubmit="handleTherapistSubmit(event)">
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Therapist Full Name</label>
+                                <input type="text" id="therapistName" class="glass-input" placeholder="e.g., Ananya Sharma" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Therapeutic Specialization</label>
+                                <input type="text" id="therapistSpec" class="glass-input" placeholder="e.g., Aromatherapy Expert" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Experience & Certification Summary</label>
+                                <input type="text" id="therapistExp" class="glass-input" placeholder="e.g., 9+ Years of experience in elite spa." required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Honorary Badge/Tag</label>
+                                <input type="text" id="therapistTag" class="glass-input" placeholder="e.g., Master Therapist" required>
+                            </div>
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Area / Local Address (Therapist Location)</label>
+                                <input type="text" id="therapistAddress" class="glass-input" placeholder="e.g., DLF Phase 4, Gurgaon" required>
+                            </div>
+                            
+                            <!-- Leaflet Map GPS coordinates picker -->
+                            <div class="glass-input-wrapper" style="margin-bottom: 15px;">
+                                <label>Select GPS Location coordinates (Click on Map)</label>
+                                <div id="coordinatesPickerMap" style="height: 200px; border-radius: 12px; border: 1px solid var(--border-glow); margin-bottom: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);"></div>
+                                <div style="display:flex; gap: 15px;">
+                                    <input type="text" id="therapistLat" class="glass-input" placeholder="Latitude" style="flex:1;" readonly required>
+                                    <input type="text" id="therapistLng" class="glass-input" placeholder="Longitude" style="flex:1;" readonly required>
+                                </div>
+                            </div>
+                            
+                            <div class="drag-uploader-area" style="padding: 25px 15px; margin-bottom: 25px;">
+                                <i class="fa-solid fa-camera"></i>
+                                <p style="font-size:0.8rem; margin-bottom: 5px;">Upload Portrait Photograph</p>
+                                <span style="font-size: 0.65rem; color: var(--gold-metallic);">9:16 Aspect ratio recommended</span>
+                                <input type="file" id="therapistFileSelect" required accept="image/*">
+                            </div>
+
+                            <button type="submit" class="btn-luxury-admin">Authorize & Add Manually</button>
+                        </form>
+                    </div>
+
+                    <!-- Display grid block Right side -->
+                    <div class="admin-glass-card">
+                        <div class="card-inner-subtitle">Experts Directory (Pending & Approved)</div>
+                        <div class="therapist-portrait-3column-grid" id="activeTherapistsGrid">
+                            <!-- Populated dynamically via Firebase Realtime Database -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANE 7: BOOKING APPROVALS QUEUE SYSTEM -->
+            <div class="dashboard-pane" id="pane-bookings">
+                <h1 class="pane-header-title">Booking Approvals Queue</h1>
+                <p class="pane-header-desc">Review incoming therapy requests, authorize booking status and monitor session completions.</p>
+
+                <div class="admin-glass-card">
+                    <div class="card-inner-subtitle">Booking Requests & Sessions</div>
+                    <div class="booking-approval-list" id="activeBookingsList">
+                        <!-- Populated dynamically via Realtime DB -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Persistent Global Notification System Toast Alert Box -->
+    <div class="admin-toast-box" id="adminToast">Action Completed</div>
+
+    <!-- Web App Engine Code Script Module (Firebase and API bindings integration) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Web App Configuration Credentials matching client system exactly
+        const firebaseConfig = {
+          apiKey: "AIzaSyB0asuJKj9wyoInuS6_mhLdWDo4OkAM_k4",
+          authDomain: "oooo-67c5c.firebaseapp.com",
+          databaseURL: "https://oooo-67c5c-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "oooo-67c5c",
+          storageBucket: "oooo-67c5c.firebasestorage.app",
+          messagingSenderId: "605074662310",
+          appId: "1:605074662310:web:aeb1610acf19a39413e567",
+          measurementId: "G-N7SZ6YW3L5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ImgBB API Configuration settings
+        const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
+
+        // Access authentication key
+        const ADMIN_PASSCODE_HASH = "1234";
+
+        // Login auth configuration
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const inputVal = document.getElementById('passcodeInput').value;
+            if (inputVal === ADMIN_PASSCODE_HASH) {
+                document.getElementById('loginGateOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loginGateOverlay').style.display = 'none';
+                    initCoordinatesPickerMap();
+                }, 400);
+                showToast("System Control Authorized.");
+            } else {
+                alert("Incorrect administrative authorization passcode.");
+                document.getElementById('passcodeInput').value = '';
+            }
+        }
+
+        // Logout authentication handler
+        function handleAdminLogout() {
+            document.getElementById('passcodeInput').value = '';
+            document.getElementById('loginGateOverlay').style.display = 'flex';
+            document.getElementById('loginGateOverlay').style.opacity = '1';
+            showToast("System Session Locked Successfully.");
+        }
+
+        // Dashboard Tabs switcher
+        function switchPane(paneId) {
+            document.querySelectorAll('.dashboard-pane').forEach(pane => pane.classList.remove('active'));
+            document.querySelectorAll('.sidebar-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById('pane-' + paneId).classList.add('active');
+            document.getElementById('tab-btn-' + paneId).classList.add('active');
+
+            // Force coordinates picker Leaflet map to redraw properly
+            if (paneId === 'therapists' && map) {
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 200);
+            }
+        }
+
+        // Global Action Toast notifier
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('adminToast');
+            toast.innerText = message;
+            toast.style.borderColor = isError ? '#d9534f' : 'var(--gold-metallic)';
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Leaflet Coordinate Picker Map Initialization
+        let map = null;
+        let pickerMarker = null;
+        function initCoordinatesPickerMap() {
+            if (map) return;
+            map = L.map('coordinatesPickerMap', {
+                center: [28.4595, 77.0266],
+                zoom: 12,
+                zoomControl: true,
+                attributionControl: false
+            });
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            map.on('click', function(e) {
+                const lat = e.latlng.lat.toFixed(6);
+                const lng = e.latlng.lng.toFixed(6);
+
+                document.getElementById('therapistLat').value = lat;
+                document.getElementById('therapistLng').value = lng;
+
+                if (pickerMarker) {
+                    pickerMarker.setLatLng(e.latlng);
+                } else {
+                    pickerMarker = L.marker(e.latlng).addTo(map);
+                }
+            });
+        }
+
+        // API Asset upload method bridge to post imagery payload to ImgBB
+        async function uploadImageToImgBB(file) {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const urlEndpoint = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
+            const response = await fetch(urlEndpoint, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                return result.data.url;
+            } else {
+                throw new Error(result.error ? result.error.message : "Asset upload transaction failed.");
+            }
+        }
+
+        // Form handler Welcome Message configurations
+        async function handleWelcomeMsgSubmit(e) {
+            e.preventDefault();
+            const welcomeEn = document.getElementById('welcomeMsgEn').value.trim();
+            const welcomeHi = document.getElementById('welcomeMsgHi').value.trim();
+
+            try {
+                const welcomeRef = ref(db, 'system_settings/welcome_message');
+                await set(welcomeRef, {
+                    en: welcomeEn,
+                    hi: welcomeHi
+                });
+                showToast("Bilingual Welcome message updated successfully!");
+            } catch (err) {
+                showToast("Error updating message: " + err.message, true);
+            }
+        }
+
+        // Form handler SPA dynamic Categories creation
+        async function handleCategorySubmit(e) {
+            e.preventDefault();
+            const catEn = document.getElementById('catNameEn').value.trim();
+            const catHi = document.getElementById('catNameHi').value.trim();
+
+            try {
+                const catRef = ref(db, 'categories');
+                const newCatRef = push(catRef);
+                await set(newCatRef, {
+                    en: catEn,
+                    hi: catHi
+                });
+                showToast("Spa Massage Category Published.");
+                document.getElementById('catNameEn').value = '';
+                document.getElementById('catNameHi').value = '';
+            } catch (err) {
+                showToast("Category exception error: " + err.message, true);
+            }
+        }
+
+        // Form handler SPA dynamic Rituals publishing
+        async function handleRitualSubmit(e) {
+            e.preventDefault();
+            const titleEn = document.getElementById('ritualTitleEn').value.trim();
+            const titleHi = document.getElementById('ritualTitleHi').value.trim();
+            const price = document.getElementById('ritualPrice').value.trim();
+            const duration = document.getElementById('ritualDuration').value.trim();
+            const descEn = document.getElementById('ritualDescEn').value.trim();
+            const descHi = document.getElementById('ritualDescHi').value.trim();
+            const file = document.getElementById('ritualFileSelect').files[0];
+
+            if(!file) return;
+
+            const loader = document.getElementById('ritualLoader');
+            loader.style.display = 'flex';
+
+            try {
+                const uploadedUrl = await uploadImageToImgBB(file);
+
+                const ritualRef = ref(db, 'services');
+                const newRitualRef = push(ritualRef);
+                await set(newRitualRef, {
+                    title: { en: titleEn, hi: titleHi },
+                    price: parseInt(price),
+                    duration: parseInt(duration),
+                    description: { en: descEn, hi: descHi },
+                    image: uploadedUrl
+                });
+
+                showToast("Spa Ritual published successfully!");
+                document.getElementById('ritualTitleEn').value = '';
+                document.getElementById('ritualTitleHi').value = '';
+                document.getElementById('ritualPrice').value = '';
+                document.getElementById('ritualDuration').value = '';
+                document.getElementById('ritualDescEn').value = '';
+                document.getElementById('ritualDescHi').value = '';
+                document.getElementById('ritualFileSelect').value = '';
+            } catch (err) {
+                showToast("Ritual publication error: " + err.message, true);
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // Form handler dynamic memberships card publishing
+        async function handleMembershipSubmit(e) {
+            e.preventDefault();
+            const titleEn = document.getElementById('memberTitleEn').value.trim();
+            const titleHi = document.getElementById('memberTitleHi').value.trim();
+            const priceEn = document.getElementById('memberPriceEn').value.trim();
+            const priceHi = document.getElementById('memberPriceHi').value.trim();
+            const tier = document.getElementById('memberTier').value;
+            const benefitsEn = document.getElementById('memberBenefitsEn').value.trim();
+            const benefitsHi = document.getElementById('memberBenefitsHi').value.trim();
+
+            try {
+                const membershipRef = ref(db, 'memberships');
+                const newMembershipRef = push(membershipRef);
+                await set(newMembershipRef, {
+                    title: { en: titleEn, hi: titleHi },
+                    price: { en: priceEn, hi: priceHi },
+                    tier: tier,
+                    benefits: {
+                        en: benefitsEn.split(',').map(item => item.trim()),
+                        hi: benefitsHi.split(',').map(item => item.trim())
+                    }
+                });
+
+                showToast("Membership Privilege card published!");
+                document.getElementById('memberTitleEn').value = '';
+                document.getElementById('memberTitleHi').value = '';
+                document.getElementById('memberPriceEn').value = '';
+                document.getElementById('memberPriceHi').value = '';
+                document.getElementById('memberBenefitsEn').value = '';
+                document.getElementById('memberBenefitsHi').value = '';
+            } catch (err) {
+                showToast("Membership publication error: " + err.message, true);
+            }
+        }
+
+        // Form handler logic to post new dynamic live slide banners (Supports Multiple Uploads)
+        async function handleBannerSubmit(e) {
+            e.preventDefault();
+            const fileSelect = document.getElementById('bannerFileSelect');
+            const files = fileSelect.files;
+
+            if (!files || files.length === 0) return;
+
+            const loader = document.getElementById('bannerLoader');
+            loader.style.display = 'flex';
+            
+            const totalFiles = files.length;
+            let uploadedCount = 0;
+
+            try {
+                for (let i = 0; i < totalFiles; i++) {
+                    const file = files[i];
+                    // Dynamic progress indicator in loader
+                    loader.querySelector('span').innerText = `Uploading Asset (${i + 1}/${totalFiles})...`;
+                    
+                    const uploadedUrl = await uploadImageToImgBB(file);
+
+                    const bannersRef = ref(db, 'slider_images');
+                    const newBannerRef = push(bannersRef);
+                    await set(newBannerRef, { url: uploadedUrl });
+                    uploadedCount++;
+                }
+
+                showToast(`Successfully published ${uploadedCount} live banners!`);
+                fileSelect.value = ''; 
+            } catch (err) {
+                showToast("System Error: " + err.message, true);
+            } finally {
+                loader.style.display = 'none';
+                loader.querySelector('span').innerText = "Uploading Asset...";
+            }
+        }
+
+        // Form handler logic to register new certified expert profiles manually from Admin (With Access Code auto-generation)
+        async function handleTherapistSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('therapistName').value.trim();
+            const spec = document.getElementById('therapistSpec').value.trim();
+            const exp = document.getElementById('therapistExp').value.trim();
+            const tag = document.getElementById('therapistTag').value.trim();
+            const address = document.getElementById('therapistAddress').value.trim();
+            const lat = document.getElementById('therapistLat').value.trim();
+            const lng = document.getElementById('therapistLng').value.trim();
+            const fileSelect = document.getElementById('therapistFileSelect');
+            const file = fileSelect.files[0];
+
+            if (!file) return;
+
+            const loader = document.getElementById('therapistLoader');
+            loader.style.display = 'flex';
+
+            try {
+                const uploadedUrl = await uploadImageToImgBB(file);
+
+                // Auto-generate unique 6-digit access code for Therapist Panel Authentication
+                const autoGeneratedCode = "OOOO-" + Math.floor(100000 + Math.random() * 900000);
+
+                const therapistsRef = ref(db, 'therapists');
+                const newTherapistRef = push(therapistsRef);
+                // Manually added by admin are automatically 'approved'
+                await set(newTherapistRef, {
+                    name: name,
+                    specialization: spec,
+                    experience: exp,
+                    tag: tag,
+                    address: address,
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng),
+                    image: uploadedUrl,
+                    status: 'approved',
+                    code: autoGeneratedCode
+                });
+
+                showToast("Therapist Authorized & Published!");
+                
+                document.getElementById('therapistName').value = '';
+                document.getElementById('therapistSpec').value = '';
+                document.getElementById('therapistExp').value = '';
+                document.getElementById('therapistTag').value = '';
+                document.getElementById('therapistAddress').value = '';
+                document.getElementById('therapistLat').value = '';
+                document.getElementById('therapistLng').value = '';
+                fileSelect.value = '';
+
+                if (pickerMarker) {
+                    map.removeLayer(pickerMarker);
+                    pickerMarker = null;
+                }
+            } catch (err) {
+                showToast("System Error: " + err.message, true);
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // Dynamic Booking status approval updates
+        function updateBookingStatus(bookingKey, status) {
+            const bookingRef = ref(db, `bookings/${bookingKey}`);
+            update(bookingRef, { status: status })
+                .then(() => {
+                    showToast(`Booking is now ${status}!`);
+                })
+                .catch(err => {
+                    showToast("Error updating booking status: " + err.message, true);
+                });
+        }
+
+        // Dynamic Therapist status approval updates
+        function updateTherapistStatus(therapistKey, status) {
+            const therapistRef = ref(db, `therapists/${therapistKey}`);
+            update(therapistRef, { status: status })
+                .then(() => {
+                    showToast(`Therapist profile is now ${status}!`);
+                })
+                .catch(err => {
+                    showToast("Error updating therapist status: " + err.message, true);
+                });
+        }
+
+        // Deletion handlers for DB assets
+        function deleteAssetNode(path, key) {
+            const confirmDel = confirm("Are you sure you want to permanently delete this record?");
+            if(!confirmDel) return;
+
+            const assetRef = ref(db, `${path}/${key}`);
+            remove(assetRef)
+                .then(() => {
+                    showToast("Resource Node Deleted Successfully.");
+                })
+                .catch(err => {
+                    showToast("System deletion exception: " + err.message, true);
+                });
+        }
+
+        // -----------------------------------------------------
+        // FIREBASE REAL-TIME LISTENERS
+        // -----------------------------------------------------
+
+        // Welcome Message
+        onValue(ref(db, 'system_settings/welcome_message'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('welcomeMsgEn').value = data.en || '';
+                document.getElementById('welcomeMsgHi').value = data.hi || '';
+            }
+        });
+
+        // Categories
+        onValue(ref(db, 'categories'), (snapshot) => {
+            const data = snapshot.val();
+            const list = document.getElementById('activeCategoriesList');
+            list.innerHTML = '';
+            if (data) {
+                Object.entries(data).forEach(([key, val]) => {
+                    const item = document.createElement('div');
+                    item.className = 'generic-admin-item';
+                    item.innerHTML = `
+                        <div>
+                            <strong style="color:var(--white);">${val.en}</strong> • <span style="color:var(--rose-pink);">${val.hi}</span>
+                        </div>
+                        <button class="btn-delete-asset" onclick="deleteAssetNode('categories', '${key}')">Remove</button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+        });
+
+        // Rituals
+        onValue(ref(db, 'services'), (snapshot) => {
+            const data = snapshot.val();
+            const list = document.getElementById('activeRitualsList');
+            const kpi = document.getElementById('kpi-rituals-count');
+            list.innerHTML = '';
+            let counter = 0;
+            if (data) {
+                Object.entries(data).forEach(([key, val]) => {
+                    counter++;
+                    const item = document.createElement('div');
+                    item.className = 'generic-admin-item';
+                    item.innerHTML = `
+                        <div style="display:flex; gap: 15px; align-items:center;">
+                            <img src="${val.image}" style="width: 55px; height: 55px; object-fit:cover; border-radius: 8px; border: 1px solid rgba(212,175,55,0.3);">
+                            <div>
+                                <strong style="display:block; color:var(--white); font-size:0.9rem;">${val.title.en} (${val.duration} Mins)</strong>
+                                <span style="font-size:0.8rem; color: var(--gold-metallic); font-weight: 600;">₹${val.price}</span>
+                            </div>
+                        </div>
+                        <button class="btn-delete-asset" onclick="deleteAssetNode('services', '${key}')">Remove</button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+            kpi.innerText = counter;
+        });
+
+        // Slider Banners
+        onValue(ref(db, 'slider_images'), (snapshot) => {
+            const data = snapshot.val();
+            const grid = document.getElementById('activeBannersGrid');
+            const kpi = document.getElementById('kpi-banner-count');
+            grid.innerHTML = '';
+
+            let counter = 0;
+            if (data) {
+                Object.entries(data).forEach(([key, val]) => {
+                    counter++;
+                    const imgUrl = typeof val === 'string' ? val : val.url;
+                    
+                    const manageCard = document.createElement('div');
+                    manageCard.className = 'banner-manage-item';
+                    manageCard.innerHTML = `
+                        <div class="banner-thumbnail-wrap" style="background-image: url('${imgUrl}');"></div>
+                        <div class="banner-manage-footer">
+                            <button class="btn-delete-asset" onclick="deleteAssetNode('slider_images', '${key}')">Delete</button>
+                        </div>
+                    `;
+                    grid.appendChild(manageCard);
+                });
+            }
+            kpi.innerText = counter;
+        });
+
+        // Memberships
+        onValue(ref(db, 'memberships'), (snapshot) => {
+            const data = snapshot.val();
+            const list = document.getElementById('activeMembershipsList');
+            list.innerHTML = '';
+            if (data) {
+                Object.entries(data).forEach(([key, val]) => {
+                    const item = document.createElement('div');
+                    item.className = 'generic-admin-item';
+                    item.innerHTML = `
+                        <div>
+                            <strong style="color:var(--white);">${val.title.en}</strong>
+                            <span style="font-size:0.75rem; display:block; color:var(--gold-metallic); margin-top:4px;">${val.price.en}</span>
+                        </div>
+                        <button class="btn-delete-asset" onclick="deleteAssetNode('memberships', '${key}')">Remove</button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+        });
+
+        // Therapists (Now with Pending/Approved Logic and Displaying Access Code)
+        onValue(ref(db, 'therapists'), (snapshot) => {
+            const data = snapshot.val();
+            const grid = document.getElementById('activeTherapistsGrid');
+            const kpi = document.getElementById('kpi-therapist-count');
+            grid.innerHTML = '';
+
+            let counter = 0;
+            if (data) {
+                Object.entries(data).forEach(([key, t]) => {
+                    // Only count approved therapists for the KPI
+                    if(t.status === 'approved' || !t.status) counter++; 
+                    
+                    const isPending = t.status === 'pending';
+                    const badgeClass = isPending ? 'therapist-pending-badge' : 'therapist-9to16-tag';
+                    const badgeText = isPending ? 'Pending Verification' : (t.tag || 'Expert');
+
+                    const manageCard = document.createElement('div');
+                    manageCard.className = 'therapist-list-portrait-card';
+                    manageCard.innerHTML = `
+                        <div class="therapist-9to16-img" style="background-image: url('${t.image}');">
+                            <span class="${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="therapist-portrait-body">
+                            <h3>${t.name}</h3>
+                            <div class="therapist-portrait-spec">${t.specialization}</div>
+                            
+                            <!-- Access Code display section -->
+                            <p style="font-size:0.8rem; color:var(--gold-metallic); margin-bottom:12px; font-weight:600;">
+                                <i class="fa-solid fa-key" style="margin-right: 5px;"></i> Code: <span style="background: rgba(212,175,55,0.1); border: 1px dashed rgba(212,175,55,0.4); padding: 3px 8px; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">${t.code || 'N/A'}</span>
+                            </p>
+
+                            <p style="font-size:0.8rem; color:var(--white); margin-bottom:12px; opacity: 0.9;">
+                                <i class="fa-solid fa-location-dot" style="margin-right: 5px; color: var(--rose-pink);"></i> ${t.address || 'N/A'} <br>
+                                <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">GPS: ${t.lat ? t.lat.toFixed(4) : '0.0000'}, ${t.lng ? t.lng.toFixed(4) : '0.0000'}</span>
+                            </p>
+                            <p class="therapist-portrait-desc">${t.experience}</p>
+                            
+                            <div style="display:flex; justify-content: flex-end; margin-top:15px; border-top: 1px solid var(--border-light); padding-top: 15px;">
+                                ${isPending ? `
+                                    <button class="btn-approve-therapist" onclick="updateTherapistStatus('${key}', 'approved')">Approve</button>
+                                ` : ''}
+                                <button class="btn-delete-asset" onclick="deleteAssetNode('therapists', '${key}')">Remove Profile</button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(manageCard);
+                });
+            }
+            kpi.innerText = counter;
+        });
+
+        // Bookings Queue & User Extraction Logic
+        onValue(ref(db, 'bookings'), (snapshot) => {
+            const data = snapshot.val();
+            const bookingsList = document.getElementById('activeBookingsList');
+            const usersList = document.getElementById('activeUsersList'); // Target for Users Tab
+            
+            const kpiBookings = document.getElementById('kpi-bookings-count');
+            const kpiUsers = document.getElementById('kpi-users-count');
+            
+            bookingsList.innerHTML = '';
+            usersList.innerHTML = '';
+
+            let bookingCounter = 0; // Only count 'Pending Approval' for KPI
+            
+            // To store unique users (based on phone number)
+            const uniqueUsersMap = new Map();
+
+            if (data) {
+                Object.entries(data).forEach(([key, val]) => {
+                    // Booking List Population
+                    if (val.status === 'Pending Approval' || val.status === 'Pending') bookingCounter++;
+                    
+                    let statusClass = 'status-pending';
+                    if(val.status === 'Approved') statusClass = 'status-approved';
+                    if(val.status === 'Completed') statusClass = 'status-completed';
+
+                    const bookingCard = document.createElement('div');
+                    bookingCard.className = 'booking-approval-card';
+                    bookingCard.innerHTML = `
+                        <div class="booking-approval-header">
+                            <strong style="font-family:'Cinzel', serif; font-size:1.1rem; color:var(--gold-metallic); letter-spacing: 1px;">ID: ${key.substring(1, 10).toUpperCase()}</strong>
+                            <span class="booking-status-badge ${statusClass}">${val.status || 'Pending'}</span>
+                        </div>
+                        <div class="booking-details-grid">
+                            <div class="booking-detail-item">
+                                <span>Guest Name</span>
+                                <strong>${val.user ? val.user.name : 'N/A'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>Contact Number</span>
+                                <strong>${val.user ? val.user.phone : 'N/A'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>Massage Therapy</span>
+                                <strong>${val.service || 'N/A'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>Therapist Assigned</span>
+                                <strong>${val.therapist || 'Any'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>Location Mode</span>
+                                <strong>${val.locationType || 'Home'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>City/Location</span>
+                                <strong>${val.user ? (val.user.city || val.user.address) : 'N/A'}</strong>
+                            </div>
+                            <div class="booking-detail-item">
+                                <span>Schedule Slot</span>
+                                <strong>${val.dateTime ? val.dateTime.replace('T', ' ') : 'N/A'}</strong>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:12px; justify-content: flex-end; margin-top: 20px; border-top: 1px solid var(--border-light); padding-top: 20px;">
+                            ${val.status !== 'Approved' && val.status !== 'Completed' ? `
+                                <button class="btn-luxury-admin" style="width:auto; padding: 12px 25px; font-size:0.8rem;" onclick="updateBookingStatus('${key}', 'Approved')">Approve Booking</button>
+                            ` : ''}
+                            <button class="btn-delete-asset" style="padding: 12px 20px; font-size:0.8rem;" onclick="deleteAssetNode('bookings', '${key}')">Delete Request</button>
+                        </div>
+                    `;
+                    bookingsList.appendChild(bookingCard);
+
+                    // Extract User for "Client Database"
+                    if (val.user && val.user.phone) {
+                        if (!uniqueUsersMap.has(val.user.phone)) {
+                            uniqueUsersMap.set(val.user.phone, {
+                                dbKey: key, // Storing booking key as reference
+                                name: val.user.name || 'N/A',
+                                phone: val.user.phone || 'N/A',
+                                city: val.user.city || val.user.address || 'N/A',
+                                state: val.user.state || 'N/A'
+                            });
+                        }
+                    }
+                });
+            }
+            kpiBookings.innerText = bookingCounter;
+            
+            // Render Users Tab (Client Database)
+            kpiUsers.innerText = uniqueUsersMap.size;
+            
+            if (uniqueUsersMap.size === 0) {
+                usersList.innerHTML = `<p style="color:var(--text-muted); font-size: 0.9rem; grid-column: 1 / -1;">No registered clients found yet.</p>`;
+            } else {
+                uniqueUsersMap.forEach((user, phoneKey) => {
+                    const userCard = document.createElement('div');
+                    userCard.className = 'client-card';
+                    userCard.innerHTML = `
+                        <div class="client-header">
+                            <div>
+                                <h4>${user.name}</h4>
+                                <div class="client-phone"><i class="fa-solid fa-phone" style="font-size:0.75rem; margin-right:5px;"></i> ${user.phone}</div>
+                            </div>
+                        </div>
+                        <div class="client-info-row">
+                            <i class="fa-solid fa-map-location-dot"></i> City: ${user.city}
+                        </div>
+                        <div class="client-info-row">
+                            <i class="fa-solid fa-building"></i> State: ${user.state}
+                        </div>
+                        <div style="display:flex; justify-content:flex-end; margin-top: 20px;">
+                            <button class="btn-delete-asset" onclick="deleteAssetNode('bookings', '${user.dbKey}')"><i class="fa-solid fa-trash" style="margin-right:5px;"></i> Delete Record</button>
+                        </div>
+                    `;
+                    usersList.appendChild(userCard);
+                });
+            }
+        });
+
+        // -------------------------------------------------------------------
+        // Listen to dedicated 'users' node (If integrated directly in future)
+        // -------------------------------------------------------------------
+        onValue(ref(db, 'users'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const usersList = document.getElementById('activeUsersList');
+                let count = parseInt(document.getElementById('kpi-users-count').innerText) || 0;
+
+                Object.entries(data).forEach(([key, user]) => {
+                    count++;
+                    const userCard = document.createElement('div');
+                    userCard.className = 'client-card';
+                    userCard.innerHTML = `
+                        <div class="client-header">
+                            <div>
+                                <h4>${user.name || 'N/A'}</h4>
+                                <div class="client-phone"><i class="fa-solid fa-phone" style="font-size:0.75rem; margin-right:5px;"></i> ${user.phone || 'N/A'}</div>
+                            </div>
+                        </div>
+                        <div class="client-info-row">
+                            <i class="fa-solid fa-map-location-dot"></i> City: ${user.city || 'N/A'}
+                        </div>
+                        <div class="client-info-row">
+                            <i class="fa-solid fa-building"></i> State: ${user.state || 'N/A'}
+                        </div>
+                        <div style="display:flex; justify-content:flex-end; margin-top: 20px;">
+                            <button class="btn-delete-asset" onclick="deleteAssetNode('users', '${key}')"><i class="fa-solid fa-trash" style="margin-right:5px;"></i> Delete Record</button>
+                        </div>
+                    `;
+                    usersList.appendChild(userCard);
+                });
+                document.getElementById('kpi-users-count').innerText = count;
+            }
+        });
+
+        // Expose modules functions to global scope to prevent inline HTML onclick exceptions
+        window.handleAdminLogin = handleAdminLogin;
+        window.handleAdminLogout = handleAdminLogout;
+        window.switchPane = switchPane;
+        window.handleWelcomeMsgSubmit = handleWelcomeMsgSubmit;
+        window.handleCategorySubmit = handleCategorySubmit;
+        window.handleRitualSubmit = handleRitualSubmit;
+        window.handleMembershipSubmit = handleMembershipSubmit;
+        window.handleBannerSubmit = handleBannerSubmit;
+        window.handleTherapistSubmit = handleTherapistSubmit;
+        window.deleteAssetNode = deleteAssetNode;
+        window.updateBookingStatus = updateBookingStatus;
+        window.updateTherapistStatus = updateTherapistStatus; 
+    </script>
+</body>
+</html>
