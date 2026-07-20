@@ -15,7 +15,7 @@
     
     <style>
         :root {
-            /* Romantic Red & Soft Pink Theme (Urban Company Inspired) */
+            /* Romantic Red & Soft Pink Theme */
             --bg-main: #FFF5F7; 
             --bg-card: #FFFFFF; 
             --bg-elevated: #FFE4EC;
@@ -48,7 +48,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100dvh; /* Supporting dynamic mobile heights */
         }
 
         /* Smartphone Device Mock Chassis */
@@ -198,7 +198,7 @@
             flex: 1;
             overflow-y: auto;
             position: relative;
-            padding-bottom: 100px;
+            padding-bottom: 110px; /* Enhanced space for docked bottom nav */
             background-color: var(--bg-main);
             scroll-behavior: smooth;
         }
@@ -221,23 +221,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Floating Bottom Navigation Menu */
+        /* Floating Bottom Navigation Menu (Optimized for iOS/Android Safe Areas) */
         .app-bottom-nav {
             position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            height: 70px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid var(--border-light);
-            border-radius: 25px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 85px; /* Taller height to safe area padding */
+            padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 5px);
+            background: rgba(255, 255, 255, 0.96);
+            border-top: 1px solid var(--border-light);
+            border-radius: 28px 28px 0 0; /* Docked rounded top */
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 30px rgba(216, 17, 89, 0.1);
+            z-index: 1000;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 -8px 30px rgba(216, 17, 89, 0.06);
         }
 
         .nav-item {
@@ -378,7 +379,7 @@
             100% { opacity: 0.3; transform: scale(0.9); }
         }
 
-        /* BEAUTIFUL NEW HERO SECTION */
+        /* HERO SECTION */
         .hero-carousel {
             position: relative;
             display: flex;
@@ -455,7 +456,7 @@
             color: white;
         }
 
-        /* 3. Premium Highlights Section */
+        /* Premium Highlights Section */
         .highlights-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -490,7 +491,7 @@
             line-height: 1.3;
         }
 
-        /* ==================== 5. SERVICES MENU & SCREEN ==================== */
+        /* ==================== SERVICES MENU & SCREEN ==================== */
         
         .category-scroll-container {
             display: flex;
@@ -525,7 +526,7 @@
             padding: 0 20px;
         }
 
-        /* PERFECT 16:9 MASSAGE BOX WITH READ MORE */
+        /* 16:9 MASSAGE BOX WITH READ MORE */
         .service-card-premium {
             background-color: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -620,7 +621,7 @@
             border-radius: 8px;
         }
 
-        /* ==================== 8. MEMBERSHIPS SECTION ==================== */
+        /* ==================== MEMBERSHIPS SECTION ==================== */
         .membership-cards-stack {
             padding: 0 20px;
         }
@@ -664,7 +665,7 @@
             font-size: 0.9rem;
         }
 
-        /* ==================== 10. MOBILE APP PROMOTION ==================== */
+        /* ==================== MOBILE APP PROMOTION ==================== */
         .app-promo-box {
             text-align: center;
             background: var(--bg-elevated);
@@ -684,7 +685,7 @@
             box-shadow: var(--shadow-soft);
         }
 
-        /* ==================== 11. CONTACT SECTION ==================== */
+        /* ==================== CONTACT SECTION ==================== */
         .contact-channel-list {
             padding: 0 20px;
         }
@@ -733,7 +734,7 @@
             font-weight: 600;
         }
 
-        /* ==================== 12. LUXURY FOOTER ==================== */
+        /* ==================== LUXURY FOOTER ==================== */
         .luxury-footer-app {
             background-color: var(--bg-card);
             padding: 30px 20px 40px 20px;
@@ -765,12 +766,12 @@
             font-weight: 500;
         }
 
-        /* ==================== 3. BOOKING SCREEN FORM (COMPACTED WIZARD) ==================== */
+        /* ==================== BOOKING SCREEN FORM (COMPACTED WIZARD) ==================== */
         .wizard-steps-row {
             display: flex;
             justify-content: space-between;
             padding: 0 40px;
-            margin-bottom: 15px; /* COMPRESSED */
+            margin-bottom: 15px; 
             position: relative;
         }
 
@@ -820,7 +821,7 @@
         .receipt-summary-box {
             background-color: var(--bg-elevated);
             border: 1px solid var(--border-light);
-            padding: 15px; /* COMPRESSED */
+            padding: 15px; 
             border-radius: 16px;
             margin-bottom: 15px;
         }
@@ -829,7 +830,7 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.85rem;
-            margin-bottom: 8px; /* COMPRESSED */
+            margin-bottom: 8px; 
             color: var(--text-dark);
             font-weight: 500;
         }
@@ -942,16 +943,16 @@
             margin-bottom: 12px;
         }
 
-        /* Unified Custom Fields styling (COMPRESSED) */
+        /* Unified Custom Fields styling */
         .glass-input-wrapper {
             display: flex;
             flex-direction: column;
             text-align: left;
-            margin-bottom: 12px; /* reduced */
+            margin-bottom: 12px; 
         }
 
         .widget-input-wrap {
-            margin-bottom: 12px; /* COMPRESSED */
+            margin-bottom: 12px; 
         }
 
         .glass-input-wrapper label, .widget-input-wrap label {
@@ -966,7 +967,7 @@
             border: 1px solid rgba(0,0,0,0.1);
             border-radius: 12px;
             color: var(--text-dark);
-            padding: 12px 14px; /* COMPRESSED */
+            padding: 12px 14px; 
             font-size: 0.85rem;
             font-family: inherit;
             outline: none;
@@ -1036,7 +1037,7 @@
         .spa-warning-notice {
             background-color: var(--bg-elevated);
             border-left: 4px solid var(--primary-red);
-            padding: 10px 12px; /* COMPRESSED */
+            padding: 10px 12px; 
             border-radius: 8px;
             font-size: 0.75rem;
             line-height: 1.4;
@@ -1052,7 +1053,7 @@
             gap: 10px;
             font-size: 0.8rem;
             cursor: pointer;
-            margin-bottom: 15px; /* COMPRESSED */
+            margin-bottom: 15px; 
             color: var(--text-dark);
             font-weight: 500;
         }
@@ -1064,46 +1065,101 @@
             height: 18px;
         }
 
-        /* Dynamic Description Overlay Screen for Therapists */
+        /* Dynamic Description Overlay Screen for Therapists - REBUILT FOR ABSOLUTE LUXURY */
         .therapist-desc-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            z-index: 250;
+            background-color: var(--bg-main);
+            z-index: 2000; /* Placed cleanly above bottom navigation */
             display: none;
             flex-direction: column;
-            padding: 25px;
-            animation: slideUp 0.3s ease forwards;
+            padding: 0;
+            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .therapist-desc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 15px;
+        .therapist-desc-scrollable {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .therapist-desc-scrollable::-webkit-scrollbar {
+            display: none;
+        }
+
+        .therapist-desc-img-card {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 12px;
+            box-shadow: var(--shadow-soft);
             margin-bottom: 20px;
         }
-
-        .therapist-desc-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-        .therapist-desc-content::-webkit-scrollbar { display: none; }
 
         .therapist-desc-img {
             width: 100%;
             aspect-ratio: 1 / 1;
             background-size: cover;
             background-position: center;
-            border-radius: 20px;
-            margin-bottom: 20px;
+            border-radius: 18px;
+        }
+
+        .therapist-desc-info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 24px;
             box-shadow: var(--shadow-soft);
+        }
+
+        .therapist-profile-spec {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--primary-red);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .therapist-profile-bio {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        .therapist-desc-footer {
+            padding: 15px 20px 25px 20px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-light);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
+        }
+
+        /* Support Gallery styling */
+        .gallery-app-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 20px 20px 20px;
+        }
+        .gallery-img-box {
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+        }
+        .gallery-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-premium);
+        }
+        .gallery-img-box:hover img {
+            transform: scale(1.05);
         }
 
         /* Success screen modal overlay */
@@ -1115,7 +1171,7 @@
             height: 100%;
             background-color: rgba(255, 245, 247, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 300;
+            z-index: 3000;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1152,7 +1208,7 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-main);
-            z-index: 200;
+            z-index: 2500;
             display: none;
             flex-direction: column;
             animation: slideUp 0.3s ease forwards;
@@ -1231,7 +1287,7 @@
             font-size: 0.85rem;
         }
 
-        /* NEW: Active Tracking FAB */
+        /* Active Tracking FAB */
         .live-track-fab {
             position: absolute;
             top: 25px;
@@ -1256,7 +1312,7 @@
             100% { box-shadow: 0 0 0 0 rgba(216, 17, 89, 0); }
         }
 
-        /* NEW: Live Tracking Overlay Map Screen */
+        /* Live Tracking Overlay Map Screen */
         .tracking-overlay {
             position: absolute;
             top: 0;
@@ -1282,6 +1338,11 @@
             box-shadow: 0 -10px 25px rgba(0,0,0,0.08); 
             position: relative;
             z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
     </style>
 </head>
@@ -1361,7 +1422,7 @@
                     </div>
                 </div>
 
-                <!-- BEAUTIFUL 16:9 WELCOME BOX -->
+                <!-- 16:9 WELCOME BOX -->
                 <div class="welcome-16-9-box">
                     <h3 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary-red); margin-bottom: 8px; font-weight: 700;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
                     <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.85rem; font-weight: 500; line-height: 1.5; padding: 0 10px;">
@@ -1541,13 +1602,26 @@
                 </div>
             </div>
 
-            <!-- SCREEN 5: REVIEW, FAQ, APP DOWNLOAD & CONTACT -->
+            <!-- SCREEN 5: REVIEW, FAQ, APP DOWNLOAD & CONTACT (Premium Redesign) -->
             <div class="app-screen" id="screen-contact">
                 <div class="section-header-app">
-                    <h2 class="section-title" data-en="Support & Gallery" data-hi="सहायता और गैलरी">Support & Gallery</h2>
+                    <h2 class="section-title" data-en="Concierge Support" data-hi="सहायता और संपर्क">Concierge Support</h2>
+                    <p class="section-subtitle" data-en="Our elite team is available around the clock to organize your personalized escape." data-hi="आपकी व्यक्तिगत स्पा यात्रा को व्यवस्थित करने के लिए हमारी टीम 24/7 उपलब्ध है।"></p>
                 </div>
 
-                <div style="padding: 10px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; color: var(--text-dark);" data-en="Luxury Settings Preview" data-hi="स्पा कक्ष गैलरी">Luxury Settings Preview</div></div>
+                <!-- Premium VIP Concierge Card -->
+                <div class="glass-card" style="background: linear-gradient(135deg, #2B0A16 0%, #D81159 100%); border: none; color: white; display: flex; flex-direction: column; gap: 15px; border-radius: 24px;">
+                    <div>
+                        <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft-pink);">VIP Privileges</span>
+                        <h3 style="font-family: 'Cinzel', serif; font-size: 1.3rem; margin-top: 5px; color: white; font-weight: 700;">Instant Oasis Concierge</h3>
+                        <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255, 255, 255, 0.8); margin-top: 8px;">Skip standard scheduling and instantly converse with an exclusive lounge assistant.</p>
+                    </div>
+                    <button class="btn-luxury-app" style="background: white; color: var(--primary-red); box-shadow: none; font-weight: 700;" onclick="openConciergeChat()">
+                        <i class="fa-solid fa-comments" style="margin-right: 6px;"></i> <span data-en="Initiate Secure Chat" data-hi="सुरक्षित चैट शुरू करें">Initiate Secure Chat</span>
+                    </button>
+                </div>
+
+                <div style="padding: 10px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text-dark);" data-en="Sensory Ambience Gallery" data-hi="स्पा कक्ष गैलरी">Sensory Ambience Gallery</div></div>
                 <div class="gallery-app-grid">
                     <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=300&auto=format&fit=crop"></div>
                     <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=300&auto=format&fit=crop"></div>
@@ -1555,13 +1629,13 @@
                     <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=300&auto=format&fit=crop"></div>
                 </div>
 
-                <div class="glass-card app-promo-box">
-                    <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 10px;" data-en="Get Mobile App" data-hi="मोबाइल ऐप डाउनलोड करें">Get Mobile App</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;" data-en="Scan QR Code to configure luxury sessions directly." data-hi="स्पा सत्रों को सीधे प्रबंधित करने के लिए क्यूआर कोड स्कैन करें।">Scan QR Code to configure luxury sessions directly.</p>
+                <div class="glass-card app-promo-box" style="border-radius: 24px;">
+                    <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 10px;" data-en="Acquire Mobile Sanctuary" data-hi="मोबाइल ऐप प्राप्त करें">Acquire Mobile Sanctuary</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;" data-en="Scan QR Code to program sensory configurations directly." data-hi="स्पा सत्रों को सीधे प्रबंधित करने के लिए क्यूआर कोड स्कैन करें।">Scan QR Code to program sensory configurations directly.</p>
                     <div class="qr-placeholder"><i class="fa-solid fa-qrcode fa-4x" style="color: var(--text-dark);"></i></div>
                     <div style="display: flex; gap: 15px; justify-content: center; margin-top: 15px;">
-                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card);" onclick="alert('iOS App coming soon!')">iPhone App</button>
-                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card);" onclick="alert('Android App coming soon!')">Android App</button>
+                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card); border-color: var(--border-light);" onclick="alert('iOS App coming soon!')">iPhone App</button>
+                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card); border-color: var(--border-light);" onclick="alert('Android App coming soon!')">Android App</button>
                     </div>
                 </div>
 
@@ -1585,31 +1659,33 @@
                             <p data-en="No fees are charged if cancelled 4 hours prior to your scheduled slot. Otherwise, standard charges are applicable." data-hi="यदि निर्धारित समय से 4 घंटे पहले निरस्त किया जाता है, तो कोई शुल्क नहीं लिया जाता है।">No fees are charged if cancelled 4 hours prior to your scheduled slot. Otherwise, standard operational charges are applicable.</p>
                         </div>
                     </div>
+                    <div class="faq-accord-item">
+                        <div class="faq-accord-header" onclick="toggleFaq(this)">
+                            <h3 data-en="How do we ensure privacy and safety?" data-hi="गोपनीयता और सुरक्षा कैसे सुनिश्चित की जाती है?">How do we ensure privacy and safety?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-accord-body">
+                            <p data-en="All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions." data-hi="सभी चिकित्सकों का कड़ा पुलिस सत्यापन किया जाता है, और हम प्रत्येक सत्र के लिए उच्चतम गोपनीयता प्रोटोकॉल बनाए रखते हैं।">All practitioners are thoroughly vetted with mandatory police background verifications, and we maintain an absolute privacy-lock protocols for all home sessions.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="padding: 30px 20px 15px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text-dark);" data-en="Contact Pathways" data-hi="संपर्क माध्यम">Contact Pathways</div></div>
+                <div style="padding: 30px 20px 15px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text-dark);" data-en="Priority Communication Pathways" data-hi="प्राथमिक संपर्क माध्यम">Priority Communication Pathways</div></div>
                 <div class="contact-channel-list">
                     <a href="tel:+919876543210" class="channel-item">
                         <div class="channel-left">
                             <i class="fa-solid fa-phone"></i>
-                            <span data-en="Voice Desk" data-hi="वॉयस डेस्क">Voice Desk</span>
+                            <span data-en="Luxury Voice Desk" data-hi="लक्जरी वॉयस डेस्क">Luxury Voice Desk</span>
                         </div>
                         <span style="font-size: 0.8rem; color: var(--primary-red); font-weight: 700;">+91 98765 43210</span>
                     </a>
                     <a href="https://wa.me/919876543210" class="channel-item" target="_blank">
                         <div class="channel-left">
                             <i class="fa-brands fa-whatsapp"></i>
-                            <span data-en="WhatsApp Priority" data-hi="व्हाट्सएप">WhatsApp Priority</span>
+                            <span data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
                         </div>
                         <i class="fa-solid fa-chevron-right" style="font-size: 0.9rem; color: var(--text-muted);"></i>
                     </a>
-                    <div class="channel-item" onclick="openConciergeChat()">
-                        <div class="channel-left">
-                            <i class="fa-solid fa-comments"></i>
-                            <span data-en="Live Support Chat" data-hi="लाइव सहायता">Live Support Chat</span>
-                        </div>
-                        <span style="font-size: 0.8rem; color: var(--primary-red); font-weight: 700;" data-en="Online" data-hi="ऑनलाइन">Online</span>
-                    </div>
                 </div>
             </div>
 
@@ -1674,31 +1750,44 @@
             </div>
         </div>
 
-        <!-- Dynamic Therapist Description Pop-up (WITH REAL MINI MAP) -->
+        <!-- Dynamic Therapist Description Pop-up (WITH REAL MINI MAP - PREMIUM REDESIGN) -->
         <div class="therapist-desc-overlay" id="therapistDescOverlay">
-            <div class="therapist-desc-header">
+            <!-- Pop-up Top Bar -->
+            <div class="chat-app-header" style="height: 75px; background-color: var(--bg-card);">
                 <button class="chat-back-btn" onclick="closeTherapistDescOverlay()"><i class="fa-solid fa-chevron-left"></i></button>
-                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);" id="descTherapistName">Expert Profile</h3>
-                <span class="therapist-badge" style="background: var(--primary-red); color: white; border:none; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 600;" id="descTherapistTag">Specialist</span>
-            </div>
-            <div class="therapist-desc-content">
-                <div class="therapist-desc-img" id="descTherapistImg"></div>
-                <div style="color: var(--primary-red); font-size: 1.1rem; margin-bottom: 12px; font-weight: 700;" id="descTherapistSpec">Aromatherapy Specialization</div>
-                
-                <p style="font-size: 0.85rem; color: var(--text-dark); font-weight: 500; line-height: 1.7; margin-bottom: 20px;" id="descTherapistExp">
-                    Therapist experience description goes here...
-                </p>
-
-                <!-- REAL LOCATION MAP IN PROFILE -->
-                <div style="margin-bottom: 30px;">
-                    <div style="font-size:0.85rem; color:var(--text-dark); font-weight:700; margin-bottom: 8px;">
-                        <i class="fa-solid fa-location-crosshairs" style="color:var(--primary-red); margin-right: 5px;"></i> 
-                        <span data-en="Real-Time Location" data-hi="वास्तविक स्थान">Real-Time Location</span>
-                    </div>
-                    <div id="descTherapistMiniMap" style="width: 100%; height: 160px; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); z-index: 1;"></div>
+                <div style="flex-grow: 1; padding-left: 5px;">
+                    <h4 style="font-size: 1rem; color: var(--text-dark); margin-bottom: 2px;" id="descTherapistName">Expert Profile</h4>
+                    <span style="font-size: 0.7rem; color: var(--primary-red); font-weight: 700;" id="descTherapistTag">Specialist</span>
                 </div>
+            </div>
 
-                <button class="btn-luxury-app" style="width: 100%; border-radius: 12px;" id="btnDescReserve" data-en="Select this Therapist" data-hi="इस थेरेपिस्ट को चुनें">Select this Therapist</button>
+            <!-- Scrollable Content -->
+            <div class="therapist-desc-scrollable">
+                <div class="therapist-desc-img-card">
+                    <div class="therapist-desc-img" id="descTherapistImg"></div>
+                </div>
+                
+                <div class="therapist-desc-info-box">
+                    <div class="therapist-profile-spec" id="descTherapistSpec">Aromatherapy Specialization</div>
+                    <div style="height: 1px; background: var(--border-light); margin: 15px 0;"></div>
+                    <p class="therapist-profile-bio" id="descTherapistExp">
+                        Therapist experience description goes here...
+                    </p>
+
+                    <!-- REAL LOCATION MAP IN PROFILE -->
+                    <div style="margin-top: 25px; margin-bottom: 25px;">
+                        <div style="font-size:0.85rem; color:var(--text-dark); font-weight:700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-location-crosshairs" style="color:var(--primary-red);"></i> 
+                            <span data-en="Real-Time Location" data-hi="वास्तविक स्थान">Real-Time Location</span>
+                        </div>
+                        <div id="descTherapistMiniMap" style="width: 100%; height: 180px; border-radius: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); z-index: 1;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pop-up Bottom Reservation Call to Action -->
+            <div class="therapist-desc-footer">
+                <button class="btn-luxury-app" style="width: 100%; border-radius: 16px; padding: 16px;" id="btnDescReserve" data-en="Select this Therapist" data-hi="इस थेरेपिस्ट को चुनें">Select this Therapist</button>
             </div>
         </div>
 
@@ -1728,7 +1817,7 @@
 
     </div>
 
-    <!-- Web App Engine Code Scripts (NO COMPRESSION) -->
+    <!-- Web App Engine Code Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
@@ -2030,9 +2119,7 @@
             updateTherapistsUI(therapistsList);
         });
 
-        // ==========================================
         // VISUAL THERAPIST SELECTION LOGIC
-        // ==========================================
         window.selectBookingTherapist = function(name) {
             document.getElementById('bookTherapistGender').value = name;
             document.querySelectorAll('.therapist-scroll-card').forEach(card => {
@@ -2355,9 +2442,7 @@
                 .catch(err => alert("Error saving reservation: " + err.message));
         }
 
-        // ==========================================
         // REAL LIVE TRACKING & "DONE" LOGIC
-        // ==========================================
         let trackingInterval = null;
         let simLat = 0;
         let simLng = 0;
@@ -2461,8 +2546,6 @@
             }
         };
 
-        // ==========================================
-
         function closeSuccessOverlay() {
             document.getElementById('successOverlay').style.display = 'none';
             appState.wizardStep = 1;
@@ -2479,9 +2562,7 @@
             switchScreen('home');
         }
 
-        // ==========================================
         // REAL LOCATION MAP IN THERAPIST OVERLAY
-        // ==========================================
         let currentActivePopupTherapist = null;
         let descMap = null;
         let descMarker = null;
