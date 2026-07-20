@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOOO Spa - Partner Expert Panel</title>
+    <!-- Premium Professional Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Iconographies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet JS Map Stylesheets & Scripts -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        :root {
+            /* Professional Partner Theme (Trust Blue & Emerald Green) */
+            --bg-main: #F4F7F6; 
+            --bg-card: #FFFFFF; 
+            --primary-blue: #1E3A8A; /* Deep Trust Blue */
+            --primary-blue-light: #3B82F6;
+            --success-green: #10B981; /* Emerald Green for Actions */
+            --success-green-hover: #059669;
+            --warning-orange: #F59E0B;
+            --text-dark: #1F2937; 
+            --text-muted: #6B7280; 
+            --border-light: #E5E7EB; 
+            --transition-premium: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #E5E7EB; /* Outer body grey */
+            color: var(--text-dark);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Smartphone Device Mock Chassis */
+        .smartphone-chassis {
+            width: 100%;
+            height: 100%;
+            max-width: 440px;
+            max-height: 890px;
+            background-color: var(--bg-main);
+            border: 6px solid #1F2937;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .smartphone-chassis::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background-color: #000;
+            border-radius: 15px;
+            z-index: 1001;
+        }
+
+        @media (max-width: 480px) {
+            body { background-color: var(--bg-main); }
+            .smartphone-chassis {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+            .smartphone-chassis::before { display: none; }
+        }
+
+        /* Top Header */
+        .app-header {
+            height: 90px;
+            background: var(--primary-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px 24px 10px 24px;
+            z-index: 100;
+            color: white;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .header-logo {
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo i {
+            color: var(--success-green);
+            font-size: 1.5rem;
+        }
+
+        .header-status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .header-status .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-green);
+            border-radius: 50%;
+            animation: pulse-green 1.5s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Full Screen Overlays (Registration & Approval) */
+        .fullscreen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-main);
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 24px;
+            overflow-y: auto;
+            transition: var(--transition-premium);
+        }
+        .fullscreen-overlay::-webkit-scrollbar { display: none; }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 40px;
+        }
+        .auth-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .auth-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition-premium);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .form-control:focus {
+            border-color: var(--primary-blue-light);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .file-upload-box {
+            border: 2px dashed #9CA3AF;
+            background: white;
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-premium);
+        }
+        .file-upload-box:hover {
+            border-color: var(--primary-blue-light);
+            background: #F3F4F6;
+        }
+        .file-upload-box input {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer;
+        }
+        .file-upload-box i {
+            font-size: 2rem;
+            color: var(--primary-blue-light);
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary:active { transform: scale(0.96); }
+        
+        .btn-success {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-success:active { transform: scale(0.96); }
+
+        /* Loader Overlay */
+        .loader-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9);
+            z-index: 6000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid #E5E7EB;
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Dashboard Layout */
+        .app-main {
+            flex: 1;
+            overflow-y: auto;
+            background-color: var(--bg-main);
+            padding: 20px;
+            padding-bottom: 90px;
+        }
+        .app-main::-webkit-scrollbar { display: none; }
+
+        /* Task Cards (Bookings) */
+        .task-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+        }
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+        }
+        .task-badge {
+            background: #DEF7EC;
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .task-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .task-detail i {
+            color: var(--primary-blue-light);
+            width: 20px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state i {
+            font-size: 4rem;
+            color: #D1D5DB;
+            margin-bottom: 15px;
+        }
+
+        /* Navigation Bottom Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            height: 75px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9CA3AF;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+            transition: var(--transition-premium);
+        }
+        .nav-item i { font-size: 1.4rem; }
+        .nav-item.active { color: var(--primary-blue); }
+
+        /* LIVE JOURNEY SCREEN (Map & Details) */
+        .journey-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-main);
+            z-index: 4000;
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease forwards;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .journey-map-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+        .journey-panel-bottom {
+            background: var(--bg-card);
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+        .journey-client-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .journey-client-info h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .journey-client-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .distance-badge {
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Main Smartphone Chassis -->
+    <div class="smartphone-chassis">
+        
+        <!-- 1. AUTH / REGISTRATION OVERLAY (Gate, Form & Login) -->
+        <div class="fullscreen-overlay" id="registrationOverlay">
+            
+            <!-- GATE VIEW (Default state) -->
+            <div id="gateView" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                <i class="fa-solid fa-spa" style="font-size: 5rem; color: var(--primary-blue); margin-bottom: 25px;"></i>
+                <h2 style="font-weight: 800; font-size: 2rem; color: var(--primary-blue); margin-bottom: 10px;">OOOO Partner</h2>
+                <p style="font-size: 0.95rem; color: var(--text-muted); font-weight: 500; margin-bottom: 40px; max-width: 320px; line-height: 1.5;">Join India's most prestigious on-demand spa network as a Certified Expert.</p>
+                
+                <button class="btn-primary" style="margin-bottom: 15px;" onclick="toggleAuthView('register')">Register as New Expert</button>
+                <button class="btn-success" onclick="toggleAuthView('login')">
+                    <i class="fa-solid fa-key"></i> Login with Access Code
+                </button>
+            </div>
+
+            <!-- REGISTRATION VIEW (Form) -->
+            <div id="registrationView" style="display: none; padding-bottom: 40px;">
+                <div class="auth-header" style="margin-top: 10px; margin-bottom: 25px;">
+                    <h2>OOOO Partner</h2>
+                    <p>Register as a Certified Expert</p>
+                </div>
+                
+                <form onsubmit="handleRegistration(event)">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" class="form-control" placeholder="e.g. Dr. Ananya Sharma" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="regPhone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Specialization</label>
+                        <select id="regSpec" class="form-control" required>
+                            <option value="" disabled selected>Select Expertise...</option>
+                            <option value="Aromatherapy Specialist">Aromatherapy Specialist</option>
+                            <option value="Deep Tissue Expert">Deep Tissue Expert</option>
+                            <option value="Swedish Massage Master">Swedish Massage Master</option>
+                            <option value="Holistic Healer">Holistic Healer</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Years of Experience</label>
+                        <input type="text" id="regExp" class="form-control" placeholder="e.g. 5+ Years in Luxury Spas" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Base Location (City/Area)</label>
+                        <input type="text" id="regAddress" class="form-control" placeholder="e.g. DLF Phase 4, Gurgaon" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Profile Photograph (Professional)</label>
+                        <div class="file-upload-box">
+                            <i class="fa-regular fa-id-badge"></i>
+                            <p style="font-size: 0.85rem; font-weight: 500;">Tap to upload your picture</p>
+                            <input type="file" id="regPhoto" accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="margin-bottom: 20px;">Submit Application</button>
+                </form>
+                <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--primary-blue); cursor: pointer;" onclick="toggleAuthView('gate')">Back to Options</p>
+            </div>
+
+            <!-- LOGIN VIEW -->
+            <div id="loginView" style="display: none;">
+                <div class="auth-header" style="margin-top: 40px; margin-bottom: 30px;">
+                    <h2>Partner Sign In</h2>
+                    <p>Enter your 11-character Certified Access Code</p>
+                </div>
+                
+                <form onsubmit="handleLoginWithCode(event)">
+                    <div class="input-group" style="margin-bottom: 25px;">
+                        <label>Access Code</label>
+                        <input type="text" id="loginCode" class="form-control" placeholder="e.g. OOOO-123456" required style="text-align: center; letter-spacing: 2px; font-weight: 700; font-family: monospace; font-size: 1.15rem;">
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-bottom: 25px;">Verify & Access Dashboard</button>
+                </form>
+                <p style="text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--primary-blue); cursor: pointer;" onclick="toggleAuthView('gate')">Back to Options</p>
+            </div>
+        </div>
+
+        <!-- 2. REGISTRATION SUCCESS OVERLAY (Code Display Screen) -->
+        <div class="fullscreen-overlay" id="successOverlay" style="display: none; justify-content: center; align-items: center; text-align: center;">
+            <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: var(--success-green); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 1.6rem; color: var(--text-dark); margin-bottom: 10px;">Registration Successful!</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; max-width: 300px;">Your unique activation code has been generated. Use this code to log in at any time.</p>
+            
+            <div style="background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 25px; width: 100%; box-shadow: var(--shadow-soft); margin-bottom: 25px;">
+                <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 8px; text-transform: uppercase;">Your Therapist Access Code</span>
+                <div id="generatedCodeDisplay" style="font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); font-family: monospace; letter-spacing: 1px; border: 2px dashed var(--primary-blue-light); padding: 12px; border-radius: 12px; background: #EFF6FF; margin-bottom: 15px;">OOOO-XXXXXX</div>
+                <button class="btn-success" style="padding: 10px 15px; font-size: 0.8rem;" onclick="copyAccessCode()">
+                    <i class="fa-regular fa-copy"></i> Copy Code
+                </button>
+            </div>
+
+            <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Demo mode will automatically verify and approve your profile in <span id="successTimer" style="font-weight:700; color: var(--primary-blue);">10</span> seconds...</p>
+        </div>
+
+        <!-- 3. PENDING APPROVAL OVERLAY -->
+        <div class="fullscreen-overlay" id="pendingOverlay" style="display: none; justify-content: center; align-items: center; text-align: center;">
+            <i class="fa-solid fa-clock-rotate-left" style="font-size: 4rem; color: var(--warning-orange); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 1.5rem; color: var(--text-dark); margin-bottom: 10px;">Verification Pending</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">Your application is under review. Our executive team will verify your credentials shortly.</p>
+            
+            <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 16px; border: 1px dashed var(--border-light); width: 100%;">
+                <span style="font-size: 0.8rem; color: var(--primary-blue); font-weight: 700; display: block; margin-bottom: 10px;">SYSTEM DEMO FEATURE:</span>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">For demonstration purposes, your profile will be auto-approved in <span id="demoTimer">10</span> seconds.</p>
+            </div>
+        </div>
+
+        <!-- MAIN DASHBOARD -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-spa"></i>
+                <div>
+                    <div>OOOO Partner</div>
+                    <div style="font-size:0.6rem; font-weight:500; letter-spacing:0.5px; opacity:0.8;">EXECUTIVE DASHBOARD</div>
+                </div>
+            </div>
+            <div class="header-status">
+                <div class="dot"></div>
+                Online
+            </div>
+        </header>
+
+        <main class="app-main" id="dashboardMain">
+            <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;" id="welcomeTherapistName">Welcome, Expert</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 500;">Here are your approved client sessions.</p>
+
+            <div id="tasksContainer">
+                <!-- Bookings will populate here dynamically -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <h3>No Active Sessions</h3>
+                    <p style="font-size: 0.8rem; margin-top: 8px;">Waiting for new bookings from the admin desk.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- LIVE JOURNEY SCREEN (Hidden by default) -->
+        <div class="journey-screen" id="journeyScreen">
+            <div class="app-header" style="height: 80px; box-shadow: none;">
+                <div style="font-weight:700; font-size:1.1rem; display:flex; align-items:center; gap:10px;">
+                    <i class="fa-solid fa-location-arrow"></i> Live Navigation
+                </div>
+                <div class="header-status" style="background: rgba(16, 185, 129, 0.2); color: #10B981;">
+                    <div class="dot" style="background: #10B981;"></div> Tracking Active
+                </div>
+            </div>
+            
+            <div class="journey-map-container" id="therapistLiveMap"></div>
+            
+            <div class="journey-panel-bottom">
+                <div class="journey-client-info">
+                    <div>
+                        <span style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Client Details</span>
+                        <h3 id="journeyClientName">Client Name</h3>
+                        <p id="journeyClientPhone">+91 XXXXX XXXXX</p>
+                    </div>
+                    <div class="distance-badge" id="journeyDistance">-- km</div>
+                </div>
+                
+                <div style="margin-bottom: 20px; font-size: 0.85rem; color: var(--text-dark); background: var(--bg-main); padding: 12px; border-radius: 10px; border: 1px solid var(--border-light);">
+                    <i class="fa-solid fa-map-pin" style="color: var(--primary-blue); margin-right: 8px;"></i>
+                    <span id="journeyClientAddress">Destination Address here</span>
+                </div>
+
+                <button class="btn-success" onclick="markArrived()">
+                    <i class="fa-solid fa-check-double"></i> Therapist Arrived (Done)
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom Bar -->
+        <nav class="bottom-nav">
+            <button class="nav-item active">
+                <i class="fa-solid fa-clipboard-list"></i>
+                Tasks
+            </button>
+            <button class="nav-item" onclick="alert('Earnings module coming soon!')">
+                <i class="fa-solid fa-wallet"></i>
+                Earnings
+            </button>
+            <button class="nav-item" onclick="logoutTherapist()">
+                <i class="fa-solid fa-user-gear"></i>
+                Logout
+            </button>
+        </nav>
+
+        <!-- Loader Overlay -->
+        <div class="loader-overlay" id="globalLoader">
+            <div class="spinner"></div>
+            <h3 style="color: var(--primary-blue); font-size: 1rem;">Uploading Profile...</h3>
+        </div>
+
+    </div>
+
+    <!-- Firebase & Logic Scripts (NO COMPRESSION) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push, set, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Same Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB0asuJKj9wyoInuS6_mhLdWDo4OkAM_k4",
+          authDomain: "oooo-67c5c.firebaseapp.com",
+          databaseURL: "https://oooo-67c5c-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "oooo-67c5c",
+          storageBucket: "oooo-67c5c.firebasestorage.app",
+          messagingSenderId: "605074662310",
+          appId: "1:605074662310:web:aeb1610acf19a39413e567"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
+
+        let currentTherapist = null;
+        let activeJourneyBookingId = null;
+        let watchId = null;
+        let tMap = null;
+        let tMarker = null; // Therapist Marker
+        let cMarker = null; // Client Marker
+        
+        let currentTherapistLat = 0;
+        let currentTherapistLng = 0;
+        let currentClientLat = 0;
+        let currentClientLng = 0;
+
+        // On Load: Check if therapist is already logged in
+        function checkAuth() {
+            const stored = localStorage.getItem('oooo_therapist_data');
+            if (stored) {
+                currentTherapist = JSON.parse(stored);
+                document.getElementById('registrationOverlay').style.display = 'none';
+                document.getElementById('pendingOverlay').style.display = 'none';
+                document.getElementById('successOverlay').style.display = 'none';
+                
+                if (currentTherapist.status === 'pending') {
+                    document.getElementById('pendingOverlay').style.display = 'flex';
+                    startPendingDemoTimer(currentTherapist.id, currentTherapist);
+                } else {
+                    document.getElementById('welcomeTherapistName').innerText = "Welcome, " + currentTherapist.name;
+                    listenToMyTasks();
+                }
+            } else {
+                document.getElementById('registrationOverlay').style.display = 'flex';
+                toggleAuthView('gate');
+            }
+        }
+
+        // Toggle Auth views (Gate / Register / Login)
+        window.toggleAuthView = function(view) {
+            const gate = document.getElementById('gateView');
+            const register = document.getElementById('registrationView');
+            const login = document.getElementById('loginView');
+
+            gate.style.display = 'none';
+            register.style.display = 'none';
+            login.style.display = 'none';
+
+            if (view === 'gate') gate.style.display = 'flex';
+            if (view === 'register') register.style.display = 'block';
+            if (view === 'login') login.style.display = 'block';
+        };
+
+        // Handle Image Upload to ImgBB
+        async function uploadImageToImgBB(file) {
+            const formData = new FormData();
+            formData.append("image", file);
+            const urlEndpoint = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
+            const response = await fetch(urlEndpoint, { method: "POST", body: formData });
+            const result = await response.json();
+            if (result.success) return result.data.url;
+            throw new Error("Image upload failed");
+        }
+
+        // Copy Access Code to Clipboard
+        window.copyAccessCode = function() {
+            const code = document.getElementById('generatedCodeDisplay').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("Access Code copied to clipboard!");
+            }).catch(() => {
+                alert("Failed to copy automatically. Code: " + code);
+            });
+        };
+
+        // Login using Access Code
+        window.handleLoginWithCode = async function(e) {
+            e.preventDefault();
+            const enteredCode = document.getElementById('loginCode').value.trim();
+            const loader = document.getElementById('globalLoader');
+
+            loader.querySelector('h3').innerText = "Verifying Access Code...";
+            loader.style.display = 'flex';
+
+            try {
+                const therapistsRef = ref(db, 'therapists');
+                const snapshot = await get(therapistsRef);
+                const data = snapshot.val();
+                
+                let matchingTherapist = null;
+                let matchingKey = null;
+
+                if (data) {
+                    for (const [key, t] of Object.entries(data)) {
+                        if (t.code === enteredCode) {
+                            matchingTherapist = t;
+                            matchingKey = key;
+                            break;
+                        }
+                    }
+                }
+
+                loader.style.display = 'none';
+
+                if (matchingTherapist) {
+                    matchingTherapist.id = matchingKey;
+                    localStorage.setItem('oooo_therapist_data', JSON.stringify(matchingTherapist));
+                    currentTherapist = matchingTherapist;
+
+                    document.getElementById('registrationOverlay').style.display = 'none';
+
+                    if (matchingTherapist.status === 'pending') {
+                        document.getElementById('pendingOverlay').style.display = 'flex';
+                        startPendingDemoTimer(matchingKey, matchingTherapist);
+                    } else {
+                        document.getElementById('pendingOverlay').style.display = 'none';
+                        document.getElementById('welcomeTherapistName').innerText = "Welcome, " + currentTherapist.name;
+                        listenToMyTasks();
+                    }
+                } else {
+                    alert("Invalid Access Code. Please enter the correct code (e.g., OOOO-123456).");
+                }
+            } catch (err) {
+                loader.style.display = 'none';
+                alert("Authentication Error: " + err.message);
+            }
+        };
+
+        // Registration Submission (Generates Activation Code)
+        window.handleRegistration = async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const spec = document.getElementById('regSpec').value;
+            const exp = document.getElementById('regExp').value.trim();
+            const address = document.getElementById('regAddress').value.trim();
+            const file = document.getElementById('regPhoto').files[0];
+
+            if(!file) { alert("Please select a profile photo."); return; }
+
+            const loader = document.getElementById('globalLoader');
+            loader.querySelector('h3').innerText = "Uploading Profile...";
+            loader.style.display = 'flex';
+
+            try {
+                // Get basic GPS location for starting point
+                let lat = 28.4595; let lng = 77.0266; // Fallback Gurgaon
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                        lat = pos.coords.latitude;
+                        lng = pos.coords.longitude;
+                    }, () => console.log("GPS denied during reg."));
+                }
+
+                const photoUrl = await uploadImageToImgBB(file);
+                
+                // Generate a unique access code
+                const autoGeneratedCode = "OOOO-" + Math.floor(100000 + Math.random() * 900000);
+
+                const newTherapist = {
+                    name: name,
+                    phone: phone,
+                    specialization: spec,
+                    experience: exp,
+                    address: address,
+                    lat: lat,
+                    lng: lng,
+                    tag: "Certified Expert",
+                    image: photoUrl,
+                    status: 'pending', // Pending authorization
+                    code: autoGeneratedCode
+                };
+
+                // Save to Firebase Therapists node directly
+                const therapistsRef = ref(db, 'therapists');
+                const newRef = push(therapistsRef);
+                await set(newRef, newTherapist);
+
+                newTherapist.id = newRef.key;
+
+                // Hide loader and show Success / Code screen
+                loader.style.display = 'none';
+                document.getElementById('registrationOverlay').style.display = 'none';
+                
+                document.getElementById('generatedCodeDisplay').innerText = autoGeneratedCode;
+                document.getElementById('successOverlay').style.display = 'flex';
+
+                // DEMO LOGIC: Auto Approve after 10 seconds
+                let timeLeft = 10;
+                const timerEl = document.getElementById('successTimer');
+                const countdown = setInterval(() => {
+                    timeLeft--;
+                    timerEl.innerText = timeLeft;
+                    if(timeLeft <= 0) {
+                        clearInterval(countdown);
+                        
+                        // Update status in DB to approved (Optional for demo)
+                        update(newRef, { status: 'approved' });
+                        newTherapist.status = 'approved';
+                        
+                        // Save to local storage and enter dashboard
+                        localStorage.setItem('oooo_therapist_data', JSON.stringify(newTherapist));
+                        currentTherapist = newTherapist;
+                        
+                        document.getElementById('successOverlay').style.display = 'none';
+                        document.getElementById('welcomeTherapistName').innerText = "Welcome, " + currentTherapist.name;
+                        listenToMyTasks();
+                    }
+                }, 1000);
+
+            } catch (err) {
+                loader.style.display = 'none';
+                alert("Registration Error: " + err.message);
+            }
+        };
+
+        // Shared function for pending state auto approval timer
+        function startPendingDemoTimer(nodeKey, therapistData) {
+            let timeLeft = 10;
+            const timerEl = document.getElementById('demoTimer');
+            timerEl.innerText = timeLeft;
+
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerEl.innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(countdown);
+                    
+                    const therapistRef = ref(db, `therapists/${nodeKey}`);
+                    update(therapistRef, { status: 'approved' });
+                    therapistData.status = 'approved';
+                    
+                    localStorage.setItem('oooo_therapist_data', JSON.stringify(therapistData));
+                    currentTherapist = therapistData;
+                    
+                    document.getElementById('pendingOverlay').style.display = 'none';
+                    document.getElementById('welcomeTherapistName').innerText = "Welcome, " + currentTherapist.name;
+                    listenToMyTasks();
+                }
+            }, 1000);
+        }
+
+        // Listen for Approved Bookings assigned to THIS Therapist
+        function listenToMyTasks() {
+            if(!currentTherapist) return;
+
+            const bookingsRef = ref(db, 'bookings');
+            onValue(bookingsRef, (snapshot) => {
+                const data = snapshot.val();
+                const container = document.getElementById('tasksContainer');
+                const emptyState = document.getElementById('emptyState');
+                
+                // Clear old tasks (except empty state)
+                const oldTasks = container.querySelectorAll('.task-card');
+                oldTasks.forEach(task => task.remove());
+
+                let hasTasks = false;
+
+                if (data) {
+                    Object.entries(data).forEach(([key, booking]) => {
+                        // Filter: Must be assigned to me, and status must be 'Approved'
+                        if (booking.therapist === currentTherapist.name && booking.status === 'Approved') {
+                            hasTasks = true;
+                            
+                            const cName = booking.user ? booking.user.name : 'Unknown Client';
+                            const cPhone = booking.user ? booking.user.phone : 'N/A';
+                            const cAddress = booking.user ? booking.user.address || booking.user.city : booking.locationType;
+                            const tTime = booking.dateTime ? booking.dateTime.replace('T', ' ') : 'Immediate';
+                            
+                            // Client exact coordinates (if available) else fallback
+                            const cLat = booking.userLat || 28.4595;
+                            const cLng = booking.userLng || 77.0266;
+
+                            const card = document.createElement('div');
+                            card.className = 'task-card';
+                            card.innerHTML = `
+                                <div class="task-header">
+                                    <span style="font-weight:800; font-size:1rem; color:var(--primary-blue);">ID: ${key.substring(1,7).toUpperCase()}</span>
+                                    <span class="task-badge">Approved</span>
+                                </div>
+                                <div class="task-detail">
+                                    <i class="fa-regular fa-user"></i>
+                                    <div>
+                                        <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Client</div>
+                                        <strong>${cName} (${cPhone})</strong>
+                                    </div>
+                                </div>
+                                <div class="task-detail">
+                                    <i class="fa-solid fa-spa"></i>
+                                    <div>
+                                        <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Therapy</div>
+                                        <strong>${booking.service}</strong>
+                                    </div>
+                                </div>
+                                <div class="task-detail">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <div>
+                                        <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Scheduled</div>
+                                        <strong>${tTime}</strong>
+                                    </div>
+                                </div>
+                                <div class="task-detail">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div>
+                                        <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Location</div>
+                                        <strong>${cAddress}</strong>
+                                    </div>
+                                </div>
+                                <button class="btn-primary" style="margin-top:15px; font-size: 0.8rem; padding: 14px;" onclick="startLiveJourney('${key}', '${cName}', '${cPhone}', '${cAddress}', ${cLat}, ${cLng})">
+                                    <i class="fa-solid fa-location-arrow"></i> Start Journey
+                                </button>
+                            `;
+                            container.appendChild(card);
+                        }
+                    });
+                }
+
+                if (hasTasks) {
+                    emptyState.style.display = 'none';
+                } else {
+                    emptyState.style.display = 'block';
+                }
+            });
+        }
+
+        // Calculate Distance
+        function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; 
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                      Math.sin(dLon/2) * Math.sin(dLon/2); 
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            return R * c; 
+        }
+
+        // START LIVE JOURNEY
+        window.startLiveJourney = function(bookingId, cName, cPhone, cAddress, cLat, cLng) {
+            activeJourneyBookingId = bookingId;
+            currentClientLat = cLat;
+            currentClientLng = cLng;
+
+            // Update UI Details
+            document.getElementById('journeyClientName').innerText = cName;
+            document.getElementById('journeyClientPhone').innerText = cPhone;
+            document.getElementById('journeyClientAddress').innerText = cAddress;
+
+            // Show Journey Screen
+            document.getElementById('journeyScreen').style.display = 'flex';
+
+            // Init Leaflet Map
+            setTimeout(() => {
+                if(!tMap) {
+                    // Use Therapist's base location temporarily until GPS kicks in
+                    currentTherapistLat = currentTherapist.lat || 28.4500;
+                    currentTherapistLng = currentTherapist.lng || 77.0200;
+
+                    tMap = L.map('therapistLiveMap', {zoomControl: false, attributionControl: false}).setView([currentTherapistLat, currentTherapistLng], 14);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(tMap);
+                    
+                    // Therapist Marker (Blue)
+                    tMarker = L.circleMarker([currentTherapistLat, currentTherapistLng], {
+                        color: '#3B82F6', fillColor: '#3B82F6', fillOpacity: 1, radius: 8
+                    }).addTo(tMap);
+
+                    // Client Marker (Red)
+                    cMarker = L.marker([cLat, cLng]).addTo(tMap);
+                }
+                tMap.invalidateSize();
+
+                // Start Actual GPS Tracking
+                if (navigator.geolocation) {
+                    watchId = navigator.geolocation.watchPosition(
+                        (position) => {
+                            updateTherapistLocation(position.coords.latitude, position.coords.longitude);
+                        },
+                        (error) => {
+                            console.log("Error watching position:", error);
+                            alert("Please enable GPS for live tracking.");
+                        },
+                        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+                    );
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+
+            }, 300);
+        };
+
+        // Update Coordinates on Map & Firebase
+        function updateTherapistLocation(lat, lng) {
+            currentTherapistLat = lat;
+            currentTherapistLng = lng;
+
+            // Update Map Marker
+            if(tMarker) tMarker.setLatLng([lat, lng]);
+
+            // Adjust Map Bounds to fit both Therapist and Client
+            if(tMap && cMarker && tMarker) {
+                const bounds = L.latLngBounds([tMarker.getLatLng(), cMarker.getLatLng()]);
+                tMap.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+            }
+
+            // Calculate & Display Distance
+            const dist = calculateHaversineDistance(lat, lng, currentClientLat, currentClientLng);
+            document.getElementById('journeyDistance').innerText = dist.toFixed(2) + " km";
+
+            // FIREBASE UPDATE: Update Therapist's LIVE location in DB so Client App can read it!
+            if(currentTherapist.id) {
+                const therapistRef = ref(db, `therapists/${currentTherapist.id}`);
+                update(therapistRef, {
+                    lat: lat,
+                    lng: lng
+                });
+            }
+        }
+
+        // COMPLETE BOOKING (Arrived / Done)
+        window.markArrived = function() {
+            if(!activeJourneyBookingId) return;
+
+            const confirmDone = confirm("Have you arrived at the client's location and ready to start the session?");
+            if(confirmDone) {
+                // Stop GPS Tracking
+                if(watchId) navigator.geolocation.clearWatch(watchId);
+                
+                // Update Booking Status in Firebase to 'Completed'
+                const bookingRef = ref(db, `bookings/${activeJourneyBookingId}`);
+                update(bookingRef, { status: 'Completed' }).then(() => {
+                    alert("Awesome! The session has been marked as Completed.");
+                    
+                    // Close Journey Screen
+                    document.getElementById('journeyScreen').style.display = 'none';
+                    activeJourneyBookingId = null;
+                    
+                    // Task list will automatically update via listener
+                }).catch(err => {
+                    alert("Error updating status: " + err.message);
+                });
+            }
+        };
+
+        // Logout
+        window.logoutTherapist = function() {
+            localStorage.removeItem('oooo_therapist_data');
+            window.location.reload();
+        };
+
+        // Initialize App
+        checkAuth();
+
+    </script>
+</body>
+</html>
