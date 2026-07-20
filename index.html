@@ -3,1613 +3,1036 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OOOO - Only One Oasis Of Opulence | Ultra-Premium Home Spa</title>
-    <!-- Premium Google Fonts -->
+    <title>OOOO - Premium Spa App</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome Premium Vector Icons -->
+    <!-- FontAwesome Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --bg-deep: #050505;
-            --bg-surface: #0f0f0f;
-            --bg-elevated: #161616;
+            --bg-surface: #111111;
+            --bg-elevated: #1a1a1a;
             --gold-gradient: linear-gradient(135deg, #c5a880 0%, #e2cfb4 50%, #a27b4c 100%);
             --gold-solid: #c5a880;
-            --gold-dark: #8c6b40;
             --white: #f5f3f0;
             --text-gray: #a8a6a1;
-            --border-color: rgba(197, 168, 128, 0.25);
+            --border-color: rgba(197, 168, 128, 0.2);
             --border-light: rgba(255, 255, 255, 0.05);
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
         }
 
-        /* Smooth Scroll & Selection Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        ::selection {
-            background-color: var(--gold-solid);
-            color: var(--bg-deep);
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-deep);
+            background-color: #000;
             color: var(--white);
-            line-height: 1.7;
-            overflow-x: hidden;
-            letter-spacing: 0.5px;
-        }
-
-        h1, h2, h3, h4, .brand-logo {
-            font-family: 'Cinzel', serif;
-            font-weight: 400;
-            letter-spacing: 2px;
-        }
-
-        /* Generic Layout Classes */
-        .container {
-            max-width: 1250px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        section {
-            padding: 120px 0;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title {
-            font-size: 2.8rem;
-            color: transparent;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        .section-subtitle {
-            font-weight: 200;
-            color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-        }
-
-        /* Luxury Button Design */
-        .btn-luxury {
-            position: relative;
-            background: transparent;
-            color: var(--white);
-            border: 1px solid var(--gold-solid);
-            padding: 14px 35px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
-            transition: var(--transition);
-            display: inline-block;
-            z-index: 1;
         }
 
-        .btn-luxury::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        /* ------------------ App Shell / Device Wrapper ------------------ */
+        /* Desktop par smartphone look dikhega, real mobile par full-screen */
+        .app-shell {
             width: 100%;
-            height: 100%;
-            background: var(--gold-gradient);
-            transition: var(--transition);
-            z-index: -1;
+            height: 100vh;
+            max-width: 450px;
+            background-color: var(--bg-deep);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        .btn-luxury:hover::before {
-            left: 0;
+        @media (min-width: 480px) {
+            .app-shell {
+                height: 850px;
+                border-radius: 40px;
+                border: 8px solid #222;
+                box-shadow: 0 0 0 4px #111, 0 30px 60px rgba(0,0,0,0.8);
+            }
         }
 
-        .btn-luxury:hover {
-            color: var(--bg-deep);
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(197, 168, 128, 0.25);
-        }
-
-        /* Glassmorphic Header & Nav */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(5, 5, 5, 0.85);
+        /* App Top Header Bar */
+        .app-header {
+            height: 70px;
+            background-color: rgba(17, 17, 17, 0.95);
             border-bottom: 1px solid var(--border-light);
-            z-index: 1000;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            transition: var(--transition);
-        }
-
-        .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 100px;
+            padding: 0 20px;
+            backdrop-filter: blur(10px);
+            z-index: 99;
         }
 
-        .brand-logo {
-            font-size: 2.2rem;
+        .app-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
             font-weight: 700;
             color: transparent;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             background-clip: text;
-            display: flex;
-            flex-direction: column;
-            line-height: 0.85;
-            cursor: pointer;
+            letter-spacing: 2px;
         }
 
-        .brand-logo span {
-            font-size: 0.5rem;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 3px;
-            color: var(--white);
-            margin-top: 5px;
-            opacity: 0.8;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 300;
-            opacity: 0.85;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold-solid);
-            opacity: 1;
-        }
-
-        .nav-right {
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
-        .lang-switch {
+        .header-btn {
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--gold-solid);
-            padding: 6px 12px;
+            padding: 4px 10px;
+            font-size: 0.7rem;
             cursor: pointer;
-            font-size: 0.75rem;
-            font-family: 'Montserrat', sans-serif;
             transition: var(--transition);
         }
 
-        .lang-switch:hover {
-            border-color: var(--white);
+        .bell-icon {
             color: var(--white);
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            color: var(--white);
         }
 
-        /* 1. Hero Section */
-        #home {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(5, 5, 5, 0.65), rgba(5, 5, 5, 0.95)), 
-                        url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1600&auto=format&fit=crop') no-repeat center center/cover;
-            padding-top: 100px;
+        /* ------------------ App Viewport / Screens Container ------------------ */
+        .app-viewport {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 90px; /* Space for bottom nav */
+            scroll-behavior: smooth;
         }
 
-        .hero-content {
-            max-width: 900px;
-            padding: 0 20px;
+        /* Hide standard scrollbars */
+        .app-viewport::-webkit-scrollbar {
+            display: none;
         }
 
-        .hero-tagline {
-            font-size: 1rem;
-            letter-spacing: 7px;
+        .app-screen {
+            display: none; /* Controlled by JS */
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        .app-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ------------------ Common UI Components ------------------ */
+        .section-header {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
             color: var(--gold-solid);
             text-transform: uppercase;
-            margin-bottom: 25px;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-gray);
             font-weight: 300;
+        }
+
+        /* Cards & Buttons */
+        .app-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .btn-app-gold {
+            background: var(--gold-gradient);
+            color: var(--bg-deep);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            display: block;
+        }
+
+        .btn-app-gold:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        /* Swipeable Horizontal Scroll Containers */
+        .swipe-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .swipe-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .swipe-card {
+            min-width: 280px;
+            max-width: 280px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            margin-bottom: 0 !important;
+        }
+
+        /* ------------------ Screen 1: Home ------------------ */
+        .app-hero {
+            height: 200px;
+            border-radius: 20px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .hero-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--gold-solid);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
         .hero-title {
-            font-size: 4.2rem;
-            color: var(--white);
-            margin-bottom: 30px;
+            font-size: 1.4rem;
             font-weight: 400;
-            line-height: 1.2;
         }
 
-        .hero-desc {
-            font-size: 1.1rem;
-            color: var(--text-gray);
-            margin-bottom: 50px;
-            font-weight: 200;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* 2. About Us Section */
-        .about-grid {
+        /* Quick Action Grid */
+        .quick-actions {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 70px;
-            align-items: center;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
         }
 
-        .about-text h3 {
-            color: var(--gold-solid);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-        }
-
-        .about-text p {
-            color: var(--text-gray);
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-            font-weight: 300;
-        }
-
-        .about-img {
-            position: relative;
-        }
-
-        .about-img img {
-            width: 100%;
-            height: 480px;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            background-color: var(--bg-surface);
-        }
-
-        /* 3. Our Services Section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            padding: 40px;
-            transition: var(--transition);
-            position: relative;
+        .action-icon-box {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .service-card:hover {
-            border-color: var(--gold-solid);
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
-
-        .service-card-top i {
-            font-size: 2.2rem;
-            color: var(--gold-solid);
-            margin-bottom: 25px;
-        }
-
-        .service-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--white);
-        }
-
-        .service-card p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-
-        .service-meta {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 20px;
+            text-align: center;
+            cursor: pointer;
         }
 
-        .service-meta .duration {
+        .action-icon-box .icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-solid);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .action-icon-box:active .icon {
+            background-color: var(--gold-solid);
+            color: var(--bg-deep);
+        }
+
+        .action-icon-box span {
+            font-size: 0.65rem;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        /* Feature/USP Blocks */
+        .usp-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .usp-row i {
+            font-size: 1.2rem;
+            color: var(--gold-solid);
+        }
+
+        .usp-row p {
             font-size: 0.8rem;
             color: var(--text-gray);
-            letter-spacing: 1px;
+            font-weight: 300;
         }
 
-        .service-meta .price {
-            font-weight: 500;
-            color: var(--gold-solid);
-            font-size: 1.1rem;
-        }
-
-        /* 4. Membership Plans */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .plan-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            padding: 50px 40px;
-            text-align: center;
-            transition: var(--transition);
+        /* ------------------ Screen 2: Services ------------------ */
+        .service-list-item {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .plan-card.premium {
-            border-color: var(--gold-solid);
-            background: linear-gradient(180deg, rgba(22, 22, 22, 0.95) 0%, rgba(15, 15, 15, 0.95) 100%);
-            box-shadow: 0 10px 40px rgba(197, 168, 128, 0.05);
+        .service-list-item:last-child {
+            border-bottom: none;
         }
 
-        .plan-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 10px;
+        .item-info h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .item-info span {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .item-price-action {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-price-action .price {
+            font-weight: 600;
+            color: var(--gold-solid);
+            font-size: 0.95rem;
+        }
+
+        .btn-mini {
+            background-color: transparent;
+            border: 1px solid var(--gold-solid);
+            color: var(--gold-solid);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
             text-transform: uppercase;
         }
 
-        .plan-price {
-            font-size: 2.5rem;
-            color: var(--gold-solid);
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-
-        .plan-price span {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-
-        .plan-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            font-weight: 300;
-        }
-
-        .plan-features li i {
-            color: var(--gold-solid);
-            margin-right: 12px;
-        }
-
-        /* 5. Book Appointment */
-        .appointment-wrapper {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 60px;
-        }
-
-        .appointment-form {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            padding: 50px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-
+        /* ------------------ Screen 3: Book Appointment ------------------ */
         .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
+            margin-bottom: 20px;
         }
 
         .form-group label {
+            display: block;
             font-size: 0.75rem;
             color: var(--gold-solid);
-            margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
         .form-group input, .form-group select, .form-group textarea {
-            background-color: var(--bg-deep);
+            width: 100%;
+            background-color: var(--bg-surface);
             border: 1px solid var(--border-light);
             color: var(--white);
-            padding: 15px;
+            padding: 12px;
+            border-radius: 8px;
             outline: none;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            transition: var(--transition);
+            font-size: 0.8rem;
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--gold-solid);
         }
 
-        /* Coupon Design */
-        .coupon-box {
+        .coupon-section {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 25px;
+            gap: 10px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
         }
 
-        .coupon-box input {
-            flex: 1;
-        }
-
-        /* 6. Therapists Section */
-        .therapist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-        }
-
-        .therapist-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
+        /* ------------------ Screen 4: Memberships ------------------ */
+        .member-card {
+            background: linear-gradient(145deg, #111111 0%, #1a1a1a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            position: relative;
             overflow: hidden;
-            text-align: center;
-            transition: var(--transition);
         }
 
-        .therapist-card:hover {
-            border-color: var(--gold-solid);
-            transform: translateY(-5px);
+        .member-card.gold-tier::before {
+            content: 'VIP';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold-gradient);
+            color: var(--bg-deep);
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            border-radius: 8px;
         }
 
-        .therapist-img {
-            height: 320px;
-            background-color: var(--bg-elevated);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-color);
-            font-size: 1rem;
+        .member-title {
             font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .therapist-info {
-            padding: 30px;
-        }
-
-        .therapist-info h3 {
             font-size: 1.3rem;
             margin-bottom: 5px;
-            color: var(--white);
         }
 
-        .therapist-info span {
+        .member-price {
+            font-size: 1.8rem;
             color: var(--gold-solid);
+            margin-bottom: 20px;
+        }
+
+        .member-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .member-features li {
             font-size: 0.8rem;
-            display: block;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .therapist-info p {
-            font-size: 0.85rem;
             color: var(--text-gray);
-            font-weight: 300;
+            margin-bottom: 8px;
         }
 
-        /* 7. Why Choose Us */
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .why-card {
-            text-align: center;
-            padding: 40px 30px;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            transition: var(--transition);
-        }
-
-        .why-card:hover {
-            border-color: var(--gold-solid);
-        }
-
-        .why-card i {
-            font-size: 2.5rem;
+        .member-features li i {
             color: var(--gold-solid);
+            margin-right: 8px;
+        }
+
+        /* ------------------ Screen 5: More (About, FAQ, Contact) ------------------ */
+        .info-button-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-bottom: 25px;
         }
 
-        .why-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .why-card p {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            font-weight: 300;
-        }
-
-        /* 8. Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            height: 280px;
+        .info-link {
             background-color: var(--bg-surface);
-            position: relative;
-            overflow: hidden;
             border: 1px solid var(--border-light);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-            filter: brightness(0.8);
-        }
-
-        /* 9. Reviews & Testimonials Slider */
-        .testimonials-slider {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .testimonial-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .testimonial-slide {
-            min-width: 100%;
-            box-sizing: border-box;
-            padding: 0 40px;
-        }
-
-        .stars {
-            color: var(--gold-solid);
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .review-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            font-style: italic;
-            color: var(--white);
-            margin-bottom: 30px;
-            font-weight: 200;
-        }
-
-        .client-name {
-            font-family: 'Cinzel', serif;
-            color: var(--gold-solid);
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-        }
-
-        .slider-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .slider-arrow {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--gold-solid);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .slider-arrow:hover {
-            background: var(--gold-solid);
-            color: var(--bg-deep);
-            border-color: transparent;
-        }
-
-        /* 10. FAQs Accordion */
-        .faq-wrapper {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border-light);
-            background-color: transparent;
-            margin-bottom: 15px;
-        }
-
-        .faq-header {
-            padding: 25px 10px;
+            padding: 15px 20px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            user-select: none;
+            font-size: 0.85rem;
         }
 
-        .faq-header h3 {
-            font-size: 1.1rem;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            letter-spacing: 0.5px;
+        .info-link i {
+            color: var(--gold-solid);
         }
 
-        .faq-header i {
+        /* FAQ Accordion app-style */
+        .faq-item {
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 0;
+        }
+
+        .faq-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .faq-title i {
             color: var(--gold-solid);
             transition: var(--transition);
         }
 
-        .faq-body {
+        .faq-text {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            transition: var(--transition);
             color: var(--text-gray);
-            font-size: 0.9rem;
-            font-weight: 300;
-            padding: 0 10px;
+            font-size: 0.75rem;
+            line-height: 1.6;
         }
 
-        .faq-item.active .faq-body {
-            padding: 0 10px 25px 10px;
-            max-height: 250px;
+        .faq-item.active .faq-text {
+            max-height: 120px;
+            margin-top: 10px;
         }
 
-        .faq-item.active .faq-header i {
+        .faq-item.active .faq-title i {
             transform: rotate(180deg);
         }
 
-        /* 11. Contact Us */
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .contact-info {
-            margin-bottom: 40px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin-bottom: 35px;
-        }
-
-        .info-item i {
-            font-size: 1.4rem;
-            color: var(--gold-solid);
-            margin-top: 5px;
-        }
-
-        .info-item h4 {
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-            color: var(--white);
-            text-transform: uppercase;
-        }
-
-        .info-item p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            font-weight: 300;
-        }
-
-        .map-container {
-            border: 1px solid var(--border-light);
-            height: 260px;
-            overflow: hidden;
-        }
-
-        /* 12. Policies Tab interface */
-        .policies-tabs {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .policy-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .policy-btn {
-            background: transparent;
-            color: var(--text-gray);
-            border: 1px solid var(--border-light);
-            padding: 12px 24px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            transition: var(--transition);
-        }
-
-        .policy-btn.active, .policy-btn:hover {
-            color: var(--gold-solid);
-            border-color: var(--gold-solid);
-        }
-
-        .policy-content {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            padding: 40px;
-            display: none;
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            font-weight: 300;
-            line-height: 1.8;
-        }
-
-        .policy-content.active {
-            display: block;
-        }
-
-        /* 13. Footer Section */
-        footer {
-            background-color: #030303;
-            padding: 80px 0 40px 0;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .footer-grid {
+        /* Quick Contact Action Buttons */
+        .quick-callouts {
             display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand h3 {
-            color: var(--gold-solid);
-            font-size: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             margin-bottom: 20px;
         }
 
-        .footer-brand p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            max-width: 400px;
-            font-weight: 200;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            width: 45px;
-            height: 45px;
-            border: 1px solid var(--border-light);
+        .btn-callout {
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--white);
+            padding: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            color: var(--gold-solid);
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            background-color: var(--gold-solid);
-            color: var(--bg-deep);
-            border-color: transparent;
-        }
-
-        .footer-links h4 {
-            color: var(--white);
-            margin-bottom: 25px;
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links ul li a {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            font-weight: 300;
-        }
-
-        .footer-links ul li a:hover {
-            color: var(--gold-solid);
-        }
-
-        .copyright-bar {
-            border-top: 1px solid var(--border-light);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-gray);
+            gap: 8px;
             font-size: 0.8rem;
-            font-weight: 300;
+            cursor: pointer;
+            text-decoration: none;
         }
 
-        /* Float Widgets */
-        .floating-widgets {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
+        /* ------------------ Persistent Bottom Nav Bar ------------------ */
+        .app-bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+            background-color: rgba(17, 17, 17, 0.95);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 10px;
+            backdrop-filter: blur(15px);
+            z-index: 100;
+        }
+
+        .nav-item {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        .float-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            color: var(--text-gray);
+            font-size: 0.65rem;
+            font-weight: 400;
             cursor: pointer;
             transition: var(--transition);
+            gap: 5px;
         }
 
-        .float-btn:hover {
-            transform: scale(1.1);
+        .nav-item i {
+            font-size: 1.2rem;
         }
 
-        .float-whatsapp {
-            background-color: #25d366;
-        }
-
-        .float-chat {
-            background-color: var(--gold-solid);
-            color: var(--bg-deep);
-        }
-
-        /* Interactive Concierge Chat Box */
-        .chat-box {
-            position: fixed;
-            bottom: 110px;
-            right: 40px;
-            width: 320px;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            z-index: 1001;
-            display: none;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            background: var(--gold-gradient);
-            color: var(--bg-deep);
-            padding: 15px 20px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
-        }
-
-        .chat-body {
-            padding: 20px;
-            height: 230px;
-            overflow-y: auto;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        .chat-footer {
-            padding: 12px;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-footer input {
-            flex: 1;
-            background-color: var(--bg-deep);
-            border: 1px solid var(--border-light);
-            color: white;
-            padding: 10px;
-            outline: none;
-            font-size: 0.8rem;
-        }
-
-        /* Mobile Viewport Optimizations */
-        @media (max-width: 991px) {
-            .navbar {
-                height: 90px;
-            }
-            .nav-links {
-                display: none;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .about-grid, .appointment-wrapper {
-                grid-template-columns: 1fr;
-                gap: 50px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .hero-title {
-                font-size: 2.8rem;
-            }
+        .nav-item.active {
+            color: var(--gold-solid);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation bar with bilingual translation option -->
-    <header id="main-header">
-        <div class="container navbar">
-            <a href="#home" class="brand-logo">
-                OOOO
-                <span data-en="ONLY ONE OASIS OF OPULENCE" data-hi="वैभव का एकमात्र परम नखलिस्तान">ONLY ONE OASIS OF OPULENCE</span>
-            </a>
-            
-            <ul class="nav-links" id="navMenu">
-                <li><a href="#home" class="active" data-en="Home" data-hi="होम">Home</a></li>
-                <li><a href="#about" data-en="About" data-hi="हमारे बारे में">About</a></li>
-                <li><a href="#services" data-en="Services" data-hi="सेवाएं">Services</a></li>
-                <li><a href="#memberships" data-en="Memberships" data-hi="सदस्यता">Memberships</a></li>
-                <li><a href="#therapists" data-en="Therapists" data-hi="थेरेपिस्ट">Therapists</a></li>
-                <li><a href="#appointment" data-en="Book Now" data-hi="बुकिंग">Book Now</a></li>
-            </ul>
-
-            <div class="nav-right">
-                <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">हिन्दी</button>
-                <a href="#appointment" class="btn-luxury" style="padding: 10px 22px; font-size: 0.75rem;" data-en="Reserve" data-hi="आरक्षित करें">Reserve</a>
-                <i class="fa-solid fa-bars menu-toggle" onclick="toggleMobileMenu()"></i>
+    <!-- Smartphone Mockup Wrapper -->
+    <div class="app-shell">
+        
+        <!-- App Top Header -->
+        <header class="app-header">
+            <div class="app-brand">OOOO</div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleLanguage()" id="langBtn">हिन्दी</button>
+                <i class="fa-regular fa-bell bell-icon" onclick="triggerAlert()"></i>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- 1. Hero Landing Page -->
-    <section id="home">
-        <div class="hero-content">
-            <div class="hero-tagline" data-en="Only One Oasis Of Opulence" data-hi="वैभव का एकमात्र परम नखलिस्तान">Only One Oasis Of Opulence</div>
-            <h1 class="hero-title" data-en="Premium Home Spa Rituals" data-hi="प्रीमियम होम स्पा सेवाएं">Premium Home Spa Rituals</h1>
-            <p class="hero-desc" data-en="Reclaim your inner balance with world-class wellness ceremonies delivered inside the absolute privacy of your luxurious residence." data-hi="अपने आलीशान निवास की पूर्ण गोपनीयता के भीतर प्रदान किए जाने वाले विश्व स्तरीय कल्याण समारोहों के साथ अपने आंतरिक संतुलन को वापस प्राप्त करें।">Reclaim your inner balance with world-class wellness ceremonies delivered inside the absolute privacy of your luxurious residence.</p>
-            <a href="#appointment" class="btn-luxury" data-en="Schedule an Experience" data-hi="बुकिंग दर्ज करें">Schedule an Experience</a>
-        </div>
-    </section>
+        <!-- Dynamic App Content Screens -->
+        <main class="app-viewport" id="app-content">
 
-    <!-- 2. About Us Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title" data-en="Our Legacy" data-hi="हमारी विरासत">Our Legacy</h2>
-            <p class="section-subtitle" data-en="A highly specialized standard of physical recovery and sensory rejuvenation." data-hi="शारीरिक स्वास्थ्य बहाली और संवेदी कायाकल्प का एक अत्यधिक विशिष्ट मानक।">A highly specialized standard of physical recovery and sensory rejuvenation.</p>
-            <div class="about-grid" style="margin-top: 60px;">
-                <div class="about-text">
-                    <h3 data-en="Impeccable Luxury, Delivered Privately" data-hi="त्रुटिहीन विलासिता, पूर्ण गोपनीयता के साथ">Impeccable Luxury, Delivered Privately</h3>
-                    <p data-en="OOOO is built with a vision to redefine physical therapies by bringing standard luxury rituals straight to premium clients. We blend centuries-old sensory methodologies with customized high-end equipment to elevate wellness to fine art." data-hi="OOOO की स्थापना प्रीमियम ग्राहकों के लिए सीधे विलासिता पूर्ण उपचार लाने की दृष्टि से की गई है। हम कल्याण को बेहतरीन कला में बदलने के लिए आधुनिक उपकरणों के साथ सदियों पुरानी उपचार पद्धतियों को मिलाते हैं।">OOOO is built with a vision to redefine physical therapies by bringing standard luxury rituals straight to premium clients. We blend centuries-old sensory methodologies with customized high-end equipment to elevate wellness to fine art.</p>
-                    <p data-en="Our absolute promise is centered on premium hygiene, certified elite therapists, and complete discretion. No matter where you live, OOOO creates a sanctuary of total calm." data-hi="हमारा पूर्ण वादा बेहतर स्वच्छता, प्रमाणित विशिष्ट थेरेपिस्ट और पूर्ण गोपनीयता पर केंद्रित है। चाहे आप कहीं भी रहते हों, OOOO मानसिक शांति का एक आश्रय स्थल बनाता है।">Our absolute promise is centered on premium hygiene, certified elite therapists, and complete discretion. No matter where you live, OOOO creates a sanctuary of total calm.</p>
-                    <a href="#services" class="btn-luxury" data-en="View Rituals" data-hi="उपचार देखें">View Rituals</a>
-                </div>
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=600&auto=format&fit=crop" alt="Bespoke luxury spa setup">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. Our Services -->
-    <section id="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Wellness Ceremonies" data-hi="कल्याण समारोह">Wellness Ceremonies</h2>
-                <p class="section-subtitle" data-en="Indulge in a curated menu of full-body therapies with premium essential oils." data-hi="प्रीमियम आवश्यक तेलों के साथ फुल-बॉडी थेरेपी के एक विशेष मेनू का आनंद लें।">Indulge in a curated menu of full-body therapies with premium essential oils.</p>
-            </div>
-            <div class="services-grid">
+            <!-- ================= SCREEN 1: HOME ================= -->
+            <div id="screen-home" class="app-screen active">
                 
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-spa"></i>
-                        <h3 data-en="Full Body Swedish" data-hi="फुल बॉडी स्वीडिश">Full Body Swedish</h3>
-                        <p data-en="A classic full body therapy utilizing smooth cold-pressed oils to untangle muscle knots and release deep mental tension." data-hi="मांसपेशियों के तनाव को दूर करने और गहरे मानसिक तनाव को दूर करने के लिए ठंडे-दबाए गए तेलों का उपयोग करके एक क्लासिक बॉडी थेरेपी।">A classic full body therapy utilizing smooth cold-pressed oils to untangle muscle knots and release deep mental tension.</p>
+                <!-- Hero App Banner -->
+                <div class="app-hero">
+                    <div class="hero-tag" data-en="Only One Oasis Of Opulence" data-hi="वैभव का एकमात्र नखलिस्तान">Only One Oasis Of Opulence</div>
+                    <div class="hero-title" data-en="Elite Home Wellness" data-hi="होम स्पा थेरेपी">Elite Home Wellness</div>
+                </div>
+
+                <!-- Quick Action App Icons -->
+                <div class="quick-actions">
+                    <div class="action-icon-box" onclick="switchScreen('screen-services', 'nav-services')">
+                        <div class="icon"><i class="fa-solid fa-spa"></i></div>
+                        <span data-en="Massages" data-hi="मसाज">Massages</span>
                     </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 60 / 90 Mins</span>
-                        <span class="price">₹2,999+</span>
+                    <div class="action-icon-box" onclick="switchScreen('screen-services', 'nav-services')">
+                        <div class="icon"><i class="fa-solid fa-heart"></i></div>
+                        <span data-en="Couples" data-hi="कपल्स">Couples</span>
+                    </div>
+                    <div class="action-icon-box" onclick="switchScreen('screen-memberships', 'nav-clubs')">
+                        <div class="icon"><i class="fa-solid fa-crown"></i></div>
+                        <span data-en="VIP Club" data-hi="VIP क्लब">VIP Club</span>
+                    </div>
+                    <div class="action-icon-box" onclick="switchScreen('screen-more', 'nav-more')">
+                        <div class="icon"><i class="fa-solid fa-circle-question"></i></div>
+                        <span data-en="FAQs" data-hi="सवाल">FAQs</span>
                     </div>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-seedling"></i>
-                        <h3 data-en="Botanical Aromatherapy" data-hi="अरोमाथेरेपी">Botanical Aromatherapy</h3>
-                        <p data-en="Invigorating massage infused with organic botanical extracts crafted to soothe nerve sensory pathways and rebalance energy." data-hi="तंत्रिका संवेदी मार्गों को शांत करने और ऊर्जा को पुनर्संतुलित करने के लिए तैयार किए गए जैविक वानस्पतिक अर्क से युक्त स्पा थेरेपी।">Invigorating massage infused with organic botanical extracts crafted to soothe nerve sensory pathways and rebalance energy.</p>
-                    </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 75 Mins</span>
-                        <span class="price">₹3,499</span>
-                    </div>
+                <!-- Featured Therapies Horizontal Carousel -->
+                <div class="section-header">
+                    <h3 class="section-title" data-en="Featured Rituals" data-hi="प्रसिद्ध थेरेपी">Featured Rituals</h3>
+                    <p class="section-subtitle" data-en="Swipe left to discover curated home ceremonies." data-hi="विशेष संवेदी उपचारों को देखने के लिए बाएं स्वाइप करें।">Swipe left to discover curated home ceremonies.</p>
                 </div>
-
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-hands-holding"></i>
-                        <h3 data-en="Deep Tissue Focus" data-hi="डीप टिश्यू फोकस">Deep Tissue Focus</h3>
-                        <p data-en="A powerful, highly targeted therapy focusing on sub-layers of muscle tissue to provide relief from chronic physical fatigue." data-hi="लंबे समय से शारीरिक थकान से राहत प्रदान करने के लिए मांसपेशियों के ऊतकों की उप-परतों पर केंद्रित एक शक्तिशाली, अत्यधिक लक्षित चिकित्सा।">A powerful, highly targeted therapy focusing on sub-layers of muscle tissue to provide relief from chronic physical fatigue.</p>
-                    </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 90 Mins</span>
-                        <span class="price">₹3,999</span>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-chair"></i>
-                        <h3 data-en="Head & Shoulder De-stress" data-hi="हेड एंड शोल्डर थेरेपी">Head & Shoulder De-stress</h3>
-                        <p data-en="Express, restorative therapy targeting the scalp, neck and shoulder joints. Ideal for rapid refreshment." data-hi="स्कैल्प, गर्दन और कंधे के जोड़ों को लक्षित करने वाली त्वरित थेरेपी। तत्काल ताजगी के लिए आदर्श।">Express, restorative therapy targeting the scalp, neck and shoulder joints. Ideal for rapid refreshment.</p>
-                    </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 45 Mins</span>
-                        <span class="price">₹1,799</span>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-shoe-prints"></i>
-                        <h3 data-en="Foot Reflexology" data-hi="फुट रिफ्लेक्सोलॉजी">Foot Reflexology</h3>
-                        <p data-en="Zone reflex pressure therapy designed to stimulate internal systems and immediately relieve tired feet." data-hi="आंतरिक प्रणालियों को उत्तेजित करने और थके हुए पैरों को तुरंत राहत देने के लिए डिज़ाइन की गई रिफ्लेक्स दबाव थेरेपी।">Zone reflex pressure therapy designed to stimulate internal systems and immediately relieve tired feet.</p>
-                    </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 60 Mins</span>
-                        <span class="price">₹1,999</span>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-card-top">
-                        <i class="fa-solid fa-heart"></i>
-                        <h3 data-en="Couples Sanctum Ritual" data-hi="कपल्स स्पा रीचूअल">Couples Sanctum Ritual</h3>
-                        <p data-en="Share a deep sensory journey alongside your partner in the absolute privacy of your master bedroom suite." data-hi="अपने मास्टर बेडरूम सूट की पूर्ण गोपनीयता में अपने साथी के साथ एक गहरी संवेदी यात्रा साझा करें।">Share a deep sensory journey alongside your partner in the absolute privacy of your master bedroom suite.</p>
-                    </div>
-                    <div class="service-meta">
-                        <span class="duration"><i class="fa-regular fa-clock"></i> 90 Mins</span>
-                        <span class="price">₹6,999</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Membership Plans -->
-    <section id="memberships">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Privilege Circles" data-hi="विशेषाधिकार सर्किल">Privilege Circles</h2>
-                <p class="section-subtitle" data-en="Incorporate ritual wellness into your premium lifestyle with elite subscriptions." data-hi="कुलीन सदस्यता विकल्पों के साथ अपनी प्रीमियम जीवनशैली में वेलनेस उपचारों को शामिल करें।">Incorporate ritual wellness into your premium lifestyle with elite subscriptions.</p>
-            </div>
-            <div class="plans-grid">
                 
-                <div class="plan-card">
-                    <div>
-                        <h3 data-en="Monthly Essential" data-hi="मंथली एसेंशियल">Monthly Essential</h3>
-                        <div class="plan-price">₹4,999<span>/mo</span></div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-check"></i> 2 Premium Massages (60 min)</li>
-                            <li><i class="fa-solid fa-check"></i> 1 Complementary Reflexology</li>
-                            <li><i class="fa-solid fa-check"></i> Free Premium Oils Upgrade</li>
-                            <li><i class="fa-solid fa-check"></i> Priority Weekend Booking</li>
-                        </ul>
+                <div class="swipe-container">
+                    <div class="app-card swipe-card">
+                        <h4 style="color: var(--gold-solid); margin-bottom: 10px;" data-en="Full Body Swedish" data-hi="स्वीडिश मसाज">Full Body Swedish</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-gray); margin-bottom: 15px;" data-en="Designed to eliminate physical fatigue and untangle tight muscle knots." data-hi="शारीरिक थकान और मांसपेशियों के खिंचाव को दूर करने के लिए विशेष रूप से डिज़ाइन किया गया।">Designed to eliminate physical fatigue and untangle tight muscle knots.</p>
+                        <button class="btn-app-gold" style="padding: 10px;" onclick="quickBook('Full Body Swedish')" data-en="Book Now" data-hi="बुक करें">Book Now</button>
                     </div>
-                    <a href="#appointment" class="btn-luxury" data-en="Enroll Now" data-hi="अभी शामिल हों">Enroll Now</a>
-                </div>
-
-                <div class="plan-card premium">
-                    <div>
-                        <h3 data-en="VIP Opulence" data-hi="VIP ऑपुलेंस">VIP Opulence</h3>
-                        <div class="plan-price">₹9,999<span>/mo</span></div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-check"></i> 4 Bespoke Massages (90 min)</li>
-                            <li><i class="fa-solid fa-check"></i> Guaranteed therapist preference</li>
-                            <li><i class="fa-solid fa-check"></i> Absolute transfer privileges to family</li>
-                            <li><i class="fa-solid fa-check"></i> 24x7 Dedicated WhatsApp Concierge</li>
-                            <li><i class="fa-solid fa-check"></i> Complimentry luxury organic kit</li>
-                        </ul>
+                    <div class="app-card swipe-card">
+                        <h4 style="color: var(--gold-solid); margin-bottom: 10px;" data-en="Botanical Aromatherapy" data-hi="अरोमाथेरेपी">Botanical Aromatherapy</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-gray); margin-bottom: 15px;" data-en="Uses premium botanical organic essential oils to calm neural networks." data-hi="तांत्रिक संवेदी मार्गों को शांत करने के लिए बेहतरीन जैविक तेलों का उपयोग करता है।">Uses premium botanical organic essential oils to calm neural networks.</p>
+                        <button class="btn-app-gold" style="padding: 10px;" onclick="quickBook('Botanical Aromatherapy')" data-en="Book Now" data-hi="बुक करें">Book Now</button>
                     </div>
-                    <a href="#appointment" class="btn-luxury" data-en="Join VIP" data-hi="VIP ज्वाइन करें">Join VIP</a>
-                </div>
-
-                <div class="plan-card">
-                    <div>
-                        <h3 data-en="Loyalty Rewards" data-hi="लॉयल्टी रिवार्ड्स">Loyalty Rewards</h3>
-                        <div class="plan-price" style="font-size: 1.8rem;" data-en="Point System" data-hi="पॉइंट्स सिस्टम">Point System</div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-star"></i> Earn 15 Points on every ₹100 spend</li>
-                            <li><i class="fa-solid fa-star"></i> Redeem points for luxury products</li>
-                            <li><i class="fa-solid fa-star"></i> Access to seasonal private spa retreats</li>
-                            <li><i class="fa-solid fa-star"></i> Personalized wellness birthday gifts</li>
-                        </ul>
-                    </div>
-                    <a href="#appointment" class="btn-luxury" data-en="Learn More" data-hi="अधिक जानें">Learn More</a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Why Choose Us -->
-    <section id="why">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="The Gold Standard" data-hi="स्वर्ण मानक">The Gold Standard</h2>
-                <p class="section-subtitle" data-en="Discover what makes OOOO the premier name in residential wellness services." data-hi="जानें कि ओओओओ को आवासीय कल्याण सेवाओं में क्या खास बनाता है।">Discover what makes OOOO the premier name in residential wellness services.</p>
-            </div>
-            <div class="why-grid">
-                <div class="why-card">
-                    <i class="fa-solid fa-certificate"></i>
-                    <h3 data-en="Elite Experts" data-hi="कुलीन विशेषज्ञ">Elite Experts</h3>
-                    <p data-en="Every therapeutic treatment is guided by internationally certified bodywork experts." data-hi="हर चिकित्सा उपचार अंतरराष्ट्रीय स्तर पर प्रमाणित शारीरिक विशेषज्ञों द्वारा निर्देशित होता है।">Every therapeutic treatment is guided by internationally certified bodywork experts.</p>
-                </div>
-                <div class="why-card">
-                    <i class="fa-solid fa-shield-virus"></i>
-                    <h3 data-en="Medical Hygiene" data-hi="बेहतर स्वच्छता">Medical Hygiene</h3>
-                    <p data-en="Single-use organic linens and thoroughly sanitized medical-grade tools used." data-hi="एकल-उपयोग जैविक लिनन और पूरी तरह से सैनिटाइज्ड चिकित्सा-ग्रेड उपकरण उपयोग किए जाते हैं।">Single-use organic linens and thoroughly sanitized medical-grade tools used.</p>
-                </div>
-                <div class="why-card">
-                    <i class="fa-solid fa-couch"></i>
-                    <h3 data-en="Custom Ambience" data-hi="अनुकूलित माहौल">Custom Ambience</h3>
-                    <p data-en="We recreate high-fashion spa atmospheres inside your suite with essential oil misting." data-hi="हम आवश्यक तेलों के उपयोग से आपके कमरे में एक विशेष स्पा वातावरण का निर्माण करते हैं।">We recreate high-fashion spa atmospheres inside your suite with essential oil misting.</p>
-                </div>
-                <div class="why-card">
-                    <i class="fa-solid fa-user-shield"></i>
-                    <h3 data-en="Absolute Privacy" data-hi="पूर्ण गोपनीयता">Absolute Privacy</h3>
-                    <p data-en="Strict safety standards and absolute discretion for high-profile homeowners." data-hi="हाई-प्रोफाइल गृहस्वामियों के लिए कड़े सुरक्षा मानक और पूर्ण गोपनीयता।">Strict safety standards and absolute discretion for high-profile homeowners.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Therapists Section -->
-    <section id="therapists">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Master Healing Practitioners" data-hi="मास्टर चिकित्सक">Master Healing Practitioners</h2>
-                <p class="section-subtitle" data-en="Our internationally trained and vetted wellness experts." data-hi="हमारे अंतरराष्ट्रीय स्तर पर प्रशिक्षित और पृष्ठभूमि सत्यापित स्वास्थ्य विशेषज्ञ।">Our internationally trained and vetted wellness experts.</p>
-            </div>
-            <div class="therapist-grid">
-                
-                <div class="therapist-card">
-                    <div class="therapist-img">OOOO MASTER THERAPIST</div>
-                    <div class="therapist-info">
-                        <h3>Ananya Sharma</h3>
-                        <span data-en="Aromatherapy & Swedish Specialist" data-hi="अरोमाथेरेपी और स्वीडिश विशेषज्ञ">Aromatherapy & Swedish Specialist</span>
-                        <p data-en="9+ Years of experience at luxury 5-star resort retreats." data-hi="लक्जरी 5-स्टार रिसॉर्ट्स में 9+ वर्षों का अनुभव।">9+ Years of experience at luxury 5-star resort retreats.</p>
+                    <div class="app-card swipe-card">
+                        <h4 style="color: var(--gold-solid); margin-bottom: 10px;" data-en="Couples Sanctum" data-hi="कपल्स सेंक्टम">Couples Sanctum</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-gray); margin-bottom: 15px;" data-en="Experience side-by-side ultimate luxury relaxation inside your bedroom." data-hi="अपने बेडरूम के भीतर एक साथ परम विलासिता पूर्ण विश्राम का अनुभव करें।">Experience side-by-side ultimate luxury relaxation inside your bedroom.</p>
+                        <button class="btn-app-gold" style="padding: 10px;" onclick="quickBook('Couples Sanctum')" data-en="Book Now" data-hi="बुक करें">Book Now</button>
                     </div>
                 </div>
 
-                <div class="therapist-card">
-                    <div class="therapist-img">OOOO CLINICAL THERAPIST</div>
-                    <div class="therapist-info">
-                        <h3>David Gomez</h3>
-                        <span data-en="Deep Tissue & Sports Therapist" data-hi="डीप टिश्यू और स्पोर्ट्स थेरेपिस्ट">Deep Tissue & Sports Therapist</span>
-                        <p data-en="Certified from premier body healing institutes in Bali." data-hi="बाली के प्रमुख बॉडी हीलिंग संस्थानों से प्रमाणित।">Certified from premier body healing institutes in Bali.</p>
-                    </div>
+                <!-- App Testimonials Area -->
+                <div class="app-card" style="margin-top: 20px;">
+                    <h4 style="color: var(--gold-solid); margin-bottom: 10px;" data-en="Guest Reflection" data-hi="अतिथियों के अनुभव">Guest Reflection</h4>
+                    <p style="font-size: 0.8rem; font-style: italic; line-height: 1.5; color: var(--white); margin-bottom: 10px;">"Absolutely flawless home wellness. The therapists arrived with pristine sanitized tables and clean sheets. Recommended!"</p>
+                    <span style="font-size: 0.7rem; color: var(--gold-solid);">- Shalini Malhotra (Gurugram)</span>
                 </div>
 
-                <div class="therapist-card">
-                    <div class="therapist-img">OOOO MASTER THERAPIST</div>
-                    <div class="therapist-info">
-                        <h3>Rhea Kapoor</h3>
-                        <span data-en="Reflexology and Shiatsu Expert" data-hi="रिफ्लेक्सोलॉजी और शियात्सु विशेषज्ञ">Reflexology and Shiatsu Expert</span>
-                        <p data-en="Specialized in pain alleviation and pressure-point activation." data-hi="दर्द निवारण और प्रेशर-पॉइंट एक्टिवेशन में विशेषज्ञता।">Specialized in pain alleviation and pressure-point activation.</p>
+                <!-- App USP Why Choose Us -->
+                <div class="section-header">
+                    <h3 class="section-title" data-en="The Gold Standard" data-hi="स्वर्ण मानक">The Gold Standard</h3>
+                </div>
+                <div class="app-card">
+                    <div class="usp-row">
+                        <i class="fa-solid fa-shield-virus"></i>
+                        <p data-en="Medical-grade hygiene and single-use fresh sheets." data-hi="मेडिकल-ग्रेड स्वच्छता और एकल-उपयोग ताजी लिनन।">Medical-grade hygiene and single-use fresh sheets.</p>
+                    </div>
+                    <div class="usp-row">
+                        <i class="fa-solid fa-certificate"></i>
+                        <p data-en="Elite, internationally certified bodywork experts." data-hi="अंतरराष्ट्रीय स्तर पर प्रमाणित शारीरिक विशेषज्ञ।">Elite, internationally certified bodywork experts.</p>
+                    </div>
+                    <div class="usp-row">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <p data-en="Absolute privacy and strict safety protocols." data-hi="पूर्ण गोपनीयता और कड़े सुरक्षा प्रोटोकॉल।">Absolute privacy and strict safety protocols.</p>
                     </div>
                 </div>
 
             </div>
-        </div>
-    </section>
 
-    <!-- 8. Gallery Section -->
-    <section id="gallery">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Visual Ambience" data-hi="दृश्य गैलरी">Visual Ambience</h2>
-                <p class="section-subtitle" data-en="A glimpse into the portable, opulent relaxation experiences." data-hi="पोर्टेबल, शानदार विश्राम अनुभवों की एक अद्भुत झलक।">A glimpse into the portable, opulent relaxation experiences.</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=400&auto=format&fit=crop" alt="Spa Room Setup"></div>
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=400&auto=format&fit=crop" alt="Sensory Spa Elements"></div>
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=400&auto=format&fit=crop" alt="Therapy Session"></div>
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600334189648-b0d9d3028eb2?q=80&w=400&auto=format&fit=crop" alt="Premium Aroma Setup"></div>
-            </div>
-        </div>
-    </section>
+            <!-- ================= SCREEN 2: SERVICES ================= -->
+            <div id="screen-services" class="app-screen">
+                <div class="section-header">
+                    <h2 class="section-title" data-en="Spa Ceremonies" data-hi="स्पा चिकित्साएं">Spa Ceremonies</h2>
+                    <p class="section-subtitle" data-en="Select a luxury ritual designed to restore balance." data-hi="संतुलन बहाल करने के लिए डिज़ाइन किए गए उपचार चुनें।">Select a luxury ritual designed to restore balance.</p>
+                </div>
 
-    <!-- 9. Reviews & Testimonials Slider -->
-    <section id="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Client Reflections" data-hi="क्लाइंट प्रतिक्रियाएं">Client Reflections</h2>
-                <p class="section-subtitle" data-en="Words of appreciation from premium estates and luxury homes." data-hi="प्रीमियम एस्टेट और लक्जरी घरों से सराहना के शब्द।">Words of appreciation from premium estates and luxury homes.</p>
-            </div>
-            <div class="testimonials-slider">
-                <div class="testimonial-track" id="testimonialTrack">
+                <!-- Categorized Service Lists -->
+                <div class="app-card">
+                    <h3 style="color: var(--gold-solid); font-size: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; margin-bottom: 10px;" data-en="Full Body Therapies" data-hi="फुल बॉडी थेरेपी">Full Body Therapies</h3>
                     
-                    <div class="testimonial-slide">
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Swedish Massage" data-hi="स्वीडिश मसाज">Swedish Massage</h4>
+                            <span>60 / 90 Mins</span>
                         </div>
-                        <p class="review-text" data-en="&quot;Absolute masterpiece. They converted my living suite into an incredible spa. The aromatherapy massage was incredibly deep.&quot;" data-hi="&quot;उत्कृष्ट कार्य। उन्होंने मेरे कमरे को एक अद्भुत स्पा में बदल दिया। अरोमाथेरेपी मालिश वास्तव में काफी सुकून देने वाली थी।&quot;">"Absolute masterpiece. They converted my living suite into an incredible spa. The aromatherapy massage was incredibly deep."</p>
-                        <div class="client-name">- Shalini Malhotra (Gurugram)</div>
+                        <div class="item-price-action">
+                            <span class="price">₹2,999+</span>
+                            <button class="btn-mini" onclick="quickBook('Swedish Massage')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
                     </div>
 
-                    <div class="testimonial-slide">
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Botanical Aromatherapy" data-hi="अरोमाथेरेपी">Botanical Aromatherapy</h4>
+                            <span>75 Mins</span>
                         </div>
-                        <p class="review-text" data-en="&quot;Exceptional hospitality standards. The therapist arrived with pristine white linens, warm oils, and wonderful relaxing music. Highest recommendation.&quot;" data-hi="&quot;असाधारण आतिथ्य मानक। थेरेपिस्ट सफेद चादर, गर्म तेल और सुखदायक संगीत के साथ आए। अत्यधिक अनुशंसित।&quot;">"Exceptional hospitality standards. The therapist arrived with pristine white linens, warm oils, and wonderful relaxing music. Highest recommendation."</p>
-                        <div class="client-name">- Vikram Aditya (South Mumbai)</div>
+                        <div class="item-price-action">
+                            <span class="price">₹3,499</span>
+                            <button class="btn-mini" onclick="quickBook('Botanical Aromatherapy')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
                     </div>
 
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Deep Tissue Focus" data-hi="डीप टिश्यू फोकस">Deep Tissue Focus</h4>
+                            <span>90 Mins</span>
+                        </div>
+                        <div class="item-price-action">
+                            <span class="price">₹3,999</span>
+                            <button class="btn-mini" onclick="quickBook('Deep Tissue Focus')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slider-controls">
-                    <button class="slider-arrow" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="slider-arrow" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 5. Book Appointment & 11. Contact Us -->
-    <section id="appointment">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Schedule Appointment" data-hi="अपॉइंटमेंट दर्ज करें">Schedule Appointment</h2>
-                <p class="section-subtitle" data-en="Reserve your luxurious sensory therapy directly inside your private estate." data-hi="अपने निजी निवास में विलासिता पूर्ण थेरेपी को सीधे आरक्षित करें।">Reserve your luxurious sensory therapy directly inside your private estate.</p>
+                <div class="app-card">
+                    <h3 style="color: var(--gold-solid); font-size: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; margin-bottom: 10px;" data-en="Targeted and Express" data-hi="लक्षित और एक्सप्रेस">Targeted and Express</h3>
+                    
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Head & Shoulder De-stress" data-hi="सिर और कंधा मसाज">Head & Shoulder De-stress</h4>
+                            <span>45 Mins</span>
+                        </div>
+                        <div class="item-price-action">
+                            <span class="price">₹1,799</span>
+                            <button class="btn-mini" onclick="quickBook('Head & Shoulder De-stress')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
+                    </div>
+
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Foot Reflexology" data-hi="फुट रिफ्लेक्सोलॉजी">Foot Reflexology</h4>
+                            <span>60 Mins</span>
+                        </div>
+                        <div class="item-price-action">
+                            <span class="price">₹1,999</span>
+                            <button class="btn-mini" onclick="quickBook('Foot Reflexology')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <h3 style="color: var(--gold-solid); font-size: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; margin-bottom: 10px;" data-en="Signature Rituals" data-hi="हस्ताक्षर उपचार">Signature Rituals</h3>
+                    
+                    <div class="service-list-item">
+                        <div class="item-info">
+                            <h4 data-en="Couples Sanctum Ritual" data-hi="कपल्स स्पा थेरेपी">Couples Sanctum Ritual</h4>
+                            <span>90 Mins</span>
+                        </div>
+                        <div class="item-price-action">
+                            <span class="price">₹6,999</span>
+                            <button class="btn-mini" onclick="quickBook('Couples Sanctum Ritual')" data-en="Book" data-hi="बुक">Book</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="appointment-wrapper">
-                
-                <!-- Appointment Booking Form -->
-                <div class="appointment-form">
+
+            <!-- ================= SCREEN 3: BOOK APPOINTMENT ================= -->
+            <div id="screen-book" class="app-screen">
+                <div class="section-header">
+                    <h2 class="section-title" data-en="Schedule Ritual" data-hi="बुकिंग दर्ज करें">Schedule Ritual</h2>
+                    <p class="section-subtitle" data-en="Confirm details for your elite home therapy." data-hi="अपनी होम थेरेपी के लिए विवरणों की पुष्टि करें।">Confirm details for your elite home therapy.</p>
+                </div>
+
+                <div class="app-card">
                     <form onsubmit="handleBooking(event)">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label data-en="Full Name" data-hi="पूरा नाम">Full Name</label>
-                                <input type="text" placeholder="John Doe" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-en="Phone" data-hi="फ़ोन">Phone</label>
-                                <input type="tel" placeholder="+91 99999 99999" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-en="Desired Therapy" data-hi="पसंदीदा थेरेपी">Desired Therapy</label>
-                                <select required>
-                                    <option value="" disabled selected data-en="Select Therapy Option" data-hi="थेरेपी विकल्प चुनें">Select Therapy Option</option>
-                                    <option value="full-body">Full Body Swedish</option>
-                                    <option value="aromatherapy">Botanical Aromatherapy</option>
-                                    <option value="deep-tissue">Deep Tissue Focus</option>
-                                    <option value="head-shoulder">Head & Shoulder De-stress</option>
-                                    <option value="foot-reflexology">Foot Reflexology</option>
-                                    <option value="couples">Couples Sanctum Ritual</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label data-en="Date & Time" data-hi="दिनांक और समय">Date & Time</label>
-                                <input type="datetime-local" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-en="Therapist Preference" data-hi="थेरेपिस्ट प्राथमिकता">Therapist Preference</label>
-                                <select>
-                                    <option value="any" data-en="No preference (Any)" data-hi="कोई प्राथमिकता नहीं (कोई भी)">No preference (Any)</option>
-                                    <option value="female">Female Therapist</option>
-                                    <option value="male">Male Therapist</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label data-en="Secure Payment Method" data-hi="सुरक्षित भुगतान विधि">Secure Payment Method</label>
-                                <select required>
-                                    <option value="online" data-en="Pay Securely Online (UPI/Card)" data-hi="ऑनलाइन सुरक्षित भुगतान (UPI/कार्ड)">Pay Securely Online (UPI/Card)</option>
-                                    <option value="cash" data-en="Pay Post-Treatment" data-hi="उपचार के बाद भुगतान">Pay Post-Treatment</option>
-                                </select>
-                            </div>
-                            <div class="form-group full-width">
-                                <label data-en="Corporate/Residence Address" data-hi="कॉर्पोरेट/निवास का पता">Corporate/Residence Address</label>
-                                <textarea rows="3" placeholder="Enter full address, floor, villa name..." required></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label data-en="Your Name" data-hi="आपका नाम">Your Name</label>
+                            <input type="text" placeholder="John Doe" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-en="Mobile Number" data-hi="मोबाइल नंबर">Mobile Number</label>
+                            <input type="tel" placeholder="+91 99999 99999" required>
                         </div>
 
-                        <!-- Coupon Code Section -->
-                        <div class="coupon-box">
-                            <input type="text" id="couponInput" placeholder="Enter Coupon Code (e.g., WELCOME10)" style="background-color: var(--bg-deep); border: 1px solid var(--border-light); color: white; padding: 12px; outline: none; font-size: 0.85rem;">
-                            <button type="button" class="btn-luxury" style="padding: 10px 20px;" onclick="applyCoupon()" data-en="Apply" data-hi="लागू करें">Apply</button>
+                        <div class="form-group">
+                            <label data-en="Select Therapy" data-hi="थेरेपी चुनें">Select Therapy</label>
+                            <select id="bookingService" required>
+                                <option value="" disabled selected data-en="Choose Ritual Option" data-hi="विकल्प चुनें">Choose Ritual Option</option>
+                                <option value="swedish">Swedish Massage</option>
+                                <option value="aroma">Botanical Aromatherapy</option>
+                                <option value="deep">Deep Tissue Focus</option>
+                                <option value="head">Head & Shoulder De-stress</option>
+                                <option value="reflex">Foot Reflexology</option>
+                                <option value="couples">Couples Sanctum Ritual</option>
+                            </select>
                         </div>
-                        <p id="couponMsg" style="font-size: 0.8rem; color: var(--gold-solid); margin-top: 10px;"></p>
 
-                        <button type="submit" class="btn-luxury" style="width: 100%; margin-top: 30px;" data-en="Request Ritual" data-hi="बुकिंग की पुष्टि करें">Request Ritual</button>
+                        <div class="form-group">
+                            <label data-en="Date & Preferred Time" data-hi="दिनांक और समय">Date & Preferred Time</label>
+                            <input type="datetime-local" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-en="Therapist Preference" data-hi="थेरेपिस्ट पसंद">Therapist Preference</label>
+                            <select>
+                                <option value="any" data-en="Any certified professional" data-hi="कोई भी प्रमाणित विशेषज्ञ">Any certified professional</option>
+                                <option value="female" data-en="Female Practitioner" data-hi="महिला थेरेपिस्ट">Female Practitioner</option>
+                                <option value="male" data-en="Male Practitioner" data-hi="पुरुष थेरेपिस्ट">Male Practitioner</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-en="Corporate / Estate Address" data-hi="निवास का पता">Corporate / Estate Address</label>
+                            <textarea rows="2" placeholder="Suite, floor, building details..." required></textarea>
+                        </div>
+
+                        <!-- Mini Coupon Integration -->
+                        <div class="coupon-section">
+                            <input type="text" id="couponInput" placeholder="Promo Code (WELCOME10)" style="flex: 1; padding: 10px; font-size: 0.75rem;">
+                            <button type="button" class="btn-mini" onclick="applyCoupon()" data-en="Apply" data-hi="लागू करें">Apply</button>
+                        </div>
+                        <p id="couponMsg" style="font-size: 0.7rem; color: var(--gold-solid); margin-top: 8px;"></p>
+
+                        <button type="submit" class="btn-app-gold" style="margin-top: 25px;" data-en="Confirm Booking" data-hi="बुकिंग फाइनल करें">Confirm Booking</button>
                     </form>
                 </div>
-
-                <!-- Contact & Location Area -->
-                <div class="contact-details">
-                    <div class="contact-info">
-                        <div class="info-item">
-                            <i class="fa-solid fa-phone"></i>
-                            <div>
-                                <h4 data-en="Concierge Call" data-hi="कंसीयज कॉल">Concierge Call</h4>
-                                <p>+91 98765 43210</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <div>
-                                <h4 data-en="WhatsApp Concierge" data-hi="व्हाट्सएप कंसीयज">WhatsApp Concierge</h4>
-                                <p><a href="https://wa.me/919876543210?text=I%20would%20like%20to%20reserve%20a%20private%20ritual" target="_blank" style="color: var(--gold-solid);">+91 98765 43210</a></p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <div>
-                                <h4 data-en="Private Office Email" data-hi="प्राइवेट ऑफिस ईमेल">Private Office Email</h4>
-                                <p>concierge@oooo.spa</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <div>
-                                <h4 data-en="Corporate Suite" data-hi="कॉर्पोरेट सूट">Corporate Suite</h4>
-                                <p>Suite 104, Oasis Heights, DLF Phase 5, Gurgaon, Haryana</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Simulated luxury Google Maps style iframe -->
-                    <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112163.6660166667!2d77.1000!3d28.4500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19d582e38851%3A0x84f507cfb752ec3!2sGurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-
             </div>
-        </div>
-    </section>
 
-    <!-- 10. FAQs Section -->
-    <section id="faqs">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Essential Inquiries" data-hi="अक्सर पूछे जाने वाले सवाल">Essential Inquiries</h2>
-                <p class="section-subtitle" data-en="Crucial details regarding the elite home wellness experience." data-hi="उत्कृष्ट घरेलू स्वास्थ्य अनुभवों के बारे में महत्वपूर्ण विवरण।">Crucial details regarding the elite home wellness experience.</p>
-            </div>
-            
-            <div class="faq-wrapper">
-                
-                <div class="faq-item">
-                    <div class="faq-header" onclick="toggleFaq(this)">
-                        <h3 data-en="Which premium geographical areas are currently served?" data-hi="वर्तमान में किन क्षेत्रों में सेवाएं उपलब्ध हैं?">Which premium geographical areas are currently served?</h3>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-body">
-                        <p data-en="Currently, OOOO services are available throughout Delhi NCR, Premium Mumbai Areas (South/West suburbs), and Bangalore. We are systematically expanding to other luxury centers." data-hi="वर्तमान में, OOOO सेवाएं पूरे दिल्ली एनसीआर, प्रीमियम मुंबई क्षेत्रों (दक्षिण/पश्चिम उपनगरों) और बैंगलोर में उपलब्ध हैं। हम व्यवस्थित रूप से अन्य शहरों में विस्तार कर रहे हैं।">Currently, OOOO services are available throughout Delhi NCR, Premium Mumbai Areas (South/West suburbs), and Bangalore. We are systematically expanding to other luxury centers.</p>
-                    </div>
+            <!-- ================= SCREEN 4: PRIVILEGE CLUBS ================= -->
+            <div id="screen-memberships" class="app-screen">
+                <div class="section-header">
+                    <h2 class="section-title" data-en="Privilege Clubs" data-hi="सदस्यता सर्कल्स">Privilege Clubs</h2>
+                    <p class="section-subtitle" data-en="Secure personalized luxury subscriptions." data-hi="प्रीमियम सदस्यता विकल्पों के साथ नियमित थेरेपी पाएं।">Secure personalized luxury subscriptions.</p>
                 </div>
 
-                <div class="faq-item">
-                    <div class="faq-header" onclick="toggleFaq(this)">
-                        <h3 data-en="How does the home treatment space need to be prepared?" data-hi="घर पर कमरे को किस प्रकार तैयार करना होगा?">How does the home treatment space need to be prepared?</h3>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-body">
-                        <p data-en="No preparation is required on your part. Our master practitioners arrive fully prepared with portable massage tables, fresh white linens, aromatherapy oils, and mist machines. We only need a quiet, comfortable space." data-hi="आपकी ओर से किसी तैयारी की आवश्यकता नहीं है। हमारे चिकित्सक पोर्टेबल मसाज टेबल, साफ चादरें, तेल और आवश्यक उपकरणों के साथ पूरी तरह से सुसज्जित होकर आते हैं। हमें केवल एक शांत, आरामदायक स्थान की आवश्यकता होती है।">No preparation is required on your part. Our master practitioners arrive fully prepared with portable massage tables, fresh white linens, aromatherapy oils, and mist machines. We only need a quiet, comfortable space.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-header" onclick="toggleFaq(this)">
-                        <h3 data-en="What is the policy for cancellation or rescheduling?" data-hi="बुकिंग रद्द करने या पुनर्निर्धारित करने की क्या नीति है?">What is the policy for cancellation or rescheduling?</h3>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-body">
-                        <p data-en="Reservations can be safely cancelled or rescheduled up to 4 hours prior to the therapy time. Late cancellations will involve an standard booking fee." data-hi="थेरेपी के समय से 4 घंटे पहले तक बुकिंग सुरक्षित रूप से रद्द या पुनर्निर्धारित की जा सकती है। देरी से रद्द करने पर मानक शुल्क लागू हो सकता है।">Reservations can be safely cancelled or rescheduled up to 4 hours prior to the therapy time. Late cancellations will involve an standard booking fee.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- 12. Policies Section -->
-    <section id="policies">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Corporate Policies" data-hi="हमारी नीतियां">Corporate Policies</h2>
-            </div>
-            <div class="policies-tabs">
-                <div class="policy-nav">
-                    <button class="policy-btn active" onclick="switchPolicy(event, 'privacy')">Privacy Policy</button>
-                    <button class="policy-btn" onclick="switchPolicy(event, 'terms')">Terms & Conditions</button>
-                    <button class="policy-btn" onclick="switchPolicy(event, 'refund')">Refund & Cancellation</button>
-                </div>
-                
-                <div id="privacy" class="policy-content active">
-                    <p data-en="Privacy is the cornerstone of our brand. All guest booking records, geographical addresses, and communication logs are kept under strict end-to-end security protocol. No data is shared with external groups." data-hi="गोपनीयता हमारे ब्रांड की मुख्य प्राथमिकता है। सभी मेहमानों की बुकिंग के रिकॉर्ड, पते और संचार विवरण सुरक्षित रखे जाते हैं। कोई भी डेटा बाहरी समूहों के साथ साझा नहीं किया जाता है।">Privacy is the cornerstone of our brand. All guest booking records, geographical addresses, and communication logs are kept under strict end-to-end security protocol. No data is shared with external groups.</p>
-                </div>
-                
-                <div id="terms" class="policy-content">
-                    <p data-en="All therapies booked with OOOO are strictly focused on luxury physical wellness. Practitioners maintain full authority to terminate sessions in case of any inappropriate behaviour. In such conditions, no refund will be issued." data-hi="OOOO के साथ बुक की गई सभी थेरेपी पूरी तरह से लक्जरी शारीरिक स्वास्थ्य और वेलनेस पर केंद्रित हैं। किसी भी अनुचित व्यवहार के मामले में थेरेपिस्ट को सत्र समाप्त करने का पूरा अधिकार है। ऐसे मामलों में कोई रिफंड नहीं दिया जाएगा।">All therapies booked with OOOO are strictly focused on luxury physical wellness. Practitioners maintain full authority to terminate sessions in case of any inappropriate behaviour. In such conditions, no refund will be issued.</p>
-                </div>
-                
-                <div id="refund" class="policy-content">
-                    <p data-en="Cancellations processed 4 hours prior to scheduled treatments will yield a complete refund back to the initial online payment method within 3-5 standard business days." data-hi="निर्धारित समय से 4 घंटे पहले रद्द करने पर 3-5 कार्य दिवसों के भीतर पूर्ण रिफंड शुरू कर दिया जाता है।">Cancellations processed 4 hours prior to scheduled treatments will yield a complete refund back to the initial online payment method within 3-5 standard business days.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 13. Footer Section -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                
-                <div class="footer-brand">
-                    <h3>OOOO</h3>
-                    <p data-en="Only One Oasis Of Opulence - Setting unprecedented, bespoke high-end home wellness standards for elite residents." data-hi="ओनली वन ओएसिस ऑफ ओपुलेंस - संभ्रांत वर्ग के लिए तैयार बेजोड़, व्यक्तिगत हाई-एंड होम स्पा थेरेपी।">Only One Oasis Of Opulence - Setting unprecedented, bespoke high-end home wellness standards for elite residents.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <h4 data-en="Explore Links" data-hi="क्विक लिंक्स">Explore Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Legacy</a></li>
-                        <li><a href="#services">Wellness Rituals</a></li>
-                        <li><a href="#memberships">Privilege Membership</a></li>
-                        <li><a href="#appointment">Secure Booking</a></li>
+                <div class="member-card">
+                    <h3 class="member-title" data-en="Monthly Essential" data-hi="मंथली आवश्यक">Monthly Essential</h3>
+                    <div class="member-price">₹4,999<span>/mo</span></div>
+                    <ul class="member-features">
+                        <li><i class="fa-solid fa-circle-check"></i> 2 Custom Massages (60 min)</li>
+                        <li><i class="fa-solid fa-circle-check"></i> 1 Complimentary Reflexology</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Priority Booking Schedule</li>
                     </ul>
+                    <button class="btn-app-gold" onclick="enrollClub('Monthly Essential')" data-en="Select Plan" data-hi="प्लान चुनें">Select Plan</button>
                 </div>
 
-                <div class="footer-links">
-                    <h4 data-en="Corporate Support" data-hi="कॉर्पोरेट सहायता">Corporate Support</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 20px;" data-en="24x7 Dedicated desk for concierge booking configurations." data-hi="कंसीयज बुकिंग अनुरोधों के लिए 24x7 सेवा उपलब्ध।">24x7 Dedicated desk for concierge booking configurations.</p>
-                    <a href="mailto:concierge@oooo.spa" class="btn-luxury" style="padding: 10px 18px; font-size: 0.75rem;" data-en="Email Office" data-hi="ईमेल ऑफिस">Email Office</a>
+                <div class="member-card gold-tier">
+                    <h3 class="member-title" data-en="VIP Opulence" data-hi="VIP ऑपुलेंस">VIP Opulence</h3>
+                    <div class="member-price">₹9,999<span>/mo</span></div>
+                    <ul class="member-features">
+                        <li><i class="fa-solid fa-circle-check"></i> 4 Premium Massages (90 min)</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Assured specific therapist choice</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Full transfer privilege to family</li>
+                        <li><i class="fa-solid fa-circle-check"></i> 24x7 Direct WhatsApp Desk</li>
+                    </ul>
+                    <button class="btn-app-gold" onclick="enrollClub('VIP Opulence')" data-en="Join Club" data-hi="क्लब में शामिल हों">Join Club</button>
+                </div>
+            </div>
+
+            <!-- ================= SCREEN 5: MORE INFO & DETAILS ================= -->
+            <div id="screen-more" class="app-screen">
+                <div class="section-header">
+                    <h2 class="section-title" data-en="Explore More" data-hi="अधिक अन्वेषण">Explore More</h2>
+                </div>
+
+                <!-- Custom App Style Navigation list -->
+                <div class="info-button-list">
+                    <div class="info-link" onclick="openPolicyModal('legacy-info')">
+                        <span data-en="Our Legacy Story" data-hi="हमारी विरासत की कहानी">Our Legacy Story</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div class="info-link" onclick="openPolicyModal('privacy-info')">
+                        <span data-en="Privacy & Secrecy Policy" data-hi="गोपनीयता नीति">Privacy & Secrecy Policy</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Fast Contact Buttons -->
+                <div class="quick-callouts">
+                    <a href="https://wa.me/919876543210?text=I%20need%20assistance%20with%20OOOO%20spa%20services" target="_blank" class="btn-callout">
+                        <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp
+                    </a>
+                    <a href="tel:+919876543210" class="btn-callout">
+                        <i class="fa-solid fa-phone" style="color: var(--gold-solid);"></i> Call Office
+                    </a>
+                </div>
+
+                <!-- App Style FAQ Accordion -->
+                <div class="section-header" style="margin-top: 30px; margin-bottom: 15px;">
+                    <h3 class="section-title" data-en="FAQs" data-hi="अक्सर पूछे जाने वाले सवाल" style="font-size: 1.1rem;">FAQs</h3>
+                </div>
+                
+                <div class="app-card">
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-title">
+                            <span data-en="Which cities are serviced?" data-hi="सेवाएं किन शहरों में उपलब्ध हैं?">Which cities are serviced?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <p class="faq-text" data-en="Currently active throughout Delhi NCR, Premium Mumbai pockets and Bangalore." data-hi="वर्तमान में दिल्ली एनसीआर, प्रीमियम मुंबई और बैंगलोर में सक्रिय सेवाएं।">Currently active throughout Delhi NCR, Premium Mumbai pockets and Bangalore.</p>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-title">
+                            <span data-en="Do you bring massage tables?" data-hi="क्या आप मसाज टेबल लाते हैं?">Do you bring massage tables?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <p class="faq-text" data-en="Yes. Our therapists arrive equipped with premium portable tables, fresh sheets, oils, and music." data-hi="हाँ। हमारे थेरेपिस्ट टेबल, ताजी चादरें, सुगंधित तेल और संगीत प्रणाली साथ लाते हैं।">Yes. Our therapists arrive equipped with premium portable tables, fresh sheets, oils, and music.</p>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-title">
+                            <span data-en="What is your cancellation policy?" data-hi="बुकिंग रद्द करने की क्या नीति है?">What is your cancellation policy?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <p class="faq-text" data-en="Cancellations are completely free when processed at least 4 hours prior to the session." data-hi="नियत समय से कम से कम 4 घंटे पहले बुकिंग रद्द करना पूरी तरह से निःशुल्क है।">Cancellations are completely free when processed at least 4 hours prior to the session.</p>
+                    </div>
+                </div>
+
+                <!-- Elite Therapists Horizontal Deck inside More section -->
+                <div class="section-header" style="margin-top: 30px;">
+                    <h3 class="section-title" data-en="Elite Therapists" data-hi="प्रमाणित थेरेपिस्ट" style="font-size: 1.1rem;">Elite Therapists</h3>
+                </div>
+                <div class="swipe-container">
+                    <div class="app-card swipe-card" style="padding: 15px;">
+                        <h4 style="font-size: 0.9rem;">Ananya Sharma</h4>
+                        <span style="font-size: 0.7rem; color: var(--gold-solid); display: block; margin-bottom: 8px;">Swedish Specialist</span>
+                        <p style="font-size: 0.7rem; color: var(--text-gray);" data-en="9 Years in 5-star hospitality wellness resorts." data-hi="5-स्टार लक्जरी रिसॉर्ट्स में कार्य करने का 9 साल का अनुभव।">9 Years in 5-star hospitality wellness resorts.</p>
+                    </div>
+                    <div class="app-card swipe-card" style="padding: 15px;">
+                        <h4 style="font-size: 0.9rem;">David Gomez</h4>
+                        <span style="font-size: 0.7rem; color: var(--gold-solid); display: block; margin-bottom: 8px;">Deep Tissue Expert</span>
+                        <p style="font-size: 0.7rem; color: var(--text-gray);" data-en="Internationally certified healing master from Bali." data-hi="बाली से प्रशिक्षित और अंतरराष्ट्रीय स्तर पर प्रमाणित।">Internationally certified healing master from Bali.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; font-size: 0.65rem; color: var(--text-gray); margin-top: 20px;">
+                    &copy; 2026 OOOO SPA PRIVATE LIMITED
                 </div>
 
             </div>
 
-            <div class="copyright-bar">
-                <span data-en="&copy; 2026 OOOO Spa. All Rights Reserved." data-hi="&copy; 2026 OOOO स्पा। सर्वाधिकार सुरक्षित।">&copy; 2026 OOOO Spa. All Rights Reserved.</span>
-                <span data-en="Created with Absolute Luxury Standards" data-hi="परम विलासिता मानकों के साथ निर्मित">Created with Absolute Luxury Standards</span>
+        </main>
+
+        <!-- Persistent App Bottom Navigation Bar -->
+        <nav class="app-bottom-nav">
+            <div class="nav-item active" id="nav-home" onclick="switchScreen('screen-home', this)">
+                <i class="fa-solid fa-house"></i>
+                <span data-en="Home" data-hi="होम">Home</span>
+            </div>
+            <div class="nav-item" id="nav-services" onclick="switchScreen('screen-services', this)">
+                <i class="fa-solid fa-spa"></i>
+                <span data-en="Services" data-hi="सेवाएं">Services</span>
+            </div>
+            <div class="nav-item" id="nav-book" onclick="switchScreen('screen-book', this)">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span data-en="Book" data-hi="बुकिंग">Book</span>
+            </div>
+            <div class="nav-item" id="nav-clubs" onclick="switchScreen('screen-memberships', this)">
+                <i class="fa-solid fa-crown"></i>
+                <span data-en="Clubs" data-hi="क्लब्स">Clubs</span>
+            </div>
+            <div class="nav-item" id="nav-more" onclick="switchScreen('screen-more', this)">
+                <i class="fa-solid fa-bars"></i>
+                <span data-en="More" data-hi="अधिक">More</span>
+            </div>
+        </nav>
+
+        <!-- Simulated Floating 24x7 Chat Widget -->
+        <div class="floating-widgets" style="bottom: 85px; right: 20px;">
+            <div class="float-btn float-chat" onclick="toggleChatBox()" style="width: 48px; height: 48px; font-size: 1.2rem;">
+                <i class="fa-regular fa-comments"></i>
             </div>
         </div>
-    </footer>
 
-    <!-- Floating Premium Features Widget area -->
-    <div class="floating-widgets">
-        <!-- One-click WhatsApp Booking -->
-        <a href="https://wa.me/919876543210?text=Hello%20OOOO,%20I'd%20like%20to%20reserve%20a%20private%20wellness%20therapy." target="_blank" class="float-btn float-whatsapp" title="WhatsApp Booking">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
-        <!-- Support Chat Float Toggle -->
-        <div class="float-btn float-chat" onclick="toggleChatBox()" title="24x7 Private Support Chat">
-            <i class="fa-regular fa-comments"></i>
+        <!-- Simulated Private Chat Drawer/Modal Inside App Shell -->
+        <div class="chat-box" id="supportChat" style="bottom: 145px; right: 20px; width: 280px;">
+            <div class="chat-header">
+                <span data-en="Private Concierge" data-hi="कंसीयज डेस्क">Private Concierge</span>
+                <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChatBox()"></i>
+            </div>
+            <div class="chat-body" id="chatBody" style="height: 180px;">
+                <p style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 4px; margin-bottom: 8px; line-height: 1.4; font-size: 0.75rem;" data-en="How may OOOO private office guide your session design today?" data-hi="हम आज आपकी स्पा थेरेपी चयन में किस प्रकार सहायता कर सकते हैं?">How may OOOO private office guide your session design today?</p>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Message...">
+                <button class="btn-mini" onclick="sendMessage()" data-en="Send" data-hi="भेजें">Send</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Legacy / Privacy App Modal Overlays (Simulated) -->
+    <div id="policyModal" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); width: 100%; max-width: 400px; border-radius: 20px; padding: 25px;">
+            <h3 id="modalTitle" style="font-family: 'Cinzel', serif; color: var(--gold-solid); margin-bottom: 15px;"></h3>
+            <p id="modalBody" style="font-size: 0.85rem; color: var(--text-gray); line-height: 1.6; margin-bottom: 20px; font-weight: 300;"></p>
+            <button class="btn-app-gold" style="padding: 10px;" onclick="closePolicyModal()" data-en="Close" data-hi="बंद करें">Close</button>
         </div>
     </div>
 
-    <!-- 24x7 Private Concierge Chat Box UI -->
-    <div class="chat-box" id="supportChat">
-        <div class="chat-header">
-            <span data-en="OOOO Concierge Desk" data-hi="OOOO कंसीयज हेल्प">OOOO Concierge Desk</span>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChatBox()"></i>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <p style="background: rgba(255,255,255,0.03); padding: 10px; border: 1px solid var(--border-light); margin-bottom: 12px; line-height: 1.5;" data-en="Welcome to OOOO Private Office. How may we guide your wellness selection today?" data-hi="OOOO प्राइवेट ऑफिस में आपका स्वागत है। हम आज आपकी थेरेपी चयन में किस प्रकार सहायता कर सकते हैं?">Welcome to OOOO Private Office. How may we guide your wellness selection today?</p>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Write a message...">
-            <button class="btn-luxury" style="padding: 8px 14px; font-size: 0.7rem;" onclick="sendMessage()" data-en="Send" data-hi="भेजें">Send</button>
-        </div>
-    </div>
-
-    <!-- Advanced Javascript Implementations -->
+    <!-- Active App Logic Control -->
     <script>
         let currentLang = 'en';
 
-        // Multi-language localization engine
+        // 1. Dynamic Tab Screen Switcher
+        function switchScreen(screenId, navElement) {
+            // Hide all active screens
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+            // Display targeted screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Remove active style state from all bottom menu items
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            // Apply active class to selected menu
+            if (typeof navElement === 'string') {
+                document.getElementById(navElement).classList.add('active');
+            } else {
+                navElement.classList.add('active');
+            }
+            
+            // Auto-scroll screen to top upon change
+            document.getElementById('app-content').scrollTop = 0;
+        }
+
+        // 2. Direct booking shortcut from carousels/lists
+        function quickBook(serviceName) {
+            switchScreen('screen-book', 'nav-book');
+            const selectEl = document.getElementById('bookingService');
+            
+            // Match select options dynamically
+            if (serviceName.includes("Swedish")) selectEl.value = "swedish";
+            else if (serviceName.includes("Aromatherapy")) selectEl.value = "aroma";
+            else if (serviceName.includes("Deep")) selectEl.value = "deep";
+            else if (serviceName.includes("Head")) selectEl.value = "head";
+            else if (serviceName.includes("Reflexology")) selectEl.value = "reflex";
+            else if (serviceName.includes("Couples")) selectEl.value = "couples";
+        }
+
+        // 3. Language Translation toggle helper
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'hi' : 'en';
             
-            // Translate all elements containing data-en / data-hi attributes
             document.querySelectorAll('[data-en]').forEach(el => {
                 el.textContent = el.getAttribute('data-' + currentLang);
             });
             
-            // Dynamically translate form inputs/placeholders
+            // Translate input placeholders
             const inputs = document.querySelectorAll('input, textarea');
             inputs.forEach(el => {
                 if (el.placeholder) {
                     if (currentLang === 'hi') {
                         el.setAttribute('data-orig-placeholder', el.placeholder);
-                        if (el.id === 'couponInput') el.placeholder = "कूपन कोड डालें (उदा: WELCOME10)";
+                        if (el.id === 'couponInput') el.placeholder = "कूपन कोड डालें (WELOCME10)";
                     } else {
                         const orig = el.getAttribute('data-orig-placeholder');
                         if (orig) el.placeholder = orig;
@@ -1620,85 +1043,75 @@
             document.getElementById('langBtn').innerText = currentLang === 'en' ? 'हिन्दी' : 'English';
         }
 
-        // Policy module active tab changer
-        function switchPolicy(evt, policyId) {
-            document.querySelectorAll('.policy-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.policy-content').forEach(content => content.classList.remove('active'));
-            
-            evt.currentTarget.classList.add('active');
-            document.getElementById(policyId).classList.add('active');
-        }
-
-        // Accordion FAQ logic
-        function toggleFaq(header) {
-            const item = header.parentElement;
+        // 4. FAQ Accordion Trigger
+        function toggleFaq(item) {
             item.classList.toggle('active');
         }
 
-        // Mobile dropdown navigation logic
-        function toggleMobileMenu() {
-            const nav = document.getElementById('navMenu');
-            if (nav.style.display === 'flex') {
-                nav.style.display = 'none';
-            } else {
-                nav.style.display = 'flex';
-                nav.style.flexDirection = 'column';
-                nav.style.position = 'absolute';
-                nav.style.top = '100px';
-                nav.style.left = '0';
-                nav.style.width = '100%';
-                nav.style.backgroundColor = 'var(--bg-deep)';
-                nav.style.padding = '25px';
-                nav.style.borderBottom = '1px solid var(--border-color)';
-            }
-        }
-
-        // Promo Code Discount simulation
+        // 5. App Promo code logic
         function applyCoupon() {
             const code = document.getElementById('couponInput').value.trim().toUpperCase();
             const msgEl = document.getElementById('couponMsg');
             if (code === 'WELCOME10') {
-                msgEl.innerText = currentLang === 'en' ? "Promo Applied: 10% Luxury Discount activated!" : "प्रोमो लागू: 10% विशेष छूट सक्रिय कर दी गई है!";
+                msgEl.innerText = currentLang === 'en' ? "Promo Applied: 10% Discount active!" : "कूपन कोड लागू: 10% छूट सक्रिय!";
                 msgEl.style.color = "var(--gold-solid)";
             } else if (code === "") {
                 msgEl.innerText = "";
             } else {
-                msgEl.innerText = currentLang === 'en' ? "Invalid Coupon Code" : "अमान्य कूपन कोड";
-                msgEl.style.color = "#d9534f";
+                msgEl.innerText = currentLang === 'en' ? "Invalid Code" : "अमान्य कूपन कोड";
+                msgEl.style.color = "red";
             }
         }
 
-        // Booking confirmation alert dialog
+        // 6. Form submissions
         function handleBooking(e) {
             e.preventDefault();
-            alert(currentLang === 'en' ? 'Reservation Request Secured. Our Private Office Concierge will call you within 15 minutes.' : 'बुकिंग अनुरोध दर्ज कर लिया गया है। हमारा कंसीयज विभाग 15 मिनट के भीतर आपसे संपर्क करेगा।');
+            alert(currentLang === 'en' ? 'Thank you! Your luxury reservation has been recorded. Our private office will call you shortly.' : 'धन्यवाद! आपकी विलासिता पूर्ण थेरेपी दर्ज कर ली गई है। हमारा कार्यालय आपसे शीघ्र संपर्क करेगा।');
             e.target.reset();
             document.getElementById('couponMsg').innerText = "";
+            switchScreen('screen-home', 'nav-home');
         }
 
-        // Live test testimonial slider carousel
-        let slideIndex = 0;
-        function moveSlide(n) {
-            const slides = document.querySelectorAll('.testimonial-slide');
-            const track = document.getElementById('testimonialTrack');
-            slideIndex += n;
-            if (slideIndex >= slides.length) slideIndex = 0;
-            if (slideIndex < 0) slideIndex = slides.length - 1;
-            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+        // 7. Simulated Alert Notification Bell Action
+        function triggerAlert() {
+            alert(currentLang === 'en' ? "You have no new notifications. Enjoy your OOOO session." : "कोई नई सूचनाएं नहीं हैं। अपने OOOO सत्र का आनंद लें।");
         }
 
-        // Automatically cycle testimonials slider every 10 seconds
-        setInterval(() => {
-            moveSlide(1);
-        }, 10000);
+        // 8. Membership subscription enrollment
+        function enrollClub(tierName) {
+            alert(currentLang === 'en' ? `Thank you for choosing ${tierName}. Our concierge will design your private circle setup.` : `धन्यवाद! आपने ${tierName} सदस्यता चुनी है। कंसीयज टीम आपसे संपर्क करेगी।`);
+        }
 
-        // Concierge support chat dialog toggle
+        // 9. Info Modal Open/Close Logic
+        function openPolicyModal(type) {
+            const modal = document.getElementById('policyModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            modal.style.display = "flex";
+            if (type === 'legacy-info') {
+                title.innerText = currentLang === 'en' ? "Our Legacy Story" : "हमारी विरासत";
+                body.innerText = currentLang === 'en' 
+                    ? "Founded to cater exclusively to high-profile clients, OOOO integrates luxury equipment with organic natural herbs to provide a therapeutic sanctuary right at your home."
+                    : "विशेष रूप से कुलीन वर्ग के लिए स्थापित, OOOO प्राकृतिक और जैविक तेलों के साथ आधुनिक पोर्टेबल उपकरणों का उपयोग करके आपके घर में स्पा वातावरण निर्मित करता है।";
+            } else if (type === 'privacy-info') {
+                title.innerText = currentLang === 'en' ? "Privacy & Secrecy" : "गोपनीयता नीति";
+                body.innerText = currentLang === 'en'
+                    ? "We strictly protect your address, name, and contact details. No client logs are ever shared with outside agents. Your relaxation and schedule are completely secret."
+                    : "हम आपके पते, नाम और बुकिंग के इतिहास को पूर्ण रूप से सुरक्षित रखते हैं। आपका विवरण किसी के भी साथ साझा नहीं किया जाता।";
+            }
+        }
+
+        function closePolicyModal() {
+            document.getElementById('policyModal').style.display = "none";
+        }
+
+        // 10. Floating Concierge Support Desk Chat
         function toggleChatBox() {
             const box = document.getElementById('supportChat');
             box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        // Simulated premium chat responder
         function sendMessage() {
             const input = document.getElementById('chatInput');
             const body = document.getElementById('chatBody');
@@ -1706,8 +1119,8 @@
                 const userMsg = document.createElement('p');
                 userMsg.style.textAlign = "right";
                 userMsg.style.color = "var(--white)";
-                userMsg.style.marginBottom = "12px";
-                userMsg.style.fontSize = "0.85rem";
+                userMsg.style.marginBottom = "8px";
+                userMsg.style.fontSize = "0.75rem";
                 userMsg.innerText = input.value;
                 body.appendChild(userMsg);
                 
@@ -1716,16 +1129,16 @@
                 
                 setTimeout(() => {
                     const reply = document.createElement('p');
-                    reply.style.background = "rgba(197, 168, 128, 0.05)";
-                    reply.style.padding = "10px";
+                    reply.style.background = "rgba(197, 168, 128, 0.03)";
+                    reply.style.padding = "8px";
                     reply.style.borderRadius = "4px";
                     reply.style.border = "1px solid var(--border-color)";
-                    reply.style.marginBottom = "12px";
-                    reply.style.fontSize = "0.8rem";
-                    reply.innerText = currentLang === 'en' ? "An elite concierge agent is looking into your request. Standby..." : "कंसीयज डेस्क आपके अनुरोध की समीक्षा कर रही है। कृपया प्रतीक्षा करें...";
+                    reply.style.marginBottom = "8px";
+                    reply.style.fontSize = "0.7rem";
+                    reply.innerText = currentLang === 'en' ? "Connecting with concierge. One moment..." : "कंसीयज डेस्क से कनेक्ट किया जा रहा है। एक क्षण रुकें...";
                     body.appendChild(reply);
                     body.scrollTop = body.scrollHeight;
-                }, 1200);
+                }, 1000);
             }
         }
     </script>
