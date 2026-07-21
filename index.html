@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2106,6 +2105,10 @@
             activeCategory: 'All Specialties'
         };
 
+        // Swipe tracking for expert dynamic images
+        let currentPopupSlide = 0;
+        let popupTotalSlides = 0;
+
         function checkUserOnboarding() {
             const storedUser = localStorage.getItem('oooo_user_data');
             if (storedUser) {
@@ -2307,7 +2310,7 @@
             }
 
             if (filteredServices.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px;" data-en="No services found in this category." data-hi="इस श्रेणी में कोई सेवा नहीं मिली।">No services found in this category.</p>`;
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px;" data-en="No services found in this category." data-hi="इस श्रेणी में कोई सेवा বাঙ্গালী मिली।">No services found in this category.</p>`;
             } else {
                 filteredServices.forEach(s => {
                     const title = appState.lang === 'en' ? s.title.en : s.title.hi;
@@ -3004,6 +3007,8 @@
 
             const imgCard = document.getElementById('descTherapistImgCard');
             if (imagesList.length > 1) {
+                currentPopupSlide = 0;
+                popupTotalSlides = imagesList.length;
                 imgCard.innerHTML = `
                     <div class="therapist-slider-container">
                         <div class="therapist-slider-track" id="popupSliderTrack" style="transform: translateX(0%);">
@@ -3015,6 +3020,8 @@
                     </div>
                 `;
             } else {
+                currentPopupSlide = 0;
+                popupTotalSlides = 0;
                 imgCard.innerHTML = `<div class="therapist-desc-img" id="descTherapistImg" style="background-image: url('${imgUrl}');"></div>`;
             }
 
@@ -3039,6 +3046,8 @@
         }
 
         window.setPopupSlide = function(index, total) {
+            currentPopupSlide = index;
+            popupTotalSlides = total;
             const track = document.getElementById('popupSliderTrack');
             if(track) {
                 track.style.transform = `translateX(-${index * 100}%)`;
@@ -3071,8 +3080,9 @@
             header.parentElement.classList.toggle('active');
         }
 
+        // REDIRECT TO NEW CHAT UI INSTEAD OF OPENING OVERLAY
         function openConciergeChat() {
-            document.getElementById('conciergeChat').style.display = 'flex';
+            window.location.href = 'j.html';
         }
 
         function closeConciergeChat() {
@@ -3157,6 +3167,36 @@
         }
 
         checkUserOnboarding();
+        
+        // EXPERT IMAGE SWIPE LOGIC
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const expertImgCard = document.getElementById('descTherapistImgCard');
+        
+        expertImgCard.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        expertImgCard.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleExpertSwipe();
+        }, {passive: true});
+        
+        function handleExpertSwipe() {
+            if(popupTotalSlides <= 1) return;
+            // Swiped left (Next image)
+            if(touchStartX - touchEndX > 50) {
+                if(currentPopupSlide < popupTotalSlides - 1) {
+                    setPopupSlide(currentPopupSlide + 1, popupTotalSlides);
+                }
+            }
+            // Swiped right (Prev image)
+            if(touchEndX - touchStartX > 50) {
+                if(currentPopupSlide > 0) {
+                    setPopupSlide(currentPopupSlide - 1, popupTotalSlides);
+                }
+            }
+        }
 
         window.switchScreen = switchScreen;
         window.directSelectService = directSelectService;
