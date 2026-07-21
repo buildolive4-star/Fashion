@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +42,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ANTI SCREENSHOT & NO DOWNLOAD SECURITY CLASSES */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #EAEAEA; 
@@ -50,6 +52,17 @@
             justify-content: center;
             align-items: center;
             height: 100dvh;
+            /* Privacy & Anti-Select Locks */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        img {
+            pointer-events: none; /* Disables long press to download images */
         }
 
         /* Smartphone Device Mock Chassis */
@@ -296,7 +309,7 @@
             line-height: 1.5;
         }
 
-        /* Romantic Red Buttons */
+        /* Romantic Red Buttons WITH CONTINUOUS SHINING EFFECT */
         .btn-luxury-app {
             background: var(--red-gradient);
             color: white;
@@ -312,6 +325,27 @@
             text-align: center;
             box-shadow: 0 8px 20px rgba(185, 19, 56, 0.25);
             text-transform: uppercase;
+            position: relative; /* REQUIRED FOR SHINE */
+            overflow: hidden; /* REQUIRED FOR SHINE */
+        }
+
+        /* THE SHINE ANIMATION CSS */
+        .btn-luxury-app::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shineEffect 3s infinite;
+        }
+
+        @keyframes shineEffect {
+            0% { left: -150%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
         }
 
         .btn-luxury-app:disabled {
@@ -319,6 +353,10 @@
             color: #999;
             cursor: not-allowed;
             box-shadow: none;
+        }
+        
+        .btn-luxury-app:disabled::after {
+            display: none; /* No shine on disabled */
         }
 
         .btn-luxury-app:active:not(:disabled) {
@@ -457,6 +495,20 @@
             transition: var(--transition-premium);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-hero-action::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shineEffect 3s infinite;
         }
 
         .btn-hero-action:active {
@@ -941,12 +993,12 @@
             color: var(--primary-red);
         }
 
-        /* ==================== EXPERTS SCREEN ==================== */
+        /* ==================== EXPERTS SCREEN (MODIFIED FOR 3-COLUMN GRID) ==================== */
         .therapist-list-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 0 20px 20px 20px;
+            grid-template-columns: repeat(3, 1fr); /* 3 COLUMNS REQUIRED */
+            gap: 10px;
+            padding: 0 15px 20px 15px;
         }
 
         .therapist-list-card {
@@ -975,21 +1027,21 @@
         }
 
         .therapist-list-body {
-            padding: 12px;
+            padding: 8px; /* REDUCED FOR 3 COLS */
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .therapist-list-body h3 {
-            font-size: 0.9rem;
+            font-size: 0.75rem; /* REDUCED FOR 3 COLS */
             color: var(--text-dark);
             margin-bottom: 4px;
             font-weight: 800;
         }
 
         .therapist-spec {
-            font-size: 0.7rem;
+            font-size: 0.6rem; /* REDUCED FOR 3 COLS */
             color: var(--primary-red);
             font-weight: 700;
             margin-bottom: 12px;
@@ -1498,6 +1550,41 @@
         </div>
     </div>
 
+    <!-- EXPERT FILTER MODAL -->
+    <div id="expertFilterModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(250, 250, 250, 0.95); backdrop-filter: blur(15px); z-index: 5500; display: none; flex-direction: column; padding: 30px; overflow-y: auto; transition: var(--transition-premium);">
+        <div class="chat-app-header" style="background: transparent; border: none; padding: 0; justify-content: flex-end; margin-bottom: 20px; box-shadow: none;">
+            <button class="chat-back-btn" onclick="closeExpertFilterModal()"><i class="fa-solid fa-xmark" style="font-size: 1.5rem;"></i></button>
+        </div>
+        <h2 style="font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--primary-red); margin-bottom: 20px; font-weight: 800;" data-en="Filter Experts" data-hi="विशेषज्ञों को फ़िल्टर करें">Filter Experts</h2>
+        
+        <div class="glass-input-wrapper">
+            <label data-en="Gender" data-hi="लिंग">Gender</label>
+            <select id="filterGender" class="glass-input">
+                <option value="All" data-en="All" data-hi="सभी">All</option>
+                <option value="Female" data-en="Female" data-hi="महिला">Female</option>
+                <option value="Male" data-en="Male" data-hi="पुरुष">Male</option>
+            </select>
+        </div>
+        
+        <div class="glass-input-wrapper">
+            <label data-en="Location" data-hi="स्थान">Location (Area/City)</label>
+            <input type="text" id="filterLocation" class="glass-input" placeholder="e.g. Delhi, Gurgaon">
+        </div>
+
+        <div class="glass-input-wrapper">
+            <label data-en="Minimum Experience" data-hi="न्यूनतम अनुभव">Minimum Experience</label>
+            <select id="filterExperience" class="glass-input">
+                <option value="All" data-en="Any Experience" data-hi="कोई भी अनुभव">Any Experience</option>
+                <option value="3" data-en="3+ Years" data-hi="3+ वर्ष">3+ Years</option>
+                <option value="5" data-en="5+ Years" data-hi="5+ वर्ष">5+ Years</option>
+                <option value="7" data-en="7+ Years" data-hi="7+ वर्ष">7+ Years</option>
+            </select>
+        </div>
+
+        <button class="btn-luxury-app" style="width: 100%; margin-top: 20px;" onclick="applyExpertFilters()" data-en="Apply Filters" data-hi="फ़िल्टर लागू करें">Apply Filters</button>
+        <button class="btn-luxury-app" style="width: 100%; margin-top: 10px; background: white; color: var(--primary-red); border: 1px solid var(--primary-red);" onclick="clearExpertFilters()" data-en="Clear Filters" data-hi="फ़िल्टर हटाएं">Clear Filters</button>
+    </div>
+
     <!-- Smartphone Frame Base Chassis -->
     <div class="smartphone-chassis">
         
@@ -1706,11 +1793,16 @@
                 </div>
             </div>
 
-            <!-- SCREEN 4: DYNAMIC EXPERTS GRID -->
+            <!-- SCREEN 4: DYNAMIC EXPERTS GRID WITH FILTER & 3 COLUMNS -->
             <div class="app-screen" id="screen-therapists">
-                <div class="section-header-app" style="padding-bottom: 15px;">
-                    <h2 class="section-title" data-en="Choose Your Expert" data-hi="अपना विशेषज्ञ चुनें">Choose Your Expert</h2>
-                    <p class="section-subtitle" data-en="Elite beauticians, therapists, artists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट, कलाकार और केयरटेकर।">Elite beauticians, therapists, artists, and caretakers.</p>
+                <div class="section-header-app" style="padding-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h2 class="section-title" data-en="Choose Your Expert" data-hi="अपना विशेषज्ञ चुनें">Choose Your Expert</h2>
+                        <p class="section-subtitle" data-en="Elite beauticians, therapists, artists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट, कलाकार और केयरटेकर।">Elite beauticians, therapists, artists, and caretakers.</p>
+                    </div>
+                    <button class="btn-luxury-app" style="padding: 12px; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
+                        <i class="fa-solid fa-sliders"></i>
+                    </button>
                 </div>
 
                 <div class="therapist-list-grid" id="therapistListGrid">
@@ -1964,6 +2056,17 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { getDatabase, ref, onValue, push, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // ANTI SCREENSHOT & NO DOWNLOAD JS SECURITY SCRIPT
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'PrintScreen' || 
+                (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c'))) {
+                e.preventDefault();
+                alert('Screenshots and saving are disabled for privacy and security.');
+                return false;
+            }
+        });
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -2305,7 +2408,6 @@
                 }
             }
             if (therapistsList.length === 0) {
-                // Included dummy data for all requested roles to fulfill instructions explicitly
                 therapistsList = [
                     {
                         name: "Riya Kapoor",
@@ -2345,6 +2447,53 @@
             updateTherapistsUI(therapistsList);
         });
 
+        // EXPERT FILTER LOGIC
+        window.openExpertFilterModal = function() {
+            document.getElementById('expertFilterModal').style.display = 'flex';
+        };
+
+        window.closeExpertFilterModal = function() {
+            document.getElementById('expertFilterModal').style.display = 'none';
+        };
+
+        window.applyExpertFilters = function() {
+            const gender = document.getElementById('filterGender').value;
+            const location = document.getElementById('filterLocation').value.toLowerCase();
+            const experience = document.getElementById('filterExperience').value;
+
+            let filtered = appState.activeTherapists;
+
+            if(location) {
+                filtered = filtered.filter(t => (t.address && t.address.toLowerCase().includes(location)) || (t.name && t.name.toLowerCase().includes(location)));
+            }
+
+            if(gender !== 'All') {
+                filtered = filtered.filter(t => JSON.stringify(t).toLowerCase().includes(gender.toLowerCase()));
+            }
+
+            if(experience !== 'All') {
+                const minYears = parseInt(experience);
+                filtered = filtered.filter(t => {
+                    const matches = t.experience ? t.experience.match(/(\d+)/) : null;
+                    if(matches) {
+                        return parseInt(matches[0]) >= minYears;
+                    }
+                    return false; 
+                });
+            }
+
+            updateTherapistsUI(filtered);
+            closeExpertFilterModal();
+        };
+
+        window.clearExpertFilters = function() {
+            document.getElementById('filterGender').value = 'All';
+            document.getElementById('filterLocation').value = '';
+            document.getElementById('filterExperience').value = 'All';
+            updateTherapistsUI(appState.activeTherapists);
+            closeExpertFilterModal();
+        };
+
         // VISUAL EXPERT SELECTION LOGIC
         window.selectBookingTherapist = function(name) {
             document.getElementById('bookTherapistGender').value = name;
@@ -2368,6 +2517,10 @@
             container.innerHTML = '';
             bookingVisualList.innerHTML = '';
             selectEl.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px; grid-column: span 3;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
+            }
 
             list.forEach((t, index) => {
                 // Populate Hidden Select
@@ -2395,7 +2548,7 @@
 
                 const imagesEscaped = t.images ? JSON.stringify(t.images).replace(/"/g, '&quot;') : '';
 
-                // Populate Main Grid Screen
+                // Populate Main Grid Screen (NOW 3 COLUMNS)
                 const card = document.createElement('div');
                 card.className = 'therapist-list-card';
                 card.innerHTML = `
@@ -2403,7 +2556,7 @@
                     <div class="therapist-list-body">
                         <h3>${t.name}</h3>
                         <div class="therapist-spec">${t.specialization}</div>
-                        <button class="btn-luxury-app" style="width: 100%; padding: 10px; font-size: 0.75rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${t.address || 'Location'}', '${imagesEscaped}')">
+                        <button class="btn-luxury-app" style="width: 100%; padding: 8px; font-size: 0.6rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${t.address || 'Location'}', '${imagesEscaped}')">
                             <span data-en="View Profile" data-hi="प्रोफ़ाइल देखें">View Profile</span>
                         </button>
                     </div>
@@ -2967,6 +3120,7 @@
                         el.setAttribute('data-orig-placeholder', el.placeholder);
                         if (el.id === 'promoInput') el.placeholder = "कूपन कोड";
                         if (el.id === 'chatAppInput') el.placeholder = "संदेश लिखें...";
+                        if (el.id === 'filterLocation') el.placeholder = "शहर का नाम...";
                     } else {
                         const orig = el.getAttribute('data-orig-placeholder');
                         if (orig) el.placeholder = orig;
@@ -3026,6 +3180,10 @@
         window.dismissSubmitSplash = dismissSubmitSplash;
         window.filterByCategory = filterByCategory;
         window.renderServices = renderServices;
+        window.openExpertFilterModal = openExpertFilterModal;
+        window.closeExpertFilterModal = closeExpertFilterModal;
+        window.applyExpertFilters = applyExpertFilters;
+        window.clearExpertFilters = clearExpertFilters;
     </script>
 </body>
 </html>
