@@ -107,11 +107,42 @@
             word-wrap: break-word;
         }
 
-        .msg img {
-            max-width: 100%;
-            border-radius: 5px;
-            margin-bottom: 5px;
+        .msg.image-msg {
+            padding: 4px 4px 6px 4px; /* WhatsApp Image Padding */
+        }
+
+        .img-container {
+            position: relative;
+            display: inline-block;
+            max-width: 260px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
             display: block;
+            border-radius: 6px;
+            margin-bottom: 2px;
+        }
+
+        /* WhatsApp-like Image Upload Loader Overlay */
+        .img-loading-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .whatsapp-spinner {
+            width: 40px; height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #008069;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
         .msg.received { background-color: #ffffff; border-top-left-radius: 0; }
@@ -129,6 +160,7 @@
 
         /* Message Time & Tick marks */
         .msg-info { float: right; margin: 6px 0 -5px 12px; display: inline-flex; align-items: center; gap: 4px; }
+        .image-msg .msg-info { margin: 2px 4px -2px 12px; } /* Slightly adjusted for images */
         .msg-time { font-size: 11px; color: #667781; }
         .tick-icon { width: 16px; height: 15px; }
 
@@ -231,11 +263,6 @@
         .delete-btn:hover { background-color: #ffebee; }
         .delete-btn .material-icons { color: #dc3545; font-size: 24px; }
 
-        /* Loader */
-        .loader {
-            display: none; width: 24px; height: 24px; border: 3px solid rgba(0,128,105,0.3);
-            border-radius: 50%; border-top-color: #008069; animation: spin 1s ease-in-out infinite;
-        }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -253,7 +280,6 @@
                 <div class="name" id="headerName">Live Support</div>
                 <div class="status" id="headerStatus">typically replies instantly</div>
             </div>
-            <!-- Video and Call removed, perfectly matching request -->
             <div class="header-actions">
                 <span class="material-icons">more_vert</span>
             </div>
@@ -262,13 +288,10 @@
         <!-- Chat Area -->
         <div class="chat-container" id="chatContainer">
             <div class="date-badge">TODAY</div>
-            <!-- Secret Admin Button -->
             <div class="secret-btn" onclick="openPasswordModal()"></div>
-            
             <div id="messagesArea"></div>
         </div>
 
-        <!-- Admin Users List (Hidden by default) -->
         <div id="adminUsersList"></div>
 
         <!-- Bottom Input Bar -->
@@ -277,10 +300,9 @@
                 <span class="material-icons" style="padding-left:0;">mood</span>
                 <input type="text" id="msgInput" placeholder="Message" onkeypress="checkEnter(event)" autocomplete="off">
                 <span class="material-icons" style="transform: rotate(-45deg);">attach_file</span>
-                <!-- Hidden file input for images -->
+                <!-- Hidden file input -->
                 <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="uploadAndSendImage(event)">
                 <span class="material-icons" style="padding-right:0;" onclick="document.getElementById('imageInput').click()">photo_camera</span>
-                <div class="loader" id="imgLoader" style="position: absolute; right: 15px;"></div>
             </div>
             <div class="action-btn" onclick="sendMsg()">
                 <span class="material-icons" id="actionIcon">send</span>
@@ -323,7 +345,7 @@
         // ImgBB API Key
         const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
 
-        // Fetch User Info from LocalStorage
+        // Fetch User Info
         let savedUser = JSON.parse(localStorage.getItem('oooo_user_data'));
         let clientData = {
             name: savedUser ? savedUser.name : "Guest Client",
@@ -331,7 +353,7 @@
         };
 
         // App States
-        let currentMode = "client"; // 'client' or 'admin'
+        let currentMode = "client"; 
         let activeChatPhone = clientData.phone; 
         let activeChatListener = null;
         let globalChatDeleteListener = null;
@@ -340,7 +362,6 @@
         const chatContainer = document.getElementById('chatContainer');
         const messagesArea = document.getElementById('messagesArea');
         const msgInput = document.getElementById('msgInput');
-        const actionIcon = document.getElementById('actionIcon');
         const adminUsersList = document.getElementById('adminUsersList');
         const bottomBar = document.getElementById('bottomBar');
         const headerName = document.getElementById('headerName');
@@ -348,33 +369,23 @@
         const backBtn = document.getElementById('backBtn');
         const headerProfilePic = document.getElementById('headerProfilePic');
 
-        // Exact WhatsApp Checkmarks (SVGs)
+        // Exact WhatsApp Checkmarks
         const singleTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M10.91 3.316l-.478-.372a.365.365 0 0 0-.51.063L5.666 9.879a.32.32 0 0 1-.484.033L3.89 8.587a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l1.547 1.512c.143.14.361.125.484-.033l4.982-6.393a.366.366 0 0 0-.064-.512z"/></svg>`;
         const doubleGreyTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
         const doubleBlueTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#53bdeb" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
 
-        // Init Client Chat Details in Firebase
         function initClientChat() {
             const userRef = ref(db, `chats/${clientData.phone}/userInfo`);
-            set(userRef, {
-                name: clientData.name,
-                phone: clientData.phone,
-                lastSeen: Date.now()
-            });
+            set(userRef, { name: clientData.name, phone: clientData.phone, lastSeen: Date.now() });
             loadChatMessages(clientData.phone);
             listenForAdminDeletion(clientData.phone);
         }
 
-        // Listener for Real-Time UI Clearing if Admin Deletes Chat
         function listenForAdminDeletion(phone) {
             const chatRootRef = ref(db, `chats/${phone}`);
-            if(globalChatDeleteListener) globalChatDeleteListener(); // unsubscribe
-            
+            if(globalChatDeleteListener) globalChatDeleteListener();
             globalChatDeleteListener = onValue(chatRootRef, (snapshot) => {
-                if(currentMode === 'client' && !snapshot.exists()) {
-                    // Chat has been completely deleted by admin
-                    messagesArea.innerHTML = '';
-                }
+                if(currentMode === 'client' && !snapshot.exists()) messagesArea.innerHTML = '';
             });
         }
 
@@ -387,37 +398,34 @@
             return `${h}:${m} ${ampm}`;
         }
 
-        // Load Messages Logic
         function loadChatMessages(phone) {
-            messagesArea.innerHTML = '';
             const messagesRef = ref(db, `chats/${phone}/messages`);
-            
-            if(activeChatListener) activeChatListener(); // Unsubscribe old
+            if(activeChatListener) activeChatListener();
             
             activeChatListener = onValue(messagesRef, (snapshot) => {
+                // Clear and re-render completely to ensure no duplicate temp msgs
+                const tempMsgs = Array.from(messagesArea.querySelectorAll('[id^="temp_"]'));
                 messagesArea.innerHTML = '';
+                
                 const data = snapshot.val();
                 if(data) {
                     Object.keys(data).forEach(key => {
                         const msg = data[key];
                         renderMessage(key, msg, phone);
-                        
-                        // Automatically Mark Read based on who is viewing
-                        if(currentMode === 'admin' && msg.sender === 'client' && msg.status !== 'read') {
-                            update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
-                        }
-                        if(currentMode === 'client' && msg.sender === 'admin' && msg.status !== 'read') {
-                            update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
-                        }
+                        if(currentMode === 'admin' && msg.sender === 'client' && msg.status !== 'read') update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
+                        if(currentMode === 'client' && msg.sender === 'admin' && msg.status !== 'read') update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
                     });
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 }
+                
+                // Re-append any still-loading temporary messages
+                tempMsgs.forEach(msg => messagesArea.appendChild(msg));
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             });
         }
 
-        // Render HTML for Message
         window.renderMessage = function(key, msg, phone) {
             let isSentByMe = (currentMode === 'client' && msg.sender === 'client') || (currentMode === 'admin' && msg.sender === 'admin');
+            let isImage = msg.type === 'image';
             
             let tickHTML = "";
             if (isSentByMe) {
@@ -426,15 +434,16 @@
                 else if (msg.status === 'read') tickHTML = doubleBlueTick;
             }
 
-            let contentHTML = msg.type === 'image' 
-                ? `<img src="${msg.text}" alt="Image">` 
+            let alignmentClass = isSentByMe ? 'sent' : 'received';
+            let msgClass = isImage ? `msg image-msg ${alignmentClass}` : `msg ${alignmentClass}`;
+            
+            let contentHTML = isImage 
+                ? `<div class="img-container"><img src="${msg.text}" alt="Image"></div>` 
                 : `${msg.text}`;
 
-            let alignmentClass = isSentByMe ? 'sent' : 'received';
-            
             let msgHTML = `
                 <div class="msg-wrapper ${alignmentClass}" onclick="promptDelete('${key}', '${phone}')">
-                    <div class="msg ${alignmentClass}">
+                    <div class="${msgClass}">
                         ${contentHTML}
                         <div class="msg-info">
                             <span class="msg-time">${formatTime(msg.timestamp)}</span>
@@ -446,96 +455,122 @@
             messagesArea.insertAdjacentHTML('beforeend', msgHTML);
         }
 
-        // Send Text Message
+        // WhatsApp Style Upload with Real-time Base64 without compression
+        window.uploadAndSendImage = function(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+
+            event.target.value = ""; // Reset input quickly
+
+            const tempId = "temp_" + Date.now();
+            const localUrl = URL.createObjectURL(file);
+            
+            // 1. Show instant WhatsApp style loader bubble
+            renderTempImageMessage(tempId, localUrl);
+
+            // 2. Read as Raw Base64 (Never fails on mobile Android)
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async () => {
+                const base64Image = reader.result.split(',')[1];
+                
+                const formData = new FormData();
+                formData.append('image', base64Image);
+                
+                try {
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { 
+                        method: 'POST', 
+                        body: formData 
+                    });
+                    const json = await res.json();
+                    
+                    if(json.success) {
+                        const imgUrl = json.data.url;
+                        
+                        if(currentMode === 'client') {
+                            const userRef = ref(db, `chats/${activeChatPhone}/userInfo`);
+                            update(userRef, { name: clientData.name, phone: clientData.phone, lastSeen: Date.now() });
+                        }
+
+                        const newMsgRef = push(ref(db, `chats/${activeChatPhone}/messages`));
+                        set(newMsgRef, { text: imgUrl, sender: currentMode, type: 'image', timestamp: Date.now(), status: 'sent' });
+
+                        // Remove temp bubble
+                        document.getElementById(tempId)?.remove();
+                    } else {
+                        markTempImageAsFailed(tempId);
+                    }
+                } catch(e) {
+                    markTempImageAsFailed(tempId);
+                }
+            };
+        }
+
+        function renderTempImageMessage(tempId, localUrl) {
+            let alignmentClass = 'sent';
+            let msgHTML = `
+                <div class="msg-wrapper ${alignmentClass}" id="${tempId}">
+                    <div class="msg image-msg ${alignmentClass}">
+                        <div class="img-container">
+                            <img src="${localUrl}" alt="Uploading">
+                            <div class="img-loading-overlay">
+                                <div class="whatsapp-spinner"></div>
+                            </div>
+                        </div>
+                        <div class="msg-info">
+                            <span class="msg-time">${formatTime(Date.now())}</span>
+                            <span class="material-icons" style="font-size:14px; color:#8696a0;">schedule</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesArea.insertAdjacentHTML('beforeend', msgHTML);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function markTempImageAsFailed(tempId) {
+            const el = document.getElementById(tempId);
+            if(el) {
+                const overlay = el.querySelector('.img-loading-overlay');
+                if(overlay) {
+                    overlay.innerHTML = `
+                        <div style="background:rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; color:white; display:flex; align-items:center; gap:6px; cursor:pointer;" onclick="document.getElementById('imageInput').click();">
+                            <span class="material-icons" style="font-size:18px;">error</span> Failed. Retry
+                        </div>
+                    `;
+                }
+            }
+        }
+
         window.sendMsg = function() {
             let text = msgInput.value.trim();
             if (text === '') return;
 
-            // Ensure userInfo exists if chat was wiped and user types again
             if(currentMode === 'client') {
                 const userRef = ref(db, `chats/${activeChatPhone}/userInfo`);
-                update(userRef, {
-                    name: clientData.name,
-                    phone: clientData.phone,
-                    lastSeen: Date.now()
-                });
+                update(userRef, { name: clientData.name, phone: clientData.phone, lastSeen: Date.now() });
             }
 
             const newMsgRef = push(ref(db, `chats/${activeChatPhone}/messages`));
-            set(newMsgRef, {
-                text: text,
-                sender: currentMode,
-                type: 'text',
-                timestamp: Date.now(),
-                status: 'sent'
-            });
-
+            set(newMsgRef, { text: text, sender: currentMode, type: 'text', timestamp: Date.now(), status: 'sent' });
             msgInput.value = '';
             
-            // Simulate 'delivered' status logic for realism if client sends
             if(currentMode === 'client') {
                 setTimeout(() => {
                     get(newMsgRef).then(snap => {
-                        if(snap.exists() && snap.val().status === 'sent') {
-                            update(newMsgRef, { status: 'delivered' });
-                        }
+                        if(snap.exists() && snap.val().status === 'sent') update(newMsgRef, { status: 'delivered' });
                     });
                 }, 1500);
             }
         }
 
-        // Upload and Send Image
-        window.uploadAndSendImage = async function(event) {
-            const file = event.target.files[0];
-            if(!file) return;
-
-            document.getElementById('imgLoader').style.display = 'block';
-            
-            const formData = new FormData();
-            formData.append('image', file);
-            
-            try {
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                const json = await res.json();
-                
-                if(json.success) {
-                    const imgUrl = json.data.url;
-                    
-                    if(currentMode === 'client') {
-                        const userRef = ref(db, `chats/${activeChatPhone}/userInfo`);
-                        update(userRef, { name: clientData.name, phone: clientData.phone, lastSeen: Date.now() });
-                    }
-
-                    const newMsgRef = push(ref(db, `chats/${activeChatPhone}/messages`));
-                    set(newMsgRef, {
-                        text: imgUrl,
-                        sender: currentMode,
-                        type: 'image',
-                        timestamp: Date.now(),
-                        status: 'sent'
-                    });
-                } else {
-                    alert("Image Upload Failed");
-                }
-            } catch(e) {
-                alert("Error Uploading Image");
-            }
-            
-            document.getElementById('imgLoader').style.display = 'none';
-            event.target.value = ""; // reset input
-        }
-
-        // Delete Single Message
         window.promptDelete = function(msgKey, phone) {
-            if(confirm("Delete this message?")) {
-                remove(ref(db, `chats/${phone}/messages/${msgKey}`));
-            }
+            if(confirm("Delete this message?")) remove(ref(db, `chats/${phone}/messages/${msgKey}`));
         }
 
-        // Entire Profile / Chat Delete by Admin (The exact feature you requested)
         window.deleteEntireProfile = function(phone, event) {
-            event.stopPropagation(); // Prevents opening the chat when clicking delete
-            if(confirm("Are you sure you want to delete this client's profile entirely? It will automatically wipe from their screen as well.")) {
+            event.stopPropagation();
+            if(confirm("Delete this entire chat? It will automatically wipe from the user's screen too.")) {
                 remove(ref(db, `chats/${phone}`));
             }
         }
@@ -547,23 +582,12 @@
         /* =========================================
            SECRET ADMIN MODE LOGIC
         ========================================= */
-        window.openPasswordModal = function() {
-            document.getElementById('passwordModal').style.display = 'flex';
-        }
-
-        window.closePasswordModal = function() {
-            document.getElementById('passwordModal').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
+        window.openPasswordModal = function() { document.getElementById('passwordModal').style.display = 'flex'; }
+        window.closePasswordModal = function() { document.getElementById('passwordModal').style.display = 'none'; document.getElementById('adminPassword').value = ''; }
 
         window.verifyAdmin = function() {
             const pass = document.getElementById('adminPassword').value;
-            if(pass === "1234") {
-                closePasswordModal();
-                enableAdminDashboard();
-            } else {
-                alert("Incorrect Passcode!");
-            }
+            if(pass === "1234") { closePasswordModal(); enableAdminDashboard(); } else { alert("Incorrect Passcode!"); }
         }
 
         function enableAdminDashboard() {
@@ -572,12 +596,10 @@
             bottomBar.style.display = 'none';
             adminUsersList.style.display = 'block';
             backBtn.style.display = 'none';
-            
             headerName.innerText = "WhatsApp Admin Panel";
             headerStatus.innerText = "All Active Customer Chats";
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg";
 
-            // Load all clients
             const chatsRef = ref(db, 'chats');
             onValue(chatsRef, (snapshot) => {
                 adminUsersList.innerHTML = '';
@@ -585,8 +607,6 @@
                 if(data && currentMode === 'admin') {
                     Object.keys(data).forEach(phone => {
                         const user = data[phone].userInfo || { name: 'Unknown', phone: phone };
-                        
-                        // Get Last Message
                         let lastMsgText = "No messages";
                         let lastMsgTime = "";
                         if(data[phone].messages) {
@@ -620,11 +640,9 @@
             chatContainer.style.display = 'flex';
             bottomBar.style.display = 'flex';
             backBtn.style.display = 'flex';
-
             headerName.innerText = name;
             headerStatus.innerText = phone;
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-
             loadChatMessages(phone);
         }
 
@@ -633,18 +651,14 @@
             bottomBar.style.display = 'none';
             adminUsersList.style.display = 'block';
             backBtn.style.display = 'none';
-            
             headerName.innerText = "WhatsApp Admin Panel";
             headerStatus.innerText = "All Active Customer Chats";
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg";
             activeChatPhone = null;
-            if(activeChatListener) activeChatListener(); // Stop listening to specific chat
+            if(activeChatListener) activeChatListener(); 
         }
 
-        // Boot Application
-        if (currentMode === "client") {
-            initClientChat();
-        }
+        if (currentMode === "client") initClientChat();
 
     </script>
 </body>
