@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="theme-color" content="#008069">
-    <title>Live Support - WhatsApp UI Ultra Premium</title>
+    <title>Live Support - WhatsApp UI</title>
     
     <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
-        /* CSS Variables for Easy Theme Tuning */
+        /* CSS Variables */
         :root {
             --wa-teal-dark: #008069;
             --wa-teal-light: #00a884;
@@ -26,7 +26,7 @@
             --wa-shadow-medium: rgba(0, 0, 0, 0.15);
         }
 
-        /* Global Reset */
+        /* Global Reset & Strict Body Lock for Mobile Keyboard */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -35,38 +35,43 @@
             -webkit-tap-highlight-color: transparent; 
         }
         
-        body, html {
+        html, body {
             width: 100%;
             height: 100%;
+            position: fixed; /* Prevents whole screen scrolling on mobile keypad popup */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
             background-color: #0c1317;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
 
-        /* Main Container */
+        /* Main Container - Dynamic Height Control */
         .app-container {
             width: 100%;
             height: 100%;
+            height: 100dvh; /* Dynamic Viewport Height */
             max-width: 450px;
             background-color: var(--wa-bg-color);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            border-radius: 0px;
         }
 
         @media (min-height: 700px) and (min-width: 500px) {
             .app-container {
                 height: 94vh;
                 border-radius: 18px;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
             }
         }
 
-        /* Top Header */
+        /* Header - Always Fixed at Top */
         .header {
             background-color: var(--wa-teal-dark);
             color: white;
@@ -76,6 +81,7 @@
             height: 62px;
             z-index: 10;
             box-shadow: 0 2px 6px var(--wa-shadow-medium);
+            flex-shrink: 0; /* Header won't resize or vanish */
         }
 
         .back-section { 
@@ -164,7 +170,7 @@
         .header-actions .icon-btn:active { background: rgba(255, 255, 255, 0.15); }
         .header-actions .material-icons { font-size: 22px; color: white; }
 
-        /* Chat Wallpaper & Container */
+        /* Scrollable Chat Area */
         .chat-container {
             flex: 1;
             padding: 14px 12px;
@@ -176,9 +182,10 @@
             background-size: 16px 16px;
             position: relative;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Date Indicator */
+        /* Date Badge */
         .date-badge {
             background-color: rgba(255, 255, 255, 0.92);
             color: #54656f;
@@ -195,7 +202,7 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        /* Chat Messages */
+        /* Messages */
         .msg-wrapper { 
             display: flex; 
             flex-direction: column; 
@@ -227,7 +234,6 @@
         }
 
         .msg:active { transform: scale(0.99); }
-
         .msg.image-msg { padding: 4px; }
 
         .img-container {
@@ -302,7 +308,7 @@
             border-left: 10px solid var(--wa-msg-sent);
         }
 
-        /* Message Info (Time & Ticks) */
+        /* Message Info */
         .msg-info { 
             float: right; 
             margin: 4px 0 -2px 10px; 
@@ -335,7 +341,7 @@
             vertical-align: middle;
         }
 
-        /* Bottom Input Bar */
+        /* Bottom Input Bar - Strictly Pinned Above Keypad */
         .bottom-bar { 
             display: flex; 
             align-items: center; 
@@ -343,6 +349,7 @@
             gap: 6px; 
             background: transparent; 
             z-index: 10;
+            flex-shrink: 0; /* Prevents input bar from squishing */
         }
 
         .input-box {
@@ -400,7 +407,7 @@
 
         .chat-container::-webkit-scrollbar { display: none; }
 
-        /* Secret Hidden Button in Center */
+        /* Secret Button */
         .secret-btn {
             position: absolute;
             top: 50%;
@@ -440,18 +447,8 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .modal-box h3 {
-            color: var(--wa-text-primary);
-            font-size: 19px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .modal-box p {
-            color: var(--wa-text-secondary);
-            font-size: 13px;
-            margin-bottom: 14px;
-        }
+        .modal-box h3 { color: var(--wa-text-primary); font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+        .modal-box p { color: var(--wa-text-secondary); font-size: 13px; margin-bottom: 14px; }
 
         .modal-box input {
             width: 100%; 
@@ -463,16 +460,11 @@
             outline: none;
             letter-spacing: 2px;
             text-align: center;
-            transition: border-color 0.2s;
         }
 
         .modal-box input:focus { border-color: var(--wa-teal-dark); }
 
-        .modal-btn-group {
-            display: flex; 
-            justify-content: center; 
-            gap: 10px;
-        }
+        .modal-btn-group { display: flex; justify-content: center; gap: 10px; }
 
         .modal-box button {
             flex: 1;
@@ -482,12 +474,10 @@
             font-size: 14.5px; 
             font-weight: 500;
             cursor: pointer; 
-            transition: opacity 0.2s;
         }
 
         .btn-primary { background: var(--wa-teal-dark); color: white; }
         .btn-danger { background: #ea868f; color: #842029; }
-        .modal-box button:active { opacity: 0.85; }
 
         /* Admin Users List View */
         #adminUsersList {
@@ -513,12 +503,10 @@
             align-items: center; 
             padding: 12px 16px; 
             cursor: pointer; 
-            transition: background 0.15s ease;
             border-bottom: 1px solid #f6f6f6;
         }
 
         .user-list-item:hover { background-color: #f5f6f6; }
-        .user-list-item:active { background-color: #e9edef; }
         .user-list-item .profile-pic { width: 48px; height: 48px; }
 
         .user-list-details { 
@@ -556,11 +544,9 @@
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            transition: background 0.2s, transform 0.1s;
         }
 
         .delete-btn:hover { background-color: #ffebee; }
-        .delete-btn:active { transform: scale(0.9); }
         .delete-btn .material-icons { color: #dc3545; font-size: 22px; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -568,7 +554,7 @@
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container" id="appContainer">
         
         <!-- Header -->
         <div class="header" id="appHeader">
@@ -635,6 +621,27 @@
         </div>
 
     </div>
+
+    <!-- Dynamic Keyboard Height Adjuster Script -->
+    <script>
+        // Automatic Dynamic Viewport Resizer for Mobile Keyboards
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', () => {
+                const app = document.getElementById('appContainer');
+                app.style.height = `${window.visualViewport.height}px`;
+                const chatArea = document.getElementById('chatContainer');
+                if(chatArea) chatArea.scrollTop = chatArea.scrollHeight;
+            });
+        }
+
+        // Auto Scroll Chat on Input Focus
+        document.getElementById('msgInput').addEventListener('focus', () => {
+            setTimeout(() => {
+                const chatArea = document.getElementById('chatContainer');
+                if(chatArea) chatArea.scrollTop = chatArea.scrollHeight;
+            }, 300);
+        });
+    </script>
 
     <!-- Firebase SDK Setup & Core Application Logic -->
     <script type="module">
@@ -767,12 +774,12 @@
             messagesArea.insertAdjacentHTML('beforeend', msgHTML);
         }
 
-        // WhatsApp-style Instant Base64 Upload Pipeline
+        // Base64 Upload Pipeline
         window.uploadAndSendImage = function(event) {
             const file = event.target.files[0];
             if(!file) return;
 
-            event.target.value = ""; // Reset input quickly
+            event.target.value = "";
 
             const tempId = "temp_" + Date.now();
             const localUrl = URL.createObjectURL(file);
@@ -844,7 +851,7 @@
                 if(overlay) {
                     overlay.innerHTML = `
                         <div style="background:rgba(0,0,0,0.75); padding: 8px 14px; border-radius: 20px; color:white; display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px;" onclick="document.getElementById('imageInput').click();">
-                            <span class="material-icons" style="font-size:18px; color:#ff6b6b;">error</span> Upload Failed. Retry
+                            <span class="material-icons" style="font-size:18px; color:#ff6b6b;">error</span> Failed. Retry
                         </div>
                     `;
                 }
@@ -889,7 +896,7 @@
         }
 
         /* =========================================
-           SECRET ADMIN MODE & NAVIGATION LOGIC
+           SECRET ADMIN MODE LOGIC
         ========================================= */
         window.openPasswordModal = function() { document.getElementById('passwordModal').style.display = 'flex'; }
         window.closePasswordModal = function() { document.getElementById('passwordModal').style.display = 'none'; document.getElementById('adminPassword').value = ''; }
