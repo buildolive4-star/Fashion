@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OOOO Spa - Executive Control Panel</title>
     <!-- Premium Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
             --text-muted: #A39F9E;
             --border-glow: rgba(212, 175, 55, 0.2);
             --border-light: rgba(255, 255, 255, 0.05);
-            --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-premium: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Basic Layout System Reset */
@@ -34,6 +34,7 @@
             padding: 0;
             box-sizing: border-box;
             outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -73,7 +74,7 @@
             background-color: var(--bg-velvet);
             border: 1px solid var(--border-glow);
             border-radius: 28px;
-            padding: 45px 35px;
+            padding: 40px 25px;
             max-width: 420px;
             width: 100%;
             text-align: center;
@@ -81,11 +82,11 @@
         }
 
         .login-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--gold-metallic);
             margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         /* Input Controls Admin styling */
@@ -93,16 +94,16 @@
             display: flex;
             flex-direction: column;
             text-align: left;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .glass-input-wrapper label {
             font-size: 0.7rem;
             color: var(--gold-metallic);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .glass-input {
@@ -110,10 +111,11 @@
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
             color: var(--white);
-            padding: 15px 20px;
+            padding: 14px 16px;
             font-size: 0.9rem;
             font-family: inherit;
             transition: var(--transition-premium);
+            width: 100%;
         }
 
         .glass-input:focus {
@@ -132,7 +134,7 @@
             background: var(--gold-gradient);
             color: var(--bg-obsidian);
             border: none;
-            padding: 16px 30px;
+            padding: 15px 25px;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -150,33 +152,52 @@
             background: var(--gold-gradient);
             color: #000;
             border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 12px 18px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         /* Dashboard Top Header Navigation Bar */
         .admin-nav-header {
-            height: 95px;
+            height: 75px;
             background-color: var(--bg-velvet);
             border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 45px;
-            z-index: 100;
+            padding: 0 20px;
+            z-index: 1000;
+            position: sticky;
+            top: 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--gold-metallic);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px;
         }
 
         .admin-logo {
             font-family: 'Cinzel', serif;
-            font-size: 1.9rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--gold-metallic);
-            letter-spacing: 3.5px;
+            letter-spacing: 2px;
             cursor: pointer;
         }
 
@@ -184,23 +205,43 @@
         .dashboard-container {
             display: flex;
             flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar overlay for mobile */
+        .sidebar-backdrop {
+            position: fixed;
+            top: 75px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 75px);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 800;
+            display: none;
+        }
+
+        .sidebar-backdrop.active {
+            display: block;
         }
 
         .dashboard-sidebar {
-            width: 280px;
+            width: 260px;
             background-color: var(--bg-velvet);
             border-right: 1px solid var(--border-light);
-            padding: 35px 25px;
+            padding: 25px 18px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 10px;
+            z-index: 900;
+            transition: var(--transition-premium);
         }
 
         .sidebar-tab-btn {
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 16px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
             text-align: left;
             font-size: 0.85rem;
@@ -208,21 +249,21 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             transition: var(--transition-premium);
         }
 
         .sidebar-tab-btn.active {
             color: var(--gold-metallic);
-            background-color: rgba(212, 175, 55, 0.05);
-            border-color: rgba(212, 175, 55, 0.15);
+            background-color: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.2);
         }
 
         .dashboard-content-panel {
             flex: 1;
-            padding: 45px 55px;
+            padding: 30px;
             overflow-y: auto;
-            max-height: calc(100vh - 95px);
+            max-height: calc(100vh - 75px);
         }
 
         .dashboard-pane {
@@ -233,33 +274,47 @@
             display: block;
         }
 
+        /* Responsive Grid Layouts */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .banner-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
         .admin-glass-card {
             background-color: var(--bg-velvet);
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 24px;
-            padding: 35px;
+            border-radius: 20px;
+            padding: 25px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .card-inner-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
             color: var(--gold-metallic);
             text-transform: uppercase;
             border-bottom: 1px solid var(--border-light);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
         /* Drag-drop file uploader */
         .drag-uploader-area {
             border: 2px dashed rgba(212, 175, 55, 0.3);
             border-radius: 16px;
-            padding: 35px 20px;
+            padding: 25px 15px;
             text-align: center;
             cursor: pointer;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: relative;
+            background: rgba(10,10,10,0.4);
         }
 
         .drag-uploader-area input[type="file"] {
@@ -284,7 +339,7 @@
         }
 
         .spinner-luxury {
-            width: 40px; height: 40px;
+            width: 38px; height: 38px;
             border: 3px solid rgba(212, 175, 55, 0.2);
             border-top-color: var(--gold-metallic);
             border-radius: 50%;
@@ -294,36 +349,103 @@
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .btn-delete-asset {
-            background: rgba(217, 83, 79, 0.1);
+            background: rgba(217, 83, 79, 0.12);
             color: #d9534f;
-            border: 1px solid #d9534f;
-            padding: 6px 12px;
-            border-radius: 6px;
+            border: 1px solid rgba(217, 83, 79, 0.4);
+            padding: 8px 14px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
         /* List Items */
         .generic-admin-item {
             background: rgba(10,10,10,0.8);
             border: 1px solid var(--border-light);
-            padding: 15px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
         .admin-toast-box {
             position: fixed;
-            bottom: 30px; right: 30px;
+            bottom: 20px; 
+            right: 20px;
+            left: 20px;
+            max-width: 350px;
+            margin: 0 auto;
             background: var(--bg-velvet);
             border: 1px solid var(--gold-metallic);
-            padding: 15px 25px;
+            color: var(--white);
+            padding: 14px 20px;
             border-radius: 12px;
             z-index: 100000;
             display: none;
+            text-align: center;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* MOBILE RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 900px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .banner-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .admin-nav-header {
+                height: 65px;
+                padding: 0 15px;
+            }
+
+            .admin-logo {
+                font-size: 1.1rem;
+            }
+
+            .dashboard-sidebar {
+                position: fixed;
+                top: 65px;
+                left: -280px;
+                height: calc(100vh - 65px);
+                width: 260px;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            }
+
+            .dashboard-sidebar.active {
+                left: 0;
+            }
+
+            .dashboard-content-panel {
+                padding: 20px 15px;
+                max-height: calc(100vh - 65px);
+            }
+
+            .admin-glass-card {
+                padding: 18px;
+                border-radius: 16px;
+            }
+
+            .btn-luxury-admin {
+                padding: 14px 18px;
+                font-size: 0.8rem;
+            }
+
+            #expertMap {
+                height: 220px !important;
+            }
         }
     </style>
 </head>
@@ -344,25 +466,38 @@
         </div>
     </div>
 
+    <!-- HEADER BAR -->
     <header class="admin-nav-header">
-        <div class="admin-logo">OOOO <span>EXECUTIVE</span></div>
-        <button class="btn-delete-asset" style="border: none; background: none; font-weight: 700;" onclick="location.reload()">LOGOUT</button>
+        <div class="header-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="admin-logo">OOOO <span>EXECUTIVE</span></div>
+        </div>
+        <button class="btn-delete-asset" style="border: none; background: none; font-weight: 700; color: #ff6b6b;" onclick="location.reload()">
+            <i class="fa-solid fa-right-from-bracket"></i> LOGOUT
+        </button>
     </header>
 
+    <!-- MOBILE BACKDROP -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+
     <div class="dashboard-container">
-        <aside class="dashboard-sidebar">
-            <button class="sidebar-tab-btn active" onclick="switchPane('overview')"><i class="fa-solid fa-chart-line"></i> Overview</button>
-            <button class="sidebar-tab-btn" onclick="switchPane('spa-menu')"><i class="fa-solid fa-spa"></i> Rituals & Menu</button>
-            <button class="sidebar-tab-btn" onclick="switchPane('therapists')"><i class="fa-solid fa-user-doctor"></i> Experts</button>
-            <button class="sidebar-tab-btn" onclick="switchPane('banners')"><i class="fa-solid fa-images"></i> Banners</button>
-            <button class="sidebar-tab-btn" onclick="switchPane('bookings')"><i class="fa-solid fa-calendar-check"></i> Bookings</button>
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <button class="sidebar-tab-btn active" onclick="switchPane('overview', this)"><i class="fa-solid fa-chart-line"></i> Overview</button>
+            <button class="sidebar-tab-btn" onclick="switchPane('spa-menu', this)"><i class="fa-solid fa-spa"></i> Rituals & Menu</button>
+            <button class="sidebar-tab-btn" onclick="switchPane('therapists', this)"><i class="fa-solid fa-user-doctor"></i> Experts</button>
+            <button class="sidebar-tab-btn" onclick="switchPane('banners', this)"><i class="fa-solid fa-images"></i> Banners</button>
+            <button class="sidebar-tab-btn" onclick="switchPane('bookings', this)"><i class="fa-solid fa-calendar-check"></i> Bookings</button>
         </aside>
 
+        <!-- MAIN CONTENT PANEL -->
         <main class="dashboard-content-panel">
             
             <!-- PANE: OVERVIEW -->
             <div class="dashboard-pane active" id="pane-overview">
-                <h1 style="margin-bottom: 20px;">System Dashboard</h1>
+                <h2 style="margin-bottom: 20px; font-size: 1.4rem;">System Dashboard</h2>
                 <div class="admin-glass-card">
                     <div class="card-inner-subtitle">Live Announcements</div>
                     <form onsubmit="handleWelcomeMsgSubmit(event)">
@@ -379,10 +514,10 @@
                 </div>
             </div>
 
-            <!-- PANE: SPA MENU (UPDATED) -->
+            <!-- PANE: SPA MENU -->
             <div class="dashboard-pane" id="pane-spa-menu">
-                <h1 style="margin-bottom: 20px;">Service Management</h1>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <h2 style="margin-bottom: 20px; font-size: 1.4rem;">Service Management</h2>
+                <div class="grid-2col">
                     <!-- LEFT: CATEGORIES -->
                     <div class="admin-glass-card">
                         <div class="card-inner-subtitle">Manage Categories</div>
@@ -394,7 +529,7 @@
                         <div id="activeCategoriesList"></div>
                     </div>
 
-                    <!-- RIGHT: RITUALS (WITH DESCRIPTION & CATEGORY) -->
+                    <!-- RIGHT: RITUALS -->
                     <div class="admin-glass-card" style="position: relative;">
                         <div class="luxury-loader-wrap" id="ritualLoader"><div class="spinner-luxury"></div></div>
                         <div class="card-inner-subtitle">Add New Ritual</div>
@@ -417,13 +552,13 @@
                                 <textarea id="ritualDescHi" class="glass-input" required></textarea>
                             </div>
 
-                            <div style="display: flex; gap: 15px;">
+                            <div style="display: flex; gap: 10px;">
                                 <div class="glass-input-wrapper" style="flex:1;"><label>Price (₹)</label><input type="number" id="ritualPrice" class="glass-input" required></div>
                                 <div class="glass-input-wrapper" style="flex:1;"><label>Duration (Min)</label><input type="number" id="ritualDuration" class="glass-input" required></div>
                             </div>
 
                             <div class="drag-uploader-area">
-                                <i class="fa-solid fa-camera fa-2x" style="color:var(--gold-metallic); margin-bottom:10px;"></i>
+                                <i class="fa-solid fa-camera fa-2x" style="color:var(--gold-metallic); margin-bottom:8px;"></i>
                                 <p style="color:var(--text-muted); font-size:0.8rem;">Upload Ritual Image</p>
                                 <input type="file" id="ritualFileSelect" accept="image/*" required>
                             </div>
@@ -432,7 +567,7 @@
                     </div>
                 </div>
 
-                <div class="admin-glass-card" style="margin-top: 30px;">
+                <div class="admin-glass-card" style="margin-top: 20px;">
                     <div class="card-inner-subtitle">Live Rituals Menu</div>
                     <div id="activeRitualsList"></div>
                 </div>
@@ -440,8 +575,8 @@
 
             <!-- PANE: THERAPISTS (EXPERTS) -->
             <div class="dashboard-pane" id="pane-therapists">
-                <h1 style="margin-bottom: 20px;">Expert Profiles</h1>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <h2 style="margin-bottom: 20px; font-size: 1.4rem;">Expert Profiles</h2>
+                <div class="grid-2col">
                     <div class="admin-glass-card" style="position: relative;">
                         <div class="luxury-loader-wrap" id="therapistLoader"><div class="spinner-luxury"></div></div>
                         <div class="card-inner-subtitle">Onboard Expert</div>
@@ -449,23 +584,24 @@
                             <div class="glass-input-wrapper"><label>Full Name</label><input type="text" id="tName" class="glass-input" required></div>
                             <div class="glass-input-wrapper"><label>Specialization</label><input type="text" id="tSpec" class="glass-input" required></div>
                             
-                            <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 20px;">
+                            <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 15px;">
                                 <div class="glass-input-wrapper" style="margin-bottom: 0; flex: 1;">
                                     <label>Pincode / Area Code</label>
-                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 122001" required>
+                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 110001" required>
                                 </div>
                                 <button type="button" class="btn-small-gold" onclick="searchPincode()" style="height: 48px;">Find on Map</button>
                             </div>
 
-                            <div id="expertMap" style="height: 250px; border-radius: 12px; margin-bottom: 20px;"></div>
+                            <div id="expertMap" style="height: 250px; border-radius: 12px; margin-bottom: 15px; width: 100%; border: 1px solid var(--border-light);"></div>
                             
-                            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                                <input type="text" id="tLat" class="glass-input" placeholder="Lat" readonly required>
-                                <input type="text" id="tLng" class="glass-input" placeholder="Lng" readonly required>
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <input type="text" id="tLat" class="glass-input" placeholder="Latitude" readonly required>
+                                <input type="text" id="tLng" class="glass-input" placeholder="Longitude" readonly required>
                             </div>
 
                             <div class="drag-uploader-area">
-                                <p>Upload Profile Photo</p>
+                                <i class="fa-solid fa-user fa-2x" style="color:var(--gold-metallic); margin-bottom:8px;"></i>
+                                <p style="color:var(--text-muted); font-size:0.8rem;">Upload Profile Photo</p>
                                 <input type="file" id="tFile" accept="image/*" required>
                             </div>
                             <button type="submit" class="btn-luxury-admin">Authorize Expert</button>
@@ -480,25 +616,25 @@
 
             <!-- PANE: BANNERS -->
             <div class="dashboard-pane" id="pane-banners">
-                <h1 style="margin-bottom: 20px;">App Banners</h1>
+                <h2 style="margin-bottom: 20px; font-size: 1.4rem;">App Banners</h2>
                 <div class="admin-glass-card" style="position: relative;">
                     <div class="luxury-loader-wrap" id="bannerLoader"><div class="spinner-luxury"></div></div>
                     <div class="card-inner-subtitle">Upload Slider Banners</div>
                     <form onsubmit="handleBannerSubmit(event)">
                         <div class="drag-uploader-area">
-                            <i class="fa-solid fa-images fa-2x" style="color:var(--gold-metallic);"></i>
-                            <p>Select multiple images</p>
+                            <i class="fa-solid fa-images fa-2x" style="color:var(--gold-metallic); margin-bottom:8px;"></i>
+                            <p style="color:var(--text-muted); font-size:0.8rem;">Select multiple banner images</p>
                             <input type="file" id="bannerFiles" accept="image/*" multiple required>
                         </div>
                         <button type="submit" class="btn-luxury-admin">Update App Slider</button>
                     </form>
                 </div>
-                <div id="activeBannersGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;"></div>
+                <div id="activeBannersGrid" class="banner-grid"></div>
             </div>
 
             <!-- PANE: BOOKINGS -->
             <div class="dashboard-pane" id="pane-bookings">
-                <h1 style="margin-bottom: 20px;">Reservations Queue</h1>
+                <h2 style="margin-bottom: 20px; font-size: 1.4rem;">Reservations Queue</h2>
                 <div id="activeBookingsList"></div>
             </div>
 
@@ -528,6 +664,17 @@
 
         let expertMap, expertMarker;
 
+        // MOBILE SIDEBAR TOGGLER
+        window.toggleSidebar = () => {
+            document.getElementById('dashboardSidebar').classList.toggle('active');
+            document.getElementById('sidebarBackdrop').classList.toggle('active');
+        };
+
+        window.closeSidebar = () => {
+            document.getElementById('dashboardSidebar').classList.remove('active');
+            document.getElementById('sidebarBackdrop').classList.remove('active');
+        };
+
         // AUTH LOGIC
         window.handleAdminLogin = (e) => {
             e.preventDefault();
@@ -541,12 +688,19 @@
         };
 
         // NAVIGATION
-        window.switchPane = (paneId) => {
+        window.switchPane = (paneId, btnEl) => {
             document.querySelectorAll('.dashboard-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.sidebar-tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('pane-' + paneId).classList.add('active');
-            event.currentTarget.classList.add('active');
-            if(paneId === 'therapists') setTimeout(() => expertMap.invalidateSize(), 200);
+            
+            if(btnEl) btnEl.classList.add('active');
+            closeSidebar();
+
+            if(paneId === 'therapists' && expertMap) {
+                setTimeout(() => {
+                    expertMap.invalidateSize();
+                }, 300);
+            }
         };
 
         function showToast(msg) {
@@ -556,10 +710,13 @@
             setTimeout(() => box.style.display = 'none', 3000);
         }
 
-        // MAP LOGIC
+        // LEAFLET MAP INITIALIZATION
         function initMap() {
+            if(expertMap) return;
             expertMap = L.map('expertMap').setView([28.6139, 77.2090], 11);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(expertMap);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(expertMap);
             
             expertMap.on('click', (e) => {
                 setMarker(e.latlng.lat, e.latlng.lng);
@@ -569,33 +726,54 @@
         function setMarker(lat, lng) {
             if(expertMarker) expertMap.removeLayer(expertMarker);
             expertMarker = L.marker([lat, lng]).addTo(expertMap);
-            document.getElementById('tLat').value = lat.toFixed(6);
-            document.getElementById('tLng').value = lng.toFixed(6);
+            document.getElementById('tLat').value = parseFloat(lat).toFixed(6);
+            document.getElementById('tLng').value = parseFloat(lng).toFixed(6);
         }
 
-        // PINCODE SEARCH (Uses OpenStreetMap Nominatim - FREE)
+        // DUAL-FALLBACK PINCODE SEARCH FIX
         window.searchPincode = async () => {
-            const pin = document.getElementById('tPin').value;
+            const pin = document.getElementById('tPin').value.trim();
             if(!pin) return alert("Please enter a pincode");
 
+            showToast("Searching location...");
+
             try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${pin}&country=India`);
-                const data = await res.json();
+                // Method 1: Geocode with Nominatim (Query with India suffix)
+                let res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(pin + ', India')}&limit=1`);
+                let data = await res.json();
+
+                // Method 2: If Nominatim misses, fetch District from India Postal API then geocode
+                if(!data || data.length === 0) {
+                    const postRes = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+                    const postData = await postRes.json();
+                    
+                    if(postData && postData[0].Status === "Success" && postData[0].PostOffice.length > 0) {
+                        const po = postData[0].PostOffice[0];
+                        const locQuery = `${po.Name}, ${po.District}, ${po.State}, India`;
+                        
+                        res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locQuery)}&limit=1`);
+                        data = await res.json();
+                    }
+                }
+
                 if(data && data.length > 0) {
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
-                    expertMap.setView([lat, lon], 14);
+                    
+                    expertMap.invalidateSize();
+                    expertMap.setView([lat, lon], 14, { animate: true });
                     setMarker(lat, lon);
-                    showToast("Pincode Found on Map");
+                    showToast("Location Set on Map!");
                 } else {
-                    alert("Pincode not found. Please click manually on map.");
+                    alert("Pincode location not found automatically. Please click manually on the map to set location.");
                 }
             } catch(e) {
-                alert("Error searching pincode");
+                console.error(e);
+                alert("Error searching pincode. Please select location manually on map.");
             }
         };
 
-        // IMAGE UPLOAD
+        // IMAGE UPLOAD PIPELINE
         async function uploadImg(file) {
             const form = new FormData();
             form.append('image', file);
@@ -604,7 +782,7 @@
             return json.data.url;
         }
 
-        // FORMS SUBMISSION
+        // FORMS SUBMISSIONS
         window.handleWelcomeMsgSubmit = async (e) => {
             e.preventDefault();
             await set(ref(db, 'system_settings/welcome_message'), {
@@ -646,12 +824,19 @@
                 });
                 e.target.reset();
                 showToast("Ritual Published Successfully");
-            } catch(e) { alert("Upload Failed"); }
+            } catch(err) { alert("Upload Failed"); }
             loader.style.display = 'none';
         };
 
         window.handleTherapistSubmit = async (e) => {
             e.preventDefault();
+            const lat = document.getElementById('tLat').value;
+            const lng = document.getElementById('tLng').value;
+
+            if(!lat || !lng) {
+                return alert("Please select a location on the map first!");
+            }
+
             const loader = document.getElementById('therapistLoader');
             loader.style.display = 'flex';
             try {
@@ -659,14 +844,14 @@
                 await push(ref(db, 'therapists'), {
                     name: document.getElementById('tName').value,
                     specialization: document.getElementById('tSpec').value,
-                    lat: parseFloat(document.getElementById('tLat').value),
-                    lng: parseFloat(document.getElementById('tLng').value),
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng),
                     image: imgUrl,
                     status: 'approved'
                 });
                 e.target.reset();
                 showToast("Expert Authorized");
-            } catch(e) { alert("Expert Onboarding Failed"); }
+            } catch(err) { alert("Expert Onboarding Failed"); }
             loader.style.display = 'none';
         };
 
@@ -683,7 +868,7 @@
             loader.style.display = 'none';
         };
 
-        // REAL-TIME DATA RENDERING
+        // REAL-TIME DATA LISTENERS
         onValue(ref(db, 'categories'), (s) => {
             const data = s.val();
             const list = document.getElementById('activeCategoriesList');
@@ -703,10 +888,10 @@
             if(data) Object.entries(data).forEach(([k,v]) => {
                 list.innerHTML += `
                     <div class="generic-admin-item">
-                        <div style="display:flex; align-items:center; gap:15px;">
-                            <img src="${v.image}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;">
-                            <div>
-                                <div style="font-weight:700;">${v.title.en}</div>
+                        <div style="display:flex; align-items:center; gap:12px; overflow:hidden;">
+                            <img src="${v.image}" style="width:45px; height:45px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+                            <div style="overflow:hidden;">
+                                <div style="font-weight:700; font-size:0.85rem; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;">${v.title?.en || 'Ritual'}</div>
                                 <div style="font-size:0.7rem; color:var(--gold-metallic);">${v.category} | ₹${v.price}</div>
                             </div>
                         </div>
@@ -731,8 +916,8 @@
             if(data) Object.entries(data).forEach(([k,v]) => {
                 grid.innerHTML += `
                     <div style="position:relative;">
-                        <img src="${v.url}" style="width:100%; border-radius:10px;">
-                        <button onclick="deleteNode('slider_images/${k}')" style="position:absolute; top:5px; right:5px; background:red; color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer;">×</button>
+                        <img src="${v.url}" style="width:100%; border-radius:10px; display:block;">
+                        <button onclick="deleteNode('slider_images/${k}')" style="position:absolute; top:5px; right:5px; background:red; color:white; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-weight:bold;">×</button>
                     </div>`;
             });
         });
@@ -744,13 +929,13 @@
             if(data) Object.entries(data).forEach(([k,v]) => {
                 list.innerHTML += `
                     <div class="admin-glass-card">
-                        <div style="display:flex; justify-content:space-between;">
-                            <strong>${v.user?.name} (${v.user?.phone})</strong>
-                            <span style="color:var(--gold-metallic)">${v.status || 'Pending'}</span>
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px;">
+                            <strong>${v.user?.name || 'Guest'} (${v.user?.phone || 'N/A'})</strong>
+                            <span style="color:var(--gold-metallic); font-size:0.8rem; font-weight:bold;">${v.status || 'Pending'}</span>
                         </div>
-                        <div style="margin-top:10px; font-size:0.85rem; color:var(--text-muted);">
-                            Ritual: ${v.service} <br>
-                            Schedule: ${v.dateTime}
+                        <div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted);">
+                            Ritual: ${v.service || 'N/A'} <br>
+                            Schedule: ${v.dateTime || 'N/A'}
                         </div>
                         <div style="margin-top:15px; display:flex; gap:10px;">
                             <button class="btn-small-gold" onclick="updateStatus('${k}', 'Approved')">Approve</button>
