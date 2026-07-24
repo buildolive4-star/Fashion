@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +139,7 @@
             border-top: 4px solid var(--primary-red);
         }
 
-        /* Top Persistent Glassmorphic Header (Made much smaller & elegant) */
+        /* Top Persistent Glassmorphic Header */
         .app-header {
             height: 70px;
             background: rgba(255, 255, 255, 0.95);
@@ -199,18 +198,20 @@
             border-color: var(--primary-red);
         }
 
-        .header-btn {
-            font-size: 1.2rem;
-            color: var(--primary-red);
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition-premium);
+        .header-btn-img-link {
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            transition: var(--transition-premium);
         }
-        .header-btn:active { transform: scale(0.9); }
+        .header-btn-img-link:active { transform: scale(0.9); }
+
+        .header-icon-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
 
         /* SPA Layout Viewports */
         .app-main {
@@ -327,11 +328,10 @@
             text-align: center;
             box-shadow: 0 8px 20px rgba(185, 19, 56, 0.25);
             text-transform: uppercase;
-            position: relative; /* REQUIRED FOR SHINE */
-            overflow: hidden; /* REQUIRED FOR SHINE */
+            position: relative;
+            overflow: hidden;
         }
 
-        /* THE SHINE ANIMATION CSS */
         .btn-luxury-app::after {
             content: '';
             position: absolute;
@@ -358,7 +358,7 @@
         }
         
         .btn-luxury-app:disabled::after {
-            display: none; /* No shine on disabled */
+            display: none;
         }
 
         .btn-luxury-app:active:not(:disabled) {
@@ -375,8 +375,47 @@
             box-shadow: var(--shadow-soft);
         }
 
-        /* ==================== 1. HOME SCREEN ==================== */
-        
+        /* ==================== WHATSAPP STRIP BANNER ==================== */
+        .whatsapp-strip-banner {
+            margin: 12px 20px 15px 20px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #FFFFFF;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition-premium);
+        }
+
+        .whatsapp-strip-banner:active {
+            transform: scale(0.97);
+        }
+
+        .whatsapp-strip-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-strip-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #FFFFFF;
+            letter-spacing: 0.2px;
+        }
+
+        .whatsapp-strip-img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
         /* Compact Welcome Box */
         .welcome-16-9-box {
             min-height: auto;
@@ -388,7 +427,7 @@
             background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
             border: 1px solid var(--border-light);
             border-radius: 16px;
-            margin: 10px 20px 20px 20px;
+            margin: 0 20px 20px 20px;
             padding: 15px 20px;
             box-shadow: var(--shadow-soft);
             overflow: hidden;
@@ -561,7 +600,6 @@
         }
 
         /* ==================== SERVICES MENU & SCREEN ==================== */
-        
         .category-scroll-container {
             display: flex;
             gap: 12px;
@@ -863,7 +901,7 @@
             color: var(--primary-red);
         }
 
-        /* ==================== BOOKING SCREEN FORM (COMPACTED WIZARD) ==================== */
+        /* ==================== BOOKING SCREEN FORM ==================== */
         .wizard-steps-row {
             display: flex;
             justify-content: space-between;
@@ -995,10 +1033,10 @@
             color: var(--primary-red);
         }
 
-        /* ==================== EXPERTS SCREEN (MODIFIED FOR 3-COLUMN GRID) ==================== */
+        /* EXPERTS SCREEN (3-COLUMN GRID) */
         .therapist-list-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 COLUMNS REQUIRED */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             padding: 0 15px 20px 15px;
         }
@@ -1029,21 +1067,21 @@
         }
 
         .therapist-list-body {
-            padding: 8px; /* REDUCED FOR 3 COLS */
+            padding: 8px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .therapist-list-body h3 {
-            font-size: 0.75rem; /* REDUCED FOR 3 COLS */
+            font-size: 0.75rem;
             color: var(--text-dark);
             margin-bottom: 4px;
             font-weight: 800;
         }
 
         .therapist-spec {
-            font-size: 0.6rem; /* REDUCED FOR 3 COLS */
+            font-size: 0.6rem;
             color: var(--primary-red);
             font-weight: 700;
             margin-bottom: 12px;
@@ -1181,7 +1219,7 @@
             height: 18px;
         }
 
-        /* Dynamic Description Overlay Screen for Experts - REBUILT FOR ABSOLUTE LUXURY */
+        /* Dynamic Description Overlay Screen for Experts */
         .therapist-desc-overlay {
             position: absolute;
             top: 0;
@@ -1603,11 +1641,9 @@
             </div>
             <div class="header-actions">
                 <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">हिन्दी</button>
-                <button class="header-btn" onclick="openConciergeChat()">
-                    <a href="https://ibb.co/nMyXkHHK" style="display: flex; align-items: center; justify-content: center; text-decoration: none;" onclick="event.preventDefault(); openConciergeChat();">
-                        <img src="https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png" alt="1000622952 removebg preview" style="height: 35px; width: auto; object-fit: contain;">
-                    </a>
-                </button>
+                <a href="j.html" class="header-btn-img-link">
+                    <img src="https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png" alt="Chat Icon" class="header-icon-img">
+                </a>
             </div>
         </header>
 
@@ -1629,15 +1665,12 @@
                     </div>
                 </div>
 
-                <!-- WHATSAPP BANNER STRIP BELOW CARD IMAGE -->
-                <a href="https://wa.me/919876543210" target="_blank" style="text-decoration: none; display: block; margin: 10px 20px 15px 20px;">
-                    <div style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; border-radius: 16px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3); border: 1px solid rgba(255,255,255,0.25); cursor: pointer; transition: transform 0.2s ease;">
-                        <div style="display: flex; flex-direction: column; gap: 3px; padding-right: 10px;">
-                            <span style="font-size: 0.82rem; font-weight: 800; letter-spacing: 0.2px; font-family: 'Montserrat', sans-serif;" data-en="Use WhatsApp from here to talk" data-hi="बात करने के लिए यहाँ से WhatsApp का उपयोग करें">बात करने के लिए यहाँ से WhatsApp का उपयोग करें</span>
-                            <span style="font-size: 0.65rem; opacity: 0.9; font-weight: 600;" data-en="Click to open WhatsApp chat directly" data-hi="सीधे व्हाट्सएप चैट खोलने के लिए क्लिक करें">Click to open WhatsApp chat directly</span>
-                        </div>
-                        <img src="https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png" alt="WhatsApp Contact Icon" style="height: 40px; width: auto; object-fit: contain; flex-shrink: 0;">
+                <!-- WHATSAPP STRIP BANNER BELOW CARD IMAGE -->
+                <a href="j.html" class="whatsapp-strip-banner">
+                    <div class="whatsapp-strip-content">
+                        <span class="whatsapp-strip-text" data-hi="बात करने के लिए यहाँ से WhatsApp का उपयोग करें" data-en="Use WhatsApp from here to chat with us">बात करने के लिए यहाँ से WhatsApp का उपयोग करें</span>
                     </div>
+                    <img src="https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png" alt="WhatsApp Icon" class="whatsapp-strip-img">
                 </a>
 
                 <!-- COMPACT WELCOME BOX -->
@@ -1738,14 +1771,13 @@
                         <div class="widget-input-wrap">
                             <label data-en="Treatment Location" data-hi="उपचार का स्थान">Treatment Location</label>
                             <select id="bookLocationType" onchange="updateLocationNotice()">
-                                <!-- Modified to have placeholder and reflect location specific logic -->
                                 <option value="" disabled selected data-en="Select Location..." data-hi="स्थान चुनें...">Select Location...</option>
                                 <option value="User Home" data-en="User Home" data-hi="उपयोगकर्ता का घर">User Home</option>
                                 <option value="Expert Nearby" data-en="Expert's Location/Studio" data-hi="विशेषज्ञ का स्थान/स्टूडियो">Expert's Location/Studio</option>
                             </select>
                         </div>
 
-                        <!-- Dynamic Notices (Advance Payment Logic) -->
+                        <!-- Dynamic Notices -->
                         <div class="spa-warning-notice" id="notice-home">
                             <i class="fa-solid fa-circle-exclamation" style="margin-right: 5px;"></i>
                             <span data-en="Home Service Notice: To guarantee safety and secure scheduling, an advance payment is required for home visits." data-hi="होम सर्विस सूचना: सुरक्षा और बुकिंग सुनिश्चित करने के लिए होम विजिट हेतु अग्रिम भुगतान (Advance Payment) अनिवार्य है।">Home Service Notice: To guarantee safety and secure scheduling, an advance payment is required for home visits.</span>
@@ -1761,7 +1793,7 @@
                         </label>
                     </div>
 
-                    <!-- Step 2 (Visual Expert Selection) -->
+                    <!-- Step 2 -->
                     <div class="wizard-pane" id="pane-2">
                         <div style="font-size:1rem; color:var(--text-dark); margin-bottom:15px; font-weight:800; text-transform:uppercase;" data-en="Choose Your Expert & Time" data-hi="विशेषज्ञ और समय चुनें">Choose Your Expert & Time</div>
                         
@@ -1810,7 +1842,7 @@
                 </div>
             </div>
 
-            <!-- SCREEN 4: DYNAMIC EXPERTS GRID WITH FILTER & 3 COLUMNS -->
+            <!-- SCREEN 4: EXPERTS GRID -->
             <div class="app-screen" id="screen-therapists">
                 <div class="section-header-app" style="padding-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
@@ -1904,7 +1936,7 @@
                         </div>
                         <span style="font-size: 0.8rem; color: var(--primary-red); font-weight: 800;">+91 98765 43210</span>
                     </a>
-                    <a href="https://wa.me/919876543210" class="channel-item" target="_blank">
+                    <a href="j.html" class="channel-item">
                         <div class="channel-left">
                             <i class="fa-brands fa-whatsapp"></i>
                             <span data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
@@ -2123,7 +2155,6 @@
             activeCategory: 'All Specialties'
         };
 
-        // Swipe tracking for expert dynamic images
         let currentPopupSlide = 0;
         let popupTotalSlides = 0;
 
@@ -2544,13 +2575,11 @@
             }
 
             list.forEach((t, index) => {
-                // Populate Hidden Select
                 const opt = document.createElement('option');
                 opt.value = t.name;
                 opt.text = t.name;
                 selectEl.appendChild(opt);
 
-                // Populate Visual Selection in Booking Step 2
                 const scrollCard = document.createElement('div');
                 scrollCard.className = `therapist-scroll-card ${index === 0 ? 'active-th' : ''}`;
                 scrollCard.setAttribute('data-name', t.name);
@@ -2569,7 +2598,6 @@
 
                 const imagesEscaped = t.images ? JSON.stringify(t.images).replace(/"/g, '&quot;') : '';
 
-                // Populate Main Grid Screen (NOW 3 COLUMNS)
                 const card = document.createElement('div');
                 card.className = 'therapist-list-card';
                 card.innerHTML = `
@@ -2627,7 +2655,6 @@
             const locVal = document.getElementById('bookLocationType').value;
             
             if (appState.wizardStep === 1) {
-                // Must have location selected and consent checked to proceed
                 if (consentCheckbox.checked && locVal && locVal !== "") {
                     nextBtn.disabled = false;
                 } else {
@@ -2985,7 +3012,7 @@
             appState.wizardStep = 1;
             appState.couponApplied = false;
             document.getElementById('bookSelectMenu').selectedIndex = 0;
-            document.getElementById('bookLocationType').selectedIndex = 0; // reset location select
+            document.getElementById('bookLocationType').selectedIndex = 0;
             document.getElementById('bookDateTimeInput').value = '';
             document.getElementById('promoInput').value = '';
             document.getElementById('promoStatusMessage').innerText = '';
@@ -3098,7 +3125,6 @@
             header.parentElement.classList.toggle('active');
         }
 
-        // REDIRECT TO NEW CHAT UI INSTEAD OF OPENING OVERLAY
         function openConciergeChat() {
             window.location.href = 'j.html';
         }
@@ -3202,13 +3228,11 @@
         
         function handleExpertSwipe() {
             if(popupTotalSlides <= 1) return;
-            // Swiped left (Next image)
             if(touchStartX - touchEndX > 50) {
                 if(currentPopupSlide < popupTotalSlides - 1) {
                     setPopupSlide(currentPopupSlide + 1, popupTotalSlides);
                 }
             }
-            // Swiped right (Prev image)
             if(touchEndX - touchStartX > 50) {
                 if(currentPopupSlide > 0) {
                     setPopupSlide(currentPopupSlide - 1, popupTotalSlides);
