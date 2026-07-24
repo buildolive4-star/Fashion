@@ -4,133 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#008069">
-    <title>Live Support - WhatsApp UI</title>
+    <title>Live Support - WhatsApp UI Ultra Premium</title>
     
-    <!-- Exact WhatsApp Android Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Fonts & Material Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
-        /* Base Reset */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; -webkit-tap-highlight-color: transparent; }
+        /* CSS Variables for Easy Theme Tuning */
+        :root {
+            --wa-teal-dark: #008069;
+            --wa-teal-light: #00a884;
+            --wa-bg-color: #efeae2;
+            --wa-msg-sent: #d9fdd3;
+            --wa-msg-received: #ffffff;
+            --wa-text-primary: #111b21;
+            --wa-text-secondary: #667781;
+            --wa-shadow-light: rgba(11, 20, 26, 0.08);
+            --wa-shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Global Reset */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
         
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #000;
+            background-color: #0c1317;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        /* Full Screen Mobile Container */
+        /* Main Container */
         .app-container {
             width: 100%;
             height: 100%;
             max-width: 450px;
-            background-color: #efeae2;
+            background-color: var(--wa-bg-color);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            border-radius: 0px;
         }
 
-        /* Top Header (Nav Bar) */
+        @media (min-height: 700px) and (min-width: 500px) {
+            .app-container {
+                height: 94vh;
+                border-radius: 18px;
+            }
+        }
+
+        /* Top Header */
         .header {
-            background-color: #008069;
+            background-color: var(--wa-teal-dark);
             color: white;
             display: flex;
             align-items: center;
-            padding: 10px 5px;
-            height: 60px;
+            padding: 10px 14px;
+            height: 62px;
             z-index: 10;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px var(--wa-shadow-medium);
         }
 
-        .back-section { display: flex; align-items: center; cursor: pointer; border-radius: 20px; padding: 2px 4px; transition: background 0.2s;}
+        .back-section { 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+            border-radius: 50%; 
+            padding: 6px; 
+            margin-right: 4px;
+            transition: background 0.2s ease;
+        }
         .back-section:active { background: rgba(255,255,255,0.2); }
-        .back-section .material-icons { font-size: 24px; margin-right: 2px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 12px; background: #ccc; cursor: pointer; }
+        .back-section .material-icons { font-size: 24px; }
+
+        .profile-pic-wrapper {
+            position: relative;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .profile-pic { 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            background: #e1e1e1; 
+            border: 1px solid rgba(255,255,255,0.2);
+            display: block;
+        }
+
+        .online-badge {
+            position: absolute;
+            bottom: 1px;
+            right: 1px;
+            width: 11px;
+            height: 11px;
+            background-color: #25D366;
+            border: 2px solid var(--wa-teal-dark);
+            border-radius: 50%;
+        }
         
-        .user-info { flex: 1; display: flex; flex-direction: column; justify-content: center; cursor: pointer; }
-        .name { font-size: 17px; font-weight: 500; letter-spacing: 0.3px; }
-        .status { font-size: 13px; opacity: 0.9; margin-top: 1px; }
+        .user-info { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            cursor: pointer; 
+            overflow: hidden;
+        }
 
-        .header-actions { display: flex; padding-right: 10px; align-items: center; gap: 20px; }
-        .header-actions .material-icons { font-size: 26px; cursor: pointer; }
+        .name { 
+            font-size: 16.5px; 
+            font-weight: 500; 
+            letter-spacing: 0.2px; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-        /* Chat Wallpaper & Area */
+        .status { 
+            font-size: 12px; 
+            opacity: 0.9; 
+            margin-top: 1px; 
+            font-weight: 300;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
+
+        .header-actions .icon-btn { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+        .header-actions .icon-btn:active { background: rgba(255, 255, 255, 0.15); }
+        .header-actions .material-icons { font-size: 22px; color: white; }
+
+        /* Chat Wallpaper & Container */
         .chat-container {
             flex: 1;
-            padding: 15px 10px;
+            padding: 14px 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            background-color: #efeae2;
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: var(--wa-bg-color);
+            background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0);
+            background-size: 16px 16px;
             position: relative;
+            scroll-behavior: smooth;
         }
 
-        /* Today Date Indicator */
+        /* Date Indicator */
         .date-badge {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.92);
             color: #54656f;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 500;
-            padding: 6px 14px;
-            border-radius: 10px;
+            letter-spacing: 0.3px;
+            padding: 5px 12px;
+            border-radius: 8px;
             align-self: center;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px var(--wa-shadow-light);
             z-index: 2;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        /* Messages */
-        .msg-wrapper { display: flex; flex-direction: column; margin-bottom: 12px; position: relative; cursor: pointer; }
+        /* Chat Messages */
+        .msg-wrapper { 
+            display: flex; 
+            flex-direction: column; 
+            margin-bottom: 8px; 
+            position: relative; 
+            animation: fadeInMsg 0.25s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+        }
+
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .msg-wrapper.sent { align-items: flex-end; }
         .msg-wrapper.received { align-items: flex-start; }
 
         .msg {
-            max-width: 85%;
-            padding: 6px 7px 8px 9px;
-            border-radius: 7.5px;
-            font-size: 15px;
-            line-height: 20px;
-            color: #111b21;
-            box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+            max-width: 82%;
+            padding: 7px 10px 8px 10px;
+            border-radius: 12px;
+            font-size: 14.5px;
+            line-height: 19px;
+            color: var(--wa-text-primary);
+            box-shadow: 0 1px 2px var(--wa-shadow-light);
             position: relative;
             word-wrap: break-word;
+            cursor: pointer;
+            transition: transform 0.1s ease;
         }
 
-        .msg.image-msg {
-            padding: 4px 4px 6px 4px; /* WhatsApp Image Padding */
-        }
+        .msg:active { transform: scale(0.99); }
+
+        .msg.image-msg { padding: 4px; }
 
         .img-container {
             position: relative;
             display: inline-block;
-            max-width: 260px;
-            border-radius: 6px;
+            max-width: 270px;
+            border-radius: 8px;
             overflow: hidden;
+            background: #e2e2e2;
         }
 
         .img-container img {
             width: 100%;
+            max-height: 320px;
+            object-fit: cover;
             display: block;
-            border-radius: 6px;
-            margin-bottom: 2px;
+            border-radius: 8px;
         }
 
-        /* WhatsApp-like Image Upload Loader Overlay */
+        /* Image Loader Overlay */
         .img-loading-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(2px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -138,108 +260,234 @@
         }
 
         .whatsapp-spinner {
-            width: 40px; height: 40px;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top-color: #008069;
+            width: 38px; height: 38px;
+            border: 3.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
-        .msg.received { background-color: #ffffff; border-top-left-radius: 0; }
-        .msg.sent { background-color: #d9fdd3; border-top-right-radius: 0; }
+        .msg.received { 
+            background-color: var(--wa-msg-received); 
+            border-top-left-radius: 0px; 
+        }
 
-        /* Perfect WhatsApp Message Tails */
+        .msg.sent { 
+            background-color: var(--wa-msg-sent); 
+            border-top-right-radius: 0px; 
+        }
+
+        /* Message Tails */
         .msg.received::before {
-            content: ''; position: absolute; top: 0; left: -10px; width: 0; height: 0;
-            border-top: 0px solid transparent; border-bottom: 13px solid transparent; border-right: 13px solid #ffffff;
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -8px; 
+            width: 0; 
+            height: 0;
+            border-top: 0px solid transparent; 
+            border-bottom: 10px solid transparent; 
+            border-right: 10px solid var(--wa-msg-received);
         }
+
         .msg.sent::before {
-            content: ''; position: absolute; top: 0; right: -10px; width: 0; height: 0;
-            border-top: 0px solid transparent; border-bottom: 13px solid transparent; border-left: 13px solid #d9fdd3;
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            right: -8px; 
+            width: 0; 
+            height: 0;
+            border-top: 0px solid transparent; 
+            border-bottom: 10px solid transparent; 
+            border-left: 10px solid var(--wa-msg-sent);
         }
 
-        /* Message Time & Tick marks */
-        .msg-info { float: right; margin: 6px 0 -5px 12px; display: inline-flex; align-items: center; gap: 4px; }
-        .image-msg .msg-info { margin: 2px 4px -2px 12px; } /* Slightly adjusted for images */
-        .msg-time { font-size: 11px; color: #667781; }
-        .tick-icon { width: 16px; height: 15px; }
+        /* Message Info (Time & Ticks) */
+        .msg-info { 
+            float: right; 
+            margin: 4px 0 -2px 10px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 3px; 
+        }
 
-        /* Bottom Input Area */
-        .bottom-bar { display: flex; align-items: flex-end; padding: 5px; gap: 6px; background: transparent; margin-bottom: 5px; z-index: 10;}
+        .image-msg .msg-info { 
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 2px 7px;
+            border-radius: 10px;
+            backdrop-filter: blur(4px);
+        }
+
+        .image-msg .msg-time { color: #ffffff !important; }
+
+        .msg-time { 
+            font-size: 10.5px; 
+            color: var(--wa-text-secondary); 
+            font-weight: 400;
+        }
+
+        .tick-icon { 
+            width: 15px; 
+            height: 14px; 
+            vertical-align: middle;
+        }
+
+        /* Bottom Input Bar */
+        .bottom-bar { 
+            display: flex; 
+            align-items: center; 
+            padding: 8px 8px 10px 8px; 
+            gap: 6px; 
+            background: transparent; 
+            z-index: 10;
+        }
 
         .input-box {
             flex: 1;
             background: #ffffff;
-            border-radius: 24px;
+            border-radius: 25px;
             display: flex;
-            align-items: flex-end;
-            padding: 10px 10px;
-            min-height: 48px;
-            box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+            align-items: center;
+            padding: 4px 12px;
+            min-height: 46px;
+            box-shadow: 0 1px 3px var(--wa-shadow-light);
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
-        .input-box .material-icons { color: #8696a0; font-size: 24px; padding: 0 8px; cursor: pointer; }
-        
+        .input-box .material-icons { 
+            color: #8696a0; 
+            font-size: 24px; 
+            padding: 4px; 
+            cursor: pointer; 
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .input-box .material-icons:hover { color: #54656f; }
+        .input-box .material-icons:active { transform: scale(0.9); }
+
         .input-box input {
             flex: 1;
             border: none;
             outline: none;
-            font-size: 16px;
-            padding: 0 5px;
-            margin-bottom: 2px;
+            font-size: 15.5px;
+            padding: 4px 8px;
             background: transparent;
-            color: #111b21;
+            color: var(--wa-text-primary);
         }
-        
-        .input-box input::placeholder { color: #8696a0; }
+
+        .input-box input::placeholder { color: #8696a0; font-weight: 400; }
 
         .action-btn {
-            width: 48px;
-            height: 48px;
-            background-color: #00a884;
+            width: 46px;
+            height: 46px;
+            background-color: var(--wa-teal-light);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+            box-shadow: 0 2px 5px var(--wa-shadow-medium);
             flex-shrink: 0;
+            transition: background-color 0.2s, transform 0.15s ease-out;
         }
-        .action-btn .material-icons { color: white; font-size: 24px; transition: transform 0.2s ease-in-out; }
+
+        .action-btn:hover { background-color: #008f70; }
+        .action-btn:active { transform: scale(0.92); }
+        .action-btn .material-icons { color: white; font-size: 22px; margin-left: 2px; }
 
         .chat-container::-webkit-scrollbar { display: none; }
 
-        /* Secret Button in Middle of Screen */
+        /* Secret Hidden Button in Center */
         .secret-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             background: transparent;
             z-index: 100;
             border-radius: 50%;
+            cursor: pointer;
         }
 
-        /* Password Modal */
+        /* Password Modal Styling */
         .modal-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 2000;
-            display: none; justify-content: center; align-items: center;
+            position: absolute; 
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(12, 19, 23, 0.75); 
+            z-index: 2000;
+            display: none; 
+            justify-content: center; 
+            align-items: center;
+            backdrop-filter: blur(6px);
+            animation: fadeIn 0.2s ease-out;
         }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .modal-box {
-            background: white; padding: 20px; border-radius: 10px; width: 80%; text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: #ffffff; 
+            padding: 24px; 
+            border-radius: 16px; 
+            width: 84%; 
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
+
+        .modal-box h3 {
+            color: var(--wa-text-primary);
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .modal-box p {
+            color: var(--wa-text-secondary);
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
         .modal-box input {
-            width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; outline: none;
+            width: 100%; 
+            padding: 12px 14px; 
+            margin-bottom: 18px; 
+            border: 1.5px solid #e1e1e1; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            outline: none;
+            letter-spacing: 2px;
+            text-align: center;
+            transition: border-color 0.2s;
         }
-        .modal-box input:focus { border-color: #008069; }
+
+        .modal-box input:focus { border-color: var(--wa-teal-dark); }
+
+        .modal-btn-group {
+            display: flex; 
+            justify-content: center; 
+            gap: 10px;
+        }
+
         .modal-box button {
-            background: #008069; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; transition: 0.2s;
+            flex: 1;
+            padding: 11px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 14.5px; 
+            font-weight: 500;
+            cursor: pointer; 
+            transition: opacity 0.2s;
         }
-        .modal-box button:active { background: #005c4b; }
+
+        .btn-primary { background: var(--wa-teal-dark); color: white; }
+        .btn-danger { background: #ea868f; color: #842029; }
+        .modal-box button:active { opacity: 0.85; }
 
         /* Admin Users List View */
         #adminUsersList {
@@ -248,20 +496,72 @@
             background: #ffffff;
             overflow-y: auto;
         }
+
+        .admin-list-header {
+            padding: 12px 16px 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--wa-teal-dark);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: #f8f9fa;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
         .user-list-item {
-            display: flex; align-items: center; padding: 12px 15px; cursor: pointer; transition: background 0.2s;
+            display: flex; 
+            align-items: center; 
+            padding: 12px 16px; 
+            cursor: pointer; 
+            transition: background 0.15s ease;
+            border-bottom: 1px solid #f6f6f6;
         }
+
         .user-list-item:hover { background-color: #f5f6f6; }
-        .user-list-item .profile-pic { width: 50px; height: 50px; }
-        .user-list-details { flex: 1; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid #f2f2f2; padding-bottom: 12px; }
-        .user-list-name { font-size: 17px; font-weight: 500; color: #111b21; margin-bottom: 3px; display: flex; justify-content: space-between;}
-        .user-list-phone { font-size: 14px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-        
-        .delete-btn {
-            padding: 10px; margin-left: 10px; cursor: pointer; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: 0.2s;
+        .user-list-item:active { background-color: #e9edef; }
+        .user-list-item .profile-pic { width: 48px; height: 48px; }
+
+        .user-list-details { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            margin-left: 12px;
+            overflow: hidden;
         }
+
+        .user-list-name { 
+            font-size: 16px; 
+            font-weight: 500; 
+            color: var(--wa-text-primary); 
+            margin-bottom: 3px; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-list-phone { 
+            font-size: 13.5px; 
+            color: var(--wa-text-secondary); 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+
+        .delete-btn {
+            padding: 8px; 
+            margin-left: 8px; 
+            cursor: pointer; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            transition: background 0.2s, transform 0.1s;
+        }
+
         .delete-btn:hover { background-color: #ffebee; }
-        .delete-btn .material-icons { color: #dc3545; font-size: 24px; }
+        .delete-btn:active { transform: scale(0.9); }
+        .delete-btn .material-icons { color: #dc3545; font-size: 22px; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -275,60 +575,73 @@
             <div class="back-section" id="backBtn" style="display: none;" onclick="goBackToAdminList()">
                 <span class="material-icons">arrow_back</span>
             </div>
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" class="profile-pic" id="headerProfilePic">
+            
+            <div class="profile-pic-wrapper">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile" class="profile-pic" id="headerProfilePic">
+                <div class="online-badge" id="onlineBadge"></div>
+            </div>
+
             <div class="user-info">
                 <div class="name" id="headerName">Live Support</div>
                 <div class="status" id="headerStatus">typically replies instantly</div>
             </div>
+
             <div class="header-actions">
-                <span class="material-icons">more_vert</span>
+                <div class="icon-btn"><span class="material-icons">videocam</span></div>
+                <div class="icon-btn"><span class="material-icons">call</span></div>
+                <div class="icon-btn"><span class="material-icons">more_vert</span></div>
             </div>
         </div>
 
         <!-- Chat Area -->
         <div class="chat-container" id="chatContainer">
             <div class="date-badge">TODAY</div>
+            <!-- Invisible Secret Trigger area in Middle -->
             <div class="secret-btn" onclick="openPasswordModal()"></div>
             <div id="messagesArea"></div>
         </div>
 
+        <!-- Admin Users List Container -->
         <div id="adminUsersList"></div>
 
         <!-- Bottom Input Bar -->
         <div class="bottom-bar" id="bottomBar">
             <div class="input-box">
-                <span class="material-icons" style="padding-left:0;">mood</span>
+                <span class="material-icons">sentiment_satisfied_alt</span>
                 <input type="text" id="msgInput" placeholder="Message" onkeypress="checkEnter(event)" autocomplete="off">
                 <span class="material-icons" style="transform: rotate(-45deg);">attach_file</span>
-                <!-- Hidden file input -->
+                
+                <!-- Hidden file input for native image upload -->
                 <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="uploadAndSendImage(event)">
-                <span class="material-icons" style="padding-right:0;" onclick="document.getElementById('imageInput').click()">photo_camera</span>
+                <span class="material-icons" onclick="document.getElementById('imageInput').click()">photo_camera</span>
             </div>
+            
             <div class="action-btn" onclick="sendMsg()">
                 <span class="material-icons" id="actionIcon">send</span>
             </div>
         </div>
 
-        <!-- Password Modal for Admin -->
+        <!-- Password Modal for Secret Admin Panel -->
         <div class="modal-overlay" id="passwordModal">
             <div class="modal-box">
-                <h3 style="color:#111b21;">Admin Access</h3>
-                <input type="password" id="adminPassword" placeholder="Enter Passcode">
-                <div style="display:flex; justify-content: center; gap: 10px;">
-                    <button onclick="verifyAdmin()">Login</button>
-                    <button style="background:#dc3545;" onclick="closePasswordModal()">Cancel</button>
+                <h3>Admin Access</h3>
+                <p>Enter secret PIN to view dashboard</p>
+                <input type="password" id="adminPassword" placeholder="••••" maxlength="8">
+                <div class="modal-btn-group">
+                    <button class="btn-primary" onclick="verifyAdmin()">Login</button>
+                    <button class="btn-danger" onclick="closePasswordModal()">Cancel</button>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Firebase SDK Setup -->
+    <!-- Firebase SDK Setup & Core Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Firebase Configuration
+        // Firebase Realtime Config
         const firebaseConfig = {
           apiKey: "AIzaSyB0asuJKj9wyoInuS6_mhLdWDo4OkAM_k4",
           authDomain: "oooo-67c5c.firebaseapp.com",
@@ -342,23 +655,23 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // ImgBB API Key
+        // ImgBB API Key for Image Uploads
         const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
 
-        // Fetch User Info
+        // Fetch / Retrieve Local User Data
         let savedUser = JSON.parse(localStorage.getItem('oooo_user_data'));
         let clientData = {
             name: savedUser ? savedUser.name : "Guest Client",
             phone: savedUser ? savedUser.phone : "Unknown_" + Math.floor(Math.random() * 10000)
         };
 
-        // App States
+        // Internal State Controllers
         let currentMode = "client"; 
         let activeChatPhone = clientData.phone; 
         let activeChatListener = null;
         let globalChatDeleteListener = null;
 
-        // UI Elements
+        // UI Reference Handles
         const chatContainer = document.getElementById('chatContainer');
         const messagesArea = document.getElementById('messagesArea');
         const msgInput = document.getElementById('msgInput');
@@ -368,8 +681,9 @@
         const headerStatus = document.getElementById('headerStatus');
         const backBtn = document.getElementById('backBtn');
         const headerProfilePic = document.getElementById('headerProfilePic');
+        const onlineBadge = document.getElementById('onlineBadge');
 
-        // Exact WhatsApp Checkmarks
+        // SVG Ticks (WhatsApp Vector Icons)
         const singleTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M10.91 3.316l-.478-.372a.365.365 0 0 0-.51.063L5.666 9.879a.32.32 0 0 1-.484.033L3.89 8.587a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l1.547 1.512c.143.14.361.125.484-.033l4.982-6.393a.366.366 0 0 0-.064-.512z"/></svg>`;
         const doubleGreyTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
         const doubleBlueTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#53bdeb" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
@@ -403,7 +717,6 @@
             if(activeChatListener) activeChatListener();
             
             activeChatListener = onValue(messagesRef, (snapshot) => {
-                // Clear and re-render completely to ensure no duplicate temp msgs
                 const tempMsgs = Array.from(messagesArea.querySelectorAll('[id^="temp_"]'));
                 messagesArea.innerHTML = '';
                 
@@ -417,7 +730,6 @@
                     });
                 }
                 
-                // Re-append any still-loading temporary messages
                 tempMsgs.forEach(msg => messagesArea.appendChild(msg));
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             });
@@ -455,7 +767,7 @@
             messagesArea.insertAdjacentHTML('beforeend', msgHTML);
         }
 
-        // WhatsApp Style Upload with Real-time Base64 without compression
+        // WhatsApp-style Instant Base64 Upload Pipeline
         window.uploadAndSendImage = function(event) {
             const file = event.target.files[0];
             if(!file) return;
@@ -465,10 +777,8 @@
             const tempId = "temp_" + Date.now();
             const localUrl = URL.createObjectURL(file);
             
-            // 1. Show instant WhatsApp style loader bubble
             renderTempImageMessage(tempId, localUrl);
 
-            // 2. Read as Raw Base64 (Never fails on mobile Android)
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = async () => {
@@ -495,7 +805,6 @@
                         const newMsgRef = push(ref(db, `chats/${activeChatPhone}/messages`));
                         set(newMsgRef, { text: imgUrl, sender: currentMode, type: 'image', timestamp: Date.now(), status: 'sent' });
 
-                        // Remove temp bubble
                         document.getElementById(tempId)?.remove();
                     } else {
                         markTempImageAsFailed(tempId);
@@ -519,7 +828,7 @@
                         </div>
                         <div class="msg-info">
                             <span class="msg-time">${formatTime(Date.now())}</span>
-                            <span class="material-icons" style="font-size:14px; color:#8696a0;">schedule</span>
+                            <span class="material-icons" style="font-size:13px; color:#ffffff;">schedule</span>
                         </div>
                     </div>
                 </div>
@@ -534,8 +843,8 @@
                 const overlay = el.querySelector('.img-loading-overlay');
                 if(overlay) {
                     overlay.innerHTML = `
-                        <div style="background:rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; color:white; display:flex; align-items:center; gap:6px; cursor:pointer;" onclick="document.getElementById('imageInput').click();">
-                            <span class="material-icons" style="font-size:18px;">error</span> Failed. Retry
+                        <div style="background:rgba(0,0,0,0.75); padding: 8px 14px; border-radius: 20px; color:white; display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px;" onclick="document.getElementById('imageInput').click();">
+                            <span class="material-icons" style="font-size:18px; color:#ff6b6b;">error</span> Upload Failed. Retry
                         </div>
                     `;
                 }
@@ -570,7 +879,7 @@
 
         window.deleteEntireProfile = function(phone, event) {
             event.stopPropagation();
-            if(confirm("Delete this entire chat? It will automatically wipe from the user's screen too.")) {
+            if(confirm("Delete this entire conversation? It will be cleared immediately from client view as well.")) {
                 remove(ref(db, `chats/${phone}`));
             }
         }
@@ -580,7 +889,7 @@
         }
 
         /* =========================================
-           SECRET ADMIN MODE LOGIC
+           SECRET ADMIN MODE & NAVIGATION LOGIC
         ========================================= */
         window.openPasswordModal = function() { document.getElementById('passwordModal').style.display = 'flex'; }
         window.closePasswordModal = function() { document.getElementById('passwordModal').style.display = 'none'; document.getElementById('adminPassword').value = ''; }
@@ -596,18 +905,19 @@
             bottomBar.style.display = 'none';
             adminUsersList.style.display = 'block';
             backBtn.style.display = 'none';
-            headerName.innerText = "WhatsApp Admin Panel";
-            headerStatus.innerText = "All Active Customer Chats";
+            onlineBadge.style.display = 'none';
+            headerName.innerText = "WhatsApp Support Admin";
+            headerStatus.innerText = "All Customer Live Chats";
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg";
 
             const chatsRef = ref(db, 'chats');
             onValue(chatsRef, (snapshot) => {
-                adminUsersList.innerHTML = '';
+                adminUsersList.innerHTML = '<div class="admin-list-header">Active Support Conversations</div>';
                 const data = snapshot.val();
                 if(data && currentMode === 'admin') {
                     Object.keys(data).forEach(phone => {
                         const user = data[phone].userInfo || { name: 'Unknown', phone: phone };
-                        let lastMsgText = "No messages";
+                        let lastMsgText = "No messages yet";
                         let lastMsgTime = "";
                         if(data[phone].messages) {
                             const msgs = Object.values(data[phone].messages);
@@ -620,11 +930,14 @@
                             <div class="user-list-item" onclick="openAdminChat('${phone}', '${user.name}')">
                                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="profile-pic">
                                 <div class="user-list-details">
-                                    <div class="user-list-name">${user.name} <span style="font-size:12px; font-weight:normal; color:#667781;">${lastMsgTime}</span></div>
+                                    <div class="user-list-name">
+                                        <span>${user.name}</span>
+                                        <span style="font-size:11.5px; font-weight:normal; color:#8696a0;">${lastMsgTime}</span>
+                                    </div>
                                     <div class="user-list-phone">${lastMsgText}</div>
                                 </div>
-                                <div class="delete-btn" onclick="deleteEntireProfile('${phone}', event)">
-                                    <span class="material-icons">delete</span>
+                                <div class="delete-btn" onclick="deleteEntireProfile('${phone}', event)" title="Delete Chat">
+                                    <span class="material-icons">delete_outline</span>
                                 </div>
                             </div>
                         `;
@@ -640,6 +953,7 @@
             chatContainer.style.display = 'flex';
             bottomBar.style.display = 'flex';
             backBtn.style.display = 'flex';
+            onlineBadge.style.display = 'block';
             headerName.innerText = name;
             headerStatus.innerText = phone;
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -651,8 +965,9 @@
             bottomBar.style.display = 'none';
             adminUsersList.style.display = 'block';
             backBtn.style.display = 'none';
-            headerName.innerText = "WhatsApp Admin Panel";
-            headerStatus.innerText = "All Active Customer Chats";
+            onlineBadge.style.display = 'none';
+            headerName.innerText = "WhatsApp Support Admin";
+            headerStatus.innerText = "All Customer Live Chats";
             headerProfilePic.src = "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg";
             activeChatPhone = null;
             if(activeChatListener) activeChatListener(); 
