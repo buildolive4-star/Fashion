@@ -587,7 +587,7 @@
                             <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 15px;">
                                 <div class="glass-input-wrapper" style="margin-bottom: 0; flex: 1;">
                                     <label>Pincode / Area Code</label>
-                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 110001" required>
+                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 600041" maxlength="6" required>
                                 </div>
                                 <button type="button" class="btn-small-gold" onclick="searchPincode()" style="height: 48px;">Find on Map</button>
                             </div>
@@ -696,8 +696,9 @@
             if(btnEl) btnEl.classList.add('active');
             closeSidebar();
 
-            if(paneId === 'therapists' && expertMap) {
+            if(paneId === 'therapists') {
                 setTimeout(() => {
+                    if(!expertMap) initMap();
                     expertMap.invalidateSize();
                 }, 300);
             }
@@ -730,48 +731,82 @@
             document.getElementById('tLng').value = parseFloat(lng).toFixed(6);
         }
 
-        // DUAL-FALLBACK PINCODE SEARCH FIX
+        // MULTI-LAYER PINCODE GEOCODING ENGINE
         window.searchPincode = async () => {
             const pin = document.getElementById('tPin').value.trim();
-            if(!pin) return alert("Please enter a pincode");
+            if(!pin || pin.length < 6) return alert("Kripya 6-digit ka sahi Indian Pincode darj karein");
 
-            showToast("Searching location...");
+            showToast("Searching pincode location...");
+
+            // Ensure map initialized
+            if(!expertMap) initMap();
 
             try {
-                // Method 1: Geocode with Nominatim (Query with India suffix)
-                let res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(pin + ', India')}&limit=1`);
-                let data = await res.json();
-
-                // Method 2: If Nominatim misses, fetch District from India Postal API then geocode
-                if(!data || data.length === 0) {
-                    const postRes = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
-                    const postData = await postRes.json();
-                    
-                    if(postData && postData[0].Status === "Success" && postData[0].PostOffice.length > 0) {
-                        const po = postData[0].PostOffice[0];
-                        const locQuery = `${po.Name}, ${po.District}, ${po.State}, India`;
-                        
-                        res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locQuery)}&limit=1`);
-                        data = await res.json();
+                // LAYER 1: Zippopotam API (Fastest for Indian 6-digit Pincodes)
+                try {
+                    const zipRes = await fetch(`https://api.zippopotam.us/IN/${pin}`);
+                    if(zipRes.ok) {
+                        const zipData = await zipRes.json();
+                        if(zipData && zipData.places && zipData.places.length > 0) {
+                            const place = zipData.places[0];
+                            const lat = parseFloat(place.latitude);
+                            const lon = parseFloat(place.longitude);
+                            
+                            if(!isNaN(lat) && !isNaN(lon)) {
+                                applyMapLocation(lat, lon, `${place['place name']}, ${place.state}`);
+                                return;
+                            }
+                        }
                     }
-                }
+                } catch(e) { console.log("Zippopotam fallback..."); }
 
-                if(data && data.length > 0) {
-                    const lat = parseFloat(data[0].lat);
-                    const lon = parseFloat(data[0].lon);
-                    
-                    expertMap.invalidateSize();
-                    expertMap.setView([lat, lon], 14, { animate: true });
-                    setMarker(lat, lon);
-                    showToast("Location Set on Map!");
-                } else {
-                    alert("Pincode location not found automatically. Please click manually on the map to set location.");
-                }
-            } catch(e) {
-                console.error(e);
-                alert("Error searching pincode. Please select location manually on map.");
+                // LAYER 2: Nominatim Structured Postal Search
+                try {
+                    const nomRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${pin}&country=India&limit=1`);
+                    if(nomRes.ok) {
+                        const nomData = await nomRes.json();
+                        if(nomData && nomData.length > 0) {
+                            const lat = parseFloat(nomData[0].lat);
+                            const lon = parseFloat(nomData[0].lon);
+                            applyMapLocation(lat, lon, nomData[0].display_name);
+                            return;
+                        }
+                    }
+                } catch(e) { console.log("Nominatim fallback..."); }
+
+                // LAYER 3: India Postal API -> Geocode District
+                try {
+                    const postRes = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+                    if(postRes.ok) {
+                        const postData = await postRes.json();
+                        if(postData && postData[0] && postData[0].Status === "Success" && postData[0].PostOffice.length > 0) {
+                            const po = postData[0].PostOffice[0];
+                            const locQuery = `${po.District}, ${po.State}, India`;
+                            
+                            const fallbackRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locQuery)}&limit=1`);
+                            const fallbackData = await fallbackRes.json();
+                            if(fallbackData && fallbackData.length > 0) {
+                                applyMapLocation(parseFloat(fallbackData[0].lat), parseFloat(fallbackData[0].lon), `${po.District}, ${po.State}`);
+                                return;
+                            }
+                        }
+                    }
+                } catch(e) { console.log("Postal API fallback..."); }
+
+                alert("Pincode location auto-detect nahi ho saki. Kripya map par click karke point set karein.");
+
+            } catch(err) {
+                console.error(err);
+                alert("Error searching location. Kripya map par click karke point set karein.");
             }
         };
+
+        function applyMapLocation(lat, lon, label) {
+            expertMap.invalidateSize();
+            expertMap.setView([lat, lon], 14, { animate: true });
+            setMarker(lat, lon);
+            showToast(`Location Found: ${label || 'Area Set'}`);
+        }
 
         // IMAGE UPLOAD PIPELINE
         async function uploadImg(file) {
@@ -834,7 +869,7 @@
             const lng = document.getElementById('tLng').value;
 
             if(!lat || !lng) {
-                return alert("Please select a location on the map first!");
+                return alert("Kripya pehle Map par point/location select karein!");
             }
 
             const loader = document.getElementById('therapistLoader');
