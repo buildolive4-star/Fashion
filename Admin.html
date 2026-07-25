@@ -579,15 +579,33 @@
                 <div class="grid-2col">
                     <div class="admin-glass-card" style="position: relative;">
                         <div class="luxury-loader-wrap" id="therapistLoader"><div class="spinner-luxury"></div></div>
-                        <div class="card-inner-subtitle">Onboard Expert</div>
-                        <form onsubmit="handleTherapistSubmit(event)">
-                            <div class="glass-input-wrapper"><label>Full Name</label><input type="text" id="tName" class="glass-input" required></div>
-                            <div class="glass-input-wrapper"><label>Specialization</label><input type="text" id="tSpec" class="glass-input" required></div>
+                        <div class="card-inner-subtitle" id="therapistFormTitle">Onboard Expert</div>
+                        <form id="therapistForm" onsubmit="handleTherapistSubmit(event)">
+                            <div class="glass-input-wrapper">
+                                <label>Full Name</label>
+                                <input type="text" id="tName" class="glass-input" required>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px;">
+                                <div class="glass-input-wrapper" style="flex: 1;">
+                                    <label>Gender</label>
+                                    <select id="tGender" class="glass-input" required>
+                                        <option value="">-- Select Gender --</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="glass-input-wrapper" style="flex: 1;">
+                                    <label>Experience (Years)</label>
+                                    <input type="number" id="tExp" class="glass-input" placeholder="e.g. 5" min="0" required>
+                                </div>
+                            </div>
                             
                             <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 15px;">
                                 <div class="glass-input-wrapper" style="margin-bottom: 0; flex: 1;">
                                     <label>Pincode / Area Code</label>
-                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 600041" maxlength="6" required>
+                                    <input type="text" id="tPin" class="glass-input" placeholder="e.g. 600041" maxlength="6">
                                 </div>
                                 <button type="button" class="btn-small-gold" onclick="searchPincode()" style="height: 48px;">Find on Map</button>
                             </div>
@@ -600,11 +618,15 @@
                             </div>
 
                             <div class="drag-uploader-area">
-                                <i class="fa-solid fa-user fa-2x" style="color:var(--gold-metallic); margin-bottom:8px;"></i>
-                                <p style="color:var(--text-muted); font-size:0.8rem;">Upload Profile Photo</p>
-                                <input type="file" id="tFile" accept="image/*" required>
+                                <i class="fa-solid fa-images fa-2x" style="color:var(--gold-metallic); margin-bottom:8px;"></i>
+                                <p style="color:var(--text-muted); font-size:0.8rem;" id="tFileText">Upload Profile Photos (Multiple Allowed)</p>
+                                <input type="file" id="tFiles" accept="image/*" multiple required>
                             </div>
-                            <button type="submit" class="btn-luxury-admin">Authorize Expert</button>
+
+                            <div style="display: flex; gap: 10px;">
+                                <button type="submit" id="tSubmitBtn" class="btn-luxury-admin">Authorize Expert</button>
+                                <button type="button" id="tCancelEditBtn" class="btn-delete-asset" style="display: none; height: 48px; padding: 0 20px;" onclick="cancelTherapistEdit()">Cancel Edit</button>
+                            </div>
                         </form>
                     </div>
                     <div class="admin-glass-card">
@@ -663,6 +685,9 @@
         const IMGBB_KEY = "2fa045f121169adcec34f55432b505ae";
 
         let expertMap, expertMarker;
+        let therapistsCache = {};
+        let editingTherapistKey = null;
+        let existingTherapistImages = [];
 
         // MOBILE SIDEBAR TOGGLER
         window.toggleSidebar = () => {
@@ -817,6 +842,15 @@
             return json.data.url;
         }
 
+        async function uploadMultipleImgs(files) {
+            const urls = [];
+            for(let f of files) {
+                const u = await uploadImg(f);
+                urls.push(u);
+            }
+            return urls;
+        }
+
         // FORMS SUBMISSIONS
         window.handleWelcomeMsgSubmit = async (e) => {
             e.preventDefault();
@@ -863,6 +897,7 @@
             loader.style.display = 'none';
         };
 
+        // THERAPIST SUBMIT (ADD & EDIT)
         window.handleTherapistSubmit = async (e) => {
             e.preventDefault();
             const lat = document.getElementById('tLat').value;
@@ -874,20 +909,86 @@
 
             const loader = document.getElementById('therapistLoader');
             loader.style.display = 'flex';
+
             try {
-                const imgUrl = await uploadImg(document.getElementById('tFile').files[0]);
-                await push(ref(db, 'therapists'), {
+                const files = document.getElementById('tFiles').files;
+                let imageUrls = [];
+
+                if(editingTherapistKey) {
+                    if(files.length > 0) {
+                        imageUrls = await uploadMultipleImgs(files);
+                    } else {
+                        imageUrls = existingTherapistImages || [];
+                    }
+                } else {
+                    if(files.length === 0) {
+                        loader.style.display = 'none';
+                        return alert("Kripya kam se kam ek photo select karein!");
+                    }
+                    imageUrls = await uploadMultipleImgs(files);
+                }
+
+                const therapistData = {
                     name: document.getElementById('tName').value,
-                    specialization: document.getElementById('tSpec').value,
+                    gender: document.getElementById('tGender').value,
+                    experience: document.getElementById('tExp').value,
                     lat: parseFloat(lat),
                     lng: parseFloat(lng),
-                    image: imgUrl,
+                    images: imageUrls,
+                    image: imageUrls[0] || '', // backward compatibility
                     status: 'approved'
-                });
-                e.target.reset();
-                showToast("Expert Authorized");
-            } catch(err) { alert("Expert Onboarding Failed"); }
+                };
+
+                if(editingTherapistKey) {
+                    await update(ref(db, `therapists/${editingTherapistKey}`), therapistData);
+                    showToast("Expert Profile Updated");
+                } else {
+                    await push(ref(db, 'therapists'), therapistData);
+                    showToast("Expert Authorized");
+                }
+
+                cancelTherapistEdit();
+            } catch(err) { 
+                console.error(err);
+                alert("Expert Save Failed"); 
+            }
             loader.style.display = 'none';
+        };
+
+        // EDIT & CANCEL THERAPIST
+        window.startEditTherapist = (key) => {
+            const t = therapistsCache[key];
+            if(!t) return;
+
+            editingTherapistKey = key;
+            existingTherapistImages = t.images || (t.image ? [t.image] : []);
+
+            document.getElementById('tName').value = t.name || '';
+            document.getElementById('tGender').value = t.gender || '';
+            document.getElementById('tExp').value = t.experience || '';
+            
+            if(t.lat && t.lng) {
+                applyMapLocation(t.lat, t.lng, t.name);
+            }
+
+            document.getElementById('tFiles').required = false;
+            document.getElementById('tFileText').innerText = "Upload New Photos (Optional - leave empty to keep existing)";
+            document.getElementById('tSubmitBtn').innerText = "Update Expert Profile";
+            document.getElementById('therapistFormTitle').innerText = "Edit Expert Profile";
+            document.getElementById('tCancelEditBtn').style.display = "block";
+
+            document.querySelector('.dashboard-content-panel').scrollTop = 0;
+        };
+
+        window.cancelTherapistEdit = () => {
+            editingTherapistKey = null;
+            existingTherapistImages = [];
+            document.getElementById('therapistForm').reset();
+            document.getElementById('tFiles').required = true;
+            document.getElementById('tFileText').innerText = "Upload Profile Photos (Multiple Allowed)";
+            document.getElementById('tSubmitBtn').innerText = "Authorize Expert";
+            document.getElementById('therapistFormTitle').innerText = "Onboard Expert";
+            document.getElementById('tCancelEditBtn').style.display = "none";
         };
 
         window.handleBannerSubmit = async (e) => {
@@ -937,11 +1038,44 @@
 
         onValue(ref(db, 'therapists'), (s) => {
             const data = s.val();
+            therapistsCache = data || {};
             const list = document.getElementById('activeTherapistsList');
             list.innerHTML = '';
-            if(data) Object.entries(data).forEach(([k,v]) => {
-                list.innerHTML += `<div class="generic-admin-item"><span>${v.name}</span> <button class="btn-delete-asset" onclick="deleteNode('therapists/${k}')">Revoke</button></div>`;
-            });
+            
+            if(data) {
+                Object.entries(data).forEach(([k,v]) => {
+                    const photos = v.images || (v.image ? [v.image] : []);
+                    const mainPhoto = photos[0] || 'https://via.placeholder.com/50';
+                    
+                    list.innerHTML += `
+                        <div class="generic-admin-item" style="flex-direction:column; align-items:stretch; gap:12px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                                <div style="display:flex; align-items:center; gap:12px; overflow:hidden;">
+                                    <img src="${mainPhoto}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:1px solid var(--gold-metallic); flex-shrink:0;">
+                                    <div>
+                                        <div style="font-weight:700; font-size:0.9rem; color:var(--white);">${v.name}</div>
+                                        <div style="font-size:0.75rem; color:var(--gold-metallic); margin-top:2px;">
+                                            ${v.gender || 'N/A'} • ${v.experience ? v.experience + ' Yrs Exp' : 'N/A'}
+                                        </div>
+                                        <div style="font-size:0.7rem; color:var(--text-muted); margin-top:2px;">
+                                            📷 ${photos.length} Photo(s) Attached
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; gap:8px;">
+                                    <button class="btn-small-gold" onclick="startEditTherapist('${k}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                                    <button class="btn-delete-asset" onclick="deleteNode('therapists/${k}')">Revoke</button>
+                                </div>
+                            </div>
+
+                            ${photos.length > 0 ? `
+                                <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;">
+                                    ${photos.map(img => `<img src="${img}" style="width:40px; height:40px; border-radius:6px; object-fit:cover; border:1px solid rgba(255,255,255,0.1);">`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>`;
+                });
+            }
         });
 
         onValue(ref(db, 'slider_images'), (s) => {
@@ -989,6 +1123,8 @@
         };
 
         window.searchPincode = searchPincode;
+        window.startEditTherapist = startEditTherapist;
+        window.cancelTherapistEdit = cancelTherapistEdit;
 
     </script>
 </body>
