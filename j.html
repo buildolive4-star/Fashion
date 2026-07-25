@@ -154,7 +154,7 @@
         .header-actions { 
             display: flex; 
             align-items: center; 
-            gap: 16px; 
+            gap: 12px; 
         }
 
         .header-actions .icon-btn { 
@@ -552,7 +552,7 @@
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body onclick="requestNotificationPermissionOnUserInteraction()">
 
     <div class="app-container" id="appContainer">
         
@@ -573,6 +573,7 @@
             </div>
 
             <div class="header-actions">
+                <div class="icon-btn" onclick="triggerNotificationTest()" title="Test Notification"><span class="material-icons">notifications_active</span></div>
                 <div class="icon-btn"><span class="material-icons">videocam</span></div>
                 <div class="icon-btn"><span class="material-icons">call</span></div>
                 <div class="icon-btn"><span class="material-icons">more_vert</span></div>
@@ -647,6 +648,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        // FCM Push Notification Imports
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
 
         // Firebase Realtime Config
         const firebaseConfig = {
@@ -661,6 +664,10 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+
+        // FCM Messaging Setup with VAPID Key
+        const messaging = getMessaging(app);
+        const VAPID_KEY = "BEElGttgo2nBTWKyQxlG0h7F36EK43H5FEEqX2DfCEUWMllWLiJJTem5ahUJDlH_ADVkKQtX_oPBurfgcZxsL_o";
 
         // ImgBB API Key for Image Uploads
         const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
@@ -677,6 +684,8 @@
         let activeChatPhone = clientData.phone; 
         let activeChatListener = null;
         let globalChatDeleteListener = null;
+        let isFirstLoad = true;
+        let previousMsgCount = 0;
 
         // UI Reference Handles
         const chatContainer = document.getElementById('chatContainer');
@@ -694,6 +703,86 @@
         const singleTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M10.91 3.316l-.478-.372a.365.365 0 0 0-.51.063L5.666 9.879a.32.32 0 0 1-.484.033L3.89 8.587a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l1.547 1.512c.143.14.361.125.484-.033l4.982-6.393a.366.366 0 0 0-.064-.512z"/></svg>`;
         const doubleGreyTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#8696a0" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
         const doubleBlueTick = `<svg class="tick-icon" viewBox="0 0 16 15"><path fill="#53bdeb" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></svg>`;
+
+        // ===============================================
+        // SOUND, VIBRATION & PUSH NOTIFICATION SYSTEM
+        // ===============================================
+
+        // Play Notification Tone Sound
+        function playNotificationSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); 
+                osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1); 
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch(e) { console.log('Audio Context Sound Error:', e); }
+        }
+
+        // Trigger System Notification
+        window.triggerSystemNotification = function(title, message) {
+            playNotificationSound();
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+            if ("Notification" in window && Notification.permission === "granted") {
+                try {
+                    new Notification(title, {
+                        body: message,
+                        icon: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png",
+                        badge: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png"
+                    });
+                } catch(e) {
+                    console.log("Native Notification error:", e);
+                }
+            }
+        };
+
+        // Request Browser Notification Permission on User Tap
+        let permissionRequested = false;
+        window.requestNotificationPermissionOnUserInteraction = async function() {
+            if (permissionRequested || !("Notification" in window)) return;
+            permissionRequested = true;
+            try {
+                const perm = await Notification.requestPermission();
+                if (perm === 'granted') {
+                    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+                    if (token && clientData.phone) {
+                        set(ref(db, `fcm_tokens/${clientData.phone}`), {
+                            token: token,
+                            updatedAt: Date.now()
+                        });
+                    }
+                }
+            } catch(e) { console.log("FCM permission request error:", e); }
+        };
+
+        // FCM Message Listener
+        onMessage(messaging, (payload) => {
+            if (payload && payload.notification) {
+                triggerSystemNotification(payload.notification.title || "OOOO Live Support", payload.notification.body || "New Message!");
+            }
+        });
+
+        window.triggerNotificationTest = function() {
+            Notification.requestPermission().then(perm => {
+                if(perm === 'granted') {
+                    triggerSystemNotification("OOOO Live Support 🎉", "Test Notification Working Perfectly!");
+                } else {
+                    alert("Notification Permission is: " + perm + "\nPlease ALLOW notifications in browser settings.");
+                }
+            });
+        };
+
+        // ===============================================
+        // CHAT APP CORE FUNCTIONS
+        // ===============================================
 
         function initClientChat() {
             const userRef = ref(db, `chats/${clientData.phone}/userInfo`);
@@ -723,20 +812,43 @@
             const messagesRef = ref(db, `chats/${phone}/messages`);
             if(activeChatListener) activeChatListener();
             
+            isFirstLoad = true;
+            previousMsgCount = 0;
+
             activeChatListener = onValue(messagesRef, (snapshot) => {
                 const tempMsgs = Array.from(messagesArea.querySelectorAll('[id^="temp_"]'));
                 messagesArea.innerHTML = '';
                 
                 const data = snapshot.val();
+                let currentMsgCount = 0;
+
                 if(data) {
-                    Object.keys(data).forEach(key => {
+                    const keys = Object.keys(data);
+                    currentMsgCount = keys.length;
+
+                    keys.forEach(key => {
                         const msg = data[key];
                         renderMessage(key, msg, phone);
                         if(currentMode === 'admin' && msg.sender === 'client' && msg.status !== 'read') update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
                         if(currentMode === 'client' && msg.sender === 'admin' && msg.status !== 'read') update(ref(db, `chats/${phone}/messages/${key}`), { status: 'read' });
                     });
+
+                    // TRIGGER NOTIFICATION WHEN NEW MESSAGE ARRIVES
+                    if (!isFirstLoad && currentMsgCount > previousMsgCount) {
+                        const lastKey = keys[keys.length - 1];
+                        const lastMsg = data[lastKey];
+
+                        if (lastMsg && lastMsg.sender !== currentMode) {
+                            const notifTitle = currentMode === 'client' ? "OOOO Live Support" : `Message from ${clientData.name}`;
+                            const notifBody = lastMsg.type === 'image' ? "📷 Sent an image" : lastMsg.text;
+                            triggerSystemNotification(notifTitle, notifBody);
+                        }
+                    }
                 }
-                
+
+                previousMsgCount = currentMsgCount;
+                isFirstLoad = false;
+
                 tempMsgs.forEach(msg => messagesArea.appendChild(msg));
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             });
