@@ -625,6 +625,15 @@
 
     <!-- Dynamic Keyboard Height Adjuster Script -->
     <script>
+        // Service Worker Automatic Registration for Mobile Push Banner
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                    .then(reg => console.log('Service Worker Registered Successfully:', reg))
+                    .catch(err => console.log('Service Worker Registration Failed:', err));
+            });
+        }
+
         // Automatic Dynamic Viewport Resizer for Mobile Keyboards
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', () => {
@@ -726,20 +735,30 @@
             } catch(e) { console.log('Audio Context Sound Error:', e); }
         }
 
-        // Trigger System Notification
+        // Trigger System Notification (Mobile Visual Banner + Sound + Vibrate)
         window.triggerSystemNotification = function(title, message) {
             playNotificationSound();
             if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
             if ("Notification" in window && Notification.permission === "granted") {
-                try {
-                    new Notification(title, {
-                        body: message,
-                        icon: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png",
-                        badge: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png"
+                const notifOptions = {
+                    body: message,
+                    icon: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png",
+                    badge: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png",
+                    vibrate: [100, 50, 100],
+                    tag: 'oooo-chat-msg',
+                    renotify: true
+                };
+
+                // Mobile Chrome ke liye Service Worker ka use karke visual banner dikhana
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(title, notifOptions);
+                    }).catch(() => {
+                        try { new Notification(title, notifOptions); } catch(e) {}
                     });
-                } catch(e) {
-                    console.log("Native Notification error:", e);
+                } else {
+                    try { new Notification(title, notifOptions); } catch(e) {}
                 }
             }
         };
@@ -773,7 +792,7 @@
         window.triggerNotificationTest = function() {
             Notification.requestPermission().then(perm => {
                 if(perm === 'granted') {
-                    triggerSystemNotification("OOOO Live Support 🎉", "Test Notification Working Perfectly!");
+                    triggerSystemNotification("OOOO Live Support 🎉", "Test Notification Banner Working Perfectly!");
                 } else {
                     alert("Notification Permission is: " + perm + "\nPlease ALLOW notifications in browser settings.");
                 }
