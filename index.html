@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OOOO - Elite Home Services | Premium Care & Beauty</title>
     <!-- Luxury & Romantic Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Iconographies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet JS Map Stylesheets & Scripts -->
@@ -15,24 +15,26 @@
     
     <style>
         :root {
-            /* Ultra-Luxury Gold, Pearl White & Ruby Red 3D Theme */
-            --bg-main: #F8F9FA; 
+            /* Ultra-Luxury Gold & Ruby Red Theme */
+            --bg-main: #FAFAFA; 
             --bg-card: #FFFFFF; 
-            --bg-elevated: #FFF0F3;
+            --bg-elevated: #FFF4F6;
             --primary-red: #B91338; 
             --primary-red-hover: #910E2A;
             --soft-pink: #FFC4D1; 
             --gold-metallic: #D4AF37; 
-            --red-gradient-3d: linear-gradient(145deg, #D9123D 0%, #8A001A 100%);
-            --gold-gradient: linear-gradient(135deg, #F3E096 0%, #D4AF37 50%, #AA8A2A 100%);
-            --glass-card-bg: rgba(255, 255, 255, 0.85);
+            --gold-light: #F9F1D8;
+            --red-gradient: linear-gradient(135deg, #C8102E 0%, #8A001A 100%);
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #AA8A2A 100%);
+            --glass-border: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(185, 19, 56, 0.2));
             --text-dark: #1A1A1A; 
             --text-muted: #666666; 
             --border-light: rgba(185, 19, 56, 0.12); 
-            --border-glow: rgba(212, 175, 55, 0.35);
-            --transition-premium: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow-3d-soft: 0 10px 25px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(185, 19, 56, 0.04);
-            --shadow-3d-strong: 0 15px 35px rgba(185, 19, 56, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            --border-glow: rgba(212, 175, 55, 0.3);
+            --transition-premium: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --shadow-strong: 0 15px 40px rgba(185, 19, 56, 0.12);
+            --shadow-gold: 0 8px 25px rgba(212, 175, 55, 0.25);
         }
 
         * {
@@ -45,7 +47,7 @@
         /* ANTI SCREENSHOT & NO DOWNLOAD SECURITY CLASSES */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #E2E4E8; 
+            background-color: #EAEAEA; 
             color: var(--text-dark);
             overflow: hidden;
             display: flex;
@@ -74,7 +76,7 @@
             background-color: var(--bg-main);
             border: 6px solid #FFFFFF;
             border-radius: 45px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), 0 0 40px rgba(185, 19, 56, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), 0 0 40px rgba(185, 19, 56, 0.1);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -117,7 +119,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(250, 250, 250, 0.96);
+            background-color: rgba(250, 250, 250, 0.95);
             backdrop-filter: blur(15px);
             z-index: 5000;
             display: flex;
@@ -137,14 +139,14 @@
             border: 1px solid var(--border-light);
             border-radius: 24px;
             padding: 40px 25px;
-            box-shadow: var(--shadow-3d-strong);
+            box-shadow: var(--shadow-strong);
             border-top: 4px solid var(--primary-red);
         }
 
         /* Top Persistent Glassmorphic Header */
         .app-header {
             height: 70px;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
@@ -153,7 +155,7 @@
             z-index: 100;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .header-logo {
@@ -192,7 +194,6 @@
             border-radius: 20px;
             font-weight: 700;
             transition: var(--transition-premium);
-            box-shadow: 0 2px 8px rgba(185, 19, 56, 0.08);
         }
 
         .lang-switch:hover {
@@ -232,7 +233,7 @@
 
         .app-screen {
             display: none;
-            animation: screenFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: screenFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .app-screen.active {
@@ -240,8 +241,8 @@
         }
 
         @keyframes screenFadeUp {
-            from { opacity: 0; transform: translateY(15px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Floating Bottom Navigation Menu */
@@ -252,7 +253,7 @@
             width: 100%;
             height: 85px;
             padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 5px);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             border-top: 1px solid var(--border-light);
             border-radius: 28px 28px 0 0;
             display: flex;
@@ -261,7 +262,7 @@
             z-index: 1000;
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.05);
         }
 
         .nav-item {
@@ -282,7 +283,7 @@
         }
 
         .nav-item i {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             transition: var(--transition-premium);
         }
 
@@ -291,45 +292,45 @@
         }
 
         .nav-item.active i {
-            transform: translateY(-4px) scale(1.1);
+            transform: translateY(-4px);
         }
 
         /* Generic Premium Typography & Custom Classes */
         .section-header-app {
-            padding: 20px 16px 10px 16px;
+            padding: 25px 20px 10px 20px;
         }
 
         .section-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             letter-spacing: 0.5px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             color: var(--text-dark);
             font-weight: 800;
         }
 
         .section-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        /* 3D Romantic Red Buttons WITH CONTINUOUS SHINING EFFECT */
+        /* Romantic Red Buttons WITH CONTINUOUS SHINING EFFECT */
         .btn-luxury-app {
-            background: var(--red-gradient-3d);
+            background: var(--red-gradient);
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 0.8rem;
-            font-weight: 800;
+            padding: 14px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
             letter-spacing: 1px;
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition-premium);
             display: inline-block;
             text-align: center;
-            box-shadow: 0 6px 18px rgba(185, 19, 56, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(185, 19, 56, 0.25);
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
@@ -368,20 +369,20 @@
             transform: scale(0.95);
         }
 
-        /* Clean White 3D Glass Cards */
+        /* Clean White Cards */
         .glass-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 20px;
-            padding: 20px;
-            margin: 0 16px 20px 16px;
-            box-shadow: var(--shadow-3d-soft);
+            padding: 24px;
+            margin: 0 20px 24px 20px;
+            box-shadow: var(--shadow-soft);
         }
 
-        /* WHATSAPP STRIP BANNER */
+        /* ==================== WHATSAPP STRIP BANNER ==================== */
         .whatsapp-strip-banner {
-            margin: 10px 16px 15px 16px;
-            padding: 10px 14px;
+            margin: 12px 20px 15px 20px;
+            padding: 10px 16px;
             background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
             border-radius: 16px;
             display: flex;
@@ -389,8 +390,8 @@
             justify-content: space-between;
             color: #FFFFFF;
             text-decoration: none;
-            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: var(--transition-premium);
         }
 
@@ -405,14 +406,15 @@
         }
 
         .whatsapp-strip-text {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
             line-height: 1.3;
             color: #FFFFFF;
+            letter-spacing: 0.2px;
         }
 
         .whatsapp-strip-img {
-            height: 34px;
+            height: 36px;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
@@ -420,6 +422,7 @@
 
         /* Compact Welcome Box */
         .welcome-16-9-box {
+            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -428,11 +431,12 @@
             background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
             border: 1px solid var(--border-light);
             border-radius: 16px;
-            margin: 0 16px 20px 16px;
-            padding: 14px 18px;
-            box-shadow: var(--shadow-3d-soft);
+            margin: 0 20px 20px 20px;
+            padding: 15px 20px;
+            box-shadow: var(--shadow-soft);
             overflow: hidden;
-            border-left: 4px solid var(--gold-metallic);
+            word-wrap: break-word;
+            border-left: 3px solid var(--gold-metallic);
         }
         
         .dynamic-banner-16-9 {
@@ -440,9 +444,9 @@
             aspect-ratio: 16 / 9;
             position: relative;
             overflow: hidden;
-            border-radius: 18px;
+            border-radius: 16px;
             background-color: var(--bg-card);
-            box-shadow: var(--shadow-3d-soft);
+            box-shadow: var(--shadow-soft);
         }
 
         .banner-track {
@@ -472,15 +476,15 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 30px 20px;
-            margin: 10px 16px 20px 16px;
-            border-radius: 22px;
+            padding: 35px 24px;
+            margin: 10px 20px 25px 20px;
+            border-radius: 20px;
             border: none;
             background-image: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(26,26,26,0.9) 100%), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            box-shadow: var(--shadow-3d-strong);
-            min-height: 380px;
+            box-shadow: var(--shadow-strong);
+            min-height: 400px;
         }
 
         .hero-inner-content {
@@ -491,32 +495,33 @@
         .hero-tag {
             display: inline-block;
             background: var(--gold-gradient);
-            color: #000;
-            padding: 5px 12px;
+            color: white;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.65rem;
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .hero-heading {
             font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             line-height: 1.25;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: white;
             font-weight: 700;
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
+        /* Hero Call to Actions Grid */
         .hero-cta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 15px;
         }
 
         .btn-hero-action {
@@ -524,8 +529,8 @@
             color: var(--primary-red);
             padding: 12px;
             border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 800;
+            font-size: 0.8rem;
+            font-weight: 700;
             border: none;
             cursor: pointer;
             display: flex;
@@ -535,6 +540,20 @@
             transition: var(--transition-premium);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-hero-action::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shineEffect 3s infinite;
         }
 
         .btn-hero-action:active {
@@ -547,45 +566,50 @@
         .highlights-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 0 16px;
-            margin-bottom: 25px;
+            gap: 12px;
+            padding: 0 20px;
+            margin-bottom: 30px;
         }
 
         .highlight-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 14px;
-            padding: 14px;
+            padding: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: var(--shadow-3d-soft);
+            gap: 12px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-premium);
+        }
+
+        .highlight-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
         }
 
         .highlight-card i {
             color: var(--gold-metallic);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             background: var(--bg-elevated);
-            padding: 8px;
+            padding: 10px;
             border-radius: 50%;
         }
 
         .highlight-card span {
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--text-dark);
             line-height: 1.3;
         }
 
-        /* SERVICES MENU & SCREEN */
+        /* ==================== SERVICES MENU & SCREEN ==================== */
         .category-scroll-container {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 10px 16px 15px 16px;
+            padding: 10px 20px 20px 20px;
             scrollbar-width: none;
-            scroll-snap-type: x mandatory;
         }
         .category-scroll-container::-webkit-scrollbar { 
             display: none; 
@@ -594,35 +618,39 @@
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             color: var(--text-muted);
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 700;
             white-space: nowrap;
-            box-shadow: var(--shadow-3d-soft);
+            box-shadow: var(--shadow-soft);
             transition: var(--transition-premium);
             cursor: pointer;
-            scroll-snap-align: start;
         }
         .category-pill.active {
-            background: var(--red-gradient-3d);
+            background: var(--red-gradient);
             color: white;
             border-color: transparent;
-            box-shadow: 0 4px 12px rgba(185, 19, 56, 0.25);
         }
 
         .services-menu-grid {
-            padding: 0 16px;
+            padding: 0 20px;
         }
 
+        /* 16:9 MASSAGE BOX WITH READ MORE */
         .service-card-premium {
             background-color: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-3d-soft);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-soft);
             transition: var(--transition-premium);
+        }
+
+        .service-card-premium:hover {
+            box-shadow: var(--shadow-strong);
+            border-color: var(--primary-red);
         }
 
         .service-img-wrap {
@@ -635,40 +663,43 @@
 
         .service-price-tag {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
+            bottom: 12px;
+            right: 12px;
             background: var(--gold-gradient);
-            color: #000;
-            padding: 5px 12px;
+            color: white;
+            padding: 6px 14px;
             border-radius: 12px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 800;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             z-index: 2;
         }
 
         .service-card-body {
-            padding: 16px;
+            padding: 18px;
+            position: relative;
         }
 
         .service-card-body h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             margin-bottom: 6px;
             color: var(--text-dark);
             font-weight: 800;
         }
 
+        /* Read More Logic Styles */
         .service-desc-text {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 4px;
             font-weight: 500;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            transition: var(--transition-premium);
         }
         .service-desc-text.expanded {
             display: block;
@@ -679,11 +710,11 @@
             background: none;
             border: none;
             color: var(--gold-metallic);
-            font-size: 0.72rem;
-            font-weight: 800;
+            font-size: 0.75rem;
+            font-weight: 700;
             cursor: pointer;
             padding: 0;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             text-transform: uppercase;
         }
 
@@ -692,87 +723,443 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid var(--border-light);
-            padding-top: 12px;
+            padding-top: 15px;
         }
 
         .duration-lbl {
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             color: var(--text-dark);
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
             background: var(--bg-elevated);
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
         }
 
-        /* ------------------------------------------------------------- */
-        /* HIGH-END 3-COLUMN GRID & HORIZONTAL CAROUSEL FOR EXPERTS       */
-        /* ------------------------------------------------------------- */
-        
-        /* 3D Touch Scroll Carousel Bar on top of Experts Screen */
-        .experts-horizontal-carousel {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 5px 16px 15px 16px;
-            scrollbar-width: none;
-            scroll-snap-type: x mandatory;
+        /* ==================== MEMBERSHIPS SECTION ==================== */
+        .membership-cards-stack {
+            padding: 0 20px;
         }
-        .experts-horizontal-carousel::-webkit-scrollbar { display: none; }
 
-        .expert-carousel-card {
-            min-width: 125px;
+        .member-tier-card {
             background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gold-gradient);
+        }
+
+        .tier-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        .tier-benefits-list {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .tier-benefits-list li {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .tier-benefits-list li i {
+            color: var(--gold-metallic);
+            font-size: 0.9rem;
+        }
+
+        /* ==================== MOBILE APP PROMOTION ==================== */
+        .app-promo-box {
+            text-align: center;
+            background: var(--bg-elevated);
+            border: none;
+            border-top: 3px solid var(--primary-red);
+        }
+
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            margin: 15px auto;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        .contact-channel-list {
+            padding: 0 20px;
+        }
+
+        .channel-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 16px;
-            padding: 10px 8px;
-            text-align: center;
-            scroll-snap-align: start;
-            box-shadow: var(--shadow-3d-soft);
-            transition: var(--transition-premium);
+            padding: 18px;
+            margin-bottom: 12px;
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-premium);
+        }
+
+        .channel-item:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .channel-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .channel-left i {
+            color: white;
+            font-size: 1.2rem;
+            background: var(--gold-gradient);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .channel-left span {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* ==================== LUXURY FOOTER ==================== */
+        .luxury-footer-app {
+            background-color: var(--bg-card);
+            padding: 30px 20px 40px 20px;
+            margin-top: 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.03);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .footer-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav-grid a {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: var(--transition-premium);
+        }
+
+        .footer-nav-grid a:hover {
+            color: var(--primary-red);
+        }
+
+        /* ==================== ENHANCED LUXURY BOOKING SCREEN FORM ==================== */
+        .booking-glass-card {
+            background: linear-gradient(145deg, #FFFFFF 0%, #FFF9FA 100%);
+            border: 1.5px solid var(--border-light);
+            border-radius: 24px;
+            padding: 24px 20px;
+            margin: 0 20px 20px 20px;
+            box-shadow: 0 15px 35px rgba(185, 19, 56, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-metallic), var(--primary-red), var(--gold-metallic));
+        }
+
+        .wizard-steps-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 25px;
+            margin-bottom: 25px; 
             position: relative;
         }
-        .expert-carousel-card:active {
-            transform: scale(0.95);
+
+        .wizard-steps-row::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 18%;
+            width: 64%;
+            height: 3px;
+            background: #EFEFEF;
+            z-index: 1;
+            border-radius: 4px;
         }
 
-        .expert-carousel-avatar {
-            width: 55px;
-            height: 55px;
+        .step-bubble {
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            margin: 0 auto 6px auto;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid var(--gold-metallic);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            background-color: #FFFFFF;
+            border: 2px solid #E2E2E2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            z-index: 2;
+            color: var(--text-muted);
+            transition: var(--transition-premium);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
         }
 
-        /* Sleek 3-Column Grid Layout */
+        .step-bubble.active {
+            background: var(--red-gradient);
+            color: white;
+            border-color: var(--gold-metallic);
+            box-shadow: 0 6px 18px rgba(185, 19, 56, 0.4);
+            transform: scale(1.1);
+        }
+
+        .step-bubble.active::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1.5px dashed var(--gold-metallic);
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .wizard-pane {
+            display: none;
+        }
+
+        .wizard-pane.active {
+            display: block;
+            animation: screenFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .pane-heading-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .pane-heading-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: var(--bg-elevated);
+            color: var(--primary-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .receipt-summary-box {
+            background: linear-gradient(135deg, #FFF9FA 0%, #FFF2F4 100%);
+            border: 1.5px solid rgba(185, 19, 56, 0.15);
+            padding: 18px; 
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .receipt-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            margin-bottom: 10px; 
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .receipt-line span {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .receipt-line.final-price {
+            border-top: 1px dashed var(--primary-red);
+            padding-top: 14px;
+            margin-top: 8px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--primary-red);
+        }
+
+        .receipt-line.final-price span {
+            color: var(--primary-red);
+            font-weight: 800;
+        }
+
+        /* Promo Code Integration */
+        .promo-box-wrap {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: #FFFFFF;
+            padding: 5px;
+            border-radius: 14px;
+            border: 1px solid var(--border-light);
+        }
+
+        .promo-box-wrap input {
+            border: none;
+            background: transparent;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            outline: none;
+            text-transform: uppercase;
+            flex: 1;
+            color: var(--text-dark);
+        }
+
+        /* FAQ Accordions */
+        .faq-accordion-group {
+            padding: 0 20px;
+        }
+
+        .faq-accord-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .faq-accord-header {
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-accord-header h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .faq-accord-header i {
+            color: var(--gold-metallic);
+            font-size: 1rem;
+            transition: var(--transition-premium);
+        }
+
+        .faq-accord-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.6;
+            padding: 0 18px;
+        }
+
+        .faq-accord-item.active .faq-accord-body {
+            padding-bottom: 18px;
+            max-height: 150px;
+        }
+
+        .faq-accord-item.active .faq-accord-header i {
+            transform: rotate(180deg);
+            color: var(--primary-red);
+        }
+
+        /* EXPERTS SCREEN (3-COLUMN GRID) */
         .therapist-list-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Clean 3 Columns Grid */
-            gap: 8px;
-            padding: 0 12px 20px 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 15px 20px 15px;
         }
 
         .therapist-list-card {
-            background: linear-gradient(145deg, #FFFFFF 0%, #FFF7F8 100%);
+            background-color: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-soft);
             text-align: center;
             transition: var(--transition-premium);
             position: relative;
         }
         
-        .therapist-list-card:active {
-            transform: scale(0.96);
+        .therapist-list-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-strong);
         }
 
         .therapist-list-img {
@@ -780,56 +1167,13 @@
             aspect-ratio: 1 / 1;
             background-size: cover;
             background-position: center;
-            position: relative;
-        }
-
-        .distance-badge {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            background: rgba(10, 10, 10, 0.78);
-            color: #FFFFFF;
-            padding: 2px 6px;
-            border-radius: 8px;
-            font-size: 0.55rem;
-            font-weight: 700;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .full-view-btn-badge {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            background: var(--gold-gradient);
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 3;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-            font-size: 0.6rem;
-            transition: var(--transition-premium);
-        }
-        .full-view-btn-badge:active {
-            transform: scale(0.82);
         }
 
         .therapist-list-body {
-            padding: 8px 5px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            justify-content: space-between;
         }
 
         .therapist-list-body h3 {
@@ -837,9 +1181,6 @@
             color: var(--text-dark);
             margin-bottom: 2px;
             font-weight: 800;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .therapist-spec {
@@ -847,64 +1188,180 @@
             color: var(--primary-red);
             font-weight: 700;
             margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .btn-view-profile-sm {
-            background: var(--red-gradient-3d);
-            color: white;
-            border: none;
-            padding: 6px 2px;
-            font-size: 0.6rem;
+        .distance-badge-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: var(--bg-elevated);
+            color: var(--primary-red);
+            font-size: 0.62rem;
             font-weight: 800;
+            padding: 3px 6px;
             border-radius: 8px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 3px 8px rgba(185, 19, 56, 0.2);
-            width: 100%;
+            border: 1px solid var(--border-light);
+            margin-bottom: 8px;
         }
 
-        /* Unified Custom Input Fields styling */
+        /* Unified Custom Fields styling */
         .glass-input-wrapper {
             display: flex;
             flex-direction: column;
             text-align: left;
-            margin-bottom: 12px; 
+            margin-bottom: 14px; 
         }
 
         .widget-input-wrap {
-            margin-bottom: 12px; 
+            margin-bottom: 16px; 
         }
 
         .glass-input-wrapper label, .widget-input-wrap label {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: var(--text-dark);
-            font-weight: 700;
-            margin-bottom: 5px;
+            font-weight: 800;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .glass-input, .widget-input-wrap select, .widget-input-wrap input {
-            background-color: var(--bg-main);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 12px;
+            background-color: #FFFFFF;
+            border: 1.5px solid rgba(185, 19, 56, 0.15);
+            border-radius: 14px;
             color: var(--text-dark);
-            padding: 11px 13px; 
-            font-size: 0.82rem;
+            padding: 13px 16px; 
+            font-size: 0.85rem;
             font-family: inherit;
             outline: none;
             transition: var(--transition-premium);
             width: 100%;
             font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
         }
 
         .glass-input:focus, .widget-input-wrap select:focus, .widget-input-wrap input:focus {
             border-color: var(--primary-red);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(185, 19, 56, 0.1);
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(185, 19, 56, 0.12);
+        }
+
+        /* VISUAL EXPERT SELECTION IN BOOKING (HORIZONTAL SCROLL) */
+        .therapist-horizontal-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 5px 2px 12px 2px;
+            scrollbar-width: none;
+            margin-top: 5px;
+        }
+        .therapist-horizontal-scroll::-webkit-scrollbar { display: none; }
+        
+        .therapist-scroll-card {
+            min-width: 115px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 18px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+        .therapist-scroll-card.active-th {
+            border-color: var(--primary-red);
+            background: var(--bg-elevated);
+            box-shadow: 0 8px 20px rgba(185, 19, 56, 0.18);
+            transform: translateY(-2px);
+        }
+        .therapist-scroll-card.active-th::after {
+            content: '✓';
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: var(--primary-red);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+        .therapist-scroll-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            margin: 0 auto 8px auto;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+        .therapist-scroll-name {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .therapist-scroll-spec {
+            font-size: 0.65rem;
+            color: var(--gold-metallic);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Warning alert panels inside checkout wizard */
+        .spa-warning-notice {
+            background-color: var(--bg-elevated);
+            border-left: 4px solid var(--primary-red);
+            padding: 14px; 
+            border-radius: 12px;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: none;
+            font-weight: 600;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .spa-warning-success {
+            background-color: #e9fbf0;
+            border-left: 4px solid #25d366;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-bottom: 15px; 
+            color: var(--text-dark);
+            font-weight: 600;
+            background: rgba(255,255,255,0.7);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        .checkbox-container input {
+            margin-top: 2px;
+            accent-color: var(--primary-red);
+            width: 18px;
+            height: 18px;
         }
 
         /* Dynamic Description Overlay Screen for Experts */
@@ -925,7 +1382,7 @@
         .therapist-desc-scrollable {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 20px;
         }
 
         .therapist-desc-scrollable::-webkit-scrollbar {
@@ -936,10 +1393,10 @@
             width: 100%;
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 22px;
-            padding: 10px;
-            box-shadow: var(--shadow-3d-soft);
-            margin-bottom: 16px;
+            border-radius: 24px;
+            padding: 12px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 20px;
             position: relative;
         }
 
@@ -948,15 +1405,16 @@
             aspect-ratio: 1 / 1;
             background-size: cover;
             background-position: center;
-            border-radius: 16px;
+            border-radius: 18px;
         }
 
+        /* Premium Dynamic Expert Multi-Image Slider styles */
         .therapist-slider-container {
             width: 100%;
             aspect-ratio: 1 / 1;
             position: relative;
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 18px;
         }
 
         .therapist-slider-track {
@@ -975,7 +1433,7 @@
 
         .therapist-slider-dots {
             position: absolute;
-            bottom: 10px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -1001,31 +1459,55 @@
         .therapist-desc-info-box {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: var(--shadow-3d-soft);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
         }
 
         .therapist-profile-spec {
             font-family: 'Cinzel', serif;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--primary-red);
             font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         .therapist-profile-bio {
             font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .therapist-desc-footer {
-            padding: 12px 16px 20px 16px;
+            padding: 15px 20px 25px 20px;
             background: var(--bg-card);
             border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 10px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
+        }
+
+        /* Support Gallery styling */
+        .gallery-app-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 20px 20px 20px;
+        }
+        .gallery-img-box {
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+        }
+        .gallery-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-premium);
+        }
+        .gallery-img-box:hover img {
+            transform: scale(1.05);
         }
 
         /* Success screen modal overlay */
@@ -1048,23 +1530,137 @@
         .success-card {
             background-color: var(--bg-card);
             border-radius: 24px;
-            padding: 35px 22px;
+            padding: 40px 25px;
             width: 100%;
-            box-shadow: var(--shadow-3d-strong);
+            box-shadow: var(--shadow-strong);
             border-top: 4px solid #25d366;
         }
 
         .success-icon {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: #e9fbf0;
             color: #25d366;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
-            margin: 0 auto 18px auto;
+            font-size: 2.5rem;
+            margin: 0 auto 20px auto;
+        }
+
+        /* Live Chat Overlay Widget */
+        .chat-app-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-main);
+            z-index: 2500;
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        .chat-app-header {
+            height: 70px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .chat-back-btn {
+            background: none;
+            border: none;
+            color: var(--primary-red);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-app-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .chat-bubble.agent {
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .chat-bubble.user {
+            background: var(--red-gradient);
+            color: white;
+            font-weight: 600;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-app-footer {
+            height: 80px;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 10px;
+        }
+
+        .chat-app-footer input {
+            flex: 1;
+            background-color: var(--bg-main);
+            border: 1px solid rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            padding: 12px 16px;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Active Tracking FAB */
+        .live-track-fab {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: var(--primary-red);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-strong);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 4000;
+            cursor: pointer;
+            animation: pulse-fab 2s infinite;
+        }
+        @keyframes pulse-fab {
+            0% { box-shadow: 0 0 0 0 rgba(185, 19, 56, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(185, 19, 56, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(185, 19, 56, 0); }
         }
 
         /* Live Tracking Overlay Map Screen */
@@ -1087,9 +1683,9 @@
         }
         .tracking-details { 
             background: white; 
-            padding: 20px; 
-            border-top-left-radius: 28px; 
-            border-top-right-radius: 28px; 
+            padding: 25px; 
+            border-top-left-radius: 30px; 
+            border-top-right-radius: 30px; 
             box-shadow: 0 -10px 25px rgba(0,0,0,0.08); 
             position: relative;
             z-index: 10;
@@ -1099,22 +1695,137 @@
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
+
+        /* ==================== ULTRA-LUXURY SPLASH TIMER OVERLAY ==================== */
+        #submitSplashOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 1, 5, 0.96);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 6000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .splash-image-card {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.3);
+            border: 2px solid var(--gold-metallic);
+            background: #000;
+            position: relative;
+        }
+
+        .splash-image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 24px;
+        }
+
+        .splash-timer-ring-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .splash-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn-splash-skip {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition-premium);
+            flex: 1;
+            text-transform: uppercase;
+        }
+
+        .btn-splash-skip:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* FULL SCREEN IMAGE PREVIEW MODAL STYLES */
+        .full-image-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 7000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .full-image-modal img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.3);
+            border: 1.5px solid var(--gold-metallic);
+        }
+
+        .full-image-close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-premium);
+            z-index: 7001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .full-image-close-btn:active {
+            transform: scale(0.9);
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. FULL IMAGE VIEWER MODAL (UNCROPPED FULL PHOTO VIEW WITH 'X' CLOSE BUTTON) -->
-    <div id="fullImageViewerModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); z-index: 7000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: var(--transition-premium);">
-        <button onclick="closeFullImageViewer()" style="position: absolute; top: 20px; right: 20px; background: var(--primary-red); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 1.3rem; cursor: pointer; z-index: 7001; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div style="width: 100%; height: 80%; display: flex; align-items: center; justify-content: center;">
-            <img id="fullImageViewerImg" src="" alt="Full View Photo" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-        </div>
-        <div id="fullImageViewerCaption" style="color: var(--gold-metallic); margin-top: 15px; font-size: 0.95rem; font-weight: 800; text-align: center; text-transform: uppercase; letter-spacing: 1px;"></div>
-    </div>
-
-    <!-- 2. INITIAL USER ONBOARDING MODAL GATEWAY -->
+    <!-- 1. INITIAL USER ONBOARDING MODAL GATEWAY -->
     <div id="userOnboardingOverlay">
         <div class="onboarding-card">
             <h2 style="font-family: 'Cinzel', serif; font-size: 1.8rem; text-align: center; color: var(--primary-red); margin-bottom: 8px; letter-spacing: 2px;">OOOO</h2>
@@ -1130,8 +1841,8 @@
                     <input type="tel" id="onboardPhone" class="glass-input" placeholder="+91 XXXXX XXXXX" required>
                 </div>
                 <div class="glass-input-wrapper">
-                    <label data-en="City / Area" data-hi="शहर / क्षेत्र">City / Area</label>
-                    <input type="text" id="onboardCity" class="glass-input" placeholder="e.g., Gurgaon, Delhi" required>
+                    <label data-en="City" data-hi="शहर">City</label>
+                    <input type="text" id="onboardCity" class="glass-input" placeholder="e.g., Gurgaon" required>
                 </div>
                 <div class="glass-input-wrapper">
                     <label data-en="State" data-hi="राज्य">State</label>
@@ -1150,12 +1861,12 @@
         </div>
     </div>
 
-    <!-- 3. EXPERT FILTER MODAL -->
-    <div id="expertFilterModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(250, 250, 250, 0.96); backdrop-filter: blur(15px); z-index: 5500; display: none; flex-direction: column; padding: 25px; overflow-y: auto; transition: var(--transition-premium);">
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-            <button onclick="closeExpertFilterModal()" style="background: none; border: none; color: var(--primary-red); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+    <!-- EXPERT FILTER MODAL -->
+    <div id="expertFilterModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(250, 250, 250, 0.95); backdrop-filter: blur(15px); z-index: 5500; display: none; flex-direction: column; padding: 30px; overflow-y: auto; transition: var(--transition-premium);">
+        <div class="chat-app-header" style="background: transparent; border: none; padding: 0; justify-content: flex-end; margin-bottom: 20px; box-shadow: none;">
+            <button class="chat-back-btn" onclick="closeExpertFilterModal()"><i class="fa-solid fa-xmark" style="font-size: 1.5rem;"></i></button>
         </div>
-        <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary-red); margin-bottom: 20px; font-weight: 800;" data-en="Filter Experts" data-hi="विशेषज्ञों को फ़िल्टर करें">Filter Experts</h2>
+        <h2 style="font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--primary-red); margin-bottom: 20px; font-weight: 800;" data-en="Filter Experts" data-hi="विशेषज्ञों को फ़िल्टर करें">Filter Experts</h2>
         
         <div class="glass-input-wrapper">
             <label data-en="Gender" data-hi="लिंग">Gender</label>
@@ -1167,32 +1878,21 @@
         </div>
         
         <div class="glass-input-wrapper">
-            <label data-en="Location / City" data-hi="स्थान / शहर">Location (Area/City)</label>
-            <input type="text" id="filterLocation" class="glass-input" placeholder="e.g. Delhi, Gurgaon, Noida">
-        </div>
-
-        <div class="glass-input-wrapper">
-            <label data-en="Max Radius / Distance" data-hi="अधिकतम दूरी">Max Radius / Distance</label>
-            <select id="filterDistance" class="glass-input">
-                <option value="All" data-en="Any Distance" data-hi="कोई भी दूरी">Any Distance</option>
-                <option value="5" data-en="Within 5 km (Nearest)" data-hi="5 किमी के भीतर">Within 5 km (Nearest)</option>
-                <option value="10" data-en="Within 10 km" data-hi="10 किमी के भीतर">Within 10 km</option>
-                <option value="25" data-en="Within 25 km" data-hi="25 किमी के भीतर">Within 25 km</option>
-                <option value="50" data-en="Within 50 km" data-hi="50 किमी के भीतर">Within 50 km</option>
-            </select>
+            <label data-en="Location" data-hi="स्थान">Location (Area/City)</label>
+            <input type="text" id="filterLocation" class="glass-input" placeholder="e.g. Delhi, Gurgaon">
         </div>
 
         <div class="glass-input-wrapper">
             <label data-en="Minimum Experience" data-hi="न्यूनतम अनुभव">Minimum Experience</label>
             <select id="filterExperience" class="glass-input">
                 <option value="All" data-en="Any Experience" data-hi="कोई भी अनुभव">Any Experience</option>
-                <option value="1" data-en="1+ Year" data-hi="1+ वर्ष">1+ Year</option>
                 <option value="3" data-en="3+ Years" data-hi="3+ वर्ष">3+ Years</option>
                 <option value="5" data-en="5+ Years" data-hi="5+ वर्ष">5+ Years</option>
+                <option value="7" data-en="7+ Years" data-hi="7+ वर्ष">7+ Years</option>
             </select>
         </div>
 
-        <button class="btn-luxury-app" style="width: 100%; margin-top: 15px;" onclick="applyExpertFilters()" data-en="Apply Filters" data-hi="फ़िल्टर लागू करें">Apply Filters</button>
+        <button class="btn-luxury-app" style="width: 100%; margin-top: 20px;" onclick="applyExpertFilters()" data-en="Apply Filters" data-hi="फ़िल्टर लागू करें">Apply Filters</button>
         <button class="btn-luxury-app" style="width: 100%; margin-top: 10px; background: white; color: var(--primary-red); border: 1px solid var(--primary-red);" onclick="clearExpertFilters()" data-en="Clear Filters" data-hi="फ़िल्टर हटाएं">Clear Filters</button>
     </div>
 
@@ -1200,8 +1900,8 @@
     <div class="smartphone-chassis">
         
         <!-- Live Track Floating Action Button -->
-        <div class="live-track-fab" id="liveTrackFab" onclick="openTrackingOverlay()" style="position: absolute; top: 15px; right: 20px; background: var(--primary-red); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; display: none; align-items: center; gap: 6px; z-index: 4000; cursor: pointer;">
-            <i class="fa-solid fa-location-dot"></i> <span data-en="Track Expert" data-hi="ट्रैक करें">Track Expert</span>
+        <div class="live-track-fab" id="liveTrackFab" onclick="openTrackingOverlay()">
+            <i class="fa-solid fa-location-dot"></i> <span data-en="Track Expert" data-hi="विशेषज्ञ को ट्रैक करें">Track Expert</span>
         </div>
 
         <!-- Glass Header top bar -->
@@ -1224,8 +1924,8 @@
             <!-- SCREEN 1: ULTRA-LUXURY HOME -->
             <div class="app-screen active" id="screen-home">
                 
-                <div style="padding: 12px 16px 0 16px; margin-bottom: 5px;">
-                    <div style="font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-dark);">
+                <div style="padding: 15px 20px 0 20px; margin-bottom: 5px;">
+                    <div style="font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-dark);">
                         <i class="fa-solid fa-circle-play" style="color: var(--primary-red); animation: pulse-dot 1.5s infinite;"></i>
                         <span data-en="Live Service Gallery" data-hi="लाइव सेवा गैलरी">Live Service Gallery</span>
                     </div>
@@ -1236,7 +1936,7 @@
                     </div>
                 </div>
 
-                <!-- WHATSAPP STRIP BANNER -->
+                <!-- WHATSAPP STRIP BANNER BELOW CARD IMAGE -->
                 <a href="j.html" class="whatsapp-strip-banner">
                     <div class="whatsapp-strip-content">
                         <span class="whatsapp-strip-text" data-hi="बात करने के लिए यहाँ से WhatsApp का उपयोग करें" data-en="Use WhatsApp from here to chat with us">बात करने के लिए यहाँ से WhatsApp का उपयोग करें</span>
@@ -1246,8 +1946,8 @@
 
                 <!-- COMPACT WELCOME BOX -->
                 <div class="welcome-16-9-box">
-                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--primary-red); margin-bottom: 4px; font-weight: 800;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
-                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.75rem; font-weight: 600; line-height: 1.4;">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--primary-red); margin-bottom: 4px; font-weight: 800;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
+                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.75rem; font-weight: 600; line-height: 1.5; padding: 0 5px;">
                         Loading exclusive message...
                     </p>
                 </div>
@@ -1259,7 +1959,7 @@
                         <h1 class="hero-heading" data-en="India's Most Premium Elite Home Services" data-hi="भारत की सबसे प्रीमियम होम सेवाएं">India's Most Premium Elite Home Services</h1>
                         <div class="hero-cta-grid">
                             <button class="btn-hero-action" onclick="switchScreen('book')">✨ <span data-en="Book Now" data-hi="बुक करें">Book Now</span></button>
-                            <button class="btn-hero-action" onclick="switchScreen('services')" style="background: rgba(255,255,255,0.25); color: white; backdrop-filter: blur(5px);">🌹 <span data-en="Explore" data-hi="सेवाएं">Explore</span></button>
+                            <button class="btn-hero-action" onclick="switchScreen('services')" style="background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(5px);">🌹 <span data-en="Explore" data-hi="सेवाएं">Explore</span></button>
                         </div>
                     </div>
                 </div>
@@ -1270,279 +1970,425 @@
                     <p class="section-subtitle" data-en="Uncompromising quality from elite beauticians, therapists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट और केयरटेकर से बेजोड़ गुणवत्ता।">Uncompromising quality from elite beauticians, therapists, and caretakers.</p>
                 </div>
                 <div class="highlights-grid">
-                    <div class="highlight-card"><i class="fa-solid fa-users"></i><span data-en="10k+ Clients" data-hi="10k+ ग्राहक">10k+ Clients</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-star"></i><span data-en="4.9★ Rating" data-hi="4.9★ रेटिंग">4.9★ Rating</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-user-shield"></i><span data-en="100% Checked" data-hi="100% सत्यापित">100% Checked</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-house-chimney"></i><span data-en="Luxury Setup" data-hi="लक्जरी सेटअप">Luxury Setup</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-users"></i><span data-en="10k+ Happy Clients" data-hi="10k+ संतुष्ट ग्राहक">10k+ Happy Clients</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-star"></i><span data-en="4.9★ Top Rating" data-hi="4.9★ उत्कृष्ट रेटिंग">4.9★ Top Rating</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-user-shield"></i><span data-en="100% Background Checked" data-hi="100% पृष्ठभूमि सत्यापित">100% Background Checked</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-house-chimney"></i><span data-en="Luxury Home Setup" data-hi="घर पर लक्जरी सेटअप">Luxury Home Setup</span></div>
                 </div>
 
                 <!-- VIP Privileges Sections -->
-                <div class="section-header-app" style="padding-top: 0;">
+                <div class="section-header-app" style="padding-top: 5px;">
                     <h2 class="section-title" data-en="Privilege Memberships" data-hi="विशेषाधिकार सदस्यता">Privilege Memberships</h2>
+                    <p class="section-subtitle" data-en="Incorporate routine premium care into your lifestyle with exclusive tiers." data-hi="विशेष सदस्यता स्तरों के साथ अपनी जीवनशैली में प्रीमियम देखभाल को शामिल करें।">Incorporate routine premium care into your lifestyle with exclusive tiers.</p>
                 </div>
-                <div class="membership-cards-stack" id="homeMembershipsStack" style="padding: 0 16px;">
+                <div class="membership-cards-stack" id="homeMembershipsStack">
                     <!-- Loaded dynamically from Firebase -->
                 </div>
 
                 <!-- Luxury Footer summary -->
-                <div style="background-color: var(--bg-card); padding: 25px 16px 35px 16px; margin-top: 20px; border-top: 1px solid var(--border-light);">
-                    <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary-red); margin-bottom: 10px; text-align: center; font-weight: 800; letter-spacing: 2px;">OOOO</div>
-                    <p style="font-size: 0.68rem; color: var(--text-muted); text-align: center; font-weight: 600;">&copy; 2026 OOOO Elite Services. Absolute Luxury.</p>
+                <div class="luxury-footer-app">
+                    <div class="footer-brand-title">OOOO</div>
+                    <div class="footer-nav-grid">
+                        <a href="#" onclick="switchScreen('home')">Home</a>
+                        <a href="#" onclick="switchScreen('services')">Premium Services</a>
+                        <a href="#" onclick="switchScreen('therapists')">Elite Experts</a>
+                        <a href="#" onclick="switchScreen('contact')">FAQs & Help</a>
+                    </div>
+                    <p style="font-size: 0.7rem; color: var(--text-muted); text-align: center; font-weight: 600;">&copy; 2026 OOOO Elite Services. Built to Absolute Luxury Specifications.</p>
                 </div>
 
             </div>
 
             <!-- SCREEN 2: ALL BESPOKE SERVICES -->
             <div class="app-screen" id="screen-services">
-                <div class="section-header-app">
+                <div class="section-header-app" style="padding-bottom: 10px;">
                     <h2 class="section-title" data-en="Our Elite Services" data-hi="हमारी प्रीमियम सेवाएं">Our Elite Services</h2>
-                    <p class="section-subtitle" data-en="An exquisite collection of world-class treatments." data-hi="विश्व स्तरीय उपचार का उत्कृष्ट संग्रह।">An exquisite collection of world-class treatments.</p>
+                    <p class="section-subtitle" data-en="An exquisite collection of world-class beauty, wellness, and care treatments." data-hi="विश्व स्तरीय सौंदर्य, वेलनेस और देखभाल उपचार का एक उत्कृष्ट संग्रह।">An exquisite collection of world-class beauty, wellness, and care treatments.</p>
                 </div>
 
                 <!-- Categories Scroll -->
                 <div class="category-scroll-container" id="categoryTagsContainer">
-                    <!-- Categories load dynamically -->
+                    <!-- Categories will load here dynamically -->
                 </div>
 
                 <div class="services-menu-grid" id="servicesMenuGrid">
-                    <!-- Loaded dynamically -->
+                    <!-- Loaded dynamically from Firebase Realtime Database -->
                 </div>
             </div>
 
-            <!-- SCREEN 3: INTERACTIVE BOOKING WIZARD -->
+            <!-- SCREEN 3: HIGHLY REDESIGNED INTERACTIVE LUXURY BOOKING WIZARD -->
             <div class="app-screen" id="screen-book">
                 <div class="section-header-app">
-                    <h2 class="section-title" data-en="Reservation Engine" data-hi="आरक्षण केंद्र">Reservation Engine</h2>
+                    <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--gold-light); padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; color: var(--gold-metallic); letter-spacing: 1px; margin-bottom: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                        <i class="fa-solid fa-crown"></i> <span data-en="VIP RESERVATION ENGINE" data-hi="वीआईपी आरक्षण प्रणाली">VIP RESERVATION ENGINE</span>
+                    </div>
+                    <h2 class="section-title" data-en="Bespoke Booking" data-hi="आरक्षण केंद्र">Bespoke Booking</h2>
+                    <p class="section-subtitle" data-en="Customize your personalized elite home service parameters." data-hi="अपनी व्यक्तिगत प्रीमियम सेवा बुकिंग के लिए पैरामीटर कॉन्फ़िगर करें।">Customize your personalized elite home service parameters.</p>
                 </div>
 
-                <div class="glass-card">
+                <div class="wizard-steps-row">
+                    <div class="step-bubble active" id="step-1">
+                        <span>1</span>
+                    </div>
+                    <div class="step-bubble" id="step-2">
+                        <span>2</span>
+                    </div>
+                    <div class="step-bubble" id="step-3">
+                        <span>3</span>
+                    </div>
+                </div>
+
+                <div class="booking-glass-card">
                     <!-- Step 1 -->
                     <div class="wizard-pane active" id="pane-1">
-                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Select Service Option" data-hi="सेवा विकल्प चुनें">Select Service Option</div>
+                        <div class="pane-heading-box">
+                            <div class="pane-heading-icon"><i class="fa-solid fa-gem"></i></div>
+                            <div>
+                                <div style="font-size:0.95rem; color:var(--text-dark); font-weight:800; text-transform:uppercase;" data-en="Service & Location" data-hi="सेवा और स्थान चुनें">Service & Location</div>
+                                <span style="font-size:0.7rem; color:var(--text-muted);" data-en="Step 1 of 3" data-hi="चरण 1 / 3">Step 1 of 3</span>
+                            </div>
+                        </div>
+
                         <div class="widget-input-wrap">
-                            <label data-en="Service Category" data-hi="सेवा श्रेणी">Service Category</label>
+                            <label data-en="Select Service" data-hi="सेवा श्रेणी"><i class="fa-solid fa-sparkles" style="color:var(--gold-metallic);"></i> Select Service</label>
                             <select id="bookSelectMenu" onchange="syncWizardSelection()">
                                 <option value="" disabled selected data-en="Choose Service..." data-hi="सेवा चुनें...">Choose Service...</option>
                             </select>
                         </div>
                         <div class="widget-input-wrap">
-                            <label data-en="Treatment Location" data-hi="उपचार का स्थान">Treatment Location</label>
+                            <label data-en="Treatment Location" data-hi="उपचार का स्थान"><i class="fa-solid fa-map-pin" style="color:var(--primary-red);"></i> Treatment Location</label>
                             <select id="bookLocationType" onchange="updateLocationNotice()">
                                 <option value="" disabled selected data-en="Select Location..." data-hi="स्थान चुनें...">Select Location...</option>
                                 <option value="User Home" data-en="User Home" data-hi="उपयोगकर्ता का घर">User Home</option>
-                                <option value="Expert Nearby" data-en="Expert's Studio" data-hi="विशेषज्ञ का स्टूडियो">Expert's Studio</option>
+                                <option value="Expert Nearby" data-en="Expert's Location/Studio" data-hi="विशेषज्ञ का स्थान/स्टूडियो">Expert's Location/Studio</option>
                             </select>
                         </div>
 
                         <!-- Dynamic Notices -->
-                        <div class="spa-warning-notice" id="notice-home" style="background: var(--bg-elevated); border-left: 3px solid var(--primary-red); padding: 10px; border-radius: 8px; font-size: 0.72rem; display: none; margin-bottom: 12px;">
-                            <span data-en="Home Service Notice: Advance payment required for home visits." data-hi="होम सर्विस सूचना: होम विजिट हेतु अग्रिम भुगतान अनिवार्य है।">Home Service Notice: Advance payment required for home visits.</span>
+                        <div class="spa-warning-notice" id="notice-home">
+                            <i class="fa-solid fa-shield-halved" style="margin-right: 6px; color: var(--primary-red); font-size: 0.9rem;"></i>
+                            <span data-en="Home Visit Protocol: An advance payment is required for home services to guarantee safety & slot allocation." data-hi="होम सर्विस सूचना: सुरक्षा और बुकिंग सुनिश्चित करने के लिए होम विजिट हेतु अग्रिम भुगतान (Advance Payment) अनिवार्य है।">Home Visit Protocol: An advance payment is required for home services to guarantee safety & slot allocation.</span>
                         </div>
-                        <div class="spa-warning-notice spa-warning-success" id="notice-hotel" style="background: #e9fbf0; border-left: 3px solid #25d366; padding: 10px; border-radius: 8px; font-size: 0.72rem; display: none; margin-bottom: 12px;">
-                            <span data-en="Studio Visit: No advance payment required." data-hi="स्टूडियो विजिट: कोई अग्रिम भुगतान आवश्यक नहीं है।">Studio Visit: No advance payment required.</span>
+                        <div class="spa-warning-notice spa-warning-success" id="notice-hotel">
+                            <i class="fa-solid fa-house-circle-check" style="margin-right: 6px; color: #25d366; font-size: 0.9rem;"></i>
+                            <span data-en="Studio Visit Protocol: Visiting the expert studio requires zero advance booking deposit." data-hi="स्टूडियो विजिट सूचना: आप विशेषज्ञ के स्थान पर जा रहे हैं। कोई अग्रिम भुगतान आवश्यक नहीं है।">Studio Visit Protocol: Visiting the expert studio requires zero advance booking deposit.</span>
                         </div>
 
-                        <label class="checkbox-container" id="consentCheckboxContainer" style="display:none; gap: 8px; font-size: 0.72rem; align-items: flex-start;">
-                            <input type="checkbox" id="bookingConsentCheckbox" onchange="toggleWizardNextBtnState()" style="margin-top: 2px;">
-                            <span data-en="I understand and accept booking terms." data-hi="मैं बुकिंग शर्तों को स्वीकार करता हूँ।">I understand and accept booking terms.</span>
+                        <label class="checkbox-container" id="consentCheckboxContainer" style="display:none;">
+                            <input type="checkbox" id="bookingConsentCheckbox" onchange="toggleWizardNextBtnState()">
+                            <span data-en="I accept the luxury home service terms & privacy guidelines." data-hi="मैं इन प्रीमियम बुकिंग शर्तों और प्रक्रियाओं को समझता हूँ और स्वीकार करता हूँ।">I accept the luxury home service terms & privacy guidelines.</span>
                         </label>
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="wizard-pane" id="pane-2" style="display:none;">
-                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Choose Your Expert & Time" data-hi="विशेषज्ञ और समय चुनें">Choose Your Expert & Time</div>
-                        
-                        <div class="widget-input-wrap">
-                            <label data-en="Preferred Date & Time" data-hi="दिनांक और समय">Preferred Date & Time</label>
-                            <input type="datetime-local" id="bookDateTimeInput">
+                    <div class="wizard-pane" id="pane-2">
+                        <div class="pane-heading-box">
+                            <div class="pane-heading-icon"><i class="fa-solid fa-user-clock"></i></div>
+                            <div>
+                                <div style="font-size:0.95rem; color:var(--text-dark); font-weight:800; text-transform:uppercase;" data-en="Expert & Schedule" data-hi="विशेषज्ञ और समय चुनें">Expert & Schedule</div>
+                                <span style="font-size:0.7rem; color:var(--text-muted);" data-en="Step 2 of 3" data-hi="चरण 2 / 3">Step 2 of 3</span>
+                            </div>
                         </div>
                         
                         <div class="widget-input-wrap">
-                            <label data-en="Select Expert (Nearest First)" data-hi="विशेषज्ञ चुनें (निकटतम पहले)">Select Expert (Nearest First)</label>
+                            <label data-en="Preferred Date & Time" data-hi="दिनांक और समय"><i class="fa-regular fa-calendar-check" style="color:var(--primary-red);"></i> Preferred Date & Time</label>
+                            <input type="datetime-local" id="bookDateTimeInput">
+                        </div>
+                        
+                        <!-- VISUAL SELECTION FOR EXPERTS -->
+                        <div class="widget-input-wrap">
+                            <label data-en="Select Verified Specialist" data-hi="विशेषज्ञ चुनें"><i class="fa-solid fa-user-check" style="color:var(--gold-metallic);"></i> Select Verified Specialist</label>
                             <select id="bookTherapistGender" style="display: none;"></select>
-                            <div class="experts-horizontal-carousel" id="bookingTherapistList">
-                                <!-- Populated dynamically -->
+                            <div class="therapist-horizontal-scroll" id="bookingTherapistList">
+                                <!-- Dynamically populated visual cards -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="wizard-pane" id="pane-3" style="display:none;">
-                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Order Receipt Summary" data-hi="आदेश प्राप्ति विवरण">Order Receipt Summary</div>
+                    <div class="wizard-pane" id="pane-3">
+                        <div class="pane-heading-box">
+                            <div class="pane-heading-icon"><i class="fa-solid fa-receipt"></i></div>
+                            <div>
+                                <div style="font-size:0.95rem; color:var(--text-dark); font-weight:800; text-transform:uppercase;" data-en="Summary & Checkout" data-hi="आदेश प्राप्ति विवरण">Summary & Checkout</div>
+                                <span style="font-size:0.7rem; color:var(--text-muted);" data-en="Step 3 of 3" data-hi="चरण 3 / 3">Step 3 of 3</span>
+                            </div>
+                        </div>
                         
-                        <div class="receipt-summary-box" id="receiptSummaryContent" style="background-color: var(--bg-elevated); border: 1px solid var(--border-light); padding: 12px; border-radius: 14px; margin-bottom: 12px;">
+                        <div class="receipt-summary-box" id="receiptSummaryContent">
                             <!-- Populated via Javascript -->
                         </div>
 
-                        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                            <input type="text" id="promoInput" placeholder="PROMO CODE" style="background-color: var(--bg-main); border: 1px solid var(--border-light); color: var(--text-dark); padding: 10px 12px; border-radius: 10px; flex: 1; outline: none; font-weight: 600; font-size: 0.8rem;">
-                            <button type="button" class="btn-luxury-app" style="padding: 8px 14px; font-size: 0.7rem;" onclick="applyPromoCode()" data-en="Apply" data-hi="लागू करें">Apply</button>
+                        <div class="promo-box-wrap">
+                            <input type="text" id="promoInput" placeholder="PROMO CODE (e.g. WELCOME10)">
+                            <button type="button" class="btn-luxury-app" style="padding: 10px 18px; font-size: 0.72rem; border-radius: 10px;" onclick="applyPromoCode()" data-en="Apply" data-hi="लागू करें">Apply</button>
                         </div>
-                        <p id="promoStatusMessage" style="font-size: 0.72rem; color: var(--primary-red); margin-bottom: 10px; font-weight: 700;"></p>
+                        <p id="promoStatusMessage" style="font-size: 0.75rem; color: var(--primary-red); margin-bottom: 14px; font-weight: 700;"></p>
 
                         <div class="widget-input-wrap">
-                            <label data-en="Billing Mode" data-hi="भुगतान का तरीका">Billing Mode</label>
+                            <label data-en="Payment Method" data-hi="भुगतान का तरीका"><i class="fa-solid fa-credit-card" style="color:var(--gold-metallic);"></i> Payment Method</label>
                             <select id="paymentType">
-                                <option value="Online (UPI/Card)" data-en="Online Secure Transfer" data-hi="सुरक्षित ऑनलाइन भुगतान">Online Secure Transfer</option>
+                                <option value="Online (UPI/Card)" data-en="Online Secure Transfer (UPI / Card)" data-hi="सुरक्षित ऑनलाइन भुगतान">Online Secure Transfer (UPI / Card)</option>
                                 <option value="Cash Post-treatment" data-en="Cash Post-Service" data-hi="सेवा के बाद नकद भुगतान">Cash Post-Service</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 12px; padding: 0 16px; margin-bottom: 20px;">
-                    <button class="btn-luxury-app" id="btnPrevStep" onclick="navigateWizard(-1)" style="display: none; background: white; border: 1px solid var(--primary-red); color: var(--primary-red); flex: 1; box-shadow: none;" data-en="Back" data-hi="पीछे">Back</button>
+                <div style="display: flex; gap: 12px; padding: 0 20px; margin-top: 10px; margin-bottom: 25px;">
+                    <button class="btn-luxury-app" id="btnPrevStep" onclick="navigateWizard(-1)" style="display: none; background: white; border: 1.5px solid var(--primary-red); color: var(--primary-red); flex: 1; box-shadow: none;" data-en="Back" data-hi="पीछे">Back</button>
                     <button class="btn-luxury-app" id="btnNextStep" onclick="navigateWizard(1)" style="flex: 2;" data-en="Next Step" data-hi="आगे बढ़ें" disabled>Next Step</button>
                 </div>
             </div>
 
-            <!-- SCREEN 4: EXPERTS GRID (3-COLUMN GRID & SWIPE CAROUSEL) -->
+            <!-- SCREEN 4: EXPERTS GRID -->
             <div class="app-screen" id="screen-therapists">
-                <div class="section-header-app" style="padding-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-start;">
+                <div class="section-header-app" style="padding-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
-                        <h2 class="section-title" data-en="Nearby Certified Experts" data-hi="निकटतम प्रमाणित विशेषज्ञ">Nearby Certified Experts</h2>
-                        <p class="section-subtitle" id="locationStatusSubtitle" data-en="Sorted by proximity to your current location." data-hi="आपकी वर्तमान स्थान के निकटता के आधार पर क्रमबद्ध।">Sorted by proximity to your current location.</p>
+                        <h2 class="section-title" data-en="Choose Your Expert" data-hi="अपना विशेषज्ञ चुनें">Choose Your Expert</h2>
+                        <p class="section-subtitle" data-en="Elite beauticians, therapists, artists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट, कलाकार और केयरटेकर।">Elite beauticians, therapists, artists, and caretakers.</p>
                     </div>
-                    <button class="btn-luxury-app" style="padding: 10px; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-3d-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
+                    <button class="btn-luxury-app" style="padding: 12px; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
                         <i class="fa-solid fa-sliders"></i>
                     </button>
                 </div>
 
-                <!-- 3D Touch Scroll Horizontal Carousel Bar for Experts -->
-                <div class="experts-horizontal-carousel" id="expertScrollCarousel">
-                    <!-- Populated dynamically -->
-                </div>
-
-                <!-- Sleek 3-Column Grid Layout -->
                 <div class="therapist-list-grid" id="therapistListGrid">
                     <!-- Dynamic profiles loaded from Firebase/JS -->
                 </div>
             </div>
 
-            <!-- SCREEN 5: SUPPORT & CONTACT -->
+            <!-- SCREEN 5: REVIEW, FAQ, APP DOWNLOAD & CONTACT -->
             <div class="app-screen" id="screen-contact">
                 <div class="section-header-app">
                     <h2 class="section-title" data-en="Concierge Support" data-hi="सहायता और संपर्क">Concierge Support</h2>
-                    <p class="section-subtitle" data-en="Our elite team is available 24/7." data-hi="हमारी टीम 24/7 उपलब्ध है।">Our elite team is available 24/7.</p>
+                    <p class="section-subtitle" data-en="Our elite team is available around the clock to organize your personalized service." data-hi="आपकी व्यक्तिगत सेवा को व्यवस्थित करने के लिए हमारी टीम 24/7 उपलब्ध है।"></p>
                 </div>
 
-                <div class="glass-card" style="background: var(--red-gradient-3d); border: none; color: white; display: flex; flex-direction: column; gap: 12px; border-radius: 20px;">
+                <!-- Premium VIP Concierge Card -->
+                <div class="glass-card" style="background: var(--red-gradient); border: none; color: white; display: flex; flex-direction: column; gap: 15px; border-radius: 24px; box-shadow: var(--shadow-strong);">
                     <div>
-                        <span style="font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-metallic);">VIP Privileges</span>
-                        <h3 style="font-family: 'Cinzel', serif; font-size: 1.2rem; margin-top: 4px; color: white; font-weight: 800;">Instant Concierge Desk</h3>
-                        <p style="font-size: 0.78rem; line-height: 1.4; color: rgba(255, 255, 255, 0.9); margin-top: 6px;">Converse with an exclusive lounge assistant directly.</p>
+                        <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-metallic);">VIP Privileges</span>
+                        <h3 style="font-family: 'Cinzel', serif; font-size: 1.3rem; margin-top: 5px; color: white; font-weight: 800;">Instant Oasis Concierge</h3>
+                        <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin-top: 8px; font-weight: 500;">Skip standard scheduling and instantly converse with an exclusive lounge assistant.</p>
                     </div>
-                    <a href="j.html" class="btn-luxury-app" style="background: white; color: var(--primary-red); box-shadow: none; font-weight: 800; text-decoration: none;">
+                    <button class="btn-luxury-app" style="background: white; color: var(--primary-red); box-shadow: none; font-weight: 800;" onclick="openConciergeChat()">
                         <i class="fa-solid fa-comments" style="margin-right: 6px;"></i> <span data-en="Initiate Secure Chat" data-hi="सुरक्षित चैट शुरू करें">Initiate Secure Chat</span>
-                    </a>
+                    </button>
                 </div>
 
-                <div style="padding: 10px 16px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Priority Communication" data-hi="प्राथमिक संपर्क माध्यम">Priority Communication</div></div>
-                <div class="contact-channel-list" style="padding: 0 16px;">
-                    <a href="tel:+919876543210" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 14px; margin-bottom: 10px; text-decoration: none; color: inherit; box-shadow: var(--shadow-3d-soft);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-solid fa-phone" style="color: black; background: var(--gold-gradient); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem;"></i>
-                            <span style="font-size: 0.8rem; font-weight: 800;" data-en="Luxury Voice Desk" data-hi="लक्जरी वॉयस डेस्क">Luxury Voice Desk</span>
+                <div style="padding: 10px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Premium Service Gallery" data-hi="प्रीमियम सेवा गैलरी">Premium Service Gallery</div></div>
+                <div class="gallery-app-grid">
+                    <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=300&auto=format&fit=crop"></div>
+                    <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=300&auto=format&fit=crop"></div>
+                    <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=300&auto=format&fit=crop"></div>
+                    <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=300&auto=format&fit=crop"></div>
+                </div>
+
+                <div class="glass-card app-promo-box" style="border-radius: 24px;">
+                    <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 10px;" data-en="Acquire Mobile App" data-hi="मोबाइल ऐप प्राप्त करें">Acquire Mobile App</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;" data-en="Scan QR Code to program service configurations directly." data-hi="सेवाओं को सीधे प्रबंधित करने के लिए क्यूआर कोड स्कैन करें।">Scan QR Code to program service configurations directly.</p>
+                    <div class="qr-placeholder"><i class="fa-solid fa-qrcode fa-4x" style="color: var(--text-dark);"></i></div>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 15px;">
+                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card); border-color: var(--border-light);" onclick="alert('iOS App coming soon!')">iPhone App</button>
+                        <button class="lang-switch" style="font-size:0.75rem; background: var(--bg-card); border-color: var(--border-light);" onclick="alert('Android App coming soon!')">Android App</button>
+                    </div>
+                </div>
+
+                <div style="padding: 10px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Frequently Asked Questions" data-hi="अक्सर पूछे जाने वाले सवाल">Frequently Asked Questions</div></div>
+                <div class="faq-accordion-group">
+                    <div class="faq-accord-item">
+                        <div class="faq-accord-header" onclick="toggleFaq(this)">
+                            <h3 data-en="Do I need to prepare any equipment?" data-hi="क्या मुझे किसी उपकरण की व्यवस्था करनी होगी?">Do I need to prepare any equipment?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
                         </div>
-                        <span style="font-size: 0.78rem; color: var(--primary-red); font-weight: 800;">+91 98765 43210</span>
+                        <div class="faq-accord-body">
+                            <p data-en="No. Our expert beauticians, therapists, and artists carry complete premium portable setups including all required hygienic tools and supplies." data-hi="नहीं। हमारे विशेषज्ञ ब्यूटीशियन, थेरेपिस्ट और कलाकार सभी आवश्यक स्वच्छ उपकरणों और आपूर्ति सहित पूर्ण पोर्टेबल सेटअप लेकर आते हैं।">No. Our expert beauticians, therapists, and artists carry complete premium portable setups including all required hygienic tools and supplies.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accord-item">
+                        <div class="faq-accord-header" onclick="toggleFaq(this)">
+                            <h3 data-en="Is there any cancellation fee?" data-hi="क्या बुकिंग निरस्त करने का कोई शुल्क है?">Is there any cancellation fee?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-accord-body">
+                            <p data-en="No fees are charged if cancelled 4 hours prior to your scheduled slot. Otherwise, standard charges are applicable." data-hi="यदि निर्धारित समय से 4 घंटे पहले निरस्त किया जाता है, तो कोई शुल्क नहीं लिया जाता है।">No fees are charged if cancelled 4 hours prior to your scheduled slot. Otherwise, standard operational charges are applicable.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accord-item">
+                        <div class="faq-accord-header" onclick="toggleFaq(this)">
+                            <h3 data-en="How do we ensure privacy and safety?" data-hi="गोपनीयता और सुरक्षा कैसे सुनिश्चित की जाती है?">How do we ensure privacy and safety?</h3>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-accord-body">
+                            <p data-en="All professionals are thoroughly vetted with mandatory police background verifications, and we maintain absolute privacy-lock protocols." data-hi="सभी पेशेवरों का कड़ा पुलिस सत्यापन किया जाता है, और हम उच्चतम गोपनीयता प्रोटोकॉल बनाए रखते हैं।">All professionals are thoroughly vetted with mandatory police background verifications, and we maintain absolute privacy-lock protocols.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding: 30px 20px 15px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Priority Communication" data-hi="प्राथमिक संपर्क माध्यम">Priority Communication</div></div>
+                <div class="contact-channel-list">
+                    <a href="tel:+919876543210" class="channel-item">
+                        <div class="channel-left">
+                            <i class="fa-solid fa-phone"></i>
+                            <span data-en="Luxury Voice Desk" data-hi="लक्जरी वॉयस डेस्क">Luxury Voice Desk</span>
+                        </div>
+                        <span style="font-size: 0.8rem; color: var(--primary-red); font-weight: 800;">+91 98765 43210</span>
                     </a>
-                    <a href="j.html" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 14px; margin-bottom: 10px; text-decoration: none; color: inherit; box-shadow: var(--shadow-3d-soft);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-brands fa-whatsapp" style="color: black; background: var(--gold-gradient); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem;"></i>
-                            <span style="font-size: 0.8rem; font-weight: 800;" data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
+                    <a href="j.html" class="channel-item">
+                        <div class="channel-left">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
                         </div>
-                        <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; color: var(--text-muted);"></i>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.9rem; color: var(--text-muted);"></i>
                     </a>
                 </div>
             </div>
 
         </main>
 
-        <!-- Success Overlay Modal -->
+        <!-- Live Chat Overlay Widget -->
+        <div class="chat-app-overlay" id="conciergeChat">
+            <div class="chat-app-header">
+                <button class="chat-back-btn" onclick="closeConciergeChat()"><i class="fa-solid fa-chevron-left"></i></button>
+                <div>
+                    <h4 style="font-size: 1rem; color: var(--text-dark); font-weight: 800;" data-en="Live Support" data-hi="लाइव सहायता">Live Support</h4>
+                    <span style="font-size: 0.75rem; color: var(--primary-red); font-weight: 700;" data-en="Active Assistant" data-hi="सक्रिय सहायक">Active Assistant</span>
+                </div>
+            </div>
+            <div class="chat-app-body" id="chatAppBody">
+                <div class="chat-bubble agent" data-en="Welcome to OOOO luxury support. Please enter your inquiries below." data-hi="OOOO लक्जरी सपोर्ट में स्वागत है। पूछताछ नीचे दर्ज करें।">Welcome to OOOO luxury support. Please enter your inquiries below.</div>
+            </div>
+            <div class="chat-app-overlay-footer chat-app-footer">
+                <input type="text" id="chatAppInput" placeholder="Type a message...">
+                <button class="btn-luxury-app" style="width: auto; padding: 12px 20px; border-radius: 20px;" onclick="sendAppMessage()" data-en="Send" data-hi="भेजें">Send</button>
+            </div>
+        </div>
+
+        <!-- Success overlay -->
         <div class="success-overlay" id="successOverlay">
             <div class="success-card">
                 <div class="success-icon"><i class="fa-solid fa-shield-heart"></i></div>
-                <h3 style="font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; color: var(--text-dark);" data-en="Booking Confirmed!" data-hi="बुकिंग पक्की हो गई!">Booking Confirmed!</h3>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; font-weight: 600;" data-en="Your appointment is secured. Our executive will call you within 15 mins." data-hi="आपकी अपॉइंटमेंट सुरक्षित कर ली गई है। हमारे प्रतिनिधि 15 मिनट में संपर्क करेंगे।">Your appointment is secured. Our executive will call you within 15 mins.</p>
-                <div style="background: var(--bg-main); padding: 12px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed var(--primary-red);">
-                    <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 700;" data-en="RESERVATION ID" data-hi="आरक्षण संदर्भ संख्या">RESERVATION ID</span>
-                    <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1rem; font-weight: 800;" id="successBookingId">OOOO-654874</strong>
+                <h3 style="font-size: 1.4rem; margin-bottom: 12px; font-weight: 800; color: var(--text-dark);" data-en="Booking Confirmed!" data-hi="बुकिंग पक्की हो गई!">Booking Confirmed!</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.6; font-weight: 600;" data-en="Your premium service appointment is secured. Our executive will call you within 15 mins." data-hi="आपकी प्रीमियम सेवा अपॉइंटमेंट सुरक्षित कर ली गई है। हमारे प्रतिनिधि 15 मिनट में आपसे संपर्क करेंगे।">Your premium service appointment is secured. Our executive will call you within 15 mins.</p>
+                <div style="background: var(--bg-main); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed var(--primary-red);">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 700;" data-en="RESERVATION ID" data-hi="आरक्षण संदर्भ संख्या">RESERVATION ID</span>
+                    <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1.1rem; font-weight: 800;" id="successBookingId">OOOO-654874</strong>
                 </div>
                 <button class="btn-luxury-app" style="width: 100%; border-radius: 12px;" onclick="closeSuccessOverlay()" data-en="Back to Home" data-hi="होम स्क्रीन पर जाएं">Back to Home</button>
             </div>
         </div>
 
-        <!-- Dynamic Expert Profile Popup Overlay -->
-        <div class="therapist-desc-overlay" id="therapistDescOverlay">
-            <div class="chat-app-header" style="height: 65px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 16px; gap: 12px; border-bottom: 1px solid var(--border-light);">
-                <button onclick="closeTherapistDescOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.2rem; cursor: pointer;">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <div style="flex-grow: 1;">
-                    <h4 style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 2px; font-weight: 800;" id="descTherapistName">Expert Profile</h4>
-                    <span style="font-size: 0.68rem; color: var(--gold-metallic); font-weight: 800;" id="descTherapistTag">Specialist</span>
-                </div>
+        <!-- ENHANCED CONFIRMATION TIMER OVERLAY WITH DESIRED IMAGE & SKIP OPTION -->
+        <div id="submitSplashOverlay">
+            <div class="splash-image-card">
+                <img src="https://i.ibb.co/zThXHMC0/file-000000005e20820ba4603cbea15bfa70.png" alt="Confirming Order">
             </div>
 
-            <div class="therapist-desc-scrollable">
-                <div class="therapist-desc-img-card" id="descTherapistImgCard">
-                    <div class="therapist-desc-img" id="descTherapistImg"></div>
-                </div>
-                
-                <div class="therapist-desc-info-box">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                        <div class="therapist-profile-spec" id="descTherapistSpec">Specialization</div>
-                        <span id="descTherapistDistanceBadge" style="background: var(--bg-elevated); color: var(--primary-red); padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800;">📍 Distance</span>
-                    </div>
+            <h3 style="font-family: 'Cinzel', serif; color: white; font-size: 1.35rem; margin-top: 22px; font-weight: 800; letter-spacing: 1px;" data-en="Processing Reservation..." data-hi="प्रक्रिया की जा रही है...">Processing Reservation...</h3>
+            <p style="color: var(--soft-pink); font-size: 0.82rem; margin-top: 6px; font-weight: 600;" data-en="Securing your VIP slots with elite specialists..." data-hi="आपकी प्रीमियम स्लॉट सुरक्षित की जा रही है...">Securing your VIP slots with elite specialists...</p>
 
-                    <div style="height: 1px; background: var(--border-light); margin: 12px 0;"></div>
-                    
-                    <p class="therapist-profile-bio" id="descTherapistExp">
-                        Professional experience details...
-                    </p>
-
-                    <div style="margin-top: 20px; margin-bottom: 10px;">
-                        <div style="font-size:0.8rem; color:var(--text-dark); font-weight:800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
-                            <i class="fa-solid fa-location-crosshairs" style="color:var(--primary-red);"></i> 
-                            <span data-en="Exact Location Map" data-hi="वास्तविक मानचित्र स्थान">Exact Location Map</span>
-                        </div>
-                        <div id="descTherapistMiniMap" style="width: 100%; height: 160px; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: var(--shadow-3d-soft); z-index: 1;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="therapist-desc-footer">
-                <button type="button" class="btn-luxury-app" id="btnFullViewFromDesc" style="background: white; color: var(--primary-red); border: 1px solid var(--primary-red); box-shadow: none; flex: 1; font-size: 0.7rem;">
-                    <i class="fa-solid fa-expand" style="margin-right: 4px;"></i> Full Photo
+            <div class="splash-actions-group">
+                <button class="btn-splash-skip" onclick="dismissSubmitSplash()" data-en="Skip" data-hi="स्किप करें">Skip</button>
+                <button id="splashOkBtn" class="btn-luxury-app" style="flex: 1.5; opacity: 0.7; cursor: not-allowed;" disabled onclick="dismissSubmitSplash()">
+                    <span id="splashTimerText">3s</span>
                 </button>
-                <button type="button" class="btn-luxury-app" id="btnDescReserve" style="flex: 2; font-size: 0.75rem;" data-en="Select Expert" data-hi="इस विशेषज्ञ को चुनें">Select Expert</button>
+            </div>
+        </div>
+
+        <!-- BOOKING PREMIUM INTRO OVERLAY MODAL -->
+        <div id="bookingWelcomeModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(17, 1, 6, 0.95); backdrop-filter: blur(15px); z-index: 4800; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center;">
+            <div style="background: var(--bg-card); border-radius: 28px; padding: 20px; width: 100%; max-width: 360px; box-shadow: var(--shadow-strong); border: 1px solid var(--border-light);">
+                <div style="width: 100%; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; margin-bottom: 20px; background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center;">
+                </div>
+                <h3 style="font-family: 'Cinzel', serif; color: var(--text-dark); font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;" data-en="PREMIUM SERVICE RESERVATION" data-hi="प्रीमियम सेवा आरक्षण">PREMIUM SERVICE RESERVATION</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; margin-bottom: 20px; font-weight: 500;" data-en="Enter India's most private and high-class home service experience. Continue to customize your parameters." data-hi="भारत के सबसे सुरक्षित और उच्च श्रेणी के होम सर्विस अनुभव में प्रवेश करें। आगे बढ़ने के लिए बटन दबाएं।">Enter India's most private and high-class home service experience. Continue to customize your parameters.</p>
+                <button class="btn-luxury-app" style="width: 100%;" onclick="dismissBookingWelcome()"><span data-en="Configure Service" data-hi="आरक्षण शुरू करें">Configure Service</span></button>
             </div>
         </div>
 
         <!-- Live Tracking Overlay Map Screen -->
         <div class="tracking-overlay" id="trackingOverlay">
-            <div style="height: 65px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 16px; gap: 12px; border-bottom: 1px solid var(--border-light);">
-                <button onclick="closeTrackingOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.2rem;"><i class="fa-solid fa-chevron-down"></i></button>
+            <div class="chat-app-header">
+                <button class="chat-back-btn" onclick="closeTrackingOverlay()"><i class="fa-solid fa-chevron-down"></i></button>
                 <div>
-                    <h4 style="font-size: 0.95rem; color: var(--text-dark); font-weight: 800;" data-en="Live Tracking" data-hi="लाइव ट्रैकिंग">Live Tracking</h4>
-                    <span style="font-size: 0.7rem; color: var(--primary-red); font-weight: 700;" id="trackingStatusText">Expert on the way...</span>
+                    <h4 style="font-size: 1rem; color: var(--text-dark); font-weight: 800;" data-en="Live Tracking" data-hi="लाइव ट्रैकिंग">Live Tracking</h4>
+                    <span style="font-size: 0.75rem; color: var(--primary-red); font-weight: 700;" id="trackingStatusText" data-en="Expert on the way..." data-hi="विशेषज्ञ रास्ते में हैं...">Expert on the way...</span>
                 </div>
             </div>
             <div class="tracking-map-container" id="trackingMap"></div>
             <div class="tracking-details">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
                     <div>
-                        <h3 style="font-size:1rem; font-weight: 800; color:var(--text-dark);" id="trackTherapistName">Professional</h3>
-                        <span style="font-size:0.75rem; font-weight: 600; color:var(--text-muted);">Arriving shortly</span>
+                        <h3 style="font-size:1.1rem; font-weight: 800; color:var(--text-dark);" id="trackTherapistName">Professional</h3>
+                        <span style="font-size:0.8rem; font-weight: 600; color:var(--text-muted);" data-en="Arriving shortly" data-hi="जल्द पहुँच रहे हैं">Arriving shortly</span>
                     </div>
                     <div style="text-align:right;">
-                        <h3 style="font-size:1.1rem; font-weight: 800; color:var(--primary-red);" id="trackDistance">-- km</h3>
-                        <span style="font-size:0.75rem; font-weight: 600; color:var(--text-muted);">Distance</span>
+                        <h3 style="font-size:1.2rem; font-weight: 800; color:var(--primary-red);" id="trackDistance">-- km</h3>
+                        <span style="font-size:0.8rem; font-weight: 600; color:var(--text-muted);" data-en="Distance" data-hi="दूरी">Distance</span>
                     </div>
                 </div>
                 <button class="btn-luxury-app" style="width:100%; border-radius:12px; background: #25d366; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);" onclick="markBookingCompleted()">
                     <i class="fa-solid fa-circle-check" style="margin-right: 5px;"></i> <span data-en="Expert Arrived (Done)" data-hi="विशेषज्ञ पहुँच गए (पूरा हुआ)">Expert Arrived (Done)</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- FULL SCREEN IMAGE PREVIEW MODAL FOR EXPERTS -->
+        <div class="full-image-modal" id="fullImageModal">
+            <button class="full-image-close-btn" onclick="closeFullImageModal()"><i class="fa-solid fa-xmark"></i></button>
+            <img id="fullImageViewTag" src="" alt="Therapist Full Image">
+        </div>
+
+        <!-- Dynamic Expert Description Pop-up -->
+        <div class="therapist-desc-overlay" id="therapistDescOverlay">
+            <!-- Pop-up Top Bar -->
+            <div class="chat-app-header" style="height: 75px; background-color: var(--bg-card);">
+                <button class="chat-back-btn" onclick="closeTherapistDescOverlay()"><i class="fa-solid fa-chevron-left"></i></button>
+                <div style="flex-grow: 1; padding-left: 5px;">
+                    <h4 style="font-size: 1rem; color: var(--text-dark); margin-bottom: 2px; font-weight: 800;" id="descTherapistName">Expert Profile</h4>
+                    <span style="font-size: 0.7rem; color: var(--gold-metallic); font-weight: 800;" id="descTherapistTag">Specialist</span>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="therapist-desc-scrollable">
+                <div class="therapist-desc-img-card" id="descTherapistImgCard">
+                    <div class="therapist-desc-img" id="descTherapistImg"></div>
+                </div>
+
+                <!-- VIEW FULL PICTURE BUTTON -->
+                <button class="btn-luxury-app" id="btnViewFullPic" style="width: 100%; margin-bottom: 18px; background: #FFFFFF; color: var(--primary-red); border: 1.5px solid var(--border-light); font-size: 0.75rem; padding: 12px; box-shadow: var(--shadow-soft);" onclick="openFullImageModal()">
+                    <i class="fa-solid fa-expand" style="margin-right: 8px; color: var(--gold-metallic);"></i> <span data-en="View Full Picture" data-hi="पूरा फोटो देखें">View Full Picture</span>
+                </button>
+                
+                <div class="therapist-desc-info-box">
+                    <div class="therapist-profile-spec" id="descTherapistSpec">Specialization</div>
+                    <div style="height: 1px; background: var(--border-light); margin: 15px 0;"></div>
+                    <p class="therapist-profile-bio" id="descTherapistExp">
+                        Professional experience description goes here...
+                    </p>
+
+                    <!-- REAL LOCATION MAP IN PROFILE WITH EXACT ROAD DISTANCE -->
+                    <div style="margin-top: 25px; margin-bottom: 25px;">
+                        <div style="font-size:0.85rem; color:var(--text-dark); font-weight:800; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-location-crosshairs" style="color:var(--primary-red);"></i> 
+                                <span data-en="Real-Time Location" data-hi="वास्तविक स्थान">Real-Time Location</span>
+                            </div>
+                            <div id="descTherapistDistanceBadge" style="background: var(--bg-elevated); border: 1px solid var(--border-light); color: var(--primary-red); padding: 4px 10px; border-radius: 12px; font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; gap: 5px;">
+                                <i class="fa-solid fa-route" style="color: var(--gold-metallic);"></i>
+                                <span id="descDistanceText">-- km</span>
+                            </div>
+                        </div>
+                        <div id="descTherapistMiniMap" style="width: 100%; height: 180px; border-radius: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); z-index: 1;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pop-up Bottom Reservation Call to Action -->
+            <div class="therapist-desc-footer">
+                <button class="btn-luxury-app" style="width: 100%; border-radius: 16px; padding: 16px;" id="btnDescReserve" data-en="Select this Expert" data-hi="इस विशेषज्ञ को चुनें">Select this Expert</button>
             </div>
         </div>
 
@@ -1577,11 +2423,14 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { getDatabase, ref, onValue, push, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        // FCM PUSH NOTIFICATIONS MODULE IMPORTS
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
 
-        // ANTI SCREENSHOT & PRIVACY LOCKS
+        // ANTI SCREENSHOT & NO DOWNLOAD JS SECURITY SCRIPT
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c'))) {
+            if (e.key === 'PrintScreen' || 
+                (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c'))) {
                 e.preventDefault();
                 alert('Screenshots and saving are disabled for privacy and security.');
                 return false;
@@ -1604,6 +2453,10 @@
         const analytics = getAnalytics(app);
         const db = getDatabase(app);
 
+        // INITIALIZE FCM MESSAGING WITH YOUR VAPID KEY
+        const messaging = getMessaging(app);
+        const VAPID_KEY = "BEElGttgo2nBTWKyQxlG0h7F36EK43H5FEEqX2DfCEUWMllWLiJJTem5ahUJDlH_ADVkKQtX_oPBurfgcZxsL_o";
+
         const appState = {
             lang: 'en',
             currentScreen: 'home',
@@ -1615,36 +2468,57 @@
             finalPrice: 2999,
             therapist: 'Expert Professional',
             user: null, 
-            userLat: 28.6139, // Default Delhi Lat
-            userLng: 77.2090, // Default Delhi Lng
+            userLat: 28.4595,
+            userLng: 77.0266,
             activeBookingId: null,
             activeBookingStatus: 'Pending',
             activeTherapists: [],
             welcomeEn: '',
             welcomeHi: '',
             allServices: [],
-            activeCategory: 'All Specialties'
+            activeCategory: 'All Specialties',
+            fcmToken: null
         };
+
+        // REQUEST FCM NOTIFICATION PERMISSION AND STORE TOKEN
+        async function requestNotificationPermission() {
+            if (!("Notification" in window)) return;
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    console.log('Notification permission granted.');
+                    const currentToken = await getToken(messaging, { vapidKey: VAPID_KEY });
+                    if (currentToken) {
+                        console.log('FCM Device Token Obtained:', currentToken);
+                        appState.fcmToken = currentToken;
+                        if (appState.user && appState.user.phone) {
+                            set(ref(db, `user_tokens/${appState.user.phone}`), {
+                                token: currentToken,
+                                updatedAt: new Date().toISOString()
+                            });
+                        }
+                    }
+                } else {
+                    console.log('Notification permission denied by user.');
+                }
+            } catch (err) {
+                console.error('Error fetching FCM Token:', err);
+            }
+        }
+
+        // LISTEN FOR FCM FOREGROUND MESSAGES
+        onMessage(messaging, (payload) => {
+            console.log('FCM Foreground Notification Received:', payload);
+            if (payload && payload.notification) {
+                const title = payload.notification.title || "OOOO Elite Services";
+                const body = payload.notification.body || "You have a new update!";
+                alert(`🔔 ${title}\n\n${body}`);
+            }
+        });
 
         let currentPopupSlide = 0;
         let popupTotalSlides = 0;
-
-        // FULL IMAGE VIEWER LOGIC WITH 'X' CLOSE BUTTON
-        window.openFullImageViewer = function(imgUrl, caption) {
-            const modal = document.getElementById('fullImageViewerModal');
-            const img = document.getElementById('fullImageViewerImg');
-            const cap = document.getElementById('fullImageViewerCaption');
-
-            if(!imgUrl) return;
-            img.src = imgUrl;
-            cap.innerText = caption || 'OOOO Certified Expert';
-            modal.style.display = 'flex';
-        };
-
-        window.closeFullImageViewer = function() {
-            const modal = document.getElementById('fullImageViewerModal');
-            modal.style.display = 'none';
-        };
+        let splashTimerInterval = null;
 
         function checkUserOnboarding() {
             const storedUser = localStorage.getItem('oooo_user_data');
@@ -1652,6 +2526,7 @@
                 appState.user = JSON.parse(storedUser);
                 document.getElementById('userOnboardingOverlay').style.display = 'none';
                 requestLiveGPSLocation();
+                requestNotificationPermission();
             } else {
                 document.getElementById('userOnboardingOverlay').style.display = 'flex';
             }
@@ -1664,7 +2539,7 @@
                     appState.userLng = position.coords.longitude;
                     updateTherapistsUI(appState.activeTherapists);
                 }, () => {
-                    console.log("GPS Unavailable. Using default city coordinates.");
+                    console.log("GPS Unavailable. Using default coordinates.");
                 });
             }
         }
@@ -1680,33 +2555,19 @@
             localStorage.setItem('oooo_user_data', JSON.stringify(userData));
             appState.user = userData;
 
-            geocodeAddressAndSetLocation(`${city}, ${state}, India`);
+            requestNotificationPermission();
 
             const overlay = document.getElementById('userOnboardingOverlay');
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
+                requestLiveGPSLocation();
             }, 300);
         }
 
-        async function geocodeAddressAndSetLocation(addressQuery) {
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(addressQuery)}&limit=1`);
-                if(res.ok) {
-                    const data = await res.json();
-                    if(data && data.length > 0) {
-                        appState.userLat = parseFloat(data[0].lat);
-                        appState.userLng = parseFloat(data[0].lon);
-                        updateTherapistsUI(appState.activeTherapists);
-                    }
-                }
-            } catch(e) { console.log("Geocoding fallback..."); }
-        }
-
-        // HAVERSINE DISTANCE ENGINE
+        // STRAIGHT LINE DISTANCE (HAVERSINE)
         function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
-            if(!lat1 || !lon1 || !lat2 || !lon2) return 5.0; // fallback default
-            const R = 6371; // Earth radius in KM
+            const R = 6371; 
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = 
@@ -1715,6 +2576,25 @@
                 Math.sin(dLon/2) * Math.sin(dLon/2); 
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
             return R * c; 
+        }
+
+        // ACTUAL DRIVING ROAD DISTANCE (OSRM API WITH ROAD MULTIPLIER FALLBACK - NO STRAIGHT DISPLACEMENT)
+        async function getDrivingDistance(lat1, lon1, lat2, lon2) {
+            if(!lat1 || !lon1 || !lat2 || !lon2) return "--";
+            try {
+                const url = `https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data && data.routes && data.routes.length > 0) {
+                    const km = data.routes[0].distance / 1000;
+                    return km.toFixed(1);
+                }
+            } catch (e) {
+                console.log("OSRM Routing API Error, falling back to road estimate multiplier:", e);
+            }
+            // Road Multiplier factor (1.28x) so it measures true road distance rather than straight displacement
+            const haversine = calculateHaversineDistance(lat1, lon1, lat2, lon2);
+            return (haversine * 1.28).toFixed(1);
         }
 
         let sliderInterval = null;
@@ -1762,7 +2642,9 @@
                 if (Array.isArray(data)) {
                     images = data.filter(item => item && item.url).map(item => item.url);
                 } else if (typeof data === 'object') {
-                    images = Object.values(data).map(item => typeof item === 'string' ? item : (item.url ? item.url : '')).filter(url => url !== '');
+                    images = Object.values(data).map(item => {
+                        return typeof item === 'string' ? item : (item.url ? item.url : '');
+                    }).filter(url => url !== '');
                 }
             }
             if (images.length === 0) {
@@ -1777,7 +2659,9 @@
         function filterByCategory(categoryEn, element) {
             appState.activeCategory = categoryEn;
             document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active'));
-            if(element) element.classList.add('active');
+            if(element) {
+                element.classList.add('active');
+            }
             renderServices();
         }
 
@@ -1792,7 +2676,29 @@
                 Object.entries(data).forEach(([key, val]) => {
                     const pill = document.createElement('div');
                     pill.className = 'category-pill';
-                    if (appState.activeCategory === val.en) pill.classList.add('active');
+                    if (appState.activeCategory === val.en) {
+                        pill.classList.add('active');
+                    }
+                    pill.setAttribute('data-en', val.en);
+                    pill.setAttribute('data-hi', val.hi);
+                    const safeEn = val.en.replace(/'/g, "\\'");
+                    pill.setAttribute('onclick', `filterByCategory('${safeEn}', this)`);
+                    pill.innerText = appState.lang === 'en' ? val.en : val.hi;
+                    container.appendChild(pill);
+                });
+            } else {
+                const defaults = [
+                    { en: "Beautician", hi: "ब्यूटीशियन" },
+                    { en: "Therapist", hi: "थेरेपिस्ट" },
+                    { en: "Mehndi Artist", hi: "मेहंदी आर्टिस्ट" },
+                    { en: "Care Taker", hi: "केयरटेकर" }
+                ];
+                defaults.forEach(val => {
+                    const pill = document.createElement('div');
+                    pill.className = 'category-pill';
+                    if (appState.activeCategory === val.en) {
+                        pill.classList.add('active');
+                    }
                     pill.setAttribute('data-en', val.en);
                     pill.setAttribute('data-hi', val.hi);
                     const safeEn = val.en.replace(/'/g, "\\'");
@@ -1821,6 +2727,7 @@
             if(!container) return;
             
             container.innerHTML = '';
+            
             selectEl.innerHTML = `<option value="" disabled selected data-en="Choose Service..." data-hi="सेवा चुनें...">Choose Service...</option>`;
             
             appState.allServices.forEach(s => {
@@ -1837,7 +2744,7 @@
             }
 
             if (filteredServices.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px;" data-en="No services found." data-hi="कोई सेवा नहीं मिली।">No services found.</p>`;
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px;" data-en="No services found in this category." data-hi="इस श्रेणी में कोई सेवा नहीं मिली।">No services found in this category.</p>`;
             } else {
                 filteredServices.forEach(s => {
                     const title = appState.lang === 'en' ? s.title.en : s.title.hi;
@@ -1857,7 +2764,7 @@
                             <button class="read-more-btn" onclick="toggleReadMore('${descId}', this)">Read More</button>
                             <div class="service-card-footer">
                                 <span class="duration-lbl"><i class="fa-regular fa-clock"></i> ${s.duration} Mins</span>
-                                <button class="btn-luxury-app" style="padding: 8px 18px; font-size: 0.72rem; border-radius: 8px;" onclick="directSelectService('${safeTitle}', ${s.price}, ${s.duration})">
+                                <button class="btn-luxury-app" style="padding: 10px 24px; font-size: 0.75rem; border-radius: 8px;" onclick="directSelectService('${safeTitle}', ${s.price}, ${s.duration})">
                                     <span data-en="Select" data-hi="चुनें">Select</span>
                                 </button>
                             </div>
@@ -1872,9 +2779,17 @@
         onValue(ref(db, 'services'), (snapshot) => {
             const data = snapshot.val();
             let servicesList = [];
+            
             if (data) {
                 servicesList = Object.entries(data).map(([key, val]) => ({ id: key, ...val }));
+            } else {
+                servicesList = [
+                    { id: 's1', category: 'Beautician', title: {en: "Bridal Beauty Package", hi: "ब्राइडल ब्यूटी पैकेज"}, description: {en: "Complete premium beauty and grooming for special occasions.", hi: "खास अवसरों के लिए संपूर्ण प्रीमियम सौंदर्य सेवा।"}, price: 4999, duration: 120, image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=400" },
+                    { id: 's2', category: 'Therapist', title: {en: "Aromatherapy Massage", hi: "अरोमाथेरेपी मालिश"}, description: {en: "Deep relaxation with elite essential oils by expert therapists.", hi: "विशेषज्ञों द्वारा कुलीन आवश्यक तेलों के साथ गहरा विश्राम।"}, price: 2999, duration: 60, image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=400" },
+                    { id: 's3', category: 'Mehndi Artist', title: {en: "Premium Mehndi Design", hi: "प्रीमियम मेहंदी डिज़ाइन"}, description: {en: "Intricate, bespoke organic Mehndi art for hands and feet.", hi: "हाथों और पैरों के लिए जटिल, जैविक मेहंदी कला।"}, price: 1500, duration: 90, image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=400" }
+                ];
             }
+
             appState.allServices = servicesList;
             renderServices();
         });
@@ -1890,7 +2805,7 @@
                 membershipsList = Object.entries(data).map(([key, val]) => ({ id: key, ...val }));
             } else {
                 membershipsList = [
-                    { id: 'm1', title: { en: 'Gold Access', hi: 'गोल्ड एक्सेस' }, price: { en: '₹4,999/mo', hi: '₹4,999/माह' }, tier: 'gold', benefits: { en: ['Priority Scheduling', '10% discount on all services'], hi: ['प्राथमिकता शेड्यूलिंग', '10% छूट'] } }
+                    { id: 'm1', title: { en: 'Gold Elite Access', hi: 'गोल्ड एलीट एक्सेस' }, price: { en: '₹4,999/mo', hi: '₹4,999/माह' }, tier: 'gold', benefits: { en: ['Priority Scheduling', '10% discount on all services', 'Dedicated Concierge'], hi: ['प्राथमिकता शेड्यूलिंग', 'सभी सेवाओं पर 10% की छूट', 'समर्पित सहायक'] } }
                 ];
             }
 
@@ -1916,7 +2831,6 @@
             toggleLanguage(true);
         });
 
-        // REAL-TIME EXPERT FETCH & PROXIMITY CALCULATOR
         onValue(ref(db, 'therapists'), (snapshot) => {
             const data = snapshot.val();
             let therapistsList = [];
@@ -1929,6 +2843,42 @@
                         ...val
                     }));
                 }
+            }
+            if (therapistsList.length === 0) {
+                therapistsList = [
+                    {
+                        name: "Pooja",
+                        specialization: "AROMATIC",
+                        experience: "1 year",
+                        image: "https://i.ibb.co/LdXv02N/Screenshot-2026-07-25-19-50-25.jpg",
+                        tag: "Master therapy",
+                        lat: 28.4595, lng: 77.0266, address: "Gurgaon"
+                    },
+                    {
+                        name: "Riya Kapoor",
+                        specialization: "Premium Beautician",
+                        experience: "Top-tier makeup artist and skincare specialist with 7 years of elite salon experience.",
+                        image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=400",
+                        tag: "Beauty Expert",
+                        lat: 28.4650, lng: 77.0350, address: "Gurgaon"
+                    },
+                    {
+                        name: "Ananya Sharma",
+                        specialization: "Aromatherapy Specialist",
+                        experience: "9+ Years of experience at elite 5-star spa resorts providing deep wellness therapies.",
+                        image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=400",
+                        tag: "Master Therapist",
+                        lat: 28.4600, lng: 77.0300, address: "Delhi NCR"
+                    },
+                    {
+                        name: "Meera Rajput",
+                        specialization: "Bridal Mehndi Artist",
+                        experience: "Award-winning henna artist specializing in intricate, organic bespoke bridal designs.",
+                        image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=400",
+                        tag: "Artisan",
+                        lat: 28.4550, lng: 77.0250, address: "South Delhi"
+                    }
+                ];
             }
             appState.activeTherapists = therapistsList;
             updateTherapistsUI(therapistsList);
@@ -1943,45 +2893,33 @@
             document.getElementById('expertFilterModal').style.display = 'none';
         };
 
-        window.applyExpertFilters = async function() {
+        window.applyExpertFilters = function() {
             const gender = document.getElementById('filterGender').value;
-            const locationStr = document.getElementById('filterLocation').value.trim();
+            const location = document.getElementById('filterLocation').value.toLowerCase();
             const experience = document.getElementById('filterExperience').value;
-            const maxDistStr = document.getElementById('filterDistance').value;
 
-            if(locationStr.length > 2) {
-                await geocodeAddressAndSetLocation(locationStr);
+            let filtered = appState.activeTherapists;
+
+            if(location) {
+                filtered = filtered.filter(t => (t.address && t.address.toLowerCase().includes(location)) || (t.name && t.name.toLowerCase().includes(location)));
             }
 
-            let filtered = [...appState.activeTherapists];
-
             if(gender !== 'All') {
-                filtered = filtered.filter(t => {
-                    const g = (t.gender || '').toLowerCase();
-                    return g === gender.toLowerCase();
-                });
+                filtered = filtered.filter(t => JSON.stringify(t).toLowerCase().includes(gender.toLowerCase()));
             }
 
             if(experience !== 'All') {
                 const minYears = parseInt(experience);
                 filtered = filtered.filter(t => {
-                    const expVal = parseInt(t.experience) || 0;
-                    return expVal >= minYears;
+                    const matches = t.experience ? t.experience.match(/(\d+)/) : null;
+                    if(matches) {
+                        return parseInt(matches[0]) >= minYears;
+                    }
+                    return false; 
                 });
             }
 
-            filtered.forEach(t => {
-                t.calcDistance = calculateHaversineDistance(appState.userLat, appState.userLng, t.lat, t.lng);
-            });
-
-            if(maxDistStr !== 'All') {
-                const maxD = parseFloat(maxDistStr);
-                filtered = filtered.filter(t => t.calcDistance <= maxD);
-            }
-
-            filtered.sort((a,b) => a.calcDistance - b.calcDistance);
-
-            updateTherapistsUI(filtered, true);
+            updateTherapistsUI(filtered);
             closeExpertFilterModal();
         };
 
@@ -1989,11 +2927,11 @@
             document.getElementById('filterGender').value = 'All';
             document.getElementById('filterLocation').value = '';
             document.getElementById('filterExperience').value = 'All';
-            document.getElementById('filterDistance').value = 'All';
             updateTherapistsUI(appState.activeTherapists);
             closeExpertFilterModal();
         };
 
+        // VISUAL EXPERT SELECTION LOGIC
         window.selectBookingTherapist = function(name) {
             document.getElementById('bookTherapistGender').value = name;
             document.querySelectorAll('.therapist-scroll-card').forEach(card => {
@@ -2004,112 +2942,86 @@
                 }
             });
             appState.therapist = name;
-        };
+        }
 
-        // RENDER 3-COLUMN GRID & HORIZONTAL CAROUSEL (CLEAN FORMATTED TEXT)
-        function updateTherapistsUI(list, isFiltered = false) {
+        function updateTherapistsUI(list) {
             const container = document.getElementById('therapistListGrid');
             const selectEl = document.getElementById('bookTherapistGender');
             const bookingVisualList = document.getElementById('bookingTherapistList');
-            const topCarousel = document.getElementById('expertScrollCarousel');
             
-            if(!container || !bookingVisualList || !topCarousel) return;
+            if(!container || !bookingVisualList) return;
             
             container.innerHTML = '';
             bookingVisualList.innerHTML = '';
-            topCarousel.innerHTML = '';
             selectEl.innerHTML = '';
 
-            // Calculate distance for all experts
-            const processedList = list.map(t => {
-                const dist = calculateHaversineDistance(appState.userLat, appState.userLng, t.lat, t.lng);
-                return { ...t, calcDistance: dist };
-            });
-
-            // Sort nearest first
-            processedList.sort((a, b) => a.calcDistance - b.calcDistance);
-
-            if (processedList.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px; grid-column: span 3;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
+            if (list.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px; grid-column: span 3;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
             }
 
-            processedList.forEach((t, index) => {
+            list.forEach((t, index) => {
                 const opt = document.createElement('option');
                 opt.value = t.name;
-                opt.text = `${t.name} (${Math.round(t.calcDistance)} km)`;
+                opt.text = t.name;
                 selectEl.appendChild(opt);
 
-                const photos = t.images || (t.image ? [t.image] : []);
-                const mainPhoto = photos[0] || 'https://via.placeholder.com/150';
-                const safeName = t.name.replace(/'/g, "\\'");
+                const tLat = t.lat || (appState.userLat + 0.02);
+                const tLng = t.lng || (appState.userLng + 0.02);
+                const initialDist = (calculateHaversineDistance(appState.userLat, appState.userLng, tLat, tLng) * 1.28).toFixed(1);
 
-                // Clean Experience Formatting
-                let expDisplay = '';
-                if(t.experience) {
-                    const cleanExpNum = String(t.experience).replace(/years|year|yrs|exp/gi, '').trim();
-                    expDisplay = cleanExpNum ? `${cleanExpNum} Yr Exp` : '';
-                }
-                const genderDisplay = t.gender || 'Certified';
-                const cleanSubtitleText = expDisplay ? `${genderDisplay} • ${expDisplay}` : genderDisplay;
-
-                // 1. Top Carousel Item
-                const carouselItem = document.createElement('div');
-                carouselItem.className = 'expert-carousel-card';
-                carouselItem.onclick = () => openTherapistDescOverlay(`${safeName}`, `${t.gender || 'Expert'}`, `${t.experience || 'Experienced'}`, `${Math.round(t.calcDistance)}`, `${mainPhoto}`, t.lat || 0.0, t.lng || 0.0, JSON.stringify(photos).replace(/"/g, '&quot;'));
-                carouselItem.innerHTML = `
-                    <div class="expert-carousel-avatar" style="background-image: url('${mainPhoto}');"></div>
-                    <div style="font-size:0.72rem; font-weight:800; color:var(--text-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.name}</div>
-                    <div style="font-size:0.6rem; color:var(--primary-red); font-weight:700;">📍 ${Math.round(t.calcDistance)} km</div>
-                `;
-                topCarousel.appendChild(carouselItem);
-
-                // 2. Booking Horizontal Selector Card
                 const scrollCard = document.createElement('div');
                 scrollCard.className = `therapist-scroll-card ${index === 0 ? 'active-th' : ''}`;
                 scrollCard.setAttribute('data-name', t.name);
                 scrollCard.onclick = () => selectBookingTherapist(t.name);
-                scrollCard.style.minWidth = '110px';
-                scrollCard.style.padding = '10px 6px';
                 scrollCard.innerHTML = `
-                    <div class="expert-carousel-avatar" style="background-image: url('${mainPhoto}'); width:45px; height:45px;"></div>
-                    <div style="font-size:0.72rem; font-weight:800; color:var(--text-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.name}</div>
-                    <div style="font-size:0.6rem; color:var(--gold-metallic); font-weight:700;">📍 ${Math.round(t.calcDistance)} km</div>
+                    <div class="therapist-scroll-img" style="background-image: url('${t.image}');"></div>
+                    <div class="therapist-scroll-name">${t.name}</div>
+                    <div class="therapist-scroll-spec">${t.tag || 'Expert'}</div>
+                    <div style="font-size:0.6rem; color:var(--primary-red); font-weight:800; margin-top:2px;" id="scroll-dist-${index}">
+                        <i class="fa-solid fa-route"></i> ${initialDist} km
+                    </div>
                 `;
                 bookingVisualList.appendChild(scrollCard);
+
+                // Asynchronously fetch exact driving distance
+                getDrivingDistance(appState.userLat, appState.userLng, tLat, tLng).then(realKm => {
+                    const el = document.getElementById(`scroll-dist-${index}`);
+                    if(el) el.innerHTML = `<i class="fa-solid fa-route"></i> ${realKm} km`;
+                });
 
                 if(index === 0) {
                     appState.therapist = t.name;
                     selectEl.value = t.name;
                 }
 
-                const photosEscaped = JSON.stringify(photos).replace(/"/g, '&quot;');
+                const imagesEscaped = t.images ? JSON.stringify(t.images).replace(/"/g, '&quot;') : '';
 
-                // 3. Main 3-Column Grid Card
                 const card = document.createElement('div');
                 card.className = 'therapist-list-card';
                 card.innerHTML = `
-                    <div class="therapist-list-img" style="background-image: url('${mainPhoto}');">
-                        <div class="distance-badge"><i class="fa-solid fa-location-dot" style="color:var(--gold-metallic);"></i> ${Math.round(t.calcDistance)} km</div>
-                        <button class="full-view-btn-badge" onclick="event.stopPropagation(); openFullImageViewer('${mainPhoto}', '${safeName}')" title="Full View Image">
-                            <i class="fa-solid fa-expand"></i>
-                        </button>
-                    </div>
+                    <div class="therapist-list-img" style="background-image: url('${t.image}');"></div>
                     <div class="therapist-list-body">
-                        <div>
-                            <h3>${t.name}</h3>
-                            <div class="therapist-spec">${cleanSubtitleText}</div>
+                        <h3>${t.name}</h3>
+                        <div class="therapist-spec">${t.specialization}</div>
+                        <div class="distance-badge-tag" id="card-dist-${index}">
+                            <i class="fa-solid fa-route" style="color:var(--gold-metallic);"></i> ${initialDist} km
                         </div>
-                        <button class="btn-view-profile-sm" onclick="openTherapistDescOverlay('${safeName}', '${t.gender || 'Expert'}', '${t.experience || 'Experienced'}', '${Math.round(t.calcDistance)}', '${mainPhoto}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${photosEscaped}')">
-                            PROFILE
+                        <button class="btn-luxury-app" style="width: 100%; padding: 8px; font-size: 0.6rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${tLat}, ${tLng}, '${t.address || 'Location'}', '${imagesEscaped}')">
+                            <span data-en="View Profile" data-hi="प्रोफ़ाइल देखें">View Profile</span>
                         </button>
                     </div>
                 `;
                 container.appendChild(card);
+
+                getDrivingDistance(appState.userLat, appState.userLng, tLat, tLng).then(realKm => {
+                    const el = document.getElementById(`card-dist-${index}`);
+                    if(el) el.innerHTML = `<i class="fa-solid fa-route" style="color:var(--gold-metallic);"></i> ${realKm} km`;
+                });
             });
             toggleLanguage(true);
         }
 
-        function selectTherapistAndBook(therapistName) {
+        function selectTherapistAndBook(therapistName, therapistLat, therapistLng) {
             selectBookingTherapist(therapistName);
             appState.wizardStep = 1;
             updateWizardNavigationPanes();
@@ -2171,6 +3083,10 @@
 
             appState.currentScreen = screenId;
             document.getElementById('appMain').scrollTop = 0;
+
+            if(screenId === 'book') {
+                document.getElementById('bookingWelcomeModal').style.display = 'flex';
+            }
         }
 
         function directSelectService(name, price, duration) {
@@ -2255,9 +3171,15 @@
         }
 
         function updateWizardNavigationPanes() {
-            document.querySelectorAll('.wizard-pane').forEach(pane => pane.style.display = 'none');
+            document.querySelectorAll('.wizard-pane').forEach(pane => pane.classList.remove('active'));
+            document.querySelectorAll('.step-bubble').forEach(step => step.classList.remove('active'));
 
-            document.getElementById('pane-' + appState.wizardStep).style.display = 'block';
+            document.getElementById('pane-' + appState.wizardStep).classList.add('active');
+            
+            for(let i = 1; i <= appState.wizardStep; i++) {
+                const bubble = document.getElementById('step-' + i);
+                if(bubble) bubble.classList.add('active');
+            }
 
             const prev = document.getElementById('btnPrevStep');
             const next = document.getElementById('btnNextStep');
@@ -2290,24 +3212,33 @@
             appState.finalPrice = appState.basePrice - discount;
 
             container.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
-                    <span>${appState.lang === 'en' ? 'Service' : 'सेवा'}:</span>
+                <div class="receipt-line">
+                    <span>${appState.lang === 'en' ? 'Selected Service' : 'चयनित सेवा'}:</span>
                     <strong>${appState.selectedService}</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
-                    <span>${appState.lang === 'en' ? 'Location' : 'स्थान'}:</span>
+                <div class="receipt-line">
+                    <span>${appState.lang === 'en' ? 'Service Location' : 'सेवा का स्थान'}:</span>
                     <strong>${locType}</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
-                    <span>${appState.lang === 'en' ? 'Expert' : 'विशेषज्ञ'}:</span>
+                <div class="receipt-line">
+                    <span>${appState.lang === 'en' ? 'Assigned Specialist' : 'विशेषज्ञ'}:</span>
                     <strong>${therapist}</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
+                <div class="receipt-line">
                     <span>${appState.lang === 'en' ? 'Date & Time' : 'दिनांक और समय'}:</span>
                     <strong>${dtVal.replace('T', ' ')}</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border-light); padding-top:10px; font-weight:800; font-size:1rem; color:var(--primary-red);">
-                    <span>${appState.lang === 'en' ? 'Total Amount' : 'कुल देय राशि'}:</span>
+                <div class="receipt-line">
+                    <span>${appState.lang === 'en' ? 'Standard Charges' : 'मानक मूल्य'}:</span>
+                    <strong>₹${appState.basePrice}</strong>
+                </div>
+                ${appState.couponApplied ? `
+                <div class="receipt-line" style="color: var(--primary-red);">
+                    <span>${appState.lang === 'en' ? 'Discount Voucher (10% OFF)' : 'कूपन छूट (10% OFF)'}:</span>
+                    <strong>- ₹${discount}</strong>
+                </div>` : ''}
+                <div class="receipt-line final-price">
+                    <span>${appState.lang === 'en' ? 'Total Payable Amount' : 'कुल देय राशि'}:</span>
                     <span>₹${appState.finalPrice}</span>
                 </div>
             `;
@@ -2327,7 +3258,7 @@
                 msg.innerText = '';
                 generateSummaryReport();
             } else {
-                msg.innerText = appState.lang === 'en' ? 'Invalid Coupon' : 'अमान्य कूपन';
+                msg.innerText = appState.lang === 'en' ? 'Invalid Coupon Code' : 'अमान्य कूपन';
                 msg.style.color = 'red';
             }
         }
@@ -2348,7 +3279,8 @@
                 dateTime: document.getElementById('bookDateTimeInput').value,
                 locationType: document.getElementById('bookLocationType').value,
                 therapist: appState.therapist,
-                status: 'Pending Approval' 
+                status: 'Pending Approval',
+                fcmToken: appState.fcmToken || null
             };
 
             set(newBookingRef, bookingPayload)
@@ -2356,12 +3288,38 @@
                     appState.activeBookingId = newBookingRef.key;
                     appState.activeBookingStatus = 'Pending Approval';
                     listenToActiveBookingStatus(newBookingRef.key);
-                    document.getElementById('successOverlay').style.display = 'flex';
+                    
+                    const splashOverlay = document.getElementById('submitSplashOverlay');
+                    const splashOk = document.getElementById('splashOkBtn');
+                    const timerText = document.getElementById('splashTimerText');
+                    
+                    splashOverlay.style.display = 'flex';
+                    splashOk.disabled = true;
+                    splashOk.style.opacity = "0.7";
+                    splashOk.style.cursor = "not-allowed";
+
+                    let countdown = 3;
+                    timerText.innerText = countdown + "s";
+
+                    if (splashTimerInterval) clearInterval(splashTimerInterval);
+
+                    splashTimerInterval = setInterval(() => {
+                        countdown--;
+                        if (countdown > 0) {
+                            timerText.innerText = countdown + "s";
+                        } else {
+                            clearInterval(splashTimerInterval);
+                            timerText.innerText = appState.lang === 'en' ? "OK" : "आगे बढ़ें";
+                            splashOk.disabled = false;
+                            splashOk.style.opacity = "1";
+                            splashOk.style.cursor = "pointer";
+                        }
+                    }, 1000);
                 })
                 .catch(err => alert("Error saving reservation: " + err.message));
         }
 
-        // REAL LIVE TRACKING
+        // REAL LIVE TRACKING & REALTIME ADMIN APPROVAL PUSH NOTIFICATION
         let trackingInterval = null;
         let simLat = 0;
         let simLng = 0;
@@ -2374,11 +3332,25 @@
             onValue(statusRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
+                    const previousStatus = appState.activeBookingStatus;
                     appState.activeBookingStatus = data.status || 'Pending Approval';
                     
-                    if (appState.activeBookingStatus === 'Approved') {
+                    // JAB ADMIN APPROVE KAR DE TAB USER KO SYSTEM PUSH NOTIFICATION
+                    if ((appState.activeBookingStatus === 'Approved' || appState.activeBookingStatus === 'approved') && previousStatus !== 'Approved') {
                         document.getElementById('liveTrackFab').style.display = 'flex';
                         startTrackingSimulation();
+
+                        // TRIGGER SYSTEM POPUP NOTIFICATION
+                        if ("Notification" in window && Notification.permission === 'granted') {
+                            new Notification("Booking Approved! 🎉", {
+                                body: `Your reservation (${data.id || bookingKey}) has been approved by admin! Tap to track expert.`,
+                                icon: "https://i.ibb.co/GQDZPKKr/1000622952-removebg-preview.png"
+                            });
+                        } else {
+                            alert(appState.lang === 'en' 
+                                ? "🎉 Notification: Your booking has been APPROVED by admin!" 
+                                : "🎉 अधिसूचना: आपकी बुकिंग एडमिन द्वारा स्वीकृत (Approved) कर दी गई है!");
+                        }
                     } 
                     else if (appState.activeBookingStatus === 'Completed') {
                         document.getElementById('liveTrackFab').style.display = 'none';
@@ -2404,16 +3376,25 @@
                 simLng = appState.userLng + 0.05;
             }
 
-            trackingInterval = setInterval(() => {
+            trackingInterval = setInterval(async () => {
                 simLat += (appState.userLat - simLat) * 0.02;
                 simLng += (appState.userLng - simLng) * 0.02;
 
-                const dist = calculateHaversineDistance(appState.userLat, appState.userLng, simLat, simLng);
+                const dist = await getDrivingDistance(appState.userLat, appState.userLng, simLat, simLng);
                 const distEl = document.getElementById('trackDistance');
-                if(distEl) distEl.innerText = Math.round(dist) + " km";
+                if(distEl) distEl.innerText = dist + " km";
 
                 if (tMarker) {
                     tMarker.setLatLng([simLat, simLng]);
+                }
+                
+                const statusText = document.getElementById('trackingStatusText');
+                if(parseFloat(dist) < 0.2) {
+                    statusText.innerText = appState.lang === 'en' ? "Arrived at location!" : "स्थान पर पहुँच गए!";
+                    statusText.style.color = "#25d366";
+                } else {
+                    statusText.innerText = appState.lang === 'en' ? "Expert on the way..." : "विशेषज्ञ रास्ते में हैं...";
+                    statusText.style.color = "var(--primary-red)";
                 }
 
             }, 3000);
@@ -2426,11 +3407,19 @@
             setTimeout(() => {
                 if(!tMap) {
                     tMap = L.map('trackingMap', { zoomControl: false, attributionControl: false }).setView([appState.userLat, appState.userLng], 13);
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(tMap);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                        maxZoom: 19
+                    }).addTo(tMap);
+                    
                     uMarker = L.marker([appState.userLat, appState.userLng]).addTo(tMap);
                     tMarker = L.marker([simLat, simLng]).addTo(tMap);
                 }
                 tMap.invalidateSize();
+                
+                if(uMarker && tMarker) {
+                    const bounds = L.latLngBounds([uMarker.getLatLng(), tMarker.getLatLng()]);
+                    tMap.fitBounds(bounds, { padding: [50, 50] });
+                }
             }, 300);
         };
 
@@ -2449,30 +3438,76 @@
             document.getElementById('successOverlay').style.display = 'none';
             appState.wizardStep = 1;
             appState.couponApplied = false;
+            document.getElementById('bookSelectMenu').selectedIndex = 0;
+            document.getElementById('bookLocationType').selectedIndex = 0;
+            document.getElementById('bookDateTimeInput').value = '';
+            document.getElementById('promoInput').value = '';
+            document.getElementById('promoStatusMessage').innerText = '';
+            document.getElementById('bookingConsentCheckbox').checked = false;
+            document.getElementById('notice-home').style.display = 'none';
+            document.getElementById('notice-hotel').style.display = 'none';
+            document.getElementById('consentCheckboxContainer').style.display = 'none';
             updateWizardNavigationPanes();
             switchScreen('home');
         }
 
-        // EXPERT PROFILE OVERLAY POPUP
+        // FULL SCREEN THERAPIST PICTURE MODAL LOGIC
+        window.openFullImageModal = function(url) {
+            const modal = document.getElementById('fullImageModal');
+            const imgTag = document.getElementById('fullImageViewTag');
+            
+            let targetUrl = url;
+            if (!targetUrl && currentActivePopupTherapist) {
+                targetUrl = currentActivePopupTherapist.imgUrl;
+            }
+
+            if (targetUrl) {
+                imgTag.src = targetUrl;
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.closeFullImageModal = function() {
+            document.getElementById('fullImageModal').style.display = 'none';
+        };
+
+        // REAL LOCATION MAP IN EXPERT OVERLAY WITH EXACT DRIVING DISTANCE
+        let currentActivePopupTherapist = null;
         let descMap = null;
         let descMarker = null;
 
-        function openTherapistDescOverlay(name, gender, exp, distanceKm, mainPhoto, lat, lng, photosEscaped) {
-            document.getElementById('descTherapistName').innerText = name;
-            document.getElementById('descTherapistTag').innerText = gender;
-            document.getElementById('descTherapistSpec').innerText = `${gender} Expert`;
+        function openTherapistDescOverlay(name, spec, exp, tag, imgUrl, lat, lng, address, imagesRaw) {
+            currentActivePopupTherapist = { name, spec, exp, tag, imgUrl, lat, lng, address };
             
-            let expClean = String(exp).replace(/years|year|yrs|exp/gi, '').trim();
-            document.getElementById('descTherapistExp').innerText = `${expClean ? expClean + ' Years of ' : ''}Certified professional experience in elite home beauty, wellness & care therapies.`;
-            document.getElementById('descTherapistDistanceBadge').innerText = `📍 ${distanceKm} km away`;
+            document.getElementById('descTherapistName').innerText = name;
+            document.getElementById('descTherapistTag').innerText = tag;
+            document.getElementById('descTherapistSpec').innerText = spec;
+            document.getElementById('descTherapistExp').innerText = exp;
+
+            // Calculate Initial Road Distance
+            const targetLat = lat || (appState.userLat + 0.02);
+            const targetLng = lng || (appState.userLng + 0.02);
+            const initialEst = (calculateHaversineDistance(appState.userLat, appState.userLng, targetLat, targetLng) * 1.28).toFixed(1);
+            document.getElementById('descDistanceText').innerText = `${initialEst} km`;
+
+            // Asynchronously Fetch Exact Road Driving Distance
+            getDrivingDistance(appState.userLat, appState.userLng, targetLat, targetLng).then(exactKm => {
+                const badgeText = document.getElementById('descDistanceText');
+                if (badgeText) badgeText.innerText = `${exactKm} km`;
+            });
 
             let imagesList = [];
-            if(photosEscaped) {
+            if(imagesRaw) {
                 try {
-                    imagesList = typeof photosEscaped === 'string' ? JSON.parse(photosEscaped) : photosEscaped;
-                } catch(e) { imagesList = []; }
+                    imagesList = typeof imagesRaw === 'string' ? JSON.parse(imagesRaw) : imagesRaw;
+                } catch(e) {
+                    imagesList = [];
+                }
             }
-            if(!Array.isArray(imagesList) || imagesList.length === 0) imagesList = [mainPhoto];
+
+            if(!Array.isArray(imagesList) || imagesList.length === 0) {
+                imagesList = [imgUrl];
+            }
 
             const imgCard = document.getElementById('descTherapistImgCard');
             if (imagesList.length > 1) {
@@ -2489,29 +3524,26 @@
                     </div>
                 `;
             } else {
-                imgCard.innerHTML = `<div class="therapist-desc-img" id="descTherapistImg" style="background-image: url('${mainPhoto}');"></div>`;
+                currentPopupSlide = 0;
+                popupTotalSlides = 0;
+                imgCard.innerHTML = `<div class="therapist-desc-img" id="descTherapistImg" style="background-image: url('${imgUrl}');"></div>`;
             }
 
             const reserveBtn = document.getElementById('btnDescReserve');
             reserveBtn.onclick = function() {
-                selectTherapistAndBook(name);
-            };
-
-            const fullViewBtn = document.getElementById('btnFullViewFromDesc');
-            fullViewBtn.onclick = function() {
-                openFullImageViewer(imagesList[currentPopupSlide] || mainPhoto, name);
+                selectTherapistAndBook(name, targetLat, targetLng);
             };
 
             document.getElementById('therapistDescOverlay').style.display = 'flex';
 
             setTimeout(() => {
                 if(!descMap) {
-                    descMap = L.map('descTherapistMiniMap', {zoomControl: false, attributionControl: false}).setView([lat || appState.userLat, lng || appState.userLng], 14);
+                    descMap = L.map('descTherapistMiniMap', {zoomControl: false, attributionControl: false}).setView([targetLat, targetLng], 14);
                     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(descMap);
-                    descMarker = L.marker([lat || appState.userLat, lng || appState.userLng]).addTo(descMap);
+                    descMarker = L.marker([targetLat, targetLng]).addTo(descMap);
                 } else {
-                    descMap.setView([lat || appState.userLat, lng || appState.userLng], 14);
-                    descMarker.setLatLng([lat || appState.userLat, lng || appState.userLng]);
+                    descMap.setView([targetLat, targetLng], 14);
+                    descMarker.setLatLng([targetLat, targetLng]);
                 }
                 descMap.invalidateSize();
             }, 300);
@@ -2521,17 +3553,69 @@
             currentPopupSlide = index;
             popupTotalSlides = total;
             const track = document.getElementById('popupSliderTrack');
-            if(track) track.style.transform = `translateX(-${index * 100}%)`;
-            
+            if(track) {
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
             const dots = document.querySelectorAll('.slider-dot');
             dots.forEach((dot, idx) => {
-                if(idx === index) dot.classList.add('active');
-                else dot.classList.remove('active');
+                if(idx === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
             });
-        };
+        }
 
         function closeTherapistDescOverlay() {
             document.getElementById('therapistDescOverlay').style.display = 'none';
+            currentActivePopupTherapist = null;
+        }
+
+        function dismissBookingWelcome() {
+            document.getElementById('bookingWelcomeModal').style.display = 'none';
+        }
+
+        function dismissSubmitSplash() {
+            if (splashTimerInterval) clearInterval(splashTimerInterval);
+            document.getElementById('submitSplashOverlay').style.display = 'none';
+            document.getElementById('successOverlay').style.display = 'flex';
+        }
+
+        function toggleFaq(header) {
+            header.parentElement.classList.toggle('active');
+        }
+
+        function openConciergeChat() {
+            window.location.href = 'j.html';
+        }
+
+        function closeConciergeChat() {
+            document.getElementById('conciergeChat').style.display = 'none';
+        }
+
+        function sendAppMessage() {
+            const input = document.getElementById('chatAppInput');
+            const body = document.getElementById('chatAppBody');
+
+            if (input.value.trim() !== '') {
+                const bubble = document.createElement('div');
+                bubble.className = "chat-bubble user";
+                bubble.innerText = input.value;
+                body.appendChild(bubble);
+
+                input.value = '';
+                body.scrollTop = body.scrollHeight;
+
+                setTimeout(() => {
+                    const agent = document.createElement('div');
+                    agent.className = "chat-bubble agent";
+                    agent.innerText = appState.lang === 'en' 
+                        ? "Connecting you with our elite support assistant. Please hold..." 
+                        : "हम आपको सक्रिय लक्जरी सपोर्ट एजेंट से जोड़ रहे हैं। कृपया प्रतीक्षा करें...";
+                    body.appendChild(agent);
+                    body.scrollTop = body.scrollHeight;
+                }, 1200);
+            }
         }
 
         function toggleLanguage(keepCurrent = false) {
@@ -2543,18 +3627,89 @@
                 el.textContent = el.getAttribute('data-' + appState.lang);
             });
 
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(el => {
+                if (el.placeholder) {
+                    if (appState.lang === 'hi') {
+                        el.setAttribute('data-orig-placeholder', el.placeholder);
+                        if (el.id === 'promoInput') el.placeholder = "कूपन कोड";
+                        if (el.id === 'chatAppInput') el.placeholder = "संदेश लिखें...";
+                        if (el.id === 'filterLocation') el.placeholder = "शहर का नाम...";
+                    } else {
+                        const orig = el.getAttribute('data-orig-placeholder');
+                        if (orig) el.placeholder = orig;
+                    }
+                }
+            });
+
             document.getElementById('langBtn').innerText = appState.lang === 'en' ? 'हिन्दी' : 'English';
             updateWizardNavigationPanes();
+            
+            const activePills = document.querySelectorAll('.category-pill');
+            activePills.forEach(pill => {
+                if(pill.hasAttribute('data-en')){
+                    pill.innerText = pill.getAttribute('data-' + appState.lang);
+                }
+            });
+            
+            const readMoreBtns = document.querySelectorAll('.read-more-btn');
+            readMoreBtns.forEach(btn => {
+                const parentText = btn.previousElementSibling;
+                if(parentText && parentText.classList.contains('expanded')) {
+                    btn.innerText = appState.lang === 'en' ? 'Show Less' : 'कम दिखाएं';
+                } else {
+                    btn.innerText = appState.lang === 'en' ? 'Read More' : 'और पढ़ें';
+                }
+            });
+
+            if (appState.wizardStep === 3) generateSummaryReport();
+
+            const welcomeMessageEl = document.getElementById('liveWelcomeMessage');
+            if (welcomeMessageEl) {
+                welcomeMessageEl.innerText = appState.lang === 'en' ? (appState.welcomeEn || '') : (appState.welcomeHi || '');
+            }
         }
 
         checkUserOnboarding();
+        
+        // EXPERT IMAGE SWIPE LOGIC
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const expertImgCard = document.getElementById('descTherapistImgCard');
+        
+        expertImgCard.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        expertImgCard.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleExpertSwipe();
+        }, {passive: true});
+        
+        function handleExpertSwipe() {
+            if(popupTotalSlides <= 1) return;
+            if(touchStartX - touchEndX > 50) {
+                if(currentPopupSlide < popupTotalSlides - 1) {
+                    setPopupSlide(currentPopupSlide + 1, popupTotalSlides);
+                }
+            }
+            if(touchEndX - touchStartX > 50) {
+                if(currentPopupSlide > 0) {
+                    setPopupSlide(currentPopupSlide - 1, popupTotalSlides);
+                }
+            }
+        }
 
         window.switchScreen = switchScreen;
         window.directSelectService = directSelectService;
         window.syncWizardSelection = syncWizardSelection;
         window.navigateWizard = navigateWizard;
         window.applyPromoCode = applyPromoCode;
+        window.toggleFaq = toggleFaq;
         window.closeSuccessOverlay = closeSuccessOverlay;
+        window.openConciergeChat = openConciergeChat;
+        window.closeConciergeChat = closeConciergeChat;
+        window.sendAppMessage = sendAppMessage;
         window.toggleLanguage = toggleLanguage;
         window.selectTherapistAndBook = selectTherapistAndBook;
         window.saveUserOnboarding = saveUserOnboarding;
@@ -2563,12 +3718,16 @@
         window.openTherapistDescOverlay = openTherapistDescOverlay;
         window.closeTherapistDescOverlay = closeTherapistDescOverlay;
         window.toggleReadMore = toggleReadMore;
+        window.dismissBookingWelcome = dismissBookingWelcome;
+        window.dismissSubmitSplash = dismissSubmitSplash;
         window.filterByCategory = filterByCategory;
         window.renderServices = renderServices;
         window.openExpertFilterModal = openExpertFilterModal;
         window.closeExpertFilterModal = closeExpertFilterModal;
         window.applyExpertFilters = applyExpertFilters;
         window.clearExpertFilters = clearExpertFilters;
+        window.openFullImageModal = openFullImageModal;
+        window.closeFullImageModal = closeFullImageModal;
     </script>
 </body>
 </html>
