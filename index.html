@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,23 +15,24 @@
     
     <style>
         :root {
-            /* Ultra-Luxury Gold & Ruby Red Theme */
-            --bg-main: #FAFAFA; 
+            /* Ultra-Luxury Gold, Pearl White & Ruby Red 3D Theme */
+            --bg-main: #F8F9FA; 
             --bg-card: #FFFFFF; 
-            --bg-elevated: #FFF4F6;
+            --bg-elevated: #FFF0F3;
             --primary-red: #B91338; 
             --primary-red-hover: #910E2A;
             --soft-pink: #FFC4D1; 
             --gold-metallic: #D4AF37; 
-            --red-gradient: linear-gradient(135deg, #C8102E 0%, #8A001A 100%);
-            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #AA8A2A 100%);
+            --red-gradient-3d: linear-gradient(145deg, #D9123D 0%, #8A001A 100%);
+            --gold-gradient: linear-gradient(135deg, #F3E096 0%, #D4AF37 50%, #AA8A2A 100%);
+            --glass-card-bg: rgba(255, 255, 255, 0.85);
             --text-dark: #1A1A1A; 
             --text-muted: #666666; 
             --border-light: rgba(185, 19, 56, 0.12); 
-            --border-glow: rgba(212, 175, 55, 0.3);
-            --transition-premium: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
-            --shadow-strong: 0 15px 40px rgba(185, 19, 56, 0.12);
+            --border-glow: rgba(212, 175, 55, 0.35);
+            --transition-premium: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow-3d-soft: 0 10px 25px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(185, 19, 56, 0.04);
+            --shadow-3d-strong: 0 15px 35px rgba(185, 19, 56, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         * {
@@ -45,7 +45,7 @@
         /* ANTI SCREENSHOT & NO DOWNLOAD SECURITY CLASSES */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #EAEAEA; 
+            background-color: #E2E4E8; 
             color: var(--text-dark);
             overflow: hidden;
             display: flex;
@@ -74,7 +74,7 @@
             background-color: var(--bg-main);
             border: 6px solid #FFFFFF;
             border-radius: 45px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), 0 0 40px rgba(185, 19, 56, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), 0 0 40px rgba(185, 19, 56, 0.15);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -117,7 +117,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(250, 250, 250, 0.95);
+            background-color: rgba(250, 250, 250, 0.96);
             backdrop-filter: blur(15px);
             z-index: 5000;
             display: flex;
@@ -137,14 +137,14 @@
             border: 1px solid var(--border-light);
             border-radius: 24px;
             padding: 40px 25px;
-            box-shadow: var(--shadow-strong);
+            box-shadow: var(--shadow-3d-strong);
             border-top: 4px solid var(--primary-red);
         }
 
         /* Top Persistent Glassmorphic Header */
         .app-header {
             height: 70px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.92);
             border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
@@ -153,7 +153,7 @@
             z-index: 100;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
 
         .header-logo {
@@ -192,6 +192,7 @@
             border-radius: 20px;
             font-weight: 700;
             transition: var(--transition-premium);
+            box-shadow: 0 2px 8px rgba(185, 19, 56, 0.08);
         }
 
         .lang-switch:hover {
@@ -231,7 +232,7 @@
 
         .app-screen {
             display: none;
-            animation: screenFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: screenFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .app-screen.active {
@@ -239,8 +240,8 @@
         }
 
         @keyframes screenFadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* Floating Bottom Navigation Menu */
@@ -251,7 +252,7 @@
             width: 100%;
             height: 85px;
             padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 5px);
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             border-top: 1px solid var(--border-light);
             border-radius: 28px 28px 0 0;
             display: flex;
@@ -260,7 +261,7 @@
             z-index: 1000;
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.06);
         }
 
         .nav-item {
@@ -281,7 +282,7 @@
         }
 
         .nav-item i {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             transition: var(--transition-premium);
         }
 
@@ -290,45 +291,45 @@
         }
 
         .nav-item.active i {
-            transform: translateY(-4px);
+            transform: translateY(-4px) scale(1.1);
         }
 
         /* Generic Premium Typography & Custom Classes */
         .section-header-app {
-            padding: 25px 20px 10px 20px;
+            padding: 20px 16px 10px 16px;
         }
 
         .section-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: var(--text-dark);
             font-weight: 800;
         }
 
         .section-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             font-weight: 500;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        /* Romantic Red Buttons WITH CONTINUOUS SHINING EFFECT */
+        /* 3D Romantic Red Buttons WITH CONTINUOUS SHINING EFFECT */
         .btn-luxury-app {
-            background: var(--red-gradient);
+            background: var(--red-gradient-3d);
             color: white;
             border: none;
-            padding: 14px 24px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            padding: 12px 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
             letter-spacing: 1px;
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition-premium);
             display: inline-block;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(185, 19, 56, 0.25);
+            box-shadow: 0 6px 18px rgba(185, 19, 56, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
@@ -367,20 +368,20 @@
             transform: scale(0.95);
         }
 
-        /* Clean White Cards */
+        /* Clean White 3D Glass Cards */
         .glass-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 20px;
-            padding: 24px;
-            margin: 0 20px 24px 20px;
-            box-shadow: var(--shadow-soft);
+            padding: 20px;
+            margin: 0 16px 20px 16px;
+            box-shadow: var(--shadow-3d-soft);
         }
 
         /* WHATSAPP STRIP BANNER */
         .whatsapp-strip-banner {
-            margin: 12px 20px 15px 20px;
-            padding: 10px 16px;
+            margin: 10px 16px 15px 16px;
+            padding: 10px 14px;
             background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
             border-radius: 16px;
             display: flex;
@@ -388,8 +389,8 @@
             justify-content: space-between;
             color: #FFFFFF;
             text-decoration: none;
-            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             transition: var(--transition-premium);
         }
 
@@ -404,15 +405,14 @@
         }
 
         .whatsapp-strip-text {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             line-height: 1.3;
             color: #FFFFFF;
-            letter-spacing: 0.2px;
         }
 
         .whatsapp-strip-img {
-            height: 36px;
+            height: 34px;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
@@ -420,7 +420,6 @@
 
         /* Compact Welcome Box */
         .welcome-16-9-box {
-            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -429,12 +428,11 @@
             background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
             border: 1px solid var(--border-light);
             border-radius: 16px;
-            margin: 0 20px 20px 20px;
-            padding: 15px 20px;
-            box-shadow: var(--shadow-soft);
+            margin: 0 16px 20px 16px;
+            padding: 14px 18px;
+            box-shadow: var(--shadow-3d-soft);
             overflow: hidden;
-            word-wrap: break-word;
-            border-left: 3px solid var(--gold-metallic);
+            border-left: 4px solid var(--gold-metallic);
         }
         
         .dynamic-banner-16-9 {
@@ -442,9 +440,9 @@
             aspect-ratio: 16 / 9;
             position: relative;
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 18px;
             background-color: var(--bg-card);
-            box-shadow: var(--shadow-soft);
+            box-shadow: var(--shadow-3d-soft);
         }
 
         .banner-track {
@@ -474,15 +472,15 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 35px 24px;
-            margin: 10px 20px 25px 20px;
-            border-radius: 20px;
+            padding: 30px 20px;
+            margin: 10px 16px 20px 16px;
+            border-radius: 22px;
             border: none;
             background-image: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(26,26,26,0.9) 100%), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            box-shadow: var(--shadow-strong);
-            min-height: 400px;
+            box-shadow: var(--shadow-3d-strong);
+            min-height: 380px;
         }
 
         .hero-inner-content {
@@ -493,33 +491,32 @@
         .hero-tag {
             display: inline-block;
             background: var(--gold-gradient);
-            color: white;
-            padding: 6px 12px;
+            color: #000;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.65rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .hero-heading {
             font-family: 'Cinzel', serif;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             line-height: 1.25;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: white;
             font-weight: 700;
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        /* Hero Call to Actions Grid */
         .hero-cta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .btn-hero-action {
@@ -527,8 +524,8 @@
             color: var(--primary-red);
             padding: 12px;
             border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             border: none;
             cursor: pointer;
             display: flex;
@@ -538,20 +535,6 @@
             transition: var(--transition-premium);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-hero-action::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            animation: shineEffect 3s infinite;
         }
 
         .btn-hero-action:active {
@@ -564,38 +547,32 @@
         .highlights-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 0 20px;
-            margin-bottom: 30px;
+            gap: 10px;
+            padding: 0 16px;
+            margin-bottom: 25px;
         }
 
         .highlight-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 14px;
-            padding: 16px;
+            padding: 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: var(--shadow-soft);
-            transition: var(--transition-premium);
-        }
-
-        .highlight-card:hover {
-            border-color: var(--primary-red);
-            transform: translateY(-2px);
+            gap: 10px;
+            box-shadow: var(--shadow-3d-soft);
         }
 
         .highlight-card i {
             color: var(--gold-metallic);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background: var(--bg-elevated);
-            padding: 10px;
+            padding: 8px;
             border-radius: 50%;
         }
 
         .highlight-card span {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--text-dark);
             line-height: 1.3;
@@ -604,10 +581,11 @@
         /* SERVICES MENU & SCREEN */
         .category-scroll-container {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             overflow-x: auto;
-            padding: 10px 20px 20px 20px;
+            padding: 10px 16px 15px 16px;
             scrollbar-width: none;
+            scroll-snap-type: x mandatory;
         }
         .category-scroll-container::-webkit-scrollbar { 
             display: none; 
@@ -616,23 +594,25 @@
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             color: var(--text-muted);
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             white-space: nowrap;
-            box-shadow: var(--shadow-soft);
+            box-shadow: var(--shadow-3d-soft);
             transition: var(--transition-premium);
             cursor: pointer;
+            scroll-snap-align: start;
         }
         .category-pill.active {
-            background: var(--red-gradient);
+            background: var(--red-gradient-3d);
             color: white;
             border-color: transparent;
+            box-shadow: 0 4px 12px rgba(185, 19, 56, 0.25);
         }
 
         .services-menu-grid {
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         .service-card-premium {
@@ -640,14 +620,9 @@
             border: 1px solid var(--border-light);
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-soft);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-3d-soft);
             transition: var(--transition-premium);
-        }
-
-        .service-card-premium:hover {
-            box-shadow: var(--shadow-strong);
-            border-color: var(--primary-red);
         }
 
         .service-img-wrap {
@@ -660,42 +635,40 @@
 
         .service-price-tag {
             position: absolute;
-            bottom: 12px;
-            right: 12px;
+            bottom: 10px;
+            right: 10px;
             background: var(--gold-gradient);
-            color: white;
-            padding: 6px 14px;
+            color: #000;
+            padding: 5px 12px;
             border-radius: 12px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 800;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             z-index: 2;
         }
 
         .service-card-body {
-            padding: 18px;
-            position: relative;
+            padding: 16px;
         }
 
         .service-card-body h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 6px;
             color: var(--text-dark);
             font-weight: 800;
         }
 
         .service-desc-text {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 4px;
             font-weight: 500;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            transition: var(--transition-premium);
         }
         .service-desc-text.expanded {
             display: block;
@@ -706,11 +679,11 @@
             background: none;
             border: none;
             color: var(--gold-metallic);
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.72rem;
+            font-weight: 800;
             cursor: pointer;
             padding: 0;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-transform: uppercase;
         }
 
@@ -719,103 +692,87 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid var(--border-light);
-            padding-top: 15px;
+            padding-top: 12px;
         }
 
         .duration-lbl {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-dark);
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
             background: var(--bg-elevated);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 8px;
         }
 
-        /* MEMBERSHIPS SECTION */
-        .membership-cards-stack {
-            padding: 0 20px;
-        }
-
-        .member-tier-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border-light);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-soft);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .member-tier-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--gold-gradient);
-        }
-
-        .tier-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.25rem;
-            color: var(--primary-red);
-            margin-bottom: 10px;
-            font-weight: 800;
-            margin-top: 5px;
-        }
-
-        .tier-benefits-list {
-            list-style: none;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .tier-benefits-list li {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+        /* ------------------------------------------------------------- */
+        /* HIGH-END 3-COLUMN GRID & HORIZONTAL CAROUSEL FOR EXPERTS       */
+        /* ------------------------------------------------------------- */
+        
+        /* 3D Touch Scroll Carousel Bar on top of Experts Screen */
+        .experts-horizontal-carousel {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 5px 16px 15px 16px;
+            scrollbar-width: none;
+            scroll-snap-type: x mandatory;
+        }
+        .experts-horizontal-carousel::-webkit-scrollbar { display: none; }
+
+        .expert-carousel-card {
+            min-width: 125px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 10px 8px;
+            text-align: center;
+            scroll-snap-align: start;
+            box-shadow: var(--shadow-3d-soft);
+            transition: var(--transition-premium);
+            cursor: pointer;
+            position: relative;
+        }
+        .expert-carousel-card:active {
+            transform: scale(0.95);
         }
 
-        .tier-benefits-list li i {
-            color: var(--gold-metallic);
-            font-size: 0.9rem;
+        .expert-carousel-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin: 0 auto 6px auto;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--gold-metallic);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
         }
 
-        /* EXPERTS SCREEN (3-COLUMN GRID) WITH FULL-VIEW IMAGE OVERLAY BADGES */
+        /* Sleek 3-Column Grid Layout */
         .therapist-list-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 0 15px 20px 15px;
+            grid-template-columns: repeat(3, 1fr); /* Clean 3 Columns Grid */
+            gap: 8px;
+            padding: 0 12px 20px 12px;
         }
 
         .therapist-list-card {
-            background-color: var(--bg-card);
+            background: linear-gradient(145deg, #FFFFFF 0%, #FFF7F8 100%);
             border: 1px solid var(--border-light);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: var(--shadow-soft);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
             text-align: center;
             transition: var(--transition-premium);
             position: relative;
         }
         
-        .therapist-list-card:hover {
-            border-color: var(--primary-red);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-strong);
+        .therapist-list-card:active {
+            transform: scale(0.96);
         }
 
         .therapist-list-img {
@@ -828,67 +785,88 @@
 
         .distance-badge {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(0,0,0,0.75);
+            top: 4px;
+            left: 4px;
+            background: rgba(10, 10, 10, 0.78);
             color: #FFFFFF;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.62rem;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.55rem;
             font-weight: 700;
             backdrop-filter: blur(4px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            z-index: 3;
             display: flex;
             align-items: center;
-            gap: 4px;
-            z-index: 3;
-            border: 1px solid rgba(255,255,255,0.2);
+            gap: 3px;
         }
 
         .full-view-btn-badge {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 4px;
+            right: 4px;
             background: var(--gold-gradient);
             color: #000;
             border: none;
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 3;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            font-size: 0.7rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            font-size: 0.6rem;
             transition: var(--transition-premium);
         }
         .full-view-btn-badge:active {
-            transform: scale(0.85);
+            transform: scale(0.82);
         }
 
         .therapist-list-body {
-            padding: 10px;
+            padding: 8px 5px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            justify-content: space-between;
         }
 
         .therapist-list-body h3 {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-dark);
             margin-bottom: 2px;
             font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .therapist-spec {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--primary-red);
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Unified Custom Fields styling */
+        .btn-view-profile-sm {
+            background: var(--red-gradient-3d);
+            color: white;
+            border: none;
+            padding: 6px 2px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 3px 8px rgba(185, 19, 56, 0.2);
+            width: 100%;
+        }
+
+        /* Unified Custom Input Fields styling */
         .glass-input-wrapper {
             display: flex;
             flex-direction: column;
@@ -904,7 +882,7 @@
             font-size: 0.7rem;
             color: var(--text-dark);
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -914,8 +892,8 @@
             border: 1px solid rgba(0,0,0,0.1);
             border-radius: 12px;
             color: var(--text-dark);
-            padding: 12px 14px; 
-            font-size: 0.85rem;
+            padding: 11px 13px; 
+            font-size: 0.82rem;
             font-family: inherit;
             outline: none;
             transition: var(--transition-premium);
@@ -927,97 +905,6 @@
             border-color: var(--primary-red);
             background-color: white;
             box-shadow: 0 0 0 3px rgba(185, 19, 56, 0.1);
-        }
-
-        /* VISUAL EXPERT SELECTION IN BOOKING (HORIZONTAL SCROLL) */
-        .therapist-horizontal-scroll {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-            margin-top: 5px;
-        }
-        .therapist-horizontal-scroll::-webkit-scrollbar { display: none; }
-        
-        .therapist-scroll-card {
-            min-width: 110px;
-            background: var(--bg-card);
-            border: 2px solid var(--border-light);
-            border-radius: 16px;
-            padding: 12px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition-premium);
-            box-shadow: var(--shadow-soft);
-        }
-        .therapist-scroll-card.active-th {
-            border-color: var(--primary-red);
-            background: var(--bg-elevated);
-        }
-        .therapist-scroll-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 auto 8px auto;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .therapist-scroll-name {
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .therapist-scroll-spec {
-            font-size: 0.65rem;
-            color: var(--gold-metallic);
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Warning alert panels inside checkout wizard */
-        .spa-warning-notice {
-            background-color: var(--bg-elevated);
-            border-left: 4px solid var(--primary-red);
-            padding: 12px; 
-            border-radius: 8px;
-            font-size: 0.75rem;
-            line-height: 1.5;
-            color: var(--text-dark);
-            margin-bottom: 12px;
-            display: none;
-            font-weight: 600;
-            box-shadow: var(--shadow-soft);
-        }
-        
-        .spa-warning-success {
-            background-color: #e9fbf0;
-            border-left: 4px solid #25d366;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            margin-bottom: 15px; 
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .checkbox-container input {
-            margin-top: 2px;
-            accent-color: var(--primary-red);
-            width: 18px;
-            height: 18px;
         }
 
         /* Dynamic Description Overlay Screen for Experts */
@@ -1038,7 +925,7 @@
         .therapist-desc-scrollable {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 16px;
         }
 
         .therapist-desc-scrollable::-webkit-scrollbar {
@@ -1049,10 +936,10 @@
             width: 100%;
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 12px;
-            box-shadow: var(--shadow-soft);
-            margin-bottom: 20px;
+            border-radius: 22px;
+            padding: 10px;
+            box-shadow: var(--shadow-3d-soft);
+            margin-bottom: 16px;
             position: relative;
         }
 
@@ -1061,16 +948,15 @@
             aspect-ratio: 1 / 1;
             background-size: cover;
             background-position: center;
-            border-radius: 18px;
+            border-radius: 16px;
         }
 
-        /* Premium Dynamic Expert Multi-Image Slider styles */
         .therapist-slider-container {
             width: 100%;
             aspect-ratio: 1 / 1;
             position: relative;
             overflow: hidden;
-            border-radius: 18px;
+            border-radius: 16px;
         }
 
         .therapist-slider-track {
@@ -1089,7 +975,7 @@
 
         .therapist-slider-dots {
             position: absolute;
-            bottom: 12px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -1115,31 +1001,29 @@
         .therapist-desc-info-box {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: var(--shadow-soft);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow-3d-soft);
         }
 
         .therapist-profile-spec {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--primary-red);
             font-weight: 800;
-            letter-spacing: 0.5px;
         }
 
         .therapist-profile-bio {
             font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         .therapist-desc-footer {
-            padding: 15px 20px 25px 20px;
+            padding: 12px 16px 20px 16px;
             background: var(--bg-card);
             border-top: 1px solid var(--border-light);
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
             display: flex;
             gap: 10px;
         }
@@ -1164,48 +1048,23 @@
         .success-card {
             background-color: var(--bg-card);
             border-radius: 24px;
-            padding: 40px 25px;
+            padding: 35px 22px;
             width: 100%;
-            box-shadow: var(--shadow-strong);
+            box-shadow: var(--shadow-3d-strong);
             border-top: 4px solid #25d366;
         }
 
         .success-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: #e9fbf0;
             color: #25d366;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 20px auto;
-        }
-
-        /* Active Tracking FAB */
-        .live-track-fab {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: var(--primary-red);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            box-shadow: var(--shadow-strong);
-            display: none;
-            align-items: center;
-            gap: 8px;
-            z-index: 4000;
-            cursor: pointer;
-            animation: pulse-fab 2s infinite;
-        }
-        @keyframes pulse-fab {
-            0% { box-shadow: 0 0 0 0 rgba(185, 19, 56, 0.5); }
-            70% { box-shadow: 0 0 0 15px rgba(185, 19, 56, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(185, 19, 56, 0); }
+            font-size: 2.2rem;
+            margin: 0 auto 18px auto;
         }
 
         /* Live Tracking Overlay Map Screen */
@@ -1228,9 +1087,9 @@
         }
         .tracking-details { 
             background: white; 
-            padding: 25px; 
-            border-top-left-radius: 30px; 
-            border-top-right-radius: 30px; 
+            padding: 20px; 
+            border-top-left-radius: 28px; 
+            border-top-right-radius: 28px; 
             box-shadow: 0 -10px 25px rgba(0,0,0,0.08); 
             position: relative;
             z-index: 10;
@@ -1272,7 +1131,7 @@
                 </div>
                 <div class="glass-input-wrapper">
                     <label data-en="City / Area" data-hi="शहर / क्षेत्र">City / Area</label>
-                    <input type="text" id="onboardCity" class="glass-input" placeholder="e.g., Gurgaon, South Delhi" required>
+                    <input type="text" id="onboardCity" class="glass-input" placeholder="e.g., Gurgaon, Delhi" required>
                 </div>
                 <div class="glass-input-wrapper">
                     <label data-en="State" data-hi="राज्य">State</label>
@@ -1291,12 +1150,12 @@
         </div>
     </div>
 
-    <!-- 3. EXPERT FILTER MODAL (WITH ACCURATE NEARBY DISTANCE FILTER) -->
-    <div id="expertFilterModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(250, 250, 250, 0.95); backdrop-filter: blur(15px); z-index: 5500; display: none; flex-direction: column; padding: 30px; overflow-y: auto; transition: var(--transition-premium);">
-        <div class="chat-app-header" style="background: transparent; border: none; padding: 0; justify-content: flex-end; margin-bottom: 20px; box-shadow: none;">
-            <button class="chat-back-btn" onclick="closeExpertFilterModal()"><i class="fa-solid fa-xmark" style="font-size: 1.5rem;"></i></button>
+    <!-- 3. EXPERT FILTER MODAL -->
+    <div id="expertFilterModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(250, 250, 250, 0.96); backdrop-filter: blur(15px); z-index: 5500; display: none; flex-direction: column; padding: 25px; overflow-y: auto; transition: var(--transition-premium);">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+            <button onclick="closeExpertFilterModal()" style="background: none; border: none; color: var(--primary-red); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <h2 style="font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--primary-red); margin-bottom: 20px; font-weight: 800;" data-en="Filter Experts" data-hi="विशेषज्ञों को फ़िल्टर करें">Filter Experts</h2>
+        <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary-red); margin-bottom: 20px; font-weight: 800;" data-en="Filter Experts" data-hi="विशेषज्ञों को फ़िल्टर करें">Filter Experts</h2>
         
         <div class="glass-input-wrapper">
             <label data-en="Gender" data-hi="लिंग">Gender</label>
@@ -1327,13 +1186,13 @@
             <label data-en="Minimum Experience" data-hi="न्यूनतम अनुभव">Minimum Experience</label>
             <select id="filterExperience" class="glass-input">
                 <option value="All" data-en="Any Experience" data-hi="कोई भी अनुभव">Any Experience</option>
+                <option value="1" data-en="1+ Year" data-hi="1+ वर्ष">1+ Year</option>
                 <option value="3" data-en="3+ Years" data-hi="3+ वर्ष">3+ Years</option>
                 <option value="5" data-en="5+ Years" data-hi="5+ वर्ष">5+ Years</option>
-                <option value="7" data-en="7+ Years" data-hi="7+ वर्ष">7+ Years</option>
             </select>
         </div>
 
-        <button class="btn-luxury-app" style="width: 100%; margin-top: 20px;" onclick="applyExpertFilters()" data-en="Apply Filters" data-hi="फ़िल्टर लागू करें">Apply Filters</button>
+        <button class="btn-luxury-app" style="width: 100%; margin-top: 15px;" onclick="applyExpertFilters()" data-en="Apply Filters" data-hi="फ़िल्टर लागू करें">Apply Filters</button>
         <button class="btn-luxury-app" style="width: 100%; margin-top: 10px; background: white; color: var(--primary-red); border: 1px solid var(--primary-red);" onclick="clearExpertFilters()" data-en="Clear Filters" data-hi="फ़िल्टर हटाएं">Clear Filters</button>
     </div>
 
@@ -1341,8 +1200,8 @@
     <div class="smartphone-chassis">
         
         <!-- Live Track Floating Action Button -->
-        <div class="live-track-fab" id="liveTrackFab" onclick="openTrackingOverlay()">
-            <i class="fa-solid fa-location-dot"></i> <span data-en="Track Expert" data-hi="विशेषज्ञ को ट्रैक करें">Track Expert</span>
+        <div class="live-track-fab" id="liveTrackFab" onclick="openTrackingOverlay()" style="position: absolute; top: 15px; right: 20px; background: var(--primary-red); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; display: none; align-items: center; gap: 6px; z-index: 4000; cursor: pointer;">
+            <i class="fa-solid fa-location-dot"></i> <span data-en="Track Expert" data-hi="ट्रैक करें">Track Expert</span>
         </div>
 
         <!-- Glass Header top bar -->
@@ -1365,8 +1224,8 @@
             <!-- SCREEN 1: ULTRA-LUXURY HOME -->
             <div class="app-screen active" id="screen-home">
                 
-                <div style="padding: 15px 20px 0 20px; margin-bottom: 5px;">
-                    <div style="font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-dark);">
+                <div style="padding: 12px 16px 0 16px; margin-bottom: 5px;">
+                    <div style="font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-dark);">
                         <i class="fa-solid fa-circle-play" style="color: var(--primary-red); animation: pulse-dot 1.5s infinite;"></i>
                         <span data-en="Live Service Gallery" data-hi="लाइव सेवा गैलरी">Live Service Gallery</span>
                     </div>
@@ -1387,8 +1246,8 @@
 
                 <!-- COMPACT WELCOME BOX -->
                 <div class="welcome-16-9-box">
-                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--primary-red); margin-bottom: 4px; font-weight: 800;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
-                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.75rem; font-weight: 600; line-height: 1.5; padding: 0 5px;">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--primary-red); margin-bottom: 4px; font-weight: 800;" data-en="WELCOME TO OOOO" data-hi="OOOO में आपका स्वागत है">WELCOME TO OOOO</h3>
+                    <p id="liveWelcomeMessage" style="color: var(--text-dark); font-size: 0.75rem; font-weight: 600; line-height: 1.4;">
                         Loading exclusive message...
                     </p>
                 </div>
@@ -1400,7 +1259,7 @@
                         <h1 class="hero-heading" data-en="India's Most Premium Elite Home Services" data-hi="भारत की सबसे प्रीमियम होम सेवाएं">India's Most Premium Elite Home Services</h1>
                         <div class="hero-cta-grid">
                             <button class="btn-hero-action" onclick="switchScreen('book')">✨ <span data-en="Book Now" data-hi="बुक करें">Book Now</span></button>
-                            <button class="btn-hero-action" onclick="switchScreen('services')" style="background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(5px);">🌹 <span data-en="Explore" data-hi="सेवाएं">Explore</span></button>
+                            <button class="btn-hero-action" onclick="switchScreen('services')" style="background: rgba(255,255,255,0.25); color: white; backdrop-filter: blur(5px);">🌹 <span data-en="Explore" data-hi="सेवाएं">Explore</span></button>
                         </div>
                     </div>
                 </div>
@@ -1411,34 +1270,33 @@
                     <p class="section-subtitle" data-en="Uncompromising quality from elite beauticians, therapists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट और केयरटेकर से बेजोड़ गुणवत्ता।">Uncompromising quality from elite beauticians, therapists, and caretakers.</p>
                 </div>
                 <div class="highlights-grid">
-                    <div class="highlight-card"><i class="fa-solid fa-users"></i><span data-en="10k+ Happy Clients" data-hi="10k+ संतुष्ट ग्राहक">10k+ Happy Clients</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-star"></i><span data-en="4.9★ Top Rating" data-hi="4.9★ उत्कृष्ट रेटिंग">4.9★ Top Rating</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-user-shield"></i><span data-en="100% Background Checked" data-hi="100% पृष्ठभूमि सत्यापित">100% Background Checked</span></div>
-                    <div class="highlight-card"><i class="fa-solid fa-house-chimney"></i><span data-en="Luxury Home Setup" data-hi="घर पर लक्जरी सेटअप">Luxury Home Setup</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-users"></i><span data-en="10k+ Clients" data-hi="10k+ ग्राहक">10k+ Clients</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-star"></i><span data-en="4.9★ Rating" data-hi="4.9★ रेटिंग">4.9★ Rating</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-user-shield"></i><span data-en="100% Checked" data-hi="100% सत्यापित">100% Checked</span></div>
+                    <div class="highlight-card"><i class="fa-solid fa-house-chimney"></i><span data-en="Luxury Setup" data-hi="लक्जरी सेटअप">Luxury Setup</span></div>
                 </div>
 
                 <!-- VIP Privileges Sections -->
-                <div class="section-header-app" style="padding-top: 5px;">
+                <div class="section-header-app" style="padding-top: 0;">
                     <h2 class="section-title" data-en="Privilege Memberships" data-hi="विशेषाधिकार सदस्यता">Privilege Memberships</h2>
-                    <p class="section-subtitle" data-en="Incorporate routine premium care into your lifestyle with exclusive tiers." data-hi="विशेष सदस्यता स्तरों के साथ अपनी जीवनशैली में प्रीमियम देखभाल को शामिल करें।">Incorporate routine premium care into your lifestyle with exclusive tiers.</p>
                 </div>
-                <div class="membership-cards-stack" id="homeMembershipsStack">
+                <div class="membership-cards-stack" id="homeMembershipsStack" style="padding: 0 16px;">
                     <!-- Loaded dynamically from Firebase -->
                 </div>
 
                 <!-- Luxury Footer summary -->
-                <div class="luxury-footer-app" style="background-color: var(--bg-card); padding: 30px 20px 40px 20px; margin-top: 20px; border-top: 1px solid var(--border-light);">
-                    <div style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary-red); margin-bottom: 15px; text-align: center; font-weight: 800; letter-spacing: 2px;">OOOO</div>
-                    <p style="font-size: 0.7rem; color: var(--text-muted); text-align: center; font-weight: 600;">&copy; 2026 OOOO Elite Services. Built to Absolute Luxury Specifications.</p>
+                <div style="background-color: var(--bg-card); padding: 25px 16px 35px 16px; margin-top: 20px; border-top: 1px solid var(--border-light);">
+                    <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary-red); margin-bottom: 10px; text-align: center; font-weight: 800; letter-spacing: 2px;">OOOO</div>
+                    <p style="font-size: 0.68rem; color: var(--text-muted); text-align: center; font-weight: 600;">&copy; 2026 OOOO Elite Services. Absolute Luxury.</p>
                 </div>
 
             </div>
 
             <!-- SCREEN 2: ALL BESPOKE SERVICES -->
             <div class="app-screen" id="screen-services">
-                <div class="section-header-app" style="padding-bottom: 10px;">
+                <div class="section-header-app">
                     <h2 class="section-title" data-en="Our Elite Services" data-hi="हमारी प्रीमियम सेवाएं">Our Elite Services</h2>
-                    <p class="section-subtitle" data-en="An exquisite collection of world-class beauty, wellness, and care treatments." data-hi="विश्व स्तरीय सौंदर्य, वेलनेस और देखभाल उपचार का एक उत्कृष्ट संग्रह।">An exquisite collection of world-class beauty, wellness, and care treatments.</p>
+                    <p class="section-subtitle" data-en="An exquisite collection of world-class treatments." data-hi="विश्व स्तरीय उपचार का उत्कृष्ट संग्रह।">An exquisite collection of world-class treatments.</p>
                 </div>
 
                 <!-- Categories Scroll -->
@@ -1455,19 +1313,12 @@
             <div class="app-screen" id="screen-book">
                 <div class="section-header-app">
                     <h2 class="section-title" data-en="Reservation Engine" data-hi="आरक्षण केंद्र">Reservation Engine</h2>
-                    <p class="section-subtitle" data-en="Configure parameters for your premium service booking." data-hi="अपनी प्रीमियम सेवा बुकिंग के लिए पैरामीटर कॉन्फ़िगर करें।">Configure parameters for your premium service booking.</p>
-                </div>
-
-                <div class="wizard-steps-row" style="display: flex; justify-content: space-between; padding: 0 40px; margin-bottom: 15px; position: relative;">
-                    <div class="step-bubble active" id="step-1" style="width:34px; height:34px; border-radius:50%; background:var(--red-gradient); color:white; display:flex; align-items:center; justify-content:center; font-weight:800;">1</div>
-                    <div class="step-bubble" id="step-2" style="width:34px; height:34px; border-radius:50%; background:var(--bg-card); border:2px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--text-muted);">2</div>
-                    <div class="step-bubble" id="step-3" style="width:34px; height:34px; border-radius:50%; background:var(--bg-card); border:2px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--text-muted);">3</div>
                 </div>
 
                 <div class="glass-card">
                     <!-- Step 1 -->
                     <div class="wizard-pane active" id="pane-1">
-                        <div style="font-size:1rem; color:var(--text-dark); margin-bottom:15px; font-weight:800; text-transform:uppercase;" data-en="Select Service Option" data-hi="सेवा विकल्प चुनें">Select Service Option</div>
+                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Select Service Option" data-hi="सेवा विकल्प चुनें">Select Service Option</div>
                         <div class="widget-input-wrap">
                             <label data-en="Service Category" data-hi="सेवा श्रेणी">Service Category</label>
                             <select id="bookSelectMenu" onchange="syncWizardSelection()">
@@ -1479,58 +1330,55 @@
                             <select id="bookLocationType" onchange="updateLocationNotice()">
                                 <option value="" disabled selected data-en="Select Location..." data-hi="स्थान चुनें...">Select Location...</option>
                                 <option value="User Home" data-en="User Home" data-hi="उपयोगकर्ता का घर">User Home</option>
-                                <option value="Expert Nearby" data-en="Expert's Location/Studio" data-hi="विशेषज्ञ का स्थान/स्टूडियो">Expert's Location/Studio</option>
+                                <option value="Expert Nearby" data-en="Expert's Studio" data-hi="विशेषज्ञ का स्टूडियो">Expert's Studio</option>
                             </select>
                         </div>
 
                         <!-- Dynamic Notices -->
-                        <div class="spa-warning-notice" id="notice-home">
-                            <i class="fa-solid fa-circle-exclamation" style="margin-right: 5px;"></i>
-                            <span data-en="Home Service Notice: To guarantee safety and secure scheduling, an advance payment is required for home visits." data-hi="होम सर्विस सूचना: सुरक्षा और बुकिंग सुनिश्चित करने के लिए होम विजिट हेतु अग्रिम भुगतान अनिवार्य है।">Home Service Notice: To guarantee safety and secure scheduling, an advance payment is required for home visits.</span>
+                        <div class="spa-warning-notice" id="notice-home" style="background: var(--bg-elevated); border-left: 3px solid var(--primary-red); padding: 10px; border-radius: 8px; font-size: 0.72rem; display: none; margin-bottom: 12px;">
+                            <span data-en="Home Service Notice: Advance payment required for home visits." data-hi="होम सर्विस सूचना: होम विजिट हेतु अग्रिम भुगतान अनिवार्य है।">Home Service Notice: Advance payment required for home visits.</span>
                         </div>
-                        <div class="spa-warning-notice spa-warning-success" id="notice-hotel">
-                            <i class="fa-solid fa-location-dot" style="margin-right: 5px;"></i>
-                            <span data-en="Studio Visit Notice: You are visiting the expert's location. No advance payment is required." data-hi="स्टूडियो विजिट सूचना: आप विशेषज्ञ के स्थान पर जा रहे हैं। कोई अग्रिम भुगतान आवश्यक नहीं है।">Studio Visit Notice: You are visiting the expert's location. No advance payment is required.</span>
+                        <div class="spa-warning-notice spa-warning-success" id="notice-hotel" style="background: #e9fbf0; border-left: 3px solid #25d366; padding: 10px; border-radius: 8px; font-size: 0.72rem; display: none; margin-bottom: 12px;">
+                            <span data-en="Studio Visit: No advance payment required." data-hi="स्टूडियो विजिट: कोई अग्रिम भुगतान आवश्यक नहीं है।">Studio Visit: No advance payment required.</span>
                         </div>
 
-                        <label class="checkbox-container" id="consentCheckboxContainer" style="display:none;">
-                            <input type="checkbox" id="bookingConsentCheckbox" onchange="toggleWizardNextBtnState()">
-                            <span data-en="I understand and accept these premium booking terms and procedures." data-hi="मैं इन प्रीमियम बुकिंग शर्तों और प्रक्रियाओं को समझता हूँ और स्वीकार करता हूँ।">I understand and accept these premium booking terms and procedures.</span>
+                        <label class="checkbox-container" id="consentCheckboxContainer" style="display:none; gap: 8px; font-size: 0.72rem; align-items: flex-start;">
+                            <input type="checkbox" id="bookingConsentCheckbox" onchange="toggleWizardNextBtnState()" style="margin-top: 2px;">
+                            <span data-en="I understand and accept booking terms." data-hi="मैं बुकिंग शर्तों को स्वीकार करता हूँ।">I understand and accept booking terms.</span>
                         </label>
                     </div>
 
                     <!-- Step 2 -->
                     <div class="wizard-pane" id="pane-2" style="display:none;">
-                        <div style="font-size:1rem; color:var(--text-dark); margin-bottom:15px; font-weight:800; text-transform:uppercase;" data-en="Choose Your Expert & Time" data-hi="विशेषज्ञ और समय चुनें">Choose Your Expert & Time</div>
+                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Choose Your Expert & Time" data-hi="विशेषज्ञ और समय चुनें">Choose Your Expert & Time</div>
                         
                         <div class="widget-input-wrap">
                             <label data-en="Preferred Date & Time" data-hi="दिनांक और समय">Preferred Date & Time</label>
                             <input type="datetime-local" id="bookDateTimeInput">
                         </div>
                         
-                        <!-- VISUAL SELECTION FOR EXPERTS -->
                         <div class="widget-input-wrap">
                             <label data-en="Select Expert (Nearest First)" data-hi="विशेषज्ञ चुनें (निकटतम पहले)">Select Expert (Nearest First)</label>
                             <select id="bookTherapistGender" style="display: none;"></select>
-                            <div class="therapist-horizontal-scroll" id="bookingTherapistList">
-                                <!-- Dynamically populated visual cards -->
+                            <div class="experts-horizontal-carousel" id="bookingTherapistList">
+                                <!-- Populated dynamically -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
                     <div class="wizard-pane" id="pane-3" style="display:none;">
-                        <div style="font-size:1rem; color:var(--text-dark); margin-bottom:15px; font-weight:800; text-transform:uppercase;" data-en="Order Receipt Summary" data-hi="आदेश प्राप्ति विवरण">Order Receipt Summary</div>
+                        <div style="font-size:0.95rem; color:var(--text-dark); margin-bottom:12px; font-weight:800; text-transform:uppercase;" data-en="Order Receipt Summary" data-hi="आदेश प्राप्ति विवरण">Order Receipt Summary</div>
                         
-                        <div class="receipt-summary-box" id="receiptSummaryContent" style="background-color: var(--bg-elevated); border: 1px solid var(--border-light); padding: 15px; border-radius: 16px; margin-bottom: 15px;">
+                        <div class="receipt-summary-box" id="receiptSummaryContent" style="background-color: var(--bg-elevated); border: 1px solid var(--border-light); padding: 12px; border-radius: 14px; margin-bottom: 12px;">
                             <!-- Populated via Javascript -->
                         </div>
 
-                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                            <input type="text" id="promoInput" placeholder="PROMO CODE" style="background-color: var(--bg-main); border: 1px solid var(--border-light); color: var(--text-dark); padding: 12px 14px; border-radius: 12px; flex: 1; outline: none; font-weight: 600;">
-                            <button type="button" class="btn-luxury-app" style="padding: 10px 18px; font-size: 0.75rem;" onclick="applyPromoCode()" data-en="Apply" data-hi="लागू करें">Apply</button>
+                        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                            <input type="text" id="promoInput" placeholder="PROMO CODE" style="background-color: var(--bg-main); border: 1px solid var(--border-light); color: var(--text-dark); padding: 10px 12px; border-radius: 10px; flex: 1; outline: none; font-weight: 600; font-size: 0.8rem;">
+                            <button type="button" class="btn-luxury-app" style="padding: 8px 14px; font-size: 0.7rem;" onclick="applyPromoCode()" data-en="Apply" data-hi="लागू करें">Apply</button>
                         </div>
-                        <p id="promoStatusMessage" style="font-size: 0.75rem; color: var(--primary-red); margin-bottom: 12px; font-weight: 700;"></p>
+                        <p id="promoStatusMessage" style="font-size: 0.72rem; color: var(--primary-red); margin-bottom: 10px; font-weight: 700;"></p>
 
                         <div class="widget-input-wrap">
                             <label data-en="Billing Mode" data-hi="भुगतान का तरीका">Billing Mode</label>
@@ -1542,24 +1390,30 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 15px; padding: 0 20px; margin-top: 15px; margin-bottom: 20px;">
+                <div style="display: flex; gap: 12px; padding: 0 16px; margin-bottom: 20px;">
                     <button class="btn-luxury-app" id="btnPrevStep" onclick="navigateWizard(-1)" style="display: none; background: white; border: 1px solid var(--primary-red); color: var(--primary-red); flex: 1; box-shadow: none;" data-en="Back" data-hi="पीछे">Back</button>
                     <button class="btn-luxury-app" id="btnNextStep" onclick="navigateWizard(1)" style="flex: 2;" data-en="Next Step" data-hi="आगे बढ़ें" disabled>Next Step</button>
                 </div>
             </div>
 
-            <!-- SCREEN 4: EXPERTS GRID (NEARBY SORTED BY DISTANCE) -->
+            <!-- SCREEN 4: EXPERTS GRID (3-COLUMN GRID & SWIPE CAROUSEL) -->
             <div class="app-screen" id="screen-therapists">
-                <div class="section-header-app" style="padding-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
+                <div class="section-header-app" style="padding-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h2 class="section-title" data-en="Nearby Certified Experts" data-hi="निकटतम प्रमाणित विशेषज्ञ">Nearby Certified Experts</h2>
                         <p class="section-subtitle" id="locationStatusSubtitle" data-en="Sorted by proximity to your current location." data-hi="आपकी वर्तमान स्थान के निकटता के आधार पर क्रमबद्ध।">Sorted by proximity to your current location.</p>
                     </div>
-                    <button class="btn-luxury-app" style="padding: 12px; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
+                    <button class="btn-luxury-app" style="padding: 10px; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-3d-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
                         <i class="fa-solid fa-sliders"></i>
                     </button>
                 </div>
 
+                <!-- 3D Touch Scroll Horizontal Carousel Bar for Experts -->
+                <div class="experts-horizontal-carousel" id="expertScrollCarousel">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Sleek 3-Column Grid Layout -->
                 <div class="therapist-list-grid" id="therapistListGrid">
                     <!-- Dynamic profiles loaded from Firebase/JS -->
                 </div>
@@ -1569,36 +1423,35 @@
             <div class="app-screen" id="screen-contact">
                 <div class="section-header-app">
                     <h2 class="section-title" data-en="Concierge Support" data-hi="सहायता और संपर्क">Concierge Support</h2>
-                    <p class="section-subtitle" data-en="Our elite team is available around the clock to organize your personalized service." data-hi="आपकी व्यक्तिगत सेवा को व्यवस्थित करने के लिए हमारी टीम 24/7 उपलब्ध है।">Our elite team is available around the clock to organize your personalized service.</p>
+                    <p class="section-subtitle" data-en="Our elite team is available 24/7." data-hi="हमारी टीम 24/7 उपलब्ध है।">Our elite team is available 24/7.</p>
                 </div>
 
-                <!-- Premium VIP Concierge Card -->
-                <div class="glass-card" style="background: var(--red-gradient); border: none; color: white; display: flex; flex-direction: column; gap: 15px; border-radius: 24px; box-shadow: var(--shadow-strong);">
+                <div class="glass-card" style="background: var(--red-gradient-3d); border: none; color: white; display: flex; flex-direction: column; gap: 12px; border-radius: 20px;">
                     <div>
-                        <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-metallic);">VIP Privileges</span>
-                        <h3 style="font-family: 'Cinzel', serif; font-size: 1.3rem; margin-top: 5px; color: white; font-weight: 800;">Instant Concierge Desk</h3>
-                        <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin-top: 8px; font-weight: 500;">Skip standard scheduling and instantly converse with an exclusive lounge assistant.</p>
+                        <span style="font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-metallic);">VIP Privileges</span>
+                        <h3 style="font-family: 'Cinzel', serif; font-size: 1.2rem; margin-top: 4px; color: white; font-weight: 800;">Instant Concierge Desk</h3>
+                        <p style="font-size: 0.78rem; line-height: 1.4; color: rgba(255, 255, 255, 0.9); margin-top: 6px;">Converse with an exclusive lounge assistant directly.</p>
                     </div>
                     <a href="j.html" class="btn-luxury-app" style="background: white; color: var(--primary-red); box-shadow: none; font-weight: 800; text-decoration: none;">
                         <i class="fa-solid fa-comments" style="margin-right: 6px;"></i> <span data-en="Initiate Secure Chat" data-hi="सुरक्षित चैट शुरू करें">Initiate Secure Chat</span>
                     </a>
                 </div>
 
-                <div style="padding: 10px 20px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Priority Communication" data-hi="प्राथमिक संपर्क माध्यम">Priority Communication</div></div>
-                <div class="contact-channel-list" style="padding: 0 20px;">
-                    <a href="tel:+919876543210" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 18px; margin-bottom: 12px; text-decoration: none; color: inherit; box-shadow: var(--shadow-soft);">
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <i class="fa-solid fa-phone" style="color: white; background: var(--gold-gradient); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"></i>
-                            <span style="font-size: 0.85rem; font-weight: 700;" data-en="Luxury Voice Desk" data-hi="लक्जरी वॉयस डेस्क">Luxury Voice Desk</span>
+                <div style="padding: 10px 16px;"><div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text-dark); text-transform: uppercase;" data-en="Priority Communication" data-hi="प्राथमिक संपर्क माध्यम">Priority Communication</div></div>
+                <div class="contact-channel-list" style="padding: 0 16px;">
+                    <a href="tel:+919876543210" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 14px; margin-bottom: 10px; text-decoration: none; color: inherit; box-shadow: var(--shadow-3d-soft);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-phone" style="color: black; background: var(--gold-gradient); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem;"></i>
+                            <span style="font-size: 0.8rem; font-weight: 800;" data-en="Luxury Voice Desk" data-hi="लक्जरी वॉयस डेस्क">Luxury Voice Desk</span>
                         </div>
-                        <span style="font-size: 0.8rem; color: var(--primary-red); font-weight: 800;">+91 98765 43210</span>
+                        <span style="font-size: 0.78rem; color: var(--primary-red); font-weight: 800;">+91 98765 43210</span>
                     </a>
-                    <a href="j.html" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 18px; margin-bottom: 12px; text-decoration: none; color: inherit; box-shadow: var(--shadow-soft);">
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <i class="fa-brands fa-whatsapp" style="color: white; background: var(--gold-gradient); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"></i>
-                            <span style="font-size: 0.85rem; font-weight: 700;" data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
+                    <a href="j.html" style="display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 14px; margin-bottom: 10px; text-decoration: none; color: inherit; box-shadow: var(--shadow-3d-soft);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-brands fa-whatsapp" style="color: black; background: var(--gold-gradient); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem;"></i>
+                            <span style="font-size: 0.8rem; font-weight: 800;" data-en="WhatsApp VIP Priority" data-hi="व्हाट्सएप वीआईपी">WhatsApp VIP Priority</span>
                         </div>
-                        <i class="fa-solid fa-chevron-right" style="font-size: 0.9rem; color: var(--text-muted);"></i>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; color: var(--text-muted);"></i>
                     </a>
                 </div>
             </div>
@@ -1609,11 +1462,11 @@
         <div class="success-overlay" id="successOverlay">
             <div class="success-card">
                 <div class="success-icon"><i class="fa-solid fa-shield-heart"></i></div>
-                <h3 style="font-size: 1.4rem; margin-bottom: 12px; font-weight: 800; color: var(--text-dark);" data-en="Booking Confirmed!" data-hi="बुकिंग पक्की हो गई!">Booking Confirmed!</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.6; font-weight: 600;" data-en="Your premium service appointment is secured. Our executive will call you within 15 mins." data-hi="आपकी प्रीमियम सेवा अपॉइंटमेंट सुरक्षित कर ली गई है। हमारे प्रतिनिधि 15 मिनट में आपसे संपर्क करेंगे।">Your premium service appointment is secured. Our executive will call you within 15 mins.</p>
-                <div style="background: var(--bg-main); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed var(--primary-red);">
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 700;" data-en="RESERVATION ID" data-hi="आरक्षण संदर्भ संख्या">RESERVATION ID</span>
-                    <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1.1rem; font-weight: 800;" id="successBookingId">OOOO-654874</strong>
+                <h3 style="font-size: 1.3rem; margin-bottom: 10px; font-weight: 800; color: var(--text-dark);" data-en="Booking Confirmed!" data-hi="बुकिंग पक्की हो गई!">Booking Confirmed!</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; font-weight: 600;" data-en="Your appointment is secured. Our executive will call you within 15 mins." data-hi="आपकी अपॉइंटमेंट सुरक्षित कर ली गई है। हमारे प्रतिनिधि 15 मिनट में संपर्क करेंगे।">Your appointment is secured. Our executive will call you within 15 mins.</p>
+                <div style="background: var(--bg-main); padding: 12px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed var(--primary-red);">
+                    <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 700;" data-en="RESERVATION ID" data-hi="आरक्षण संदर्भ संख्या">RESERVATION ID</span>
+                    <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1rem; font-weight: 800;" id="successBookingId">OOOO-654874</strong>
                 </div>
                 <button class="btn-luxury-app" style="width: 100%; border-radius: 12px;" onclick="closeSuccessOverlay()" data-en="Back to Home" data-hi="होम स्क्रीन पर जाएं">Back to Home</button>
             </div>
@@ -1621,13 +1474,13 @@
 
         <!-- Dynamic Expert Profile Popup Overlay -->
         <div class="therapist-desc-overlay" id="therapistDescOverlay">
-            <div class="chat-app-header" style="height: 75px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 20px; gap: 15px;">
-                <button class="chat-back-btn" onclick="closeTherapistDescOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.3rem; cursor: pointer;">
+            <div class="chat-app-header" style="height: 65px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 16px; gap: 12px; border-bottom: 1px solid var(--border-light);">
+                <button onclick="closeTherapistDescOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.2rem; cursor: pointer;">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
                 <div style="flex-grow: 1;">
-                    <h4 style="font-size: 1rem; color: var(--text-dark); margin-bottom: 2px; font-weight: 800;" id="descTherapistName">Expert Profile</h4>
-                    <span style="font-size: 0.7rem; color: var(--gold-metallic); font-weight: 800;" id="descTherapistTag">Specialist</span>
+                    <h4 style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 2px; font-weight: 800;" id="descTherapistName">Expert Profile</h4>
+                    <span style="font-size: 0.68rem; color: var(--gold-metallic); font-weight: 800;" id="descTherapistTag">Specialist</span>
                 </div>
             </div>
 
@@ -1637,55 +1490,54 @@
                 </div>
                 
                 <div class="therapist-desc-info-box">
-                    <div style="display:flex; justify-style:space-between; align-items:center; margin-bottom: 10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
                         <div class="therapist-profile-spec" id="descTherapistSpec">Specialization</div>
-                        <span id="descTherapistDistanceBadge" style="background: var(--bg-elevated); color: var(--primary-red); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800;">📍 Distance</span>
+                        <span id="descTherapistDistanceBadge" style="background: var(--bg-elevated); color: var(--primary-red); padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800;">📍 Distance</span>
                     </div>
 
-                    <div style="height: 1px; background: var(--border-light); margin: 15px 0;"></div>
+                    <div style="height: 1px; background: var(--border-light); margin: 12px 0;"></div>
                     
                     <p class="therapist-profile-bio" id="descTherapistExp">
-                        Professional experience description goes here...
+                        Professional experience details...
                     </p>
 
-                    <!-- MAP IN PROFILE -->
-                    <div style="margin-top: 25px; margin-bottom: 15px;">
-                        <div style="font-size:0.85rem; color:var(--text-dark); font-weight:800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; text-transform: uppercase;">
+                    <div style="margin-top: 20px; margin-bottom: 10px;">
+                        <div style="font-size:0.8rem; color:var(--text-dark); font-weight:800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase;">
                             <i class="fa-solid fa-location-crosshairs" style="color:var(--primary-red);"></i> 
                             <span data-en="Exact Location Map" data-hi="वास्तविक मानचित्र स्थान">Exact Location Map</span>
                         </div>
-                        <div id="descTherapistMiniMap" style="width: 100%; height: 180px; border-radius: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-soft); z-index: 1;"></div>
+                        <div id="descTherapistMiniMap" style="width: 100%; height: 160px; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: var(--shadow-3d-soft); z-index: 1;"></div>
                     </div>
                 </div>
             </div>
 
             <div class="therapist-desc-footer">
-                <button type="button" class="btn-luxury-app" id="btnFullViewFromDesc" style="background: white; color: var(--primary-red); border: 1px solid var(--primary-red); box-shadow: none; flex: 1;">
-                    <i class="fa-solid fa-expand" style="margin-right: 5px;"></i> Full Photo
+                <button type="button" class="btn-luxury-app" id="btnFullViewFromDesc" style="background: white; color: var(--primary-red); border: 1px solid var(--primary-red); box-shadow: none; flex: 1; font-size: 0.7rem;">
+                    <i class="fa-solid fa-expand" style="margin-right: 4px;"></i> Full Photo
                 </button>
-                <button type="button" class="btn-luxury-app" id="btnDescReserve" style="flex: 2;" data-en="Select Expert" data-hi="इस विशेषज्ञ को चुनें">Select Expert</button>
+                <button type="button" class="btn-luxury-app" id="btnDescReserve" style="flex: 2; font-size: 0.75rem;" data-en="Select Expert" data-hi="इस विशेषज्ञ को चुनें">Select Expert</button>
             </div>
         </div>
 
         <!-- Live Tracking Overlay Map Screen -->
         <div class="tracking-overlay" id="trackingOverlay">
-            <div class="chat-app-header" style="height: 70px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 20px; gap: 15px;">
-                <button class="chat-back-btn" onclick="closeTrackingOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.3rem;"><i class="fa-solid fa-chevron-down"></i></button>
+            <div style="height: 65px; background-color: var(--bg-card); display: flex; align-items: center; padding: 0 16px; gap: 12px; border-bottom: 1px solid var(--border-light);">
+                <button onclick="closeTrackingOverlay()" style="background: none; border: none; color: var(--primary-red); font-size: 1.2rem;"><i class="fa-solid fa-chevron-down"></i></button>
                 <div>
-                    <h4 style="font-size: 1rem; color: var(--text-dark); font-weight: 800;" data-en="Live Tracking" data-hi="लाइव ट्रैकिंग">Live Tracking</h4>
-                    <span style="font-size: 0.75rem; color: var(--primary-red); font-weight: 700;" id="trackingStatusText" data-en="Expert on the way..." data-hi="विशेषज्ञ रास्ते में हैं...">Expert on the way...</span>
+                    <h4 style="font-size: 0.95rem; color: var(--text-dark); font-weight: 800;" data-en="Live Tracking" data-hi="लाइव ट्रैकिंग">Live Tracking</h4>
+                    <span style="font-size: 0.7rem; color: var(--primary-red); font-weight: 700;" id="trackingStatusText">Expert on the way...</span>
                 </div>
             </div>
             <div class="tracking-map-container" id="trackingMap"></div>
             <div class="tracking-details">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
                     <div>
-                        <h3 style="font-size:1.1rem; font-weight: 800; color:var(--text-dark);" id="trackTherapistName">Professional</h3>
-                        <span style="font-size:0.8rem; font-weight: 600; color:var(--text-muted);" data-en="Arriving shortly" data-hi="जल्द पहुँच रहे हैं">Arriving shortly</span>
+                        <h3 style="font-size:1rem; font-weight: 800; color:var(--text-dark);" id="trackTherapistName">Professional</h3>
+                        <span style="font-size:0.75rem; font-weight: 600; color:var(--text-muted);">Arriving shortly</span>
                     </div>
                     <div style="text-align:right;">
-                        <h3 style="font-size:1.2rem; font-weight: 800; color:var(--primary-red);" id="trackDistance">-- km</h3>
-                        <span style="font-size:0.8rem; font-weight: 600; color:var(--text-muted);" data-en="Distance" data-hi="दूरी">Distance</span>
+                        <h3 style="font-size:1.1rem; font-weight: 800; color:var(--primary-red);" id="trackDistance">-- km</h3>
+                        <span style="font-size:0.75rem; font-weight: 600; color:var(--text-muted);">Distance</span>
                     </div>
                 </div>
                 <button class="btn-luxury-app" style="width:100%; border-radius:12px; background: #25d366; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);" onclick="markBookingCompleted()">
@@ -2005,7 +1857,7 @@
                             <button class="read-more-btn" onclick="toggleReadMore('${descId}', this)">Read More</button>
                             <div class="service-card-footer">
                                 <span class="duration-lbl"><i class="fa-regular fa-clock"></i> ${s.duration} Mins</span>
-                                <button class="btn-luxury-app" style="padding: 10px 24px; font-size: 0.75rem; border-radius: 8px;" onclick="directSelectService('${safeTitle}', ${s.price}, ${s.duration})">
+                                <button class="btn-luxury-app" style="padding: 8px 18px; font-size: 0.72rem; border-radius: 8px;" onclick="directSelectService('${safeTitle}', ${s.price}, ${s.duration})">
                                     <span data-en="Select" data-hi="चुनें">Select</span>
                                 </button>
                             </div>
@@ -2082,7 +1934,7 @@
             updateTherapistsUI(therapistsList);
         });
 
-        // EXPERT FILTER LOGIC (GENDER, LOCATION, EXPERIENCE, RADIUS DISTANCE)
+        // EXPERT FILTER LOGIC
         window.openExpertFilterModal = function() {
             document.getElementById('expertFilterModal').style.display = 'flex';
         };
@@ -2103,7 +1955,6 @@
 
             let filtered = [...appState.activeTherapists];
 
-            // Gender Filter
             if(gender !== 'All') {
                 filtered = filtered.filter(t => {
                     const g = (t.gender || '').toLowerCase();
@@ -2111,7 +1962,6 @@
                 });
             }
 
-            // Minimum Experience Filter
             if(experience !== 'All') {
                 const minYears = parseInt(experience);
                 filtered = filtered.filter(t => {
@@ -2120,18 +1970,15 @@
                 });
             }
 
-            // Calculate live distance for all remaining experts
             filtered.forEach(t => {
                 t.calcDistance = calculateHaversineDistance(appState.userLat, appState.userLng, t.lat, t.lng);
             });
 
-            // Distance Radius Filter
             if(maxDistStr !== 'All') {
                 const maxD = parseFloat(maxDistStr);
                 filtered = filtered.filter(t => t.calcDistance <= maxD);
             }
 
-            // Sort Nearest First
             filtered.sort((a,b) => a.calcDistance - b.calcDistance);
 
             updateTherapistsUI(filtered, true);
@@ -2159,48 +2006,74 @@
             appState.therapist = name;
         };
 
+        // RENDER 3-COLUMN GRID & HORIZONTAL CAROUSEL (CLEAN FORMATTED TEXT)
         function updateTherapistsUI(list, isFiltered = false) {
             const container = document.getElementById('therapistListGrid');
             const selectEl = document.getElementById('bookTherapistGender');
             const bookingVisualList = document.getElementById('bookingTherapistList');
+            const topCarousel = document.getElementById('expertScrollCarousel');
             
-            if(!container || !bookingVisualList) return;
+            if(!container || !bookingVisualList || !topCarousel) return;
             
             container.innerHTML = '';
             bookingVisualList.innerHTML = '';
+            topCarousel.innerHTML = '';
             selectEl.innerHTML = '';
 
-            // Calculate distance for all experts if not already done
+            // Calculate distance for all experts
             const processedList = list.map(t => {
                 const dist = calculateHaversineDistance(appState.userLat, appState.userLng, t.lat, t.lng);
                 return { ...t, calcDistance: dist };
             });
 
-            // Always sort nearest first
+            // Sort nearest first
             processedList.sort((a, b) => a.calcDistance - b.calcDistance);
 
             if (processedList.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px; grid-column: span 2;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px; grid-column: span 3;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
             }
 
             processedList.forEach((t, index) => {
                 const opt = document.createElement('option');
                 opt.value = t.name;
-                opt.text = `${t.name} (${t.calcDistance.toFixed(1)} km)`;
+                opt.text = `${t.name} (${Math.round(t.calcDistance)} km)`;
                 selectEl.appendChild(opt);
 
                 const photos = t.images || (t.image ? [t.image] : []);
                 const mainPhoto = photos[0] || 'https://via.placeholder.com/150';
+                const safeName = t.name.replace(/'/g, "\\'");
 
-                // Booking Scroll Card
+                // Clean Experience Formatting
+                let expDisplay = '';
+                if(t.experience) {
+                    const cleanExpNum = String(t.experience).replace(/years|year|yrs|exp/gi, '').trim();
+                    expDisplay = cleanExpNum ? `${cleanExpNum} Yr Exp` : '';
+                }
+                const genderDisplay = t.gender || 'Certified';
+                const cleanSubtitleText = expDisplay ? `${genderDisplay} • ${expDisplay}` : genderDisplay;
+
+                // 1. Top Carousel Item
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'expert-carousel-card';
+                carouselItem.onclick = () => openTherapistDescOverlay(`${safeName}`, `${t.gender || 'Expert'}`, `${t.experience || 'Experienced'}`, `${Math.round(t.calcDistance)}`, `${mainPhoto}`, t.lat || 0.0, t.lng || 0.0, JSON.stringify(photos).replace(/"/g, '&quot;'));
+                carouselItem.innerHTML = `
+                    <div class="expert-carousel-avatar" style="background-image: url('${mainPhoto}');"></div>
+                    <div style="font-size:0.72rem; font-weight:800; color:var(--text-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.name}</div>
+                    <div style="font-size:0.6rem; color:var(--primary-red); font-weight:700;">📍 ${Math.round(t.calcDistance)} km</div>
+                `;
+                topCarousel.appendChild(carouselItem);
+
+                // 2. Booking Horizontal Selector Card
                 const scrollCard = document.createElement('div');
                 scrollCard.className = `therapist-scroll-card ${index === 0 ? 'active-th' : ''}`;
                 scrollCard.setAttribute('data-name', t.name);
                 scrollCard.onclick = () => selectBookingTherapist(t.name);
+                scrollCard.style.minWidth = '110px';
+                scrollCard.style.padding = '10px 6px';
                 scrollCard.innerHTML = `
-                    <div class="therapist-scroll-img" style="background-image: url('${mainPhoto}');"></div>
-                    <div class="therapist-scroll-name">${t.name}</div>
-                    <div class="therapist-scroll-spec">📍 ${t.calcDistance.toFixed(1)} km</div>
+                    <div class="expert-carousel-avatar" style="background-image: url('${mainPhoto}'); width:45px; height:45px;"></div>
+                    <div style="font-size:0.72rem; font-weight:800; color:var(--text-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.name}</div>
+                    <div style="font-size:0.6rem; color:var(--gold-metallic); font-weight:700;">📍 ${Math.round(t.calcDistance)} km</div>
                 `;
                 bookingVisualList.appendChild(scrollCard);
 
@@ -2210,23 +2083,24 @@
                 }
 
                 const photosEscaped = JSON.stringify(photos).replace(/"/g, '&quot;');
-                const safeName = t.name.replace(/'/g, "\\'");
 
-                // Main Expert List Card with Distance Badge & Full View Button
+                // 3. Main 3-Column Grid Card
                 const card = document.createElement('div');
                 card.className = 'therapist-list-card';
                 card.innerHTML = `
                     <div class="therapist-list-img" style="background-image: url('${mainPhoto}');">
-                        <div class="distance-badge"><i class="fa-solid fa-location-dot" style="color:var(--gold-metallic);"></i> ${t.calcDistance.toFixed(1)} km away</div>
+                        <div class="distance-badge"><i class="fa-solid fa-location-dot" style="color:var(--gold-metallic);"></i> ${Math.round(t.calcDistance)} km</div>
                         <button class="full-view-btn-badge" onclick="event.stopPropagation(); openFullImageViewer('${mainPhoto}', '${safeName}')" title="Full View Image">
                             <i class="fa-solid fa-expand"></i>
                         </button>
                     </div>
                     <div class="therapist-list-body">
-                        <h3>${t.name}</h3>
-                        <div class="therapist-spec">${t.gender || 'Certified Expert'} ${t.experience ? '• ' + t.experience + ' Yrs Exp' : ''}</div>
-                        <button class="btn-luxury-app" style="width: 100%; padding: 8px; font-size: 0.65rem; border-radius: 8px; margin-top: auto;" onclick="openTherapistDescOverlay('${safeName}', '${t.gender || 'Expert'}', '${t.experience || 'Experienced'}', '${t.calcDistance.toFixed(1)}', '${mainPhoto}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${photosEscaped}')">
-                            <span data-en="View Profile" data-hi="प्रोफ़ाइल देखें">View Profile</span>
+                        <div>
+                            <h3>${t.name}</h3>
+                            <div class="therapist-spec">${cleanSubtitleText}</div>
+                        </div>
+                        <button class="btn-view-profile-sm" onclick="openTherapistDescOverlay('${safeName}', '${t.gender || 'Expert'}', '${t.experience || 'Experienced'}', '${Math.round(t.calcDistance)}', '${mainPhoto}', ${t.lat || 0.0}, ${t.lng || 0.0}, '${photosEscaped}')">
+                            PROFILE
                         </button>
                     </div>
                 `;
@@ -2382,15 +2256,8 @@
 
         function updateWizardNavigationPanes() {
             document.querySelectorAll('.wizard-pane').forEach(pane => pane.style.display = 'none');
-            document.querySelectorAll('.step-bubble').forEach(step => {
-                step.style.background = 'var(--bg-card)';
-                step.style.color = 'var(--text-muted)';
-            });
 
             document.getElementById('pane-' + appState.wizardStep).style.display = 'block';
-            const curStepEl = document.getElementById('step-' + appState.wizardStep);
-            curStepEl.style.background = 'var(--red-gradient)';
-            curStepEl.style.color = 'white';
 
             const prev = document.getElementById('btnPrevStep');
             const next = document.getElementById('btnNextStep');
@@ -2543,7 +2410,7 @@
 
                 const dist = calculateHaversineDistance(appState.userLat, appState.userLng, simLat, simLng);
                 const distEl = document.getElementById('trackDistance');
-                if(distEl) distEl.innerText = dist.toFixed(2) + " km";
+                if(distEl) distEl.innerText = Math.round(dist) + " km";
 
                 if (tMarker) {
                     tMarker.setLatLng([simLat, simLng]);
@@ -2594,7 +2461,9 @@
             document.getElementById('descTherapistName').innerText = name;
             document.getElementById('descTherapistTag').innerText = gender;
             document.getElementById('descTherapistSpec').innerText = `${gender} Expert`;
-            document.getElementById('descTherapistExp').innerText = `${exp} Years of certified professional experience in elite beauty, care, and therapy services.`;
+            
+            let expClean = String(exp).replace(/years|year|yrs|exp/gi, '').trim();
+            document.getElementById('descTherapistExp').innerText = `${expClean ? expClean + ' Years of ' : ''}Certified professional experience in elite home beauty, wellness & care therapies.`;
             document.getElementById('descTherapistDistanceBadge').innerText = `📍 ${distanceKm} km away`;
 
             let imagesList = [];
