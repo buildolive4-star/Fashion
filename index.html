@@ -1883,6 +1883,16 @@
         </div>
 
         <div class="glass-input-wrapper">
+            <label data-en="Maximum Distance (km)" data-hi="अधिकतम दूरी (किमी)">Maximum Distance (km)</label>
+            <select id="filterMaxDistance" class="glass-input">
+                <option value="999" data-en="Any Distance" data-hi="कोई भी दूरी">Any Distance</option>
+                <option value="5" data-en="Within 5 km" data-hi="5 किमी के भीतर">Within 5 km</option>
+                <option value="10" data-en="Within 10 km" data-hi="10 किमी के भीतर">Within 10 km</option>
+                <option value="20" data-en="Within 20 km" data-hi="20 किमी के भीतर">Within 20 km</option>
+            </select>
+        </div>
+
+        <div class="glass-input-wrapper">
             <label data-en="Minimum Experience" data-hi="न्यूनतम अनुभव">Minimum Experience</label>
             <select id="filterExperience" class="glass-input">
                 <option value="All" data-en="Any Experience" data-hi="कोई भी अनुभव">Any Experience</option>
@@ -2097,7 +2107,7 @@
                         
                         <!-- VISUAL SELECTION FOR EXPERTS -->
                         <div class="widget-input-wrap">
-                            <label data-en="Select Verified Specialist" data-hi="विशेषज्ञ चुनें"><i class="fa-solid fa-user-check" style="color:var(--gold-metallic);"></i> Select Verified Specialist</label>
+                            <label data-en="Select Verified Specialist" data-hi="विशेषज्ञ चुनें"><i class="fa-solid fa-user-check" style="color:var(--gold-metallic);"></i> Select Verified Specialist (Nearest First)</label>
                             <select id="bookTherapistGender" style="display: none;"></select>
                             <div class="therapist-horizontal-scroll" id="bookingTherapistList">
                                 <!-- Dynamically populated visual cards -->
@@ -2146,7 +2156,7 @@
                 <div class="section-header-app" style="padding-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h2 class="section-title" data-en="Choose Your Expert" data-hi="अपना विशेषज्ञ चुनें">Choose Your Expert</h2>
-                        <p class="section-subtitle" data-en="Elite beauticians, therapists, artists, and caretakers." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट, कलाकार और केयरटेकर।">Elite beauticians, therapists, artists, and caretakers.</p>
+                        <p class="section-subtitle" data-en="Elite beauticians, therapists, artists, and caretakers (Nearest first)." data-hi="कुलीन ब्यूटीशियन, थेरेपिस्ट, कलाकार और केयरटेकर।">Elite beauticians, therapists, artists, and caretakers (Nearest first).</p>
                     </div>
                     <button class="btn-luxury-app" style="padding: 12px; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-strong); flex-shrink: 0;" onclick="openExpertFilterModal()">
                         <i class="fa-solid fa-sliders"></i>
@@ -2299,7 +2309,7 @@
         <!-- BOOKING PREMIUM INTRO OVERLAY MODAL -->
         <div id="bookingWelcomeModal" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(17, 1, 6, 0.95); backdrop-filter: blur(15px); z-index: 4800; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center;">
             <div style="background: var(--bg-card); border-radius: 28px; padding: 20px; width: 100%; max-width: 360px; box-shadow: var(--shadow-strong); border: 1px solid var(--border-light);">
-                <div style="width: 100%; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; margin-bottom: 20px; background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center;">
+                <div style="width: 100%; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; margin-bottom: 20px; background-image: url('https://i.ibb.co/p6ZS88w7/file-00000000bfa082089ec4d78b002fecda.png'); background-size: cover; background-position: center;">
                 </div>
                 <h3 style="font-family: 'Cinzel', serif; color: var(--text-dark); font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;" data-en="PREMIUM SERVICE RESERVATION" data-hi="प्रीमियम सेवा आरक्षण">PREMIUM SERVICE RESERVATION</h3>
                 <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; margin-bottom: 20px; font-weight: 500;" data-en="Enter India's most private and high-class home service experience. Continue to customize your parameters." data-hi="भारत के सबसे सुरक्षित और उच्च श्रेणी के होम सर्विस अनुभव में प्रवेश करें। आगे बढ़ने के लिए बटन दबाएं।">Enter India's most private and high-class home service experience. Continue to customize your parameters.</p>
@@ -2519,6 +2529,7 @@
         let currentPopupSlide = 0;
         let popupTotalSlides = 0;
         let splashTimerInterval = null;
+        let currentActivePopupImages = []; // Track slider images for full view modal
 
         function checkUserOnboarding() {
             const storedUser = localStorage.getItem('oooo_user_data');
@@ -2592,7 +2603,6 @@
             } catch (e) {
                 console.log("OSRM Routing API Error, falling back to road estimate multiplier:", e);
             }
-            // Road Multiplier factor (1.28x) so it measures true road distance rather than straight displacement
             const haversine = calculateHaversineDistance(lat1, lon1, lat2, lon2);
             return (haversine * 1.28).toFixed(1);
         }
@@ -2884,7 +2894,7 @@
             updateTherapistsUI(therapistsList);
         });
 
-        // EXPERT FILTER LOGIC
+        // EXPERT FILTER MODAL
         window.openExpertFilterModal = function() {
             document.getElementById('expertFilterModal').style.display = 'flex';
         };
@@ -2897,8 +2907,14 @@
             const gender = document.getElementById('filterGender').value;
             const location = document.getElementById('filterLocation').value.toLowerCase();
             const experience = document.getElementById('filterExperience').value;
+            const maxDistanceKm = parseFloat(document.getElementById('filterMaxDistance').value);
 
-            let filtered = appState.activeTherapists;
+            let filtered = appState.activeTherapists.map(t => {
+                const tLat = t.lat || (appState.userLat + 0.02);
+                const tLng = t.lng || (appState.userLng + 0.02);
+                const dist = calculateHaversineDistance(appState.userLat, appState.userLng, tLat, tLng);
+                return { ...t, calculatedDist: dist };
+            });
 
             if(location) {
                 filtered = filtered.filter(t => (t.address && t.address.toLowerCase().includes(location)) || (t.name && t.name.toLowerCase().includes(location)));
@@ -2906,6 +2922,10 @@
 
             if(gender !== 'All') {
                 filtered = filtered.filter(t => JSON.stringify(t).toLowerCase().includes(gender.toLowerCase()));
+            }
+
+            if(maxDistanceKm < 999) {
+                filtered = filtered.filter(t => t.calculatedDist <= maxDistanceKm);
             }
 
             if(experience !== 'All') {
@@ -2919,6 +2939,9 @@
                 });
             }
 
+            // Sort filtered results with nearest expert first
+            filtered.sort((a, b) => a.calculatedDist - b.calculatedDist);
+
             updateTherapistsUI(filtered);
             closeExpertFilterModal();
         };
@@ -2926,6 +2949,7 @@
         window.clearExpertFilters = function() {
             document.getElementById('filterGender').value = 'All';
             document.getElementById('filterLocation').value = '';
+            document.getElementById('filterMaxDistance').value = '999';
             document.getElementById('filterExperience').value = 'All';
             updateTherapistsUI(appState.activeTherapists);
             closeExpertFilterModal();
@@ -2955,19 +2979,28 @@
             bookingVisualList.innerHTML = '';
             selectEl.innerHTML = '';
 
-            if (list.length === 0) {
+            // SORT EXPERTS: NEAREST FIRST AUTOMATICALLY
+            let sortedList = [...list].map(t => {
+                const tLat = t.lat || (appState.userLat + 0.02);
+                const tLng = t.lng || (appState.userLng + 0.02);
+                const dist = calculateHaversineDistance(appState.userLat, appState.userLng, tLat, tLng);
+                return { ...t, distCalc: dist, tLat, tLng };
+            });
+
+            sortedList.sort((a, b) => a.distCalc - b.distCalc);
+
+            if (sortedList.length === 0) {
                 container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px; grid-column: span 3;" data-en="No experts match your filters." data-hi="आपके फ़िल्टर से कोई भी विशेषज्ञ मेल नहीं खाता।">No experts match your filters.</p>`;
+                return;
             }
 
-            list.forEach((t, index) => {
+            sortedList.forEach((t, index) => {
                 const opt = document.createElement('option');
                 opt.value = t.name;
                 opt.text = t.name;
                 selectEl.appendChild(opt);
 
-                const tLat = t.lat || (appState.userLat + 0.02);
-                const tLng = t.lng || (appState.userLng + 0.02);
-                const initialDist = (calculateHaversineDistance(appState.userLat, appState.userLng, tLat, tLng) * 1.28).toFixed(1);
+                const initialDist = (t.distCalc * 1.28).toFixed(1);
 
                 const scrollCard = document.createElement('div');
                 scrollCard.className = `therapist-scroll-card ${index === 0 ? 'active-th' : ''}`;
@@ -2984,7 +3017,7 @@
                 bookingVisualList.appendChild(scrollCard);
 
                 // Asynchronously fetch exact driving distance
-                getDrivingDistance(appState.userLat, appState.userLng, tLat, tLng).then(realKm => {
+                getDrivingDistance(appState.userLat, appState.userLng, t.tLat, t.tLng).then(realKm => {
                     const el = document.getElementById(`scroll-dist-${index}`);
                     if(el) el.innerHTML = `<i class="fa-solid fa-route"></i> ${realKm} km`;
                 });
@@ -3006,14 +3039,14 @@
                         <div class="distance-badge-tag" id="card-dist-${index}">
                             <i class="fa-solid fa-route" style="color:var(--gold-metallic);"></i> ${initialDist} km
                         </div>
-                        <button class="btn-luxury-app" style="width: 100%; padding: 8px; font-size: 0.6rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${tLat}, ${tLng}, '${t.address || 'Location'}', '${imagesEscaped}')">
+                        <button class="btn-luxury-app" style="width: 100%; padding: 8px; font-size: 0.6rem; border-radius: 8px;" onclick="openTherapistDescOverlay('${t.name}', '${t.specialization}', '${t.experience}', '${t.tag || 'Expert'}', '${t.image}', ${t.tLat}, ${t.tLng}, '${t.address || 'Location'}', '${imagesEscaped}')">
                             <span data-en="View Profile" data-hi="प्रोफ़ाइल देखें">View Profile</span>
                         </button>
                     </div>
                 `;
                 container.appendChild(card);
 
-                getDrivingDistance(appState.userLat, appState.userLng, tLat, tLng).then(realKm => {
+                getDrivingDistance(appState.userLat, appState.userLng, t.tLat, t.tLng).then(realKm => {
                     const el = document.getElementById(`card-dist-${index}`);
                     if(el) el.innerHTML = `<i class="fa-solid fa-route" style="color:var(--gold-metallic);"></i> ${realKm} km`;
                 });
@@ -3335,12 +3368,10 @@
                     const previousStatus = appState.activeBookingStatus;
                     appState.activeBookingStatus = data.status || 'Pending Approval';
                     
-                    // JAB ADMIN APPROVE KAR DE TAB USER KO SYSTEM PUSH NOTIFICATION
                     if ((appState.activeBookingStatus === 'Approved' || appState.activeBookingStatus === 'approved') && previousStatus !== 'Approved') {
                         document.getElementById('liveTrackFab').style.display = 'flex';
                         startTrackingSimulation();
 
-                        // TRIGGER SYSTEM POPUP NOTIFICATION
                         if ("Notification" in window && Notification.permission === 'granted') {
                             new Notification("Booking Approved! 🎉", {
                                 body: `Your reservation (${data.id || bookingKey}) has been approved by admin! Tap to track expert.`,
@@ -3451,14 +3482,14 @@
             switchScreen('home');
         }
 
-        // FULL SCREEN THERAPIST PICTURE MODAL LOGIC
+        // FULL SCREEN THERAPIST PICTURE MODAL LOGIC (FIXED FOR ACTIVE SLIDE)
         window.openFullImageModal = function(url) {
             const modal = document.getElementById('fullImageModal');
             const imgTag = document.getElementById('fullImageViewTag');
             
             let targetUrl = url;
-            if (!targetUrl && currentActivePopupTherapist) {
-                targetUrl = currentActivePopupTherapist.imgUrl;
+            if (!targetUrl && currentActivePopupImages.length > 0) {
+                targetUrl = currentActivePopupImages[currentPopupSlide];
             }
 
             if (targetUrl) {
@@ -3508,6 +3539,8 @@
             if(!Array.isArray(imagesList) || imagesList.length === 0) {
                 imagesList = [imgUrl];
             }
+            
+            currentActivePopupImages = imagesList; // Store active images array for full view modal
 
             const imgCard = document.getElementById('descTherapistImgCard');
             if (imagesList.length > 1) {
@@ -3569,6 +3602,7 @@
         function closeTherapistDescOverlay() {
             document.getElementById('therapistDescOverlay').style.display = 'none';
             currentActivePopupTherapist = null;
+            currentActivePopupImages = [];
         }
 
         function dismissBookingWelcome() {
