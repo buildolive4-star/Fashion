@@ -1,421 +1,1426 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department of Anatomy | Human Nervous System</title>
+    <title>Pro Content Manager Ultra</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            /* Default Clean Light/Modern Theme Variables */
-            --bg-default: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --border-color: #e2e8f0;
-            
-            /* 10 Vibrant Colors for 10 Modules */
-            --col-red: #ff3333;
-            --col-yellow: #d4ac0d;
-            --col-blue: #0066ff;
-            --col-green: #00b050;
-            --col-orange: #ff6600;
-            --col-purple: #8a2be2;
-            --col-pink: #ff1493;
-            --col-teal: #008080;
-            --col-indigo: #4b0082;
-            --col-cyan: #008b8b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Base Hot Red & Yellow Glassmorphic Theme */
         body {
-            background-color: var(--bg-default);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            background: linear-gradient(135deg, #180303 0%, #2a0808 35%, #1a0f00 70%, #290000 100%);
+            background-attachment: fixed;
+            color: #fff1f2;
         }
 
-        /* Animated Soft Dynamic Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(120deg, #f4f7f6, #e6fffa, #fff5f5, #f0f4ff);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
+        /* Burning Flame Animation */
+        @keyframes burnFlame {
+            0% { filter: drop-shadow(0 0 6px #ff4500) drop-shadow(0 0 15px #facc15); transform: scale(1) rotate(-3deg); }
+            50% { filter: drop-shadow(0 0 14px #dc2626) drop-shadow(0 0 28px #ff8c00); transform: scale(1.22) rotate(3deg); }
+            100% { filter: drop-shadow(0 0 6px #ff4500) drop-shadow(0 0 15px #facc15); transform: scale(1) rotate(-3deg); }
+        }
+        .animate-burn {
+            display: inline-block;
+            animation: burnFlame 0.9s infinite ease-in-out;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* 3D Glass Cards */
+        .glass-card-3d {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                        0 0 15px rgba(239, 68, 68, 0.15);
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            animation: fadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* 3D Glassmorphic Header / Bars */
+        .glass-bar-3d {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.35) 0%, rgba(234, 179, 8, 0.2) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(253, 224, 71, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                        0 0 20px rgba(234, 179, 8, 0.2);
         }
 
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header Styling */
-        header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--col-blue), var(--col-purple), var(--col-pink));
+        /* Gradient Text */
+        .gradient-text-hot {
+            background: linear-gradient(135deg, #ffe600 0%, #ff4500 50%, #ff0055 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
         }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+        /* 3D Buttons with Glossy Shine */
+        .btn-3d-red {
+            background: linear-gradient(180deg, #ff4d4d 0%, #dc2626 50%, #991b1b 100%);
+            box-shadow: 0 5px 0 #7f1d1d, 0 8px 15px rgba(220, 38, 38, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-3d-red:hover {
+            background: linear-gradient(180deg, #ff6666 0%, #ef4444 50%, #b91c1c 100%);
+            box-shadow: 0 6px 0 #7f1d1d, 0 10px 20px rgba(220, 38, 38, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        .btn-3d-red:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #7f1d1d, 0 3px 6px rgba(220, 38, 38, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
-        /* Modern Clean Cards with 3D Float Animation */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 28px;
-            margin-bottom: 22px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        .btn-3d-yellow {
+            background: linear-gradient(180deg, #fff066 0%, #eab308 50%, #a16207 100%);
+            box-shadow: 0 5px 0 #713f12, 0 8px 15px rgba(234, 179, 8, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            color: #1a0500;
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-3d-yellow:hover {
+            background: linear-gradient(180deg, #ffff80 0%, #facc15 50%, #ca8a04 100%);
+            box-shadow: 0 6px 0 #713f12, 0 10px 20px rgba(234, 179, 8, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        .btn-3d-yellow:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #713f12, 0 3px 6px rgba(234, 179, 8, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-3d-orange {
+            background: linear-gradient(180deg, #ff944d 0%, #ea580c 50%, #9a3412 100%);
+            box-shadow: 0 5px 0 #7c2d12, 0 8px 15px rgba(234, 88, 12, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-3d-orange:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #7c2d12, 0 3px 6px rgba(234, 88, 12, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        /* Shine Hover Effect */
+        .shine-effect {
             position: relative;
             overflow: hidden;
-            animation: floatCard 6s ease-in-out infinite alternate;
         }
-
-        .card:nth-child(even) { animation-delay: 3s; }
-
-        @keyframes floatCard {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-5px); }
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-            border-color: var(--col-blue);
-        }
-
-        /* Top colored accent line for cards */
-        .card::before {
+        .shine-effect::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--col-red), var(--col-yellow), var(--col-blue), var(--col-green));
+            top: -50%;
+            left: -75%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+        }
+        .shine-effect:hover::after {
+            left: 145%;
         }
 
-        /* Video Section */
-        .video-container {
-            position: relative;
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            background: #000;
-            margin-top: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        /* Highlight Feature Styles */
+        .highlightable-text {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            padding: 2px 4px;
         }
-
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-            outline: none;
+        .highlightable-text:hover {
+            background-color: rgba(254, 240, 138, 0.25);
         }
-
-        /* Headings & Text */
-        h2 {
-            font-size: 1.3rem;
-            color: var(--col-blue);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h3 {
-            font-size: 1.05rem;
-            color: var(--col-purple);
-            margin: 14px 0 5px 0;
-        }
-
-        p, li {
-            color: var(--text-main);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
-        li span {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        li::before {
-            content: '🔹';
-            position: absolute;
-            left: 0;
-            font-size: 0.6rem;
-            top: 4px;
-        }
-
-        /* 10 Unique Color-Coded Study Grid */
-        .study-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 15px;
-            margin-top: 12px;
-        }
-
-        .study-item {
-            background: #fafbfc;
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 12px;
-            transition: 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .study-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
-
-        /* Assigning 10 Different Colors to 10 Grid Items */
-        .study-item:nth-child(1) { border-left: 5px solid var(--col-red); }
-        .study-item:nth-child(2) { border-left: 5px solid var(--col-yellow); }
-        .study-item:nth-child(3) { border-left: 5px solid var(--col-blue); }
-        .study-item:nth-child(4) { border-left: 5px solid var(--col-green); }
-        .study-item:nth-child(5) { border-left: 5px solid var(--col-orange); }
-        .study-item:nth-child(6) { border-left: 5px solid var(--col-purple); }
-        .study-item:nth-child(7) { border-left: 5px solid var(--col-pink); }
-        .study-item:nth-child(8) { border-left: 5px solid var(--col-teal); }
-        .study-item:nth-child(9) { border-left: 5px solid var(--col-indigo); }
-        .study-item:nth-child(10) { border-left: 5px solid var(--col-cyan); }
-
-        .study-item:nth-child(1) h4 { color: var(--col-red); }
-        .study-item:nth-child(2) h4 { color: var(--col-yellow); }
-        .study-item:nth-child(3) h4 { color: var(--col-blue); }
-        .study-item:nth-child(4) h4 { color: var(--col-green); }
-        .study-item:nth-child(5) h4 { color: var(--col-orange); }
-        .study-item:nth-child(6) h4 { color: var(--col-purple); }
-        .study-item:nth-child(7) h4 { color: var(--col-pink); }
-        .study-item:nth-child(8) h4 { color: var(--col-teal); }
-        .study-item:nth-child(9) h4 { color: var(--col-indigo); }
-        .study-item:nth-child(10) h4 { color: var(--col-cyan); }
-
-        .study-item h4 {
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-        }
-
-        .study-item p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Bottom Image Section */
-        .college-section {
-            text-align: center;
-        }
-
-        .college-img-box {
-            margin-top: 15px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .college-img-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .college-img-box img:hover {
-            transform: scale(1.02);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 35px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Mobile Friendly */
-        @media (max-width: 768px) {
-            header h1 { font-size: 1.8rem; }
-            .card { padding: 20px; }
+        .is-highlighted {
+            background-color: #FEF08A !important; /* Bright Yellow Highlight */
+            color: #0F172A !important;
+            box-shadow: 0 2px 10px rgba(250, 204, 21, 0.8);
+            font-weight: 800 !important;
+            border-left: 4px solid #DC2626;
         }
     </style>
 </head>
-<body>
+<body class="font-sans min-h-screen flex flex-col antialiased selection:bg-yellow-400 selection:text-red-950">
 
-    <div class="animated-bg"></div>
+    <!-- Header Navigation -->
+    <header class="glass-bar-3d sticky top-0 z-40 border-b border-amber-500/30">
+        <div class="max-w-4xl mx-auto p-3 sm:p-4 flex items-center justify-between gap-2">
+            
+            <!-- Left: Back Button & Title -->
+            <div class="flex items-center gap-2 min-w-0">
+                <button id="backBtn" class="hidden btn-3d-red shine-effect text-white p-2.5 rounded-2xl text-xs transition flex-shrink-0 border border-red-400/40">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="min-w-0">
+                    <h1 class="text-base sm:text-lg font-black tracking-wide truncate gradient-text-hot flex items-center gap-2">
+                        <!-- Burning Icon -->
+                        <i class="fa-solid fa-fire-flame-curved text-yellow-400 animate-burn"></i>
+                        <span id="headerTitle">Sections</span>
+                    </h1>
+                    <div id="breadcrumb" class="text-[11px] text-amber-200/80 truncate hidden font-semibold">Home</div>
+                </div>
+            </div>
 
-    <div class="container">
+            <!-- Right: Admin Mode Switch & Admin Panel Button -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <label class="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-2xl cursor-pointer border border-amber-500/30 shadow-inner">
+                    <input type="checkbox" id="adminToggle" class="sr-only peer">
+                    <span class="text-[11px] font-black text-amber-200 peer-checked:text-yellow-400">Admin</span>
+                    <div class="w-7 h-4 bg-red-950 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-yellow-400 after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-red-600 relative border border-amber-500/30"></div>
+                </label>
+
+                <!-- Admin Action Button -->
+                <button id="openModalBtn" class="hidden btn-3d-yellow shine-effect px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl font-black text-xs sm:text-sm flex items-center gap-1.5 transition border border-yellow-300">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Admin Panel</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Feed -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-5">
         
-        <!-- Header -->
-        <header>
-            <h1>Human Nervous System</h1>
-            <p>Department of Anatomy | Academic Portal</p>
-        </header>
+        <!-- Loader -->
+        <div id="loader" class="text-center py-20">
+            <i class="fa-solid fa-fire-flame-curved text-6xl text-yellow-400 mb-3 animate-burn"></i>
+            <p class="text-amber-200 font-bold text-sm tracking-wide">Loading Content...</p>
+        </div>
 
-        <!-- 1. Video Section (On Top) -->
-        <div class="card">
-            <h2>🎥 Live Neural Data Stream</h2>
-            <p>Real-time visual telemetry and neural transmission mapping.</p>
-            <div class="video-container">
-                <video controls autoplay muted loop>
-                    <source src="https://res.cloudinary.com/qlaryvek/video/upload/v1785990714/VID-20260806-WA0002_akq5p9.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+        <!-- VIEW 1: SECTIONS PAGE -->
+        <section id="viewSections" class="hidden">
+            <h2 class="text-lg font-black text-yellow-300 mb-4 flex items-center gap-2 drop-shadow-md">
+                <i class="fa-solid fa-fire-flame-curved text-red-500 animate-burn"></i> All Sections
+            </h2>
+            <div id="sectionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- VIEW 2: CHAPTERS PAGE -->
+        <section id="viewChapters" class="hidden">
+            <div class="mb-4 glass-bar-3d p-4 rounded-3xl border border-yellow-500/40">
+                <span class="text-[10px] font-black text-yellow-400 uppercase tracking-widest">Section:</span>
+                <h2 id="currentSectionName" class="text-base sm:text-lg font-black text-white truncate drop-shadow"></h2>
             </div>
-        </div>
+            <div id="chaptersGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </section>
 
-        <!-- 2. Introduction -->
-        <div class="card">
-            <h2>🧠 System Overview</h2>
-            <p>The primary control mainframe governing biological communications and response automation.</p>
-            <ul>
-                <li><span>Input:</span> High-speed acquisition of sensory environmental stimuli.</li>
-                <li><span>Processing:</span> Centralized data evaluation via neural networks.</li>
-                <li><span>Output:</span> Immediate electrical signaling to target organs.</li>
-            </ul>
-        </div>
-
-        <!-- 3. Main Architecture -->
-        <div class="card">
-            <h2>⚡ Core Architecture</h2>
+        <!-- VIEW 3: FULL CONTENT READ-ONLY PAGE (SINGLE TOPIC WITH SWIPE) -->
+        <section id="viewContents" class="hidden space-y-4">
             
-            <h3>Central Nervous System (CNS)</h3>
-            <ul>
-                <li><span>Components:</span> Brain and Spinal Cord.</li>
-                <li><span>Function:</span> Memory processing, cognition, and total body command.</li>
-            </ul>
+            <!-- TOP NAVIGATION & READER ACTION BAR (3D Shiny Glassmorphic Bar at TOP) -->
+            <div class="glass-bar-3d p-3.5 rounded-3xl border border-yellow-500/40 shadow-2xl space-y-3">
+                <!-- Previous & Next Navigation Controls at TOP -->
+                <div class="flex justify-between items-center gap-2">
+                    <button id="prevTopicBtn" class="btn-3d-red shine-effect text-white px-4 py-2.5 rounded-2xl font-black text-xs transition disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 border border-red-400/40">
+                        <i class="fa-solid fa-arrow-left"></i> Previous Topic
+                    </button>
 
-            <h3>Peripheral Nervous System (PNS)</h3>
-            <ul>
-                <li><span>Components:</span> Extended network of nerves outside the CNS.</li>
-                <li><span>Function:</span> Bridges central processing units with muscles and receptors.</li>
-            </ul>
-        </div>
+                    <span class="bg-black/50 text-yellow-300 border border-yellow-500/40 px-3 py-1.5 rounded-xl text-[11px] font-black tracking-wider shadow-inner text-center" id="topicCounterText">Topic 1 of 1</span>
 
-        <!-- 4. 10 Color-Coded Nervous System Study Modules -->
-        <div class="card">
-            <h2>🔬 10 Nervous System Specializations</h2>
-            <p>Focused morphological and functional aspects of the human neural network:</p>
-            
-            <div class="study-grid">
-                <div class="study-item">
-                    <h4>1. Central Brain Mapping</h4>
-                    <p>Analysis of cerebral hemispheres, cortex layers, and higher cognitive control centers.</p>
+                    <button id="nextTopicBtn" class="btn-3d-yellow shine-effect px-4 py-2.5 rounded-2xl font-black text-xs transition disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 border border-yellow-300/60">
+                        Next Topic <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
-                <div class="study-item">
-                    <h4>2. Spinal Cord Pathways</h4>
-                    <p>Examining ascending sensory tracts and descending motor pathways within the vertebrae.</p>
-                </div>
-                <div class="study-item">
-                    <h4>3. Cranial Nerve Tracing</h4>
-                    <p>Study of the 12 pairs of nerves emerging directly from the brain for head and neck control.</p>
-                </div>
-                <div class="study-item">
-                    <h4>4. Spinal Nerve Networks</h4>
-                    <p>Investigating the 31 pairs of mixed nerves branching out to coordinate torso and limbs.</p>
-                </div>
-                <div class="study-item">
-                    <h4>5. Autonomic Regulation</h4>
-                    <p>Understanding sympathetic and parasympathetic control over involuntary visceral functions.</p>
-                </div>
-                <div class="study-item">
-                    <h4>6. Microscopic Neurohistology</h4>
-                    <p>Cellular examination of neurons, synapses, glial cells, and myelin sheath structures.</p>
-                </div>
-                <div class="study-item">
-                    <h4>7. Reflex Arc Mechanics</h4>
-                    <p>Tracing fast, involuntary neural circuits bypassing the brain for instant threat defense.</p>
-                </div>
-                <div class="study-item">
-                    <h4>8. Sensory Receptor Dynamics</h4>
-                    <p>Exploring photoreceptors, mechanoreceptors, and thermoreceptors translating stimuli.</p>
-                </div>
-                <div class="study-item">
-                    <h4>9. Neurotransmitter Signalling</h4>
-                    <p>Chemical transmission mechanisms across synaptic clefts like dopamine and acetylcholine.</p>
-                </div>
-                <div class="study-item">
-                    <h4>10. Clinical Neuromorphology</h4>
-                    <p>Correlating structural nerve lesions and deficits with clinical diagnostic presentations.</p>
+
+                <!-- Highlight Mode, Mind Map & Speaker Action Controls -->
+                <div class="flex flex-wrap justify-between items-center gap-2 pt-2 border-t border-amber-500/20">
+                    <div class="text-xs font-bold text-amber-200 flex items-center gap-2">
+                        <span class="text-amber-400 hidden sm:inline text-[11px]"><i class="fa-solid fa-hand-pointer mr-1"></i>Swipe left/right to navigate</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <!-- Speaker Button (Text-to-Speech Male / Female Voice) -->
+                        <button id="ttsBtn" class="btn-3d-orange shine-effect text-white px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-orange-400/40">
+                            <i class="fa-solid fa-volume-high text-yellow-300"></i>
+                            <span>Listen</span>
+                        </button>
+
+                        <!-- Mind Map Button -->
+                        <button id="mindmapBtn" class="btn-3d-yellow shine-effect px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-yellow-300/80">
+                            <i class="fa-solid fa-sitemap text-red-700"></i>
+                            <span>Mind Map</span>
+                        </button>
+
+                        <!-- Highlight Mode Toggle Button -->
+                        <button id="highlightModeBtn" class="btn-3d-orange shine-effect text-white px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-orange-400/40">
+                            <i class="fa-solid fa-highlighter text-yellow-300"></i>
+                            <span id="highlightBtnText">Highlight Mode: OFF</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 5. Department of Anatomy & Image at Bottom -->
-        <div class="card college-section">
-            <h2>🏥 Department of Anatomy Specimen</h2>
-            <p>Homeopathic Medical College — Detailed structural study of neural morphology and clinical blueprints.</p>
-            
-            <div class="college-img-box">
-                <a href="https://ibb.co/M5k8Y3sG" target="_blank">
-                    <img src="https://i.ibb.co/6J0v3fm1/file-0000000006108208a49568899bab2df7.png" alt="Anatomy Department Specimen" border="0">
-                </a>
+            <!-- Chapter Banner -->
+            <div class="glass-bar-3d p-4 sm:p-5 rounded-3xl shadow-xl border border-red-500/40">
+                <div class="text-[10px] font-black text-yellow-400 uppercase tracking-widest mb-1" id="contentSectionBadge"></div>
+                <h2 id="currentChapterName" class="text-lg sm:text-2xl font-black text-white leading-snug drop-shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-fire-flame-curved text-yellow-400 animate-burn"></i>
+                    <span id="currentChapterText"></span>
+                </h2>
             </div>
-            <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">Interactive Anatomical Specimen & Blueprint Mapping</p>
+
+            <!-- Swipe Container (One Topic Displayed Here) -->
+            <div id="swipeContentContainer" class="touch-pan-y min-h-[300px]">
+                <div id="contentsList"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MIND MAP GALLERY MODAL -->
+    <div id="mindmapModal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center hidden p-3 sm:p-4 overflow-y-auto backdrop-blur-md">
+        <div class="bg-stone-900 border-2 border-yellow-500/40 rounded-3xl w-full max-w-4xl p-5 sm:p-6 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto text-amber-100 space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-amber-500/30">
+                <h2 class="text-lg font-black text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-red-500"></i> Mind Maps (<span id="mindmapCount">0</span> Images)
+                </h2>
+                <button id="closeMindmapBtn" class="text-amber-400 hover:text-red-500 text-2xl font-black transition">&times;</button>
+            </div>
+            <div id="mindmapGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
         </div>
-
-        <footer>
-            <p>&copy; 2026 Department of Anatomy | Homeopathic Medical College Portal</p>
-        </footer>
-
     </div>
 
+    <!-- TEXT-TO-SPEECH (SPEAKER) VOICE SELECTOR MODAL -->
+    <div id="ttsVoiceModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden p-4 backdrop-blur-md">
+        <div class="bg-stone-900 border-2 border-yellow-500/40 rounded-3xl w-full max-w-md p-6 shadow-2xl relative text-amber-100 space-y-5">
+            <div class="flex justify-between items-center border-b border-amber-500/30 pb-3">
+                <h3 class="text-base font-black text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-volume-high text-red-500"></i> Select Voice Reader
+                </h3>
+                <button id="closeTtsModalBtn" class="text-amber-400 hover:text-red-500 text-2xl font-black">&times;</button>
+            </div>
+            
+            <p class="text-xs text-amber-200/80 font-bold">Choose speech voice for reading out the current content:</p>
+
+            <div class="grid grid-cols-2 gap-3">
+                <button id="playMaleVoiceBtn" class="btn-3d-red shine-effect text-white p-4 rounded-2xl font-black text-xs flex flex-col items-center gap-2 border border-red-400/40">
+                    <i class="fa-solid fa-user-large text-2xl text-yellow-300"></i>
+                    <span>👨 Male Voice</span>
+                </button>
+                <button id="playFemaleVoiceBtn" class="btn-3d-yellow shine-effect p-4 rounded-2xl font-black text-xs flex flex-col items-center gap-2 border border-yellow-300">
+                    <i class="fa-solid fa-user-nurse text-2xl text-red-700"></i>
+                    <span>👩 Female Voice</span>
+                </button>
+            </div>
+
+            <button id="stopTtsBtn" class="w-full btn-3d-orange shine-effect text-white py-2.5 rounded-xl font-black text-xs hidden flex items-center justify-center gap-2">
+                <i class="fa-solid fa-circle-stop"></i> Stop Speech Reading
+            </button>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX IMAGE VIEWER MODAL -->
+    <div id="imageLightbox" class="fixed inset-0 bg-black/95 z-50 hidden flex flex-col items-center justify-center p-4 backdrop-blur-xl select-none">
+        <div class="absolute top-4 right-4 flex items-center gap-2 sm:gap-3 z-50 glass-bar-3d p-2 rounded-2xl border border-yellow-500/40 shadow-2xl">
+            <button id="zoomInBtn" class="w-9 h-9 rounded-xl btn-3d-orange text-white flex items-center justify-center text-sm transition" title="Zoom In"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+            <button id="zoomOutBtn" class="w-9 h-9 rounded-xl btn-3d-orange text-white flex items-center justify-center text-sm transition" title="Zoom Out"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+            <button id="rotateBtn" class="w-9 h-9 rounded-xl btn-3d-orange text-white flex items-center justify-center text-sm transition" title="Rotate 90°"><i class="fa-solid fa-rotate-right"></i></button>
+            <button id="resetImgBtn" class="w-9 h-9 rounded-xl btn-3d-orange text-white flex items-center justify-center text-sm transition" title="Reset Scale/Rotate"><i class="fa-solid fa-arrows-rotate"></i></button>
+            <button id="closeLightboxBtn" class="w-9 h-9 rounded-xl btn-3d-red text-white flex items-center justify-center text-base transition shadow-md" title="Close Viewer"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="w-full h-full flex items-center justify-center overflow-hidden p-4">
+            <img id="lightboxImg" src="" alt="Full View" class="max-h-[85vh] max-w-[90vw] object-contain transition-transform duration-200 ease-out rounded-xl shadow-2xl">
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div id="contentModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden p-3 sm:p-4 overflow-y-auto backdrop-blur-md">
+        <div class="bg-stone-900 border-2 border-yellow-500/40 rounded-3xl w-full max-w-2xl p-5 sm:p-7 shadow-2xl relative my-6 max-h-[92vh] overflow-y-auto text-amber-100">
+            
+            <div class="flex justify-between items-center pb-3 border-b border-amber-500/30 mb-4">
+                <h2 class="text-lg font-black text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-gears text-red-500"></i> Admin Management Panel
+                </h2>
+                <button id="closeModalBtn" class="text-amber-400 hover:text-red-500 text-2xl font-black transition">&times;</button>
+            </div>
+
+            <!-- Panel Tabs -->
+            <div class="flex border-b border-amber-500/30 mb-5 text-xs font-black">
+                <button id="tabAddBtn" class="flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400">
+                    <i class="fa-solid fa-plus-circle mr-1"></i> Add / Edit Form
+                </button>
+                <button id="tabManageBtn" class="flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300">
+                    <i class="fa-solid fa-list-check mr-1"></i> Manage / Delete Existing
+                </button>
+            </div>
+
+            <!-- TAB 1: ADD / EDIT FORM -->
+            <div id="panelAdd">
+                <form id="contentForm" class="space-y-4">
+                    <input type="hidden" id="editDocId" value="">
+
+                    <!-- Section Input -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">Section *</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="sectionSelect" class="w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                                <option value="">-- Choose Section --</option>
+                                <option value="custom">+ New Custom Section</option>
+                            </select>
+                            <input type="text" id="customSectionInput" placeholder="Section Name" class="hidden w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Chapter Input -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">Chapter *</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="chapterSelect" class="w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                                <option value="">-- Choose Chapter --</option>
+                                <option value="custom">+ New Custom Chapter</option>
+                            </select>
+                            <input type="text" id="customChapterInput" placeholder="Chapter Name" class="hidden w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Heading & Color -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">Heading *</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="headingInput" required placeholder="Main Heading" class="flex-1 bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                            <div class="flex items-center gap-1 border border-amber-500/30 rounded-xl px-2 bg-stone-800">
+                                <span class="text-[10px] font-black text-yellow-400">Color:</span>
+                                <input type="color" id="headingColorInput" value="#FACC15" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Description -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">Main Description (Separated by '.') *</label>
+                        <textarea id="descriptionInput" required rows="3" placeholder="Enter main description text..." class="w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-semibold leading-relaxed"></textarea>
+                    </div>
+
+                    <!-- Main Description Pointer Colors -->
+                    <div class="bg-stone-800/60 p-3 rounded-2xl border border-amber-500/30">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-black text-yellow-300 uppercase">Main Description Colors</span>
+                            <button type="button" id="addDescColorBtn" class="btn-3d-yellow px-2.5 py-1 rounded-lg text-[11px] font-black">+ Add Color</button>
+                        </div>
+                        <div id="descColorsContainer" class="flex flex-wrap gap-2"></div>
+                    </div>
+
+                    <!-- Dynamic Subheadings & Multi-Level Pointers Block -->
+                    <div class="space-y-3 pt-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-black text-yellow-300 uppercase">Subheadings & Nested Pointers</span>
+                            <button type="button" id="addSubblockBtn" class="btn-3d-orange text-white px-3 py-1 rounded-xl text-xs font-black">+ Add Subheading Block</button>
+                        </div>
+                        <div id="subblocksContainer" class="space-y-3"></div>
+                    </div>
+
+                    <!-- Multiple Topic Image Upload -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">
+                            Topic Images <span class="text-amber-200/60">(Multiple files allowed: #1 Top, #2 Bottom, #3+ Middle)</span>
+                        </label>
+                        <input type="file" id="imageInput" multiple accept="image/*" class="w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-bold">
+                        <span id="imgUploadingText" class="text-[11px] text-yellow-400 font-black hidden">Uploading Topic Images to ImgBB...</span>
+                    </div>
+
+                    <!-- Mind Map Images Upload (100+ Files Support) -->
+                    <div class="bg-stone-800/80 p-3 rounded-2xl border border-amber-500/40">
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">
+                            <i class="fa-solid fa-sitemap mr-1"></i> Mind Map Images <span class="text-amber-200/70">(Upload 100+ files allowed)</span>
+                        </label>
+                        <input type="file" id="mindmapInput" multiple accept="image/*" class="w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-bold">
+                        <span id="mindmapUploadingText" class="text-[11px] text-yellow-400 font-black hidden">Uploading Mind Maps to ImgBB...</span>
+                    </div>
+
+                    <!-- YouTube Link -->
+                    <div>
+                        <label class="block text-xs font-black text-yellow-300 uppercase mb-1">YouTube Link <span class="text-amber-200/60">(Optional)</span></label>
+                        <input type="url" id="youtubeInput" placeholder="https://youtube.com/watch?v=..." class="w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full btn-3d-yellow shine-effect font-black py-3 rounded-xl shadow-xl transition text-sm">
+                        Save Content
+                    </button>
+                </form>
+            </div>
+
+            <!-- TAB 2: MANAGE & DELETE -->
+            <div id="panelManage" class="hidden space-y-4">
+                <p class="text-xs text-amber-200/70">Select any Section, Chapter, or Topic below to Edit or Delete:</p>
+                <div id="manageList" class="space-y-3"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Firebase Script Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC84FBpn-O2VkHPJCw9O3oKDnNZ-2K1iG4",
+            authDomain: "mrel-8a378.firebaseapp.com",
+            projectId: "mrel-8a378",
+            storageBucket: "mrel-8a378.firebasestorage.app",
+            messagingSenderId: "1062382184856",
+            appId: "1:1062382184856:web:43f6cdb4e1b67a8d0a63ed",
+            measurementId: "G-1C3D7RFMHE"
+        };
+
+        const IMGBB_API_KEY = "2fa045f121169adcec34f55432b505ae";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const contentRef = collection(db, "contents");
+
+        let state = {
+            view: 'sections',
+            selectedSection: null,
+            selectedChapter: null,
+            isAdmin: false,
+            highlightMode: false,
+            allData: [],
+            currentTopicIndex: 0
+        };
+
+        const HOT_COLOR_PALETTE = [
+            "#EF4444", "#FACC15", "#F97316", "#DC2626", "#EAB308", 
+            "#FF6B6B", "#FF4500", "#FF0055", "#FFD700", "#CCFF00", 
+            "#FF00FF", "#E056FD", "#FF8C00", "#FFE600", "#F43F5E", 
+            "#EC4899", "#10B981", "#00D2FF", "#8B5CF6"
+        ];
+
+        let descColors = ["#EF4444", "#FACC15", "#F97316", "#DC2626", "#FF0055"];
+        let subblocksData = [];
+
+        let lightboxScale = 1;
+        let lightboxRotation = 0;
+
+        // Speech Synthesis Voices Global State
+        let availableVoices = [];
+        let synth = window.speechSynthesis;
+
+        function loadVoices() {
+            if ('speechSynthesis' in window) {
+                availableVoices = synth.getVoices();
+            }
+        }
+        loadVoices();
+        if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        // DOM References
+        const loader = document.getElementById("loader");
+        const adminToggle = document.getElementById("adminToggle");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const modal = document.getElementById("contentModal");
+        const form = document.getElementById("contentForm");
+        const backBtn = document.getElementById("backBtn");
+        const headerTitle = document.getElementById("headerTitle");
+        const breadcrumb = document.getElementById("breadcrumb");
+
+        const viewSections = document.getElementById("viewSections");
+        const viewChapters = document.getElementById("viewChapters");
+        const viewContents = document.getElementById("viewContents");
+
+        const sectionsGrid = document.getElementById("sectionsGrid");
+        const chaptersGrid = document.getElementById("chaptersGrid");
+        const contentsList = document.getElementById("contentsList");
+
+        const tabAddBtn = document.getElementById("tabAddBtn");
+        const tabManageBtn = document.getElementById("tabManageBtn");
+        const panelAdd = document.getElementById("panelAdd");
+        const panelManage = document.getElementById("panelManage");
+
+        const highlightModeBtn = document.getElementById("highlightModeBtn");
+        const highlightBtnText = document.getElementById("highlightBtnText");
+
+        const prevTopicBtn = document.getElementById("prevTopicBtn");
+        const nextTopicBtn = document.getElementById("nextTopicBtn");
+        const topicCounterText = document.getElementById("topicCounterText");
+        const swipeContentContainer = document.getElementById("swipeContentContainer");
+
+        // Mind Map DOM
+        const mindmapBtn = document.getElementById("mindmapBtn");
+        const mindmapModal = document.getElementById("mindmapModal");
+        const closeMindmapBtn = document.getElementById("closeMindmapBtn");
+        const mindmapGalleryGrid = document.getElementById("mindmapGalleryGrid");
+        const mindmapCount = document.getElementById("mindmapCount");
+
+        // TTS DOM
+        const ttsBtn = document.getElementById("ttsBtn");
+        const ttsVoiceModal = document.getElementById("ttsVoiceModal");
+        const closeTtsModalBtn = document.getElementById("closeTtsModalBtn");
+        const playMaleVoiceBtn = document.getElementById("playMaleVoiceBtn");
+        const playFemaleVoiceBtn = document.getElementById("playFemaleVoiceBtn");
+        const stopTtsBtn = document.getElementById("stopTtsBtn");
+
+        // Lightbox DOM
+        const imageLightbox = document.getElementById("imageLightbox");
+        const lightboxImg = document.getElementById("lightboxImg");
+        const zoomInBtn = document.getElementById("zoomInBtn");
+        const zoomOutBtn = document.getElementById("zoomOutBtn");
+        const rotateBtn = document.getElementById("rotateBtn");
+        const resetImgBtn = document.getElementById("resetImgBtn");
+        const closeLightboxBtn = document.getElementById("closeLightboxBtn");
+
+        // Lightbox Functions
+        window.openLightbox = function(url) {
+            lightboxImg.src = url;
+            lightboxScale = 1;
+            lightboxRotation = 0;
+            updateLightboxTransform();
+            imageLightbox.classList.remove("hidden");
+        };
+
+        function updateLightboxTransform() {
+            lightboxImg.style.transform = `scale(${lightboxScale}) rotate(${lightboxRotation}deg)`;
+        }
+
+        zoomInBtn.addEventListener("click", () => { lightboxScale += 0.25; updateLightboxTransform(); });
+        zoomOutBtn.addEventListener("click", () => { lightboxScale = Math.max(0.5, lightboxScale - 0.25); updateLightboxTransform(); });
+        rotateBtn.addEventListener("click", () => { lightboxRotation = (lightboxRotation + 90) % 360; updateLightboxTransform(); });
+        resetImgBtn.addEventListener("click", () => { lightboxScale = 1; lightboxRotation = 0; updateLightboxTransform(); });
+        closeLightboxBtn.addEventListener("click", () => imageLightbox.classList.add("hidden"));
+
+        // Swipe Gesture Handlers
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        swipeContentContainer.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        swipeContentContainer.addEventListener("touchend", (e) => { touchEndX = e.changedTouches[0].screenX; handleSwipeGesture(); }, { passive: true });
+
+        function handleSwipeGesture() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) navigateTopic(1);
+            else if (touchEndX > touchStartX + threshold) navigateTopic(-1);
+        }
+
+        function navigateTopic(direction) {
+            const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
+            const newIndex = state.currentTopicIndex + direction;
+            if (newIndex >= 0 && newIndex < currentChapterItems.length) {
+                state.currentTopicIndex = newIndex;
+                if (synth) synth.cancel(); // Stop reading on slide change
+                renderContents();
+            }
+        }
+
+        prevTopicBtn.addEventListener("click", () => navigateTopic(-1));
+        nextTopicBtn.addEventListener("click", () => navigateTopic(1));
+
+        // Highlight Mode Toggle
+        highlightModeBtn.addEventListener("click", () => {
+            state.highlightMode = !state.highlightMode;
+            if(state.highlightMode) {
+                highlightModeBtn.className = "btn-3d-yellow shine-effect px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-yellow-300";
+                highlightBtnText.innerText = "Highlight Mode: ON (Click Text)";
+            } else {
+                highlightModeBtn.className = "btn-3d-orange shine-effect text-white px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-orange-400/40";
+                highlightBtnText.innerText = "Highlight Mode: OFF";
+            }
+        });
+
+        // Toggle Highlight on text click (Tap 1 = Highlight ON, Tap 2 = Highlight OFF)
+        document.addEventListener("click", (e) => {
+            if (state.highlightMode) {
+                const target = e.target.closest('.highlightable-text');
+                if (target) {
+                    target.classList.toggle("is-highlighted");
+                }
+            }
+        });
+
+        // Mind Map Modal Handling
+        mindmapBtn.addEventListener("click", () => {
+            const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
+            if (currentChapterItems.length === 0) return;
+
+            const data = currentChapterItems[state.currentTopicIndex];
+            const mmUrls = data.mindmapUrls || [];
+
+            mindmapGalleryGrid.innerHTML = "";
+            mindmapCount.innerText = mmUrls.length;
+
+            if (mmUrls.length === 0) {
+                mindmapGalleryGrid.innerHTML = `<div class="col-span-full text-center py-8 text-amber-200/60 font-bold">No Mind Maps uploaded for this topic.</div>`;
+            } else {
+                mmUrls.forEach((url, idx) => {
+                    const imgDiv = document.createElement("div");
+                    imgDiv.className = "rounded-2xl overflow-hidden border-2 border-yellow-500/30 bg-black/60 cursor-pointer group relative shadow-xl hover:scale-105 transition-transform";
+                    imgDiv.onclick = () => openLightbox(url);
+                    imgDiv.innerHTML = `
+                        <img src="${url}" alt="Mind Map #${idx+1}" class="w-full h-48 object-cover">
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-yellow-300 text-[10px] px-2 py-0.5 rounded-lg border border-yellow-500/30 font-bold">
+                            #${idx+1} View
+                        </div>
+                    `;
+                    mindmapGalleryGrid.appendChild(imgDiv);
+                });
+            }
+
+            mindmapModal.classList.remove("hidden");
+        });
+
+        closeMindmapBtn.addEventListener("click", () => mindmapModal.classList.add("hidden"));
+
+        // Text-To-Speech (Speaker) Modal & Reading Logic
+        ttsBtn.addEventListener("click", () => ttsVoiceModal.classList.remove("hidden"));
+        closeTtsModalBtn.addEventListener("click", () => ttsVoiceModal.classList.add("hidden"));
+
+        function speakContent(gender) {
+            if (!('speechSynthesis' in window)) {
+                alert("Text-to-speech is not supported in your browser.");
+                return;
+            }
+
+            synth.cancel(); // Stop any active speech
+
+            const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
+            if (currentChapterItems.length === 0) return;
+
+            const data = currentChapterItems[state.currentTopicIndex];
+
+            let textToRead = `${data.heading}. ${data.description}. `;
+            if (data.subblocks) {
+                data.subblocks.forEach(sb => {
+                    if (sb.title) textToRead += `${sb.title}. `;
+                    if (sb.pointers) {
+                        sb.pointers.forEach(ptr => {
+                            if (ptr.text) textToRead += `${ptr.text}. `;
+                            if (ptr.pointerDesc) textToRead += `${ptr.pointerDesc}. `;
+                        });
+                    }
+                });
+            }
+
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.rate = 0.95; // Clear speed
+
+            // Voice selection logic for Male / Female
+            if (availableVoices.length === 0) availableVoices = synth.getVoices();
+
+            let selectedVoice = null;
+            if (gender === 'female') {
+                utterance.pitch = 1.25; // Higher pitch for Female
+                selectedVoice = availableVoices.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('google hindi') || v.name.toLowerCase().includes('samantha'));
+            } else {
+                utterance.pitch = 0.85; // Lower pitch for Male
+                selectedVoice = availableVoices.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('mark') || v.name.toLowerCase().includes('george'));
+            }
+
+            if (selectedVoice) utterance.voice = selectedVoice;
+
+            stopTtsBtn.classList.remove("hidden");
+            
+            utterance.onend = () => stopTtsBtn.classList.add("hidden");
+            utterance.onerror = () => stopTtsBtn.classList.add("hidden");
+
+            synth.speak(utterance);
+            ttsVoiceModal.classList.add("hidden");
+        }
+
+        playMaleVoiceBtn.addEventListener("click", () => speakContent('male'));
+        playFemaleVoiceBtn.addEventListener("click", () => speakContent('female'));
+        stopTtsBtn.addEventListener("click", () => {
+            if (synth) synth.cancel();
+            stopTtsBtn.classList.add("hidden");
+        });
+
+        // Admin Toggle
+        adminToggle.addEventListener("change", (e) => {
+            state.isAdmin = e.target.checked;
+            openModalBtn.classList.toggle("hidden", !state.isAdmin);
+        });
+
+        // Tab Switching
+        tabAddBtn.addEventListener("click", () => {
+            tabAddBtn.className = "flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400 font-black";
+            tabManageBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            panelAdd.classList.remove("hidden");
+            panelManage.classList.add("hidden");
+        });
+
+        tabManageBtn.addEventListener("click", () => {
+            tabManageBtn.className = "flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400 font-black";
+            tabAddBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            panelManage.classList.remove("hidden");
+            panelAdd.classList.add("hidden");
+            renderManageList();
+        });
+
+        // Description Pointer Colors
+        function renderDescColors() {
+            const container = document.getElementById("descColorsContainer");
+            container.innerHTML = "";
+            descColors.forEach((hex, idx) => {
+                const div = document.createElement("div");
+                div.className = "flex items-center gap-1 bg-stone-800 px-2 py-1 rounded-lg border border-amber-500/30 shadow-sm";
+                div.innerHTML = `
+                    <span class="text-[10px] font-bold text-yellow-400">#${idx+1}:</span>
+                    <input type="color" value="${hex}" data-idx="${idx}" class="color-picker-input w-6 h-6 rounded cursor-pointer border-0 bg-transparent">
+                    ${descColors.length > 1 ? `<button type="button" class="del-color text-amber-400 hover:text-red-500 font-black text-xs" data-idx="${idx}">&times;</button>` : ''}
+                `;
+                container.appendChild(div);
+            });
+
+            container.querySelectorAll(".color-picker-input").forEach(inp => {
+                inp.addEventListener("change", (e) => { descColors[e.target.dataset.idx] = e.target.value; });
+            });
+
+            container.querySelectorAll(".del-color").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    descColors.splice(e.target.dataset.idx, 1);
+                    renderDescColors();
+                });
+            });
+        }
+
+        document.getElementById("addDescColorBtn").addEventListener("click", () => {
+            const randomColor = HOT_COLOR_PALETTE[Math.floor(Math.random() * HOT_COLOR_PALETTE.length)];
+            descColors.push(randomColor);
+            renderDescColors();
+        });
+
+        function getAllUniqueSubheadings() {
+            const subSet = new Set();
+            state.allData.forEach(item => {
+                if (item.subblocks) {
+                    item.subblocks.forEach(sb => { if (sb.title) subSet.add(sb.title); });
+                }
+            });
+            return Array.from(subSet);
+        }
+
+        // Render Subheadings & Pointer Descriptions
+        function renderSubblocks() {
+            const container = document.getElementById("subblocksContainer");
+            container.innerHTML = "";
+            const existingSubheadings = getAllUniqueSubheadings();
+
+            subblocksData.forEach((block, bIdx) => {
+                const bDiv = document.createElement("div");
+                bDiv.className = "bg-stone-800/80 p-3.5 rounded-2xl border border-amber-500/30 space-y-3";
+                
+                const isCustom = block.isCustom || (!existingSubheadings.includes(block.title) && block.title !== "");
+
+                bDiv.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[11px] font-black text-yellow-300 uppercase">Subheading Title</span>
+                            <button type="button" class="del-subblock text-red-400 hover:text-red-500 p-1 rounded-lg text-xs font-bold" data-bidx="${bIdx}"><i class="fa-solid fa-trash"></i> Delete Subblock</button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select data-bidx="${bIdx}" class="subblock-dropdown bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-bold">
+                                <option value="">-- Choose Existing Subheading --</option>
+                                <option value="custom" ${isCustom ? 'selected' : ''}>+ Custom Subheading</option>
+                                ${existingSubheadings.map(sh => `<option value="${sh}" ${sh === block.title && !isCustom ? 'selected' : ''}>${sh}</option>`).join('')}
+                            </select>
+                            <input type="text" placeholder="Subheading Title" value="${block.title || ''}" data-bidx="${bIdx}" class="subblock-title-input ${isCustom ? '' : 'hidden'} bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-bold">
+                        </div>
+                        <div class="flex items-center gap-1 mt-1">
+                            <span class="text-[10px] text-yellow-400 font-bold">Title Color:</span>
+                            <input type="color" value="${block.titleColor || '#FACC15'}" data-bidx="${bIdx}" class="subblock-color w-6 h-6 rounded cursor-pointer border-0 bg-transparent">
+                        </div>
+                    </div>
+
+                    <div class="pl-2 space-y-3 pt-2 border-t border-amber-500/20">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[11px] font-black text-yellow-300 uppercase">Pointers & Pointer Descriptions</span>
+                            <button type="button" class="add-pointer-btn btn-3d-yellow text-[11px] px-2.5 py-1 rounded-lg font-black" data-bidx="${bIdx}">+ Add Pointer</button>
+                        </div>
+
+                        <div class="pointers-list space-y-3" data-bidx="${bIdx}">
+                            ${(block.pointers || []).map((ptr, pIdx) => `
+                                <div class="bg-stone-900/90 p-3 rounded-xl border border-amber-500/20 space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <input type="text" placeholder="Pointer Title / Name..." value="${ptr.text || ''}" data-bidx="${bIdx}" data-pidx="${pIdx}" class="pointer-text-input flex-1 bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-bold">
+                                        <input type="color" value="${ptr.color || '#EF4444'}" data-bidx="${bIdx}" data-pidx="${pIdx}" class="pointer-color-input w-6 h-6 rounded cursor-pointer border-0 bg-transparent" title="Pointer Title Color">
+                                        <button type="button" class="del-pointer text-amber-400 hover:text-red-500 font-black text-xs" data-bidx="${bIdx}" data-pidx="${pIdx}">&times;</button>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[10px] font-black text-yellow-400 uppercase">Pointer Description <span class="text-amber-200/60">(Use '.' for sentences)</span></label>
+                                        <textarea rows="2" placeholder="Enter description for this pointer..." data-bidx="${bIdx}" data-pidx="${pIdx}" class="pointer-desc-input w-full bg-stone-800 border border-amber-500/30 text-amber-100 rounded-xl p-2 text-xs font-semibold leading-relaxed">${ptr.pointerDesc || ''}</textarea>
+                                    </div>
+
+                                    <div class="bg-stone-800/80 p-2 rounded-xl border border-amber-500/20 space-y-1">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-[10px] font-black text-yellow-400 uppercase">Sentence Colors</span>
+                                            <button type="button" class="add-ptr-desc-color btn-3d-orange text-[10px] text-white px-2 py-0.5 rounded-md font-black" data-bidx="${bIdx}" data-pidx="${pIdx}">+ Add Color</button>
+                                        </div>
+                                        <div class="flex flex-wrap gap-1.5 pt-1">
+                                            ${(ptr.pointerDescColors || ["#F97316", "#FACC15", "#EC4899"]).map((hex, cIdx) => `
+                                                <div class="flex items-center gap-0.5 bg-stone-900 px-1.5 py-0.5 rounded border border-amber-500/30">
+                                                    <input type="color" value="${hex}" data-bidx="${bIdx}" data-pidx="${pIdx}" data-cidx="${cIdx}" class="ptr-desc-color-picker w-5 h-5 rounded cursor-pointer border-0 bg-transparent">
+                                                    ${(ptr.pointerDescColors || []).length > 1 ? `<button type="button" class="del-ptr-desc-color text-amber-400 hover:text-red-500 text-[10px] px-0.5 font-bold" data-bidx="${bIdx}" data-pidx="${pIdx}" data-cidx="${cIdx}">&times;</button>` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(bDiv);
+            });
+
+            // Bind Events
+            container.querySelectorAll(".subblock-dropdown").forEach(sel => {
+                sel.addEventListener("change", e => {
+                    const bidx = e.target.dataset.bidx;
+                    const val = e.target.value;
+                    const inp = e.target.parentElement.querySelector(".subblock-title-input");
+                    if (val === "custom") {
+                        inp.classList.remove("hidden");
+                        subblocksData[bidx].isCustom = true;
+                    } else {
+                        inp.classList.add("hidden");
+                        subblocksData[bidx].isCustom = false;
+                        subblocksData[bidx].title = val;
+                    }
+                });
+            });
+
+            container.querySelectorAll(".subblock-title-input").forEach(inp => {
+                inp.addEventListener("input", e => { subblocksData[e.target.dataset.bidx].title = e.target.value; });
+            });
+
+            container.querySelectorAll(".subblock-color").forEach(inp => {
+                inp.addEventListener("change", e => { subblocksData[e.target.dataset.bidx].titleColor = e.target.value; });
+            });
+
+            container.querySelectorAll(".del-subblock").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    subblocksData.splice(e.target.closest("button").dataset.bidx, 1);
+                    renderSubblocks();
+                });
+            });
+
+            container.querySelectorAll(".add-pointer-btn").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const bidx = e.target.dataset.bidx;
+                    if(!subblocksData[bidx].pointers) subblocksData[bidx].pointers = [];
+                    subblocksData[bidx].pointers.push({ 
+                        text: "", 
+                        color: "#EF4444", 
+                        pointerDesc: "", 
+                        pointerDescColors: ["#F97316", "#FACC15", "#EC4899"] 
+                    });
+                    renderSubblocks();
+                });
+            });
+
+            container.querySelectorAll(".pointer-text-input").forEach(inp => {
+                inp.addEventListener("input", e => { subblocksData[e.target.dataset.bidx].pointers[e.target.dataset.pidx].text = e.target.value; });
+            });
+
+            container.querySelectorAll(".pointer-color-input").forEach(inp => {
+                inp.addEventListener("change", e => { subblocksData[e.target.dataset.bidx].pointers[e.target.dataset.pidx].color = e.target.value; });
+            });
+
+            container.querySelectorAll(".pointer-desc-input").forEach(inp => {
+                inp.addEventListener("input", e => { subblocksData[e.target.dataset.bidx].pointers[e.target.dataset.pidx].pointerDesc = e.target.value; });
+            });
+
+            container.querySelectorAll(".add-ptr-desc-color").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const bidx = e.target.dataset.bidx;
+                    const pidx = e.target.dataset.pidx;
+                    if(!subblocksData[bidx].pointers[pidx].pointerDescColors) {
+                        subblocksData[bidx].pointers[pidx].pointerDescColors = ["#F97316"];
+                    }
+                    const randomColor = HOT_COLOR_PALETTE[Math.floor(Math.random() * HOT_COLOR_PALETTE.length)];
+                    subblocksData[bidx].pointers[pidx].pointerDescColors.push(randomColor);
+                    renderSubblocks();
+                });
+            });
+
+            container.querySelectorAll(".ptr-desc-color-picker").forEach(inp => {
+                inp.addEventListener("change", e => {
+                    const { bidx, pidx, cidx } = e.target.dataset;
+                    subblocksData[bidx].pointers[pidx].pointerDescColors[cidx] = e.target.value;
+                });
+            });
+
+            container.querySelectorAll(".del-ptr-desc-color").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const { bidx, pidx, cidx } = e.target.dataset;
+                    subblocksData[bidx].pointers[pidx].pointerDescColors.splice(cidx, 1);
+                    renderSubblocks();
+                });
+            });
+
+            container.querySelectorAll(".del-pointer").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const bidx = e.target.dataset.bidx;
+                    const pidx = e.target.dataset.pidx;
+                    subblocksData[bidx].pointers.splice(pidx, 1);
+                    renderSubblocks();
+                });
+            });
+        }
+
+        document.getElementById("addSubblockBtn").addEventListener("click", () => {
+            subblocksData.push({ 
+                title: "", 
+                titleColor: "#FACC15", 
+                isCustom: false, 
+                pointers: [{ text: "", color: "#EF4444", pointerDesc: "", pointerDescColors: ["#F97316", "#FACC15", "#EC4899"] }] 
+            });
+            renderSubblocks();
+        });
+
+        // Navigation
+        backBtn.addEventListener("click", () => {
+            if (synth) synth.cancel();
+            if (state.view === 'contents') switchView('chapters', state.selectedSection);
+            else if (state.view === 'chapters') switchView('sections');
+        });
+
+        function switchView(targetView, section = null, chapter = null) {
+            state.view = targetView;
+            if (section) state.selectedSection = section;
+            if (chapter) state.selectedChapter = chapter;
+
+            viewSections.classList.add("hidden");
+            viewChapters.classList.add("hidden");
+            viewContents.classList.add("hidden");
+            backBtn.classList.add("hidden");
+            breadcrumb.classList.add("hidden");
+
+            if (targetView === 'sections') {
+                headerTitle.innerText = "Sections";
+                viewSections.classList.remove("hidden");
+                renderSections();
+            } else if (targetView === 'chapters') {
+                headerTitle.innerText = "Chapters";
+                breadcrumb.innerText = `Sections > ${state.selectedSection}`;
+                breadcrumb.classList.remove("hidden");
+                backBtn.classList.remove("hidden");
+                document.getElementById("currentSectionName").innerText = state.selectedSection;
+                viewChapters.classList.remove("hidden");
+                renderChapters();
+            } else if (targetView === 'contents') {
+                state.currentTopicIndex = 0;
+                headerTitle.innerText = "Topic View";
+                breadcrumb.innerText = `${state.selectedSection} > ${state.selectedChapter}`;
+                breadcrumb.classList.remove("hidden");
+                backBtn.classList.remove("hidden");
+                document.getElementById("contentSectionBadge").innerText = state.selectedSection;
+                document.getElementById("currentChapterText").innerText = state.selectedChapter;
+                viewContents.classList.remove("hidden");
+                renderContents();
+            }
+        }
+
+        function renderSections() {
+            sectionsGrid.innerHTML = "";
+            const sections = [...new Set(state.allData.map(i => i.section))];
+
+            if (sections.length === 0) {
+                sectionsGrid.innerHTML = `<div class="col-span-full text-center py-12 text-amber-200/60 font-bold text-sm">No sections created yet!</div>`;
+                return;
+            }
+
+            sections.forEach(sec => {
+                const count = state.allData.filter(i => i.section === sec).length;
+                const card = document.createElement("div");
+                card.className = "glass-card-3d p-4 sm:p-5 rounded-3xl hover:scale-[1.02] transition-transform duration-300 cursor-pointer flex justify-between items-center group shine-effect border border-yellow-500/30";
+                card.onclick = () => switchView('chapters', sec);
+                card.innerHTML = `
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-12 h-12 rounded-2xl btn-3d-red flex items-center justify-center font-black text-xl flex-shrink-0 text-white shadow-lg border border-red-400/40">
+                            <i class="fa-solid fa-folder"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-black text-white text-sm sm:text-base truncate group-hover:text-yellow-300 transition">${sec}</h3>
+                            <p class="text-[11px] text-amber-200/70 font-semibold">${count} Content Items</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-yellow-400 group-hover:translate-x-1 transition-transform flex-shrink-0 ml-2"></i>
+                `;
+                sectionsGrid.appendChild(card);
+            });
+        }
+
+        function renderChapters() {
+            chaptersGrid.innerHTML = "";
+            const items = state.allData.filter(i => i.section === state.selectedSection);
+            const chapters = [...new Set(items.map(i => i.chapter))];
+
+            if (chapters.length === 0) {
+                chaptersGrid.innerHTML = `<div class="col-span-full text-center py-12 text-amber-200/60 font-bold text-sm">No chapters found.</div>`;
+                return;
+            }
+
+            chapters.forEach(chap => {
+                const count = items.filter(i => i.chapter === chap).length;
+                const card = document.createElement("div");
+                card.className = "glass-card-3d p-4 sm:p-5 rounded-3xl hover:scale-[1.02] transition-transform duration-300 cursor-pointer flex justify-between items-center group shine-effect border border-yellow-500/30";
+                card.onclick = () => switchView('contents', state.selectedSection, chap);
+                card.innerHTML = `
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-12 h-12 rounded-2xl btn-3d-yellow flex items-center justify-center font-black text-xl flex-shrink-0 text-red-950 shadow-lg border border-yellow-300">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-black text-white text-sm sm:text-base truncate group-hover:text-yellow-300 transition">${chap}</h3>
+                            <p class="text-[11px] text-amber-200/70 font-semibold">${count} Topics</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-yellow-400 group-hover:translate-x-1 transition-transform flex-shrink-0 ml-2"></i>
+                `;
+                chaptersGrid.appendChild(card);
+            });
+        }
+
+        // Render Single Topic Page with Swipe & Image Placement Logic
+        function renderContents() {
+            contentsList.innerHTML = "";
+            const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
+
+            if (currentChapterItems.length === 0) {
+                contentsList.innerHTML = `<div class="text-center py-12 text-amber-200/60 font-bold text-sm">No topics available in this chapter.</div>`;
+                prevTopicBtn.disabled = true;
+                nextTopicBtn.disabled = true;
+                topicCounterText.innerText = "Topic 0 of 0";
+                return;
+            }
+
+            if (state.currentTopicIndex >= currentChapterItems.length) state.currentTopicIndex = currentChapterItems.length - 1;
+            if (state.currentTopicIndex < 0) state.currentTopicIndex = 0;
+
+            topicCounterText.innerText = `Topic ${state.currentTopicIndex + 1} of ${currentChapterItems.length}`;
+            prevTopicBtn.disabled = (state.currentTopicIndex === 0);
+            nextTopicBtn.disabled = (state.currentTopicIndex === currentChapterItems.length - 1);
+
+            const data = currentChapterItems[state.currentTopicIndex];
+            const imgs = data.imageUrls || (data.imageUrl ? [data.imageUrl] : []);
+
+            const topImg = imgs.length > 0 ? imgs[0] : null;
+            const bottomImg = imgs.length > 1 ? imgs[1] : null;
+            const middleImgs = imgs.length > 2 ? imgs.slice(2) : [];
+
+            const card = document.createElement("div");
+            card.className = "glass-card-3d rounded-3xl shadow-2xl p-5 sm:p-6 space-y-4 border border-yellow-500/40 transition-all duration-300";
+
+            card.innerHTML = `
+                <!-- Heading -->
+                <h2 class="text-xl sm:text-2xl font-black tracking-tight leading-snug highlightable-text drop-shadow-md" style="color: ${data.headingColor || '#FACC15'};">
+                    ${data.heading}
+                </h2>
+
+                <!-- Image #1: TOP -->
+                ${topImg ? `
+                    <div class="rounded-2xl overflow-hidden border-2 border-yellow-500/30 bg-black/60 cursor-pointer group relative shadow-xl" onclick="openLightbox('${topImg}')">
+                        <img src="${topImg}" alt="Topic Image Top" class="w-full object-contain max-h-96 group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-yellow-300 text-[10px] px-2.5 py-1 rounded-xl backdrop-blur-md opacity-90 border border-yellow-500/30 font-bold">
+                            <i class="fa-solid fa-expand mr-1"></i> Tap to View
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- YouTube Video (STRICT 16:9 Aspect Ratio Container) -->
+                ${data.youtubeUrl ? `
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-red-500/40 bg-black">
+                        <iframe src="${data.youtubeUrl}" class="absolute top-0 left-0 w-full h-full rounded-2xl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                ` : ''}
+
+                <!-- Main Description -->
+                <div class="pt-2 border-t border-amber-500/20">
+                    <span class="text-[10px] font-black uppercase text-yellow-400 tracking-wider block mb-2">Description:</span>
+                    ${formatDescription(data.description, data.descColors)}
+                </div>
+
+                <!-- Images #3+: MIDDLE -->
+                ${middleImgs.length > 0 ? `
+                    <div class="space-y-3 pt-2">
+                        ${middleImgs.map(mUrl => `
+                            <div class="rounded-2xl overflow-hidden border-2 border-yellow-500/30 bg-black/60 cursor-pointer group relative shadow-xl" onclick="openLightbox('${mUrl}')">
+                                <img src="${mUrl}" alt="Topic Image Middle" class="w-full object-contain max-h-96 group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute bottom-2 right-2 bg-black/80 text-yellow-300 text-[10px] px-2.5 py-1 rounded-xl backdrop-blur-md opacity-90 border border-yellow-500/30 font-bold">
+                                    <i class="fa-solid fa-expand mr-1"></i> Tap to View
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                <!-- Subheadings & Nested Pointers -->
+                ${(data.subblocks && data.subblocks.length > 0) ? `
+                    <div class="space-y-4 pt-2">
+                        ${data.subblocks.map(sb => `
+                            <div class="bg-black/40 p-4 rounded-2xl border border-amber-500/30 space-y-3 shadow-inner">
+                                ${sb.title ? `<h3 class="text-sm sm:text-base font-black highlightable-text drop-shadow" style="color: ${sb.titleColor || '#FACC15'};">${sb.title}</h3>` : ''}
+                                ${(sb.pointers && sb.pointers.length > 0) ? `
+                                    <div class="space-y-3">
+                                        ${sb.pointers.map(ptr => `
+                                            <div class="space-y-1">
+                                                <div class="text-xs sm:text-sm font-bold flex items-start gap-2 highlightable-text" style="color: ${ptr.color || '#EF4444'};">
+                                                    <span class="mt-1.5 w-2 h-2 rounded-full flex-shrink-0 shadow-[0_0_8px_currentColor]" style="background-color: ${ptr.color || '#EF4444'};"></span>
+                                                    <span>${ptr.text}</span>
+                                                </div>
+                                                ${ptr.pointerDesc ? `
+                                                    <div class="pl-4 space-y-1 border-l-2 border-amber-500/30 ml-1">
+                                                        ${formatPointerDesc(ptr.pointerDesc, ptr.pointerDescColors)}
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                <!-- Image #2: BOTTOM -->
+                ${bottomImg ? `
+                    <div class="rounded-2xl overflow-hidden border-2 border-yellow-500/30 bg-black/60 cursor-pointer group relative pt-2 shadow-xl" onclick="openLightbox('${bottomImg}')">
+                        <img src="${bottomImg}" alt="Topic Image Bottom" class="w-full object-contain max-h-96 group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-yellow-300 text-[10px] px-2.5 py-1 rounded-xl backdrop-blur-md opacity-90 border border-yellow-500/30 font-bold">
+                            <i class="fa-solid fa-expand mr-1"></i> Tap to View
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+
+            contentsList.appendChild(card);
+        }
+
+        // Format Main Description
+        function formatDescription(text, colorsArray) {
+            if (!text) return '';
+            const palette = (colorsArray && colorsArray.length > 0) ? colorsArray : descColors;
+            const sentences = text.split('.').map(s => s.trim()).filter(s => s.length > 0);
+
+            return sentences.map((sentence, idx) => {
+                const color = palette[idx % palette.length];
+                return `<p class="mb-2 text-xs sm:text-sm font-bold leading-relaxed flex items-start gap-2 highlightable-text" style="color: ${color};">
+                            <span class="mt-1.5 w-2 h-2 rounded-full flex-shrink-0 shadow-[0_0_8px_currentColor]" style="background-color: ${color};"></span>
+                            <span>${sentence}.</span>
+                        </p>`;
+            }).join('');
+        }
+
+        // Format Pointer Description
+        function formatPointerDesc(text, colorsArray) {
+            if (!text) return '';
+            const palette = (colorsArray && colorsArray.length > 0) ? colorsArray : ["#F97316", "#FACC15", "#EC4899"];
+            const sentences = text.split('.').map(s => s.trim()).filter(s => s.length > 0);
+
+            return sentences.map((s, idx) => {
+                const color = palette[idx % palette.length];
+                return `<p class="text-xs font-semibold leading-relaxed flex items-start gap-1.5 highlightable-text" style="color: ${color};">
+                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 shadow-[0_0_6px_currentColor]" style="background-color: ${color};"></span>
+                            <span>${s}.</span>
+                        </p>`;
+            }).join('');
+        }
+
+        // Render Manage Tab
+        function renderManageList() {
+            const container = document.getElementById("manageList");
+            container.innerHTML = "";
+
+            if(state.allData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-amber-200/60">No content found to manage.</p>`;
+                return;
+            }
+
+            state.allData.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "bg-stone-800 p-3 rounded-2xl border border-amber-500/30 flex justify-between items-center gap-2 shadow-md";
+                div.innerHTML = `
+                    <div class="min-w-0">
+                        <div class="text-[10px] text-yellow-400 font-black uppercase">${item.section} &gt; ${item.chapter}</div>
+                        <div class="text-xs font-bold text-white truncate">${item.heading}</div>
+                    </div>
+                    <div class="flex gap-1 flex-shrink-0">
+                        <button class="edit-item-btn btn-3d-yellow px-2.5 py-1 rounded-lg text-xs font-black" data-id="${item.id}">Edit</button>
+                        <button class="del-item-btn btn-3d-red px-2.5 py-1 rounded-lg text-xs font-black text-white" data-id="${item.id}">Delete</button>
+                    </div>
+                `;
+
+                div.querySelector(".edit-item-btn").addEventListener("click", () => editItem(item));
+                div.querySelector(".del-item-btn").addEventListener("click", () => deleteItem(item.id));
+
+                container.appendChild(div);
+            });
+        }
+
+        function editItem(item) {
+            tabAddBtn.click();
+            document.getElementById("editDocId").value = item.id;
+            document.getElementById("sectionSelect").value = item.section;
+            document.getElementById("chapterSelect").value = item.chapter;
+
+            document.getElementById("headingInput").value = item.heading || "";
+            document.getElementById("headingColorInput").value = item.headingColor || "#FACC15";
+            document.getElementById("descriptionInput").value = item.description || "";
+            document.getElementById("youtubeInput").value = item.rawYoutube || "";
+
+            if(item.descColors) descColors = [...item.descColors];
+            renderDescColors();
+
+            if(item.subblocks) subblocksData = JSON.parse(JSON.stringify(item.subblocks));
+            else subblocksData = [];
+            renderSubblocks();
+        }
+
+        async function deleteItem(id) {
+            if(confirm("Are you sure you want to delete this content?")) {
+                await deleteDoc(doc(db, "contents", id));
+            }
+        }
+
+        document.getElementById("sectionSelect").addEventListener("change", (e) => {
+            document.getElementById("customSectionInput").classList.toggle("hidden", e.target.value !== "custom");
+        });
+
+        document.getElementById("chapterSelect").addEventListener("change", (e) => {
+            document.getElementById("customChapterInput").classList.toggle("hidden", e.target.value !== "custom");
+        });
+
+        openModalBtn.addEventListener("click", () => {
+            document.getElementById("editDocId").value = "";
+            form.reset();
+            document.getElementById("customSectionInput").classList.add("hidden");
+            document.getElementById("customChapterInput").classList.add("hidden");
+            subblocksData = [];
+            renderDescColors();
+            renderSubblocks();
+            tabAddBtn.click();
+            modal.classList.remove("hidden");
+        });
+
+        closeModalBtn.addEventListener("click", () => modal.classList.add("hidden"));
+
+        // Upload Helper Function
+        async function uploadSingleToImgBB(file) {
+            const formData = new FormData();
+            formData.append("image", file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+            const data = await res.json();
+            if (data.success) return data.data.url;
+            throw new Error("ImgBB Upload Failed");
+        }
+
+        function parseYoutubeUrl(url) {
+            if (!url) return null;
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+        }
+
+        // Submit Form (Topic Images & 100+ Mind Maps Upload Support)
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Saving...";
+
+            try {
+                const docId = document.getElementById("editDocId").value;
+                const sectionSel = document.getElementById("sectionSelect").value;
+                const chapterSel = document.getElementById("chapterSelect").value;
+
+                const section = sectionSel === "custom" ? document.getElementById("customSectionInput").value.trim() : sectionSel;
+                const chapter = chapterSel === "custom" ? document.getElementById("customChapterInput").value.trim() : chapterSel;
+
+                const heading = document.getElementById("headingInput").value.trim();
+                const headingColor = document.getElementById("headingColorInput").value;
+                const description = document.getElementById("descriptionInput").value.trim();
+                const youtubeRaw = document.getElementById("youtubeInput").value.trim();
+
+                // Topic Images Upload
+                const imageFiles = document.getElementById("imageInput").files;
+                let uploadedUrls = [];
+
+                if (imageFiles && imageFiles.length > 0) {
+                    document.getElementById("imgUploadingText").classList.remove("hidden");
+                    for (let i = 0; i < imageFiles.length; i++) {
+                        const url = await uploadSingleToImgBB(imageFiles[i]);
+                        uploadedUrls.push(url);
+                    }
+                    document.getElementById("imgUploadingText").classList.add("hidden");
+                }
+
+                // Mind Map Images Upload (Supports 100+ Images)
+                const mindmapFiles = document.getElementById("mindmapInput").files;
+                let uploadedMindmapUrls = [];
+
+                if (mindmapFiles && mindmapFiles.length > 0) {
+                    document.getElementById("mindmapUploadingText").classList.remove("hidden");
+                    for (let i = 0; i < mindmapFiles.length; i++) {
+                        const url = await uploadSingleToImgBB(mindmapFiles[i]);
+                        uploadedMindmapUrls.push(url);
+                    }
+                    document.getElementById("mindmapUploadingText").classList.add("hidden");
+                }
+
+                const payload = {
+                    section: section || "General",
+                    chapter: chapter || "General",
+                    heading,
+                    headingColor,
+                    description,
+                    descColors,
+                    subblocks: subblocksData,
+                    rawYoutube: youtubeRaw,
+                    youtubeUrl: parseYoutubeUrl(youtubeRaw),
+                    updatedAt: new Date().getTime()
+                };
+
+                if (uploadedUrls.length > 0) {
+                    payload.imageUrls = uploadedUrls;
+                    payload.imageUrl = uploadedUrls[0];
+                }
+
+                if (uploadedMindmapUrls.length > 0) {
+                    payload.mindmapUrls = uploadedMindmapUrls;
+                }
+
+                if (docId) {
+                    await updateDoc(doc(db, "contents", docId), payload);
+                } else {
+                    payload.createdAt = new Date().getTime();
+                    await addDoc(contentRef, payload);
+                }
+
+                modal.classList.add("hidden");
+                form.reset();
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Save Content";
+            }
+        });
+
+        // Initialize Firestore Listener
+        const q = query(contentRef, orderBy("createdAt", "asc"));
+        onSnapshot(q, (snapshot) => {
+            loader.classList.add("hidden");
+            state.allData = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+
+            const sections = [...new Set(state.allData.map(i => i.section))];
+            const chapters = [...new Set(state.allData.map(i => i.chapter))];
+
+            updateDropdown(document.getElementById("sectionSelect"), sections);
+            updateDropdown(document.getElementById("chapterSelect"), chapters);
+
+            switchView(state.view, state.selectedSection, state.selectedChapter);
+        });
+
+        function updateDropdown(el, items) {
+            el.innerHTML = `<option value="">-- Choose Existing --</option><option value="custom">+ New Custom</option>`;
+            items.forEach(i => {
+                const opt = document.createElement("option");
+                opt.value = i;
+                opt.textContent = i;
+                el.appendChild(opt);
+            });
+        }
+
+        renderDescColors();
+    </script>
 </body>
 </html>
