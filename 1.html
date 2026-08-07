@@ -127,7 +127,7 @@
             background-color: rgba(254, 240, 138, 0.25);
         }
         .is-highlighted {
-            background-color: #FEF08A !important; /* Bright Yellow Highlight */
+            background-color: #FEF08A !important;
             color: #0F172A !important;
             box-shadow: 0 2px 10px rgba(250, 204, 21, 0.8);
             font-weight: 800 !important;
@@ -202,7 +202,7 @@
         <!-- VIEW 3: FULL CONTENT READ-ONLY PAGE (SINGLE TOPIC WITH SWIPE) -->
         <section id="viewContents" class="hidden space-y-4">
             
-            <!-- TOP NAVIGATION & READER ACTION BAR (3D Shiny Glassmorphic Bar at TOP) -->
+            <!-- TOP NAVIGATION & READER ACTION BAR -->
             <div class="glass-bar-3d p-3.5 rounded-3xl border border-yellow-500/40 shadow-2xl space-y-3">
                 <!-- Previous & Next Navigation Controls at TOP -->
                 <div class="flex justify-between items-center gap-2">
@@ -224,7 +224,7 @@
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap">
-                        <!-- Speaker Button (Text-to-Speech Male / Female Voice) -->
+                        <!-- Speaker Button -->
                         <button id="ttsBtn" class="btn-3d-orange shine-effect text-white px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-orange-400/40">
                             <i class="fa-solid fa-volume-high text-yellow-300"></i>
                             <span>Listen</span>
@@ -254,7 +254,7 @@
                 </h2>
             </div>
 
-            <!-- Swipe Container (One Topic Displayed Here) -->
+            <!-- Swipe Container -->
             <div id="swipeContentContainer" class="touch-pan-y min-h-[300px]">
                 <div id="contentsList"></div>
             </div>
@@ -328,17 +328,20 @@
                 <button id="closeModalBtn" class="text-amber-400 hover:text-red-500 text-2xl font-black transition">&times;</button>
             </div>
 
-            <!-- Panel Tabs -->
-            <div class="flex border-b border-amber-500/30 mb-5 text-xs font-black">
+            <!-- Panel Tabs (3 Dedicated Tabs) -->
+            <div class="flex border-b border-amber-500/30 mb-5 text-[11px] sm:text-xs font-black gap-1">
                 <button id="tabAddBtn" class="flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400">
-                    <i class="fa-solid fa-plus-circle mr-1"></i> Add / Edit Form
+                    <i class="fa-solid fa-plus-circle mr-1"></i> Add Topic
+                </button>
+                <button id="tabMindmapBtn" class="flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300">
+                    <i class="fa-solid fa-sitemap mr-1"></i> Upload Mind Map Only
                 </button>
                 <button id="tabManageBtn" class="flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300">
-                    <i class="fa-solid fa-list-check mr-1"></i> Manage / Delete Existing
+                    <i class="fa-solid fa-list-check mr-1"></i> Manage
                 </button>
             </div>
 
-            <!-- TAB 1: ADD / EDIT FORM -->
+            <!-- TAB 1: ADD / EDIT FULL TOPIC FORM -->
             <div id="panelAdd">
                 <form id="contentForm" class="space-y-4">
                     <input type="hidden" id="editDocId" value="">
@@ -412,7 +415,7 @@
                         <span id="imgUploadingText" class="text-[11px] text-yellow-400 font-black hidden">Uploading Topic Images to ImgBB...</span>
                     </div>
 
-                    <!-- Mind Map Images Upload (100+ Files Support) -->
+                    <!-- Mind Map Images Upload -->
                     <div class="bg-stone-800/80 p-3 rounded-2xl border border-amber-500/40">
                         <label class="block text-xs font-black text-yellow-300 uppercase mb-1">
                             <i class="fa-solid fa-sitemap mr-1"></i> Mind Map Images <span class="text-amber-200/70">(Upload 100+ files allowed)</span>
@@ -433,7 +436,67 @@
                 </form>
             </div>
 
-            <!-- TAB 2: MANAGE & DELETE -->
+            <!-- TAB 2: DEDICATED MIND MAP ONLY UPLOAD FORM -->
+            <div id="panelMindmap" class="hidden space-y-4">
+                <div class="bg-stone-800/90 p-4 rounded-2xl border border-yellow-500/40 space-y-4">
+                    <h3 class="text-xs font-black text-yellow-300 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap text-red-500"></i> Quick Upload Mind Map Images Only
+                    </h3>
+                    
+                    <form id="mindmapOnlyForm" class="space-y-4">
+                        <!-- Select Section -->
+                        <div>
+                            <label class="block text-[11px] font-black text-amber-200 uppercase mb-1">Select Section *</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <select id="mmSectionSelect" required class="w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                                    <option value="">-- Choose Section --</option>
+                                    <option value="custom">+ New Custom Section</option>
+                                </select>
+                                <input type="text" id="mmCustomSectionInput" placeholder="Section Name" class="hidden w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                            </div>
+                        </div>
+
+                        <!-- Select Chapter -->
+                        <div>
+                            <label class="block text-[11px] font-black text-amber-200 uppercase mb-1">Select Chapter *</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <select id="mmChapterSelect" required class="w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                                    <option value="">-- Choose Chapter --</option>
+                                    <option value="custom">+ New Custom Chapter</option>
+                                </select>
+                                <input type="text" id="mmCustomChapterInput" placeholder="Chapter Name" class="hidden w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                            </div>
+                        </div>
+
+                        <!-- Select or Enter Topic Name -->
+                        <div>
+                            <label class="block text-[11px] font-black text-amber-200 uppercase mb-1">Topic / Heading *</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <select id="mmTopicSelect" class="w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                                    <option value="">-- Choose Existing Topic --</option>
+                                    <option value="custom">+ New Topic Heading</option>
+                                </select>
+                                <input type="text" id="mmCustomTopicInput" placeholder="Topic Heading Name" class="w-full bg-stone-900 border border-amber-500/30 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                            </div>
+                        </div>
+
+                        <!-- Dedicated File Input for Mind Map -->
+                        <div>
+                            <label class="block text-[11px] font-black text-yellow-300 uppercase mb-1">
+                                Choose Mind Map Files <span class="text-amber-200/70">(Select 100+ images at once)</span>
+                            </label>
+                            <input type="file" id="mmOnlyFileInput" multiple required accept="image/*" class="w-full bg-stone-900 border border-amber-500/40 text-amber-100 rounded-xl p-2.5 text-xs font-bold">
+                            <span id="mmOnlyUploadingText" class="text-xs text-yellow-400 font-black hidden">Uploading Mind Maps to ImgBB... Please wait.</span>
+                        </div>
+
+                        <button type="submit" id="mmOnlySubmitBtn" class="w-full btn-3d-orange shine-effect text-white font-black py-3 rounded-xl shadow-xl transition text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Mind Map Images Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 3: MANAGE & DELETE -->
             <div id="panelManage" class="hidden space-y-4">
                 <p class="text-xs text-amber-200/70">Select any Section, Chapter, or Topic below to Edit or Delete:</p>
                 <div id="manageList" class="space-y-3"></div>
@@ -486,7 +549,7 @@
         let lightboxScale = 1;
         let lightboxRotation = 0;
 
-        // Speech Synthesis Voices Global State
+        // Speech Synthesis Voices
         let availableVoices = [];
         let synth = window.speechSynthesis;
 
@@ -520,8 +583,11 @@
         const contentsList = document.getElementById("contentsList");
 
         const tabAddBtn = document.getElementById("tabAddBtn");
+        const tabMindmapBtn = document.getElementById("tabMindmapBtn");
         const tabManageBtn = document.getElementById("tabManageBtn");
+        
         const panelAdd = document.getElementById("panelAdd");
+        const panelMindmap = document.getElementById("panelMindmap");
         const panelManage = document.getElementById("panelManage");
 
         const highlightModeBtn = document.getElementById("highlightModeBtn");
@@ -538,6 +604,18 @@
         const closeMindmapBtn = document.getElementById("closeMindmapBtn");
         const mindmapGalleryGrid = document.getElementById("mindmapGalleryGrid");
         const mindmapCount = document.getElementById("mindmapCount");
+
+        // Mind Map Dedicated Upload Form DOM
+        const mindmapOnlyForm = document.getElementById("mindmapOnlyForm");
+        const mmSectionSelect = document.getElementById("mmSectionSelect");
+        const mmCustomSectionInput = document.getElementById("mmCustomSectionInput");
+        const mmChapterSelect = document.getElementById("mmChapterSelect");
+        const mmCustomChapterInput = document.getElementById("mmCustomChapterInput");
+        const mmTopicSelect = document.getElementById("mmTopicSelect");
+        const mmCustomTopicInput = document.getElementById("mmCustomTopicInput");
+        const mmOnlyFileInput = document.getElementById("mmOnlyFileInput");
+        const mmOnlyUploadingText = document.getElementById("mmOnlyUploadingText");
+        const mmOnlySubmitBtn = document.getElementById("mmOnlySubmitBtn");
 
         // TTS DOM
         const ttsBtn = document.getElementById("ttsBtn");
@@ -593,7 +671,7 @@
             const newIndex = state.currentTopicIndex + direction;
             if (newIndex >= 0 && newIndex < currentChapterItems.length) {
                 state.currentTopicIndex = newIndex;
-                if (synth) synth.cancel(); // Stop reading on slide change
+                if (synth) synth.cancel();
                 renderContents();
             }
         }
@@ -613,7 +691,7 @@
             }
         });
 
-        // Toggle Highlight on text click (Tap 1 = Highlight ON, Tap 2 = Highlight OFF)
+        // Toggle Highlight on text click
         document.addEventListener("click", (e) => {
             if (state.highlightMode) {
                 const target = e.target.closest('.highlightable-text');
@@ -623,7 +701,7 @@
             }
         });
 
-        // Mind Map Modal Handling
+        // Mind Map Gallery View Modal
         mindmapBtn.addEventListener("click", () => {
             const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
             if (currentChapterItems.length === 0) return;
@@ -656,7 +734,7 @@
 
         closeMindmapBtn.addEventListener("click", () => mindmapModal.classList.add("hidden"));
 
-        // Text-To-Speech (Speaker) Modal & Reading Logic
+        // Text-To-Speech (Speaker) Modal
         ttsBtn.addEventListener("click", () => ttsVoiceModal.classList.remove("hidden"));
         closeTtsModalBtn.addEventListener("click", () => ttsVoiceModal.classList.add("hidden"));
 
@@ -666,7 +744,7 @@
                 return;
             }
 
-            synth.cancel(); // Stop any active speech
+            synth.cancel();
 
             const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
             if (currentChapterItems.length === 0) return;
@@ -687,17 +765,16 @@
             }
 
             const utterance = new SpeechSynthesisUtterance(textToRead);
-            utterance.rate = 0.95; // Clear speed
+            utterance.rate = 0.95;
 
-            // Voice selection logic for Male / Female
             if (availableVoices.length === 0) availableVoices = synth.getVoices();
 
             let selectedVoice = null;
             if (gender === 'female') {
-                utterance.pitch = 1.25; // Higher pitch for Female
+                utterance.pitch = 1.25;
                 selectedVoice = availableVoices.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('google hindi') || v.name.toLowerCase().includes('samantha'));
             } else {
-                utterance.pitch = 0.85; // Lower pitch for Male
+                utterance.pitch = 0.85;
                 selectedVoice = availableVoices.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('mark') || v.name.toLowerCase().includes('george'));
             }
 
@@ -725,20 +802,159 @@
             openModalBtn.classList.toggle("hidden", !state.isAdmin);
         });
 
-        // Tab Switching
+        // Tab Switching for 3 Tabs
         tabAddBtn.addEventListener("click", () => {
             tabAddBtn.className = "flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400 font-black";
+            tabMindmapBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
             tabManageBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            
             panelAdd.classList.remove("hidden");
+            panelMindmap.classList.add("hidden");
             panelManage.classList.add("hidden");
+        });
+
+        tabMindmapBtn.addEventListener("click", () => {
+            tabMindmapBtn.className = "flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400 font-black";
+            tabAddBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            tabManageBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            
+            panelMindmap.classList.remove("hidden");
+            panelAdd.classList.add("hidden");
+            panelManage.classList.add("hidden");
+            
+            populateMindmapDropdowns();
         });
 
         tabManageBtn.addEventListener("click", () => {
             tabManageBtn.className = "flex-1 py-2.5 text-center text-yellow-400 border-b-2 border-yellow-400 font-black";
             tabAddBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            tabMindmapBtn.className = "flex-1 py-2.5 text-center text-amber-200/60 border-b-2 border-transparent hover:text-yellow-300 font-black";
+            
             panelManage.classList.remove("hidden");
             panelAdd.classList.add("hidden");
+            panelMindmap.classList.add("hidden");
             renderManageList();
+        });
+
+        // Dedicated Mind Map Upload Form Dropdown Sync
+        function populateMindmapDropdowns() {
+            const sections = [...new Set(state.allData.map(i => i.section))];
+            updateDropdown(mmSectionSelect, sections);
+            mmChapterSelect.innerHTML = `<option value="">-- Choose Chapter --</option><option value="custom">+ New Custom Chapter</option>`;
+            mmTopicSelect.innerHTML = `<option value="">-- Choose Existing Topic --</option><option value="custom">+ New Topic Heading</option>`;
+        }
+
+        mmSectionSelect.addEventListener("change", (e) => {
+            const val = e.target.value;
+            mmCustomSectionInput.classList.toggle("hidden", val !== "custom");
+
+            if (val && val !== "custom") {
+                const chapters = [...new Set(state.allData.filter(i => i.section === val).map(i => i.chapter))];
+                updateDropdown(mmChapterSelect, chapters);
+            } else {
+                mmChapterSelect.innerHTML = `<option value="">-- Choose Chapter --</option><option value="custom">+ New Custom Chapter</option>`;
+            }
+        });
+
+        mmChapterSelect.addEventListener("change", (e) => {
+            const val = e.target.value;
+            const secVal = mmSectionSelect.value;
+            mmCustomChapterInput.classList.toggle("hidden", val !== "custom");
+
+            if (secVal && val && val !== "custom") {
+                const topics = state.allData.filter(i => i.section === secVal && i.chapter === val);
+                mmTopicSelect.innerHTML = `<option value="">-- Choose Existing Topic --</option><option value="custom">+ New Topic Heading</option>`;
+                topics.forEach(t => {
+                    const opt = document.createElement("option");
+                    opt.value = t.id;
+                    opt.textContent = t.heading;
+                    mmTopicSelect.appendChild(opt);
+                });
+            }
+        });
+
+        mmTopicSelect.addEventListener("change", (e) => {
+            const val = e.target.value;
+            if (val === "custom") {
+                mmCustomTopicInput.classList.remove("hidden");
+                mmCustomTopicInput.value = "";
+            } else if (val) {
+                mmCustomTopicInput.classList.add("hidden");
+                const selectedDoc = state.allData.find(d => d.id === val);
+                if (selectedDoc) mmCustomTopicInput.value = selectedDoc.heading;
+            } else {
+                mmCustomTopicInput.classList.add("hidden");
+            }
+        });
+
+        // Submit Dedicated Mind Map Only Form
+        mindmapOnlyForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            mmOnlySubmitBtn.disabled = true;
+            mmOnlySubmitBtn.innerText = "Uploading...";
+
+            try {
+                const sectionSel = mmSectionSelect.value;
+                const chapterSel = mmChapterSelect.value;
+                const topicSel = mmTopicSelect.value;
+
+                const section = sectionSel === "custom" ? mmCustomSectionInput.value.trim() : sectionSel;
+                const chapter = chapterSel === "custom" ? mmCustomChapterInput.value.trim() : chapterSel;
+                const heading = (topicSel === "custom" || !topicSel) ? mmCustomTopicInput.value.trim() : mmCustomTopicInput.value.trim();
+
+                if (!section || !chapter || !heading) {
+                    alert("Please select or enter Section, Chapter, and Topic Heading.");
+                    return;
+                }
+
+                const files = mmOnlyFileInput.files;
+                if (!files || files.length === 0) {
+                    alert("Please select at least one Mind Map image to upload.");
+                    return;
+                }
+
+                mmOnlyUploadingText.classList.remove("hidden");
+                let uploadedMmUrls = [];
+
+                for (let i = 0; i < files.length; i++) {
+                    const url = await uploadSingleToImgBB(files[i]);
+                    uploadedMmUrls.push(url);
+                }
+                mmOnlyUploadingText.classList.add("hidden");
+
+                // Check if existing topic matches in database
+                const existingDoc = state.allData.find(d => d.id === topicSel || (d.section === section && d.chapter === chapter && d.heading === heading));
+
+                if (existingDoc) {
+                    const updatedMmList = [...(existingDoc.mindmapUrls || []), ...uploadedMmUrls];
+                    await updateDoc(doc(db, "contents", existingDoc.id), {
+                        mindmapUrls: updatedMmList,
+                        updatedAt: new Date().getTime()
+                    });
+                } else {
+                    await addDoc(contentRef, {
+                        section: section || "General",
+                        chapter: chapter || "General",
+                        heading: heading || "Mind Map Topic",
+                        headingColor: "#FACC15",
+                        description: "Mind Map Collection",
+                        descColors: ["#FACC15"],
+                        mindmapUrls: uploadedMmUrls,
+                        createdAt: new Date().getTime(),
+                        updatedAt: new Date().getTime()
+                    });
+                }
+
+                alert(`Successfully uploaded ${uploadedMmUrls.length} Mind Map images!`);
+                modal.classList.add("hidden");
+                mindmapOnlyForm.reset();
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                mmOnlySubmitBtn.disabled = false;
+                mmOnlySubmitBtn.innerText = "Upload Mind Map Images Now";
+            }
         });
 
         // Description Pointer Colors
@@ -1069,7 +1285,7 @@
             });
         }
 
-        // Render Single Topic Page with Swipe & Image Placement Logic
+        // Render Single Topic Page
         function renderContents() {
             contentsList.innerHTML = "";
             const currentChapterItems = state.allData.filter(i => i.section === state.selectedSection && i.chapter === state.selectedChapter);
@@ -1115,7 +1331,7 @@
                     </div>
                 ` : ''}
 
-                <!-- YouTube Video (STRICT 16:9 Aspect Ratio Container) -->
+                <!-- YouTube Video -->
                 ${data.youtubeUrl ? `
                     <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-red-500/40 bg-black">
                         <iframe src="${data.youtubeUrl}" class="absolute top-0 left-0 w-full h-full rounded-2xl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -1309,7 +1525,7 @@
             return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
         }
 
-        // Submit Form (Topic Images & 100+ Mind Maps Upload Support)
+        // Submit Full Form
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById("submitBtn");
@@ -1329,7 +1545,6 @@
                 const description = document.getElementById("descriptionInput").value.trim();
                 const youtubeRaw = document.getElementById("youtubeInput").value.trim();
 
-                // Topic Images Upload
                 const imageFiles = document.getElementById("imageInput").files;
                 let uploadedUrls = [];
 
@@ -1342,7 +1557,6 @@
                     document.getElementById("imgUploadingText").classList.add("hidden");
                 }
 
-                // Mind Map Images Upload (Supports 100+ Images)
                 const mindmapFiles = document.getElementById("mindmapInput").files;
                 let uploadedMindmapUrls = [];
 
