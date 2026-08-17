@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaFood | Admin Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #E23744;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #E23744;
+            border-bottom: 3px solid #E23744;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form Design */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            border-color: #E23744;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        .btn-submit {
+            background: #E23744;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #c12e3a;
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Manage List Grid */
+        .items-list {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .list-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .data-card {
+            background: #fafafa;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .data-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .data-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .data-card p {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .btn-delete {
+            background: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .btn-delete:hover {
+            background: #e04444;
+        }
+
+        .loading-text {
+            color: #E23744;
+            font-weight: 500;
+            font-size: 14px;
+            display: none;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <h1>InstaFood Control Center</h1>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-banners')">Manage 16:9 Banners</button>
+            <button class="tab-btn" onclick="switchTab('tab-items')">Manage Food Items</button>
+        </div>
+
+        <!-- ================= TAB 1: BANNERS ================= -->
+        <div id="tab-banners" class="tab-content active">
+            <form id="bannerForm">
+                <div class="form-group">
+                    <label for="bannerImage">Upload Banner Image (Recommended Ratio 16:9)</label>
+                    <input type="file" id="bannerImage" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-submit" id="bannerSubmitBtn">Upload Banner</button>
+                <div class="loading-text" id="bannerLoading">Processing & Uploading to ImgBB ...</div>
+            </form>
+
+            <div class="items-list">
+                <div class="list-header">Active Banners</div>
+                <div class="data-grid" id="banners-grid">
+                    <!-- Banners loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: FOOD ITEMS ================= -->
+        <div id="tab-items" class="tab-content">
+            <form id="foodForm">
+                <div class="form-group">
+                    <label for="foodTitle">Food Name / Title</label>
+                    <input type="text" id="foodTitle" required placeholder="e.g. Hyderabadi Chicken Biryani">
+                </div>
+                <div class="form-group">
+                    <label for="foodPrice">Price (₹)</label>
+                    <input type="number" id="foodPrice" required placeholder="e.g. 249">
+                </div>
+                <div class="form-group">
+                    <label for="foodRating">Initial Rating (1.0 to 5.0)</label>
+                    <input type="text" id="foodRating" required placeholder="e.g. 4.2">
+                </div>
+                <div class="form-group">
+                    <label for="foodType">Type (Veg / Non-Veg)</label>
+                    <select id="foodType" required>
+                        <option value="veg">Vegetarian (Veg)</option>
+                        <option value="nonveg">Non-Vegetarian (Non-Veg)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="foodDesc">Description</label>
+                    <textarea id="foodDesc" rows="3" required placeholder="Describe ingredients, taste, or portion size..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="foodImage">Food Photo</label>
+                    <input type="file" id="foodImage" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-submit" id="foodSubmitBtn">Add Food Item</button>
+                <div class="loading-text" id="foodLoading">Uploading Image to ImgBB and Saving to Database...</div>
+            </form>
+
+            <div class="items-list">
+                <div class="list-header">Active Food Menu</div>
+                <div class="data-grid" id="food-grid">
+                    <!-- Menu items loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Setup -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Configuration (Same as User Panel)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC84FBpn-O2VkHPJCw9O3oKDnNZ-2K1iG4",
+            authDomain: "mrel-8a378.firebaseapp.com",
+            databaseURL: "https://mrel-8a378-default-rtdb.firebaseio.com",
+            projectId: "mrel-8a378",
+            storageBucket: "mrel-8a378.firebasestorage.app",
+            messagingSenderId: "1062382184856",
+            appId: "1:1062382184856:web:43f6cdb4e1b67a8d0a63ed",
+            measurementId: "G-1C3D7RFMHE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ImgBB API Configuration
+        const IMGBB_API_KEY = "2fb5cef9a3f009a49c6e502d87a448c2";
+
+        // Helper: Image Upload function using ImgBB API
+        async function uploadToImgBB(file) {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                return result.data.url; // Returns direct dynamic high-quality image URL
+            } else {
+                throw new Error("ImgBB upload failed: " + result.error.message);
+            }
+        }
+
+        // --- SUBMIT 1: UPLOAD BANNER ---
+        document.getElementById('bannerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('bannerImage');
+            const submitBtn = document.getElementById('bannerSubmitBtn');
+            const loadingText = document.getElementById('bannerLoading');
+
+            if (fileInput.files.length === 0) return;
+
+            submitBtn.disabled = true;
+            loadingText.style.display = "block";
+
+            try {
+                // Upload image to ImgBB
+                const imageUrl = await uploadToImgBB(fileInput.files[0]);
+
+                // Save URL in Firebase
+                await push(ref(db, 'banners'), {
+                    url: imageUrl,
+                    timestamp: Date.now()
+                });
+
+                alert("Banner uploaded successfully!");
+                document.getElementById('bannerForm').reset();
+            } catch (err) {
+                console.error(err);
+                alert("Upload failed! Please check your ImgBB key or Internet Connection.");
+            } finally {
+                submitBtn.disabled = false;
+                loadingText.style.display = "none";
+            }
+        });
+
+        // --- SUBMIT 2: ADD FOOD ITEM ---
+        document.getElementById('foodForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('foodTitle').value;
+            const price = document.getElementById('foodPrice').value;
+            const rating = document.getElementById('foodRating').value;
+            const type = document.getElementById('foodType').value;
+            const description = document.getElementById('foodDesc').value;
+            const fileInput = document.getElementById('foodImage');
+
+            const submitBtn = document.getElementById('foodSubmitBtn');
+            const loadingText = document.getElementById('foodLoading');
+
+            if (fileInput.files.length === 0) return;
+
+            submitBtn.disabled = true;
+            loadingText.style.display = "block";
+
+            try {
+                // Upload image to ImgBB
+                const imageUrl = await uploadToImgBB(fileInput.files[0]);
+
+                // Store full dataset in Firebase
+                await push(ref(db, 'food_items'), {
+                    title,
+                    price,
+                    rating,
+                    type,
+                    description,
+                    imageUrl,
+                    timestamp: Date.now()
+                });
+
+                alert("Food item added successfully!");
+                document.getElementById('foodForm').reset();
+            } catch (err) {
+                console.error(err);
+                alert("Operation failed! Check console for errors.");
+            } finally {
+                submitBtn.disabled = false;
+                loadingText.style.display = "none";
+            }
+        });
+
+        // --- FETCH & RENDER: BANNERS ---
+        const bannersGrid = document.getElementById('banners-grid');
+        onValue(ref(db, 'banners'), (snapshot) => {
+            bannersGrid.innerHTML = '';
+            const data = snapshot.val();
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const card = document.createElement('div');
+                    card.className = "data-card";
+                    card.innerHTML = `
+                        <img src="${data[key].url}" alt="Banner">
+                        <button class="btn-delete" data-id="${key}">Remove Banner</button>
+                    `;
+                    // Delete handler logic
+                    card.querySelector('.btn-delete').addEventListener('click', () => {
+                        if (confirm("Are you sure you want to remove this banner?")) {
+                            remove(ref(db, `banners/${key}`));
+                        }
+                    });
+                    bannersGrid.appendChild(card);
+                });
+            } else {
+                bannersGrid.innerHTML = "<p style='color:#999;'>No active banners.</p>";
+            }
+        });
+
+        // --- FETCH & RENDER: FOOD ITEMS ---
+        const foodGrid = document.getElementById('food-grid');
+        onValue(ref(db, 'food_items'), (snapshot) => {
+            foodGrid.innerHTML = '';
+            const data = snapshot.val();
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const item = data[key];
+                    const card = document.createElement('div');
+                    card.className = "data-card";
+                    card.innerHTML = `
+                        <img src="${item.imageUrl}" alt="Food">
+                        <h4>${item.title}</h4>
+                        <p style="margin-bottom:5px;"><b>Price:</b> ₹${item.price} | <b>Rating:</b> ${item.rating}</p>
+                        <p>${item.description}</p>
+                        <button class="btn-delete" data-id="${key}">Remove Item</button>
+                    `;
+                    card.querySelector('.btn-delete').addEventListener('click', () => {
+                        if (confirm("Are you sure you want to delete this menu item?")) {
+                            remove(ref(db, `food_items/${key}`));
+                        }
+                    });
+                    foodGrid.appendChild(card);
+                });
+            } else {
+                foodGrid.innerHTML = "<p style='color:#999;'>No food items in the menu.</p>";
+            }
+        });
+    </script>
+
+    <script>
+        // Simple client-side non-module navigation for Admin Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
