@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>InstaFood | Fast Grocery & Food Delivery</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-color: #0c831f; /* Blinkit Green */
+            --brand-gradient: linear-gradient(135deg, #0c831f 0%, #096a18 100%);
+            --bg-color: #ffffff;
+            --blinkit-yellow: #fffce4; /* Creamy Yellow Header Background */
+            --surface-color: #f8f9fa;
+            --text-main: #1c1c1c;
+            --text-muted: #666666;
+            --border-color: #e2e2e2;
+            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --glow-shadow: 0 8px 20px rgba(12, 131, 31, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--text-main);
+            transition: background-color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* === SCREEN 1: WELCOME SCREEN === */
+        #welcome-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .welcome-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        @media (max-width: 480px) {
+            .welcome-container {
+                height: 100vh;
+                box-shadow: none;
+            }
+        }
+
+        .image-section {
+            flex: 1;
+            background-color: #1a1513;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .wave-container {
+            position: relative;
+            width: 100%;
+            height: 70px;
+            background-color: transparent;
+            overflow: hidden;
+            margin-top: -68px;
+            z-index: 5;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 200%;
+            height: 100%;
+        }
+
+        .wave1 { animation: flow-left 16s linear infinite; z-index: 10; opacity: 0.3; }
+        .wave2 { animation: flow-right 10s linear infinite; z-index: 15; opacity: 0.6; }
+        .wave3 { animation: flow-left 6s linear infinite; z-index: 20; opacity: 1; }
+
+        @keyframes flow-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes flow-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .bottom-section {
+            background-color: #ffffff;
+            padding: 15px 24px 45px 24px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 22;
+        }
+
+        .btn-3d {
+            display: inline-block;
+            width: 100%;
+            max-width: 280px;
+            padding: 16px 0;
+            background: linear-gradient(135deg, #ff9f43 0%, #ff5252 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #d35400, 0 15px 20px rgba(211, 84, 0, 0.35);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            animation: float3D 3s ease-in-out infinite;
+        }
+
+        .btn-3d:active {
+            transform: translateY(6px) !important;
+            box-shadow: 0 2px 0 #d35400, 0 5px 10px rgba(211, 84, 0, 0.4);
+        }
+
+        @keyframes float3D {
+            0% { transform: translateY(0px); }
+            50% {
+                transform: translateY(-6px);
+                box-shadow: 0 14px 0 #d35400, 0 22px 25px rgba(211, 84, 0, 0.25);
+            }
+            100% { transform: translateY(0px); }
+        }
+
+        /* === SCREEN 2: DASHBOARD SCREEN === */
+        #dashboard-screen {
+            display: none;
+            opacity: 0;
+            background-color: var(--bg-color);
+            padding-bottom: 95px;
+            transition: opacity 0.4s ease;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* === BLINKIT HEADER STYLING === */
+        .blinkit-header-area {
+            background-color: var(--blinkit-yellow);
+            padding: 16px 16px 10px 16px;
+            margin-left: -16px;
+            margin-right: -16px;
+            border-bottom: 1.5px solid #f2eebf;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .delivery-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .meta-brand-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .delivery-time {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+
+        .location-dropdown {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+            cursor: pointer;
+            max-width: 260px;
+        }
+        .location-dropdown p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .location-dropdown i {
+            font-size: 10px;
+            color: var(--text-main);
+        }
+
+        /* Header Quick Actions Icons */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wallet-badge-btn {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 12px;
+            padding: 6px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: transform 0.2s;
+        }
+        .wallet-badge-btn:active { transform: scale(0.95); }
+        .wallet-badge-btn img {
+            width: 32px;
+            height: 20px;
+            object-fit: contain;
+        }
+        .wallet-badge-btn span {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .header-profile-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: transform 0.2s;
+        }
+        .header-profile-btn:active { transform: scale(0.95); }
+
+        /* === BLINKIT SEARCH BAR === */
+        .search-container {
+            margin: 10px 0 6px 0;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--brand-color);
+            box-shadow: 0 4px 12px rgba(12, 131, 31, 0.1);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            margin-left: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+        .search-box input::placeholder {
+            color: #888888;
+        }
+
+        .search-box i.fa-magnifying-glass { color: #555555; font-size: 18px;}
+        .search-box i.fa-microphone { color: #222222; font-size: 18px; cursor: pointer;}
+
+        /* === 16:9 Carousel Slider === */
+        .promo-banner-slider {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 18px 0 22px 0;
+            position: relative;
+            background-color: #eaeaea;
+            box-shadow: var(--premium-shadow);
+        }
+        
+        .slide-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slide-img.active {
+            opacity: 1;
+        }
+
+        /* === Categories & Titles === */
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-list {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 4px 2px 14px 2px;
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .category-list::-webkit-scrollbar { display: none; }
+
+        .category-item {
+            text-align: center;
+            min-width: 72px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .category-item:active {
+            transform: scale(0.92);
+        }
+
+        .category-img-wrapper {
+            position: relative;
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 8px auto;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #fbf7e3 0%, #fffce4 100%);
+            border: 1px solid #f2eebf;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover .category-img-wrapper {
+            border-color: var(--brand-color);
+            background: #eefbee;
+        }
+
+        .category-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .category-item span { 
+            font-size: 12px; 
+            font-weight: 700; 
+            color: #333333; 
+        }
+
+        /* === BLINKIT-STYLE GRID PROMOS (FESTIVE SPECIALS) === */
+        .blinkit-promos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .promo-block-card {
+            background-color: #0c831f;
+            border-radius: 16px;
+            padding: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .promo-block-card.green-dark { background-color: #0c6a1a; }
+        .promo-block-card.green-light { background-color: #128224; }
+        
+        .promo-block-card h4 {
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1.2;
+            z-index: 2;
+        }
+        
+        .promo-block-card .price-badge {
+            background: #ffd33c;
+            color: #1c1c1c;
+            font-size: 12px;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 8px;
+            width: max-content;
+            margin-top: 6px;
+            z-index: 2;
+        }
+        
+        .promo-block-card img {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        /* === Food Grid === */
+        .food-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .food-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .food-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .food-card {
+            display: flex;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 18px;
+            background: var(--bg-color);
+            border: 1.5px solid var(--border-color);
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .food-card:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04); 
+            border-color: rgba(12, 131, 31, 0.15);
+        }
+
+        .food-img-container {
+            position: relative;
+            width: 105px;
+            height: 105px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.04);
+        }
+
+        .food-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .food-card:hover .food-img-container img {
+            transform: scale(1.04);
+        }
+
+        .veg-nonveg {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .veg-nonveg.veg { border: 1.5px solid #1e824c; }
+        .veg-nonveg.veg::after { content: ''; width: 8px; height: 8px; background: #1e824c; border-radius: 50%; }
+        .veg-nonveg.nonveg { border: 1.5px solid #e74c3c; }
+        .veg-nonveg.nonveg::after { content: ''; width: 8px; height: 8px; background: #e74c3c; border-radius: 50%; }
+
+        .food-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .food-details h4 { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.3; }
+        
+        .rating-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #24963f;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 5px;
+            margin: 4px 0;
+            width: max-content;
+        }
+        
+        .food-details p { font-size: 11px; color: var(--text-muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
+        
+        .price-and-add {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price { font-size: 15px; font-weight: 800; color: #1c1c1c; }
+
+        /* Dynamic Interactive Cart Button */
+        .add-btn-wrapper {
+            position: relative;
+            min-width: 80px;
+            height: 32px;
+        }
+
+        .add-btn {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            color: var(--brand-color);
+            border: 1.5px solid var(--brand-color);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(12, 131, 31, 0.05);
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            background: var(--brand-color);
+            color: white;
+            box-shadow: var(--glow-shadow);
+        }
+
+        .qty-controller {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            background: var(--brand-color);
+            border-radius: 10px;
+            color: white;
+            overflow: hidden;
+            box-shadow: var(--glow-shadow);
+        }
+
+        .qty-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 28px;
+            height: 100%;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .qty-btn:active {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .qty-val {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* === BLINKIT SIGNATURE FLOATING CART PILL === */
+        #cart-strip {
+            position: fixed;
+            bottom: 74px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            width: calc(100% - 32px);
+            max-width: 480px;
+            background: #0c831f; /* Clean Blinkit Green */
+            padding: 10px 16px;
+            border-radius: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 25px rgba(12, 131, 31, 0.35);
+            z-index: 999;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        #cart-strip.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Stack of mini item thumbnails inside the cart pill */
+        .cart-strip-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-items-thumbnails {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-thumb-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1.5px solid #ffffff;
+            margin-right: -12px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .cart-pill-meta {
+            display: flex;
+            flex-direction: column;
+            margin-left: 15px;
+        }
+
+        .cart-pill-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .cart-pill-qty {
+            font-size: 11px;
+            font-weight: 500;
+            color: #d1ffd6;
+        }
+
+        .cart-pill-btn-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .cart-pill-btn-right i {
+            font-size: 12px;
+        }
+
+        /* === MODERN MODAL DRAWER === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+            z-index: 2001;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-overlay.show + .modal-drawer,
+        .modal-drawer.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 800; }
+        .close-btn { background: #f5f5f5; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;}
+
+        .modal-body {
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .cart-item-name { font-size: 14px; font-weight: 600; }
+        .cart-item-price { font-size: 13px; color: var(--text-muted); }
+
+        .bill-details {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        .bill-row.total {
+            font-weight: 800;
+            color: var(--text-main);
+            font-size: 15px;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .whatsapp-submit-btn {
+            background: #25D366; /* WhatsApp Green */
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s;
+        }
+        .whatsapp-submit-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* === TAB SECTIONS === */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- History Screen --- */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 14px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .history-item:hover {
+            border-color: var(--brand-color);
+        }
+        .history-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .history-item-left i {
+            color: var(--brand-color);
+            background: rgba(12, 131, 31, 0.08);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .history-item span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .delete-hist-btn {
+            background: transparent;
+            border: none;
+            color: #d1d1d1;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .delete-hist-btn:hover {
+            color: #ff3333;
+        }
+
+        /* --- Money Screen (Wallet) --- */
+        .wallet-card {
+            background: var(--brand-gradient);
+            border-radius: 24px;
+            padding: 24px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(12, 131, 31, 0.2);
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -40px;
+            right: -40px;
+        }
+        .wallet-balance-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+        .wallet-balance { font-size: 32px; font-weight: 800; margin: 6px 0 18px 0; }
+        .wallet-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;}
+        .wallet-footer span { font-size: 13px; font-weight: 600; }
+
+        /* --- Highly Advanced Profile Form Styling --- */
+        .profile-container {
+            padding: 10px 0;
+        }
+        .profile-avatar-big {
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffe3e3 0%, #ffd1d1 100%);
+            margin: 0 auto 12px auto;
+            border: 3px solid #fff;
+            box-shadow: 0 6px 15px rgba(12, 131, 31, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--brand-color);
+        }
+        .profile-name-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .profile-tagline {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 20px;
+        }
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #ffffff;
+            padding: 10px 2px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-group label i {
+            color: var(--brand-color);
+        }
+        .form-group input, .form-group textarea {
+            background: #f6f6f9;
+            border: 1.5px solid transparent;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            background: #ffffff;
+            border-color: var(--brand-color);
+            box-shadow: 0 4px 12px rgba(12, 131, 31, 0.08);
+        }
+        
+        /* Auto Geolocation/Maps Button */
+        .gps-btn {
+            background: rgba(12, 131, 31, 0.08);
+            color: var(--brand-color);
+            border: 1.5px dashed var(--brand-color);
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+        .gps-btn:active {
+            transform: scale(0.98);
+        }
+
+        .save-profile-btn {
+            background: var(--brand-gradient);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--glow-shadow);
+            transition: transform 0.2s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .save-profile-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* === BLINKIT MINIMAL NAVIGATION BAR === */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 14px 0;
+            border-top: 1px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #555555;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item i { 
+            font-size: 18px; 
+            transition: transform 0.2s;
+            color: #444444;
+        }
+        .nav-item:active i {
+            transform: scale(0.85);
+        }
+        
+        .nav-item.active { 
+            color: #000000; 
+        }
+        .nav-item.active i {
+            color: var(--brand-color);
+        }
+
+        /* Special Purple District Button styled exactly like Blinkit */
+        .nav-item.district-tab {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 4px 10px;
+            border-radius: 10px;
+            border: 1px solid #c7d2fe;
+        }
+        .nav-item.district-tab i {
+            color: #4f46e5;
+        }
+
+        @media (min-width: 768px) {
+            .bottom-nav { 
+                max-width: 500px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 20px 20px 0 0;
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= SCREEN 1: WELCOME SCREEN ================= -->
+    <div id="welcome-screen">
+        <div class="welcome-container">
+            <div class="image-section">
+                <img src="https://i.ibb.co/cK3Sx23H/file-00000000e1708211bfbd72dcf3decf46.png" alt="Instafood Poster">
+            </div>
+
+            <!-- Wave Animation -->
+            <div class="wave-container">
+                <svg class="wave wave1" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <path fill="#ffffff" d="M0,50 C150,90 350,10 500,50 C650,90 850,10 1000,50 L1000,100 L0,100 Z"></path>
+                </svg>
+                <svg class="wave wave2" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <path fill="#ffffff" d="M0,50 C150,10 350,90 500,50 C650,10 850,90 1000,50 L1000,100 L0,100 Z"></path>
+                </svg>
+                <svg class="wave wave3" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <path fill="#ffffff" d="M0,50 C150,80 350,20 500,50 C650,80 850,20 1000,50 L1000,100 L0,100 Z"></path>
+                </svg>
+            </div>
+
+            <div class="bottom-section">
+                <button class="btn-3d" id="btn-get-started">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SCREEN 2: DASHBOARD ================= -->
+    <div id="dashboard-screen">
+        <div class="container">
+            
+            <!-- BLINKIT PALE YELLOW HEADER CONTAINER -->
+            <div class="blinkit-header-area">
+                <header class="top-header">
+                    <div class="delivery-meta">
+                        <span class="meta-brand-title">InstaFood in</span>
+                        <h2 class="delivery-time">16 minutes</h2>
+                        <div class="location-dropdown" onclick="switchTab('profile')">
+                            <p id="header-address-text">HOME - Loading Address...</p>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <!-- Rupee Wallet Badge -->
+                        <div class="wallet-badge-btn" onclick="switchTab('money')">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Money Wallet Icon">
+                            <span id="wallet-balance-badge">₹480</span>
+                        </div>
+                        <!-- Profile Circular Button -->
+                        <div class="header-profile-btn" onclick="switchTab('profile')">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- BLINKIT SEARCH BOX -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="menu-search-input" placeholder='Search "healthy snacks, biryani, or grocery"'>
+                        <div style="border-left: 1px solid #ddd; padding-left: 12px; margin-left: 6px;">
+                            <i class="fa-solid fa-microphone"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 1: DELIVERY (MAIN SHOP) ================= -->
+            <div id="tab-delivery" class="tab-content active" style="margin-top: 15px;">
+                
+                <!-- Horizontal scrolling Categories -->
+                <div class="category-list">
+                    <div class="category-item" onclick="filterByCategory('Biryani')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150&q=80" alt="Biryani" class="category-img">
+                        </div>
+                        <span>Biryani</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('Pizza')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&q=80" alt="Pizza" class="category-img">
+                        </div>
+                        <span>Pizza</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('Burger')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&q=80" alt="Burger" class="category-img">
+                        </div>
+                        <span>Burger</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('Paneer')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150&q=80" alt="Paneer" class="category-img">
+                        </div>
+                        <span>Paneer</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('Chinese')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=150&q=80" alt="Chinese" class="category-img">
+                        </div>
+                        <span>Chinese</span>
+                    </div>
+                    <div class="category-item" onclick="filterByCategory('Desserts')">
+                        <div class="category-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150&q=80" alt="Desserts" class="category-img">
+                        </div>
+                        <span>Desserts</span>
+                    </div>
+                </div>
+
+                <!-- 16:9 Banner Carousels -->
+                <div class="promo-banner-slider">
+                    <div class="slide-track" id="slide-track-container">
+                        <div class="slide-img active" style="background: #ccc; display: flex; justify-content: center; align-items: center; color: #555; width:100%; height:100%;">
+                            Loading Banners...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLINKIT FESTIVE PROMOS CARDS GRID -->
+                <div class="blinkit-promos-grid">
+                    <div class="promo-block-card" onclick="filterByCategory('Desserts')">
+                        <div>
+                            <h4>Festive<br>checklist</h4>
+                            <div class="price-badge">₹80</div>
+                        </div>
+                        <p style="font-size: 11px; font-weight: 700; z-index: 2;">Dessert Mix</p>
+                        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80" alt="Dessert Plate">
+                    </div>
+                    <div class="promo-block-card green-dark" onclick="filterByCategory('Biryani')">
+                        <div>
+                            <h4>Sadhya<br>Specials</h4>
+                            <div class="price-badge">From ₹120</div>
+                        </div>
+                        <p style="font-size: 11px; font-weight: 700; z-index: 2;">Kerala Rice Mix</p>
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150&q=80" alt="Rice Pack">
+                    </div>
+                </div>
+
+                <!-- Main Menu Food Section -->
+                <h3 class="section-title">InstaFood Menu</h3>
+                <div class="food-grid" id="food-grid-container">
+                    <!-- Dynamic food items injected here -->
+                </div>
+            </div>
+
+            <!-- ================= TAB 2: HISTORY (SEARCH HISTORY) ================= -->
+            <div id="tab-history" class="tab-content">
+                <div class="section-title">Your Search History</div>
+                <div class="history-list" id="search-history-container">
+                    <!-- Dynamic search items -->
+                </div>
+            </div>
+
+            <!-- ================= TAB 3: MONEY ================= -->
+            <div id="tab-money" class="tab-content">
+                <div class="section-title">InstaFood Wallet</div>
+                <div class="wallet-card">
+                    <div class="wallet-balance-label">Available Balance</div>
+                    <div class="wallet-balance" id="wallet-balance-text">₹480.50</div>
+                    <div class="wallet-footer">
+                        <span>SuperSaver Club Member</span>
+                        <i class="fa-solid fa-crown" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; background: #fff; padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 15px;">Active Offers</h4>
+                    <p style="font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-percent" style="color:var(--brand-color); margin-right: 8px;"></i> Get 20% Cashback on ordering via InstaFood Wallet!</p>
+                </div>
+            </div>
+
+            <!-- ================= TAB 4: PROFILE (HIGHLY ADVANCED FORM) ================= -->
+            <div id="tab-profile" class="tab-content">
+                <div class="profile-container">
+                    <div class="profile-avatar-big">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="profile-name-title" id="prof-display-name">GUEST USER</div>
+                    <div class="profile-tagline">Manage Your Delivery Details ⚙️</div>
+                    
+                    <div class="profile-form">
+                        
+                        <!-- Name Field -->
+                        <div class="form-group">
+                            <label><i class="fa-regular fa-circle-user"></i> Receiver Full Name</label>
+                            <input type="text" id="prof-name" placeholder="E.g., Rahul Kumar">
+                        </div>
+
+                        <!-- Receiver Mobile No. -->
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-phone"></i> Receiver Mobile Number</label>
+                            <input type="tel" id="prof-phone" placeholder="E.g., +91 73043 56716">
+                        </div>
+
+                        <!-- WhatsApp No. -->
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-whatsapp"></i> WhatsApp Number</label>
+                            <input type="tel" id="prof-whatsapp" placeholder="E.g., +91 73043 56716">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label><i class="fa-regular fa-envelope"></i> Email Address</label>
+                            <input type="email" id="prof-email" placeholder="E.g., user@example.com">
+                        </div>
+
+                        <!-- Manual Address / Google Maps link -->
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-map-location-dot"></i> Delivery Address / Google Maps Link</label>
+                            <textarea id="prof-address" rows="3" placeholder="Enter manual address or use Detect GPS button below..."></textarea>
+                            
+                            <!-- Premium GPS Auto Location Grabber -->
+                            <button class="gps-btn" id="gps-btn" onclick="getGPSLocation()">
+                                <i class="fa-solid fa-location-crosshairs"></i> Detect Live Location (GPS)
+                            </button>
+                        </div>
+
+                        <!-- Save Profile Button -->
+                        <button class="save-profile-btn" onclick="saveUserProfile()">
+                            <i class="fa-regular fa-circle-check"></i> Save Profile Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= BLINKIT-STYLE FLOATING GREEN CART PILL ================= -->
+        <div id="cart-strip" onclick="openCartModal()">
+            <div class="cart-strip-left">
+                <!-- Stack of overlapping product thumbnails loaded dynamically -->
+                <div class="cart-items-thumbnails" id="cart-strip-thumbnails">
+                    <!-- Dynamic mini pictures added here -->
+                </div>
+                <div class="cart-pill-meta">
+                    <span class="cart-pill-title" id="cart-strip-qty">0 Items</span>
+                    <span class="cart-pill-qty" id="cart-strip-total">₹0</span>
+                </div>
+            </div>
+            <button class="cart-pill-btn-right">
+                View Cart <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM NAV BAR (Blinkit Clean Styling) -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" onclick="switchTab('delivery', event)">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('history', event)">
+                <i class="fa-solid fa-bag-shopping"></i> Order Again
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('money', event)">
+                <i class="fa-solid fa-wallet"></i> Wallet
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('profile', event)">
+                <i class="fa-regular fa-user"></i> Profile
+            </a>
+            <a href="#" class="nav-item district-tab" onclick="switchTab('delivery', event)">
+                <i class="fa-solid fa-gem"></i> district
+            </a>
+        </nav>
+    </div>
+
+    <!-- CART MODAL (DRAWER) -->
+    <div class="modal-overlay" id="cart-overlay" onclick="closeCartModal()"></div>
+    <div class="modal-drawer" id="cart-drawer">
+        <div class="modal-header">
+            <h3>My Bucket</h3>
+            <button class="close-btn" onclick="closeCartModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="cart-items-container">
+            <!-- Dynamic Cart Items list -->
+        </div>
+        <div class="bill-details">
+            <div class="bill-row">
+                <span>Items Subtotal</span>
+                <span id="bill-subtotal">₹0</span>
+            </div>
+            <div class="bill-row">
+                <span>Delivery Charge</span>
+                <span>₹30</span>
+            </div>
+            <div class="bill-row">
+                <span>GST & Restaurant Charges</span>
+                <span>₹18</span>
+            </div>
+            <div class="bill-row total">
+                <span>Grand Total</span>
+                <span id="bill-grand-total">₹0</span>
+            </div>
+        </div>
+        <div style="margin-top: 15px;">
+            <button class="whatsapp-submit-btn" onclick="sendOrderToWhatsApp()">
+                <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> Order on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Imports (v10 modular syntax) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC84FBpn-O2VkHPJCw9O3oKDnNZ-2K1iG4",
+            authDomain: "mrel-8a378.firebaseapp.com",
+            databaseURL: "https://mrel-8a378-default-rtdb.firebaseio.com",
+            projectId: "mrel-8a378",
+            storageBucket: "mrel-8a378.firebasestorage.app",
+            messagingSenderId: "1062382184856",
+            appId: "1:1062382184856:web:43f6cdb4e1b67a8d0a63ed",
+            measurementId: "G-1C3D7RFMHE"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Global States
+        let menuItems = {};
+        let cart = {};
+        let searchHistory = JSON.parse(localStorage.getItem('instafood_search_history')) || [];
+        
+        // Load User Profile from local storage or set defaults
+        let userProfile = JSON.parse(localStorage.getItem('instafood_profile')) || {
+            name: "GUEST USER",
+            phone: "+91 73043 56716",
+            whatsapp: "+91 73043 56716",
+            email: "user.instafood@gmail.com",
+            address: "HOME - Sector 14, HSR Layout, Bengaluru"
+        };
+
+        // Initial setup on Window Load
+        window.addEventListener('load', () => {
+            initProfileForm();
+            updateHeaderAddress();
+        });
+
+        // Get Started Button Click Transition
+        document.getElementById('btn-get-started').addEventListener('click', () => {
+            const welcome = document.getElementById('welcome-screen');
+            const dashboard = document.getElementById('dashboard-screen');
+            welcome.style.opacity = '0';
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                document.body.style.backgroundColor = '#ffffff';
+                dashboard.style.display = 'block';
+                setTimeout(() => {
+                    dashboard.style.opacity = '1';
+                }, 50);
+            }, 400);
+        });
+
+        // 1. Fetch Banner Slider images (16:9)
+        const slideTrack = document.getElementById('slide-track-container');
+        onValue(ref(db, 'banners'), (snapshot) => {
+            slideTrack.innerHTML = '';
+            const data = snapshot.val();
+            const bannerUrls = [];
+
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    bannerUrls.push(data[key].url);
+                });
+            } else {
+                bannerUrls.push("https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80");
+            }
+
+            bannerUrls.forEach((url, index) => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.className = `slide-img ${index === 0 ? 'active' : ''}`;
+                img.alt = `Promo Slide ${index + 1}`;
+                slideTrack.appendChild(img);
+            });
+
+            startBannerSlider();
+        });
+
+        // Carousel Logic
+        let slideIndex = 0;
+        let sliderInterval = null;
+
+        function startBannerSlider() {
+            if (sliderInterval) clearInterval(sliderInterval);
+            const slides = document.querySelectorAll('.slide-img');
+            if (slides.length <= 1) return;
+
+            sliderInterval = setInterval(() => {
+                slides[slideIndex].classList.remove('active');
+                slideIndex = (slideIndex + 1) % slides.length;
+                slides[slideIndex].classList.add('active');
+            }, 3000);
+        }
+
+        // 2. Fetch Food Items dynamically from Firebase
+        const foodGrid = document.getElementById('food-grid-container');
+        onValue(ref(db, 'food_items'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                menuItems = data; // store globally
+                renderMenu(menuItems);
+            } else {
+                foodGrid.innerHTML = '<p style="text-align:center; color: #999; grid-column: 1/-1; padding: 20px;">No items available. Please add some from the Admin Panel.</p>';
+            }
+        });
+
+        // Render Menu with Cart Buttons
+        function renderMenu(items) {
+            foodGrid.innerHTML = '';
+            Object.keys(items).forEach(key => {
+                const item = items[key];
+                const cartQty = cart[key] ? cart[key].qty : 0;
+                
+                let actionBtnHTML = '';
+                if (cartQty > 0) {
+                    actionBtnHTML = `
+                        <div class="qty-controller">
+                            <button class="qty-btn" onclick="updateCartItem('${key}', -1)">-</button>
+                            <span class="qty-val">${cartQty}</span>
+                            <button class="qty-btn" onclick="updateCartItem('${key}', 1)">+</button>
+                        </div>
+                    `;
+                } else {
+                    actionBtnHTML = `<button class="add-btn" onclick="updateCartItem('${key}', 1)">ADD</button>`;
+                }
+
+                const itemHTML = `
+                    <div class="food-card" data-title="${item.title.toLowerCase()}" data-desc="${item.description.toLowerCase()}">
+                        <div class="food-img-container">
+                            <img src="${item.imageUrl}" alt="${item.title}">
+                            <div class="veg-nonveg ${item.type}"></div>
+                        </div>
+                        <div class="food-details">
+                            <h4>${item.title}</h4>
+                            <div>
+                                <span class="rating-box">${item.rating} <i class="fa-solid fa-star" style="font-size: 9px;"></i></span>
+                            </div>
+                            <p>${item.description}</p>
+                            <div class="price-and-add">
+                                <span class="price">₹${item.price}</span>
+                                <div class="add-btn-wrapper">
+                                    ${actionBtnHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                foodGrid.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+
+        // Cart Update Mechanism
+        window.updateCartItem = function(key, val) {
+            const item = menuItems[key];
+            if (!item) return;
+
+            if (!cart[key]) {
+                cart[key] = {
+                    title: item.title,
+                    price: parseFloat(item.price),
+                    imageUrl: item.imageUrl, // Image URL passed to display on cart strip pill
+                    qty: 0
+                };
+            }
+
+            cart[key].qty += val;
+
+            if (cart[key].qty <= 0) {
+                delete cart[key];
+            }
+
+            // Sync with DOM and UI
+            renderMenu(menuItems);
+            updateCartStrip();
+            renderCartModal();
+        }
+
+        // Dynamic Cart Strip with item Overlapping Thumbnails
+        function updateCartStrip() {
+            const strip = document.getElementById('cart-strip');
+            const thumbContainer = document.getElementById('cart-strip-thumbnails');
+            
+            let totalQty = 0;
+            let totalPrice = 0;
+
+            thumbContainer.innerHTML = ''; // clear previous thumbnails
+
+            Object.keys(cart).forEach(key => {
+                totalQty += cart[key].qty;
+                totalPrice += (cart[key].price * cart[key].qty);
+
+                // Add thumbnails of added items
+                const img = document.createElement('img');
+                img.src = cart[key].imageUrl;
+                img.className = 'cart-thumb-img';
+                thumbContainer.appendChild(img);
+            });
+
+            if (totalQty > 0) {
+                document.getElementById('cart-strip-qty').innerText = `${totalQty} Item${totalQty > 1 ? 's' : ''}`;
+                document.getElementById('cart-strip-total').innerText = `₹${totalPrice}`;
+                strip.classList.add('show');
+            } else {
+                strip.classList.remove('show');
+            }
+        }
+
+        // Render Cart Details in Drawer
+        function renderCartModal() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            let totalAmount = 0;
+
+            Object.keys(cart).forEach(key => {
+                const item = cart[key];
+                const itemCost = item.price * item.qty;
+                totalAmount += itemCost;
+
+                const itemHTML = `
+                    <div class="cart-item">
+                        <div>
+                            <div class="cart-item-name">${item.title}</div>
+                            <div class="cart-item-price">₹${item.price} × ${item.qty}</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap: 10px;">
+                            <span style="font-weight:700; font-size:14px; margin-right:5px;">₹${itemCost}</span>
+                            <div class="add-btn-wrapper" style="width: 75px; height: 28px;">
+                                <div class="qty-controller">
+                                    <button class="qty-btn" style="font-size:12px;" onclick="updateCartItem('${key}', -1)">-</button>
+                                    <span class="qty-val" style="font-size:11px;">${item.qty}</span>
+                                    <button class="qty-btn" style="font-size:12px;" onclick="updateCartItem('${key}', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            if (totalAmount === 0) {
+                container.innerHTML = '<p style="text-align:center; padding: 20px; color:#999;">Your Cart is Empty</p>';
+            }
+
+            const deliveryFee = totalAmount > 0 ? 30 : 0;
+            const taxes = totalAmount > 0 ? 18 : 0;
+            const grandTotal = totalAmount + deliveryFee + taxes;
+
+            document.getElementById('bill-subtotal').innerText = `₹${totalAmount}`;
+            document.getElementById('bill-grand-total').innerText = `₹${grandTotal}`;
+        }
+
+        // WhatsApp Order Dispatch (Dynamic using Profile Fields & Auto Map Coordinates)
+        window.sendOrderToWhatsApp = function() {
+            if (Object.keys(cart).length === 0) {
+                alert("Please add items to your cart first!");
+                return;
+            }
+
+            let message = "🍔 *New InstaFood Order Received!* 🍔\n";
+            message += "======================================\n\n";
+            message += `👤 *Receiver Name:* ${userProfile.name}\n`;
+            message += `📞 *Mobile No:* ${userProfile.phone}\n`;
+            message += `💬 *WhatsApp No:* ${userProfile.whatsapp}\n`;
+            message += `📧 *Email Address:* ${userProfile.email}\n`;
+            message += `📍 *Delivery Address:* \n_${userProfile.address}_\n\n`;
+            message += "======================================\n";
+            message += `🛍️ *Order Items:*\n`;
+
+            let subtotal = 0;
+            Object.keys(cart).forEach((key, index) => {
+                const item = cart[key];
+                const cost = item.price * item.qty;
+                subtotal += cost;
+                message += `${index + 1}. *${item.title}* [Qty: ${item.qty}] - ₹${cost}\n`;
+            });
+
+            const delivery = 30;
+            const taxes = 18;
+            const grandTotal = subtotal + delivery + taxes;
+
+            message += `\n======================================\n`;
+            message += `💵 *Subtotal:* ₹${subtotal}\n`;
+            message += `🚚 *Delivery Charge:* ₹${delivery}\n`;
+            message += `📝 *Taxes:* ₹${taxes}\n`;
+            message += `💰 *Grand Total:* ₹${grandTotal}\n`;
+            message += `======================================\n\n`;
+            message += `Please confirm my order immediately. Thanks!`;
+
+            const targetPhone = userProfile.whatsapp.replace(/[^0-9]/g, ''); 
+            const fallbackPhone = "917304356716"; 
+            const activePhone = targetPhone ? targetPhone : fallbackPhone;
+
+            const encodedText = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${activePhone}?text=${encodedText}`;
+
+            window.open(waUrl, '_blank');
+        }
+
+        // GPS Geolocation Auto Maps Link Finder
+        window.getGPSLocation = function() {
+            const gpsBtn = document.getElementById('gps-btn');
+            const addressInput = document.getElementById('prof-address');
+
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser!");
+                return;
+            }
+
+            gpsBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Getting GPS Coordinates...';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                    
+                    // Fill text area with Map Link and placeholder
+                    addressInput.value = `📍 Maps Link: ${googleMapsLink}\n(Complete Address details: )`;
+                    
+                    gpsBtn.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #25D366;"></i> Location Captured!';
+                    setTimeout(() => {
+                        gpsBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Detect Live Location (GPS)';
+                    }, 3000);
+                },
+                (error) => {
+                    console.error(error);
+                    alert("GPS access denied or unavailable. Please type manually or allow location permissions.");
+                    gpsBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Detect Live Location (GPS)';
+                },
+                { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+            );
+        };
+
+        // Initialize Form Values from State
+        function initProfileForm() {
+            document.getElementById('prof-name').value = userProfile.name;
+            document.getElementById('prof-phone').value = userProfile.phone;
+            document.getElementById('prof-whatsapp').value = userProfile.whatsapp;
+            document.getElementById('prof-email').value = userProfile.email;
+            document.getElementById('prof-address').value = userProfile.address;
+            document.getElementById('prof-display-name').innerText = userProfile.name.toUpperCase();
+        }
+
+        // Save User Profile to LocalStorage
+        window.saveUserProfile = function() {
+            const name = document.getElementById('prof-name').value.trim();
+            const phone = document.getElementById('prof-phone').value.trim();
+            const whatsapp = document.getElementById('prof-whatsapp').value.trim();
+            const email = document.getElementById('prof-email').value.trim();
+            const address = document.getElementById('prof-address').value.trim();
+
+            if (!name || !phone || !whatsapp || !email || !address) {
+                alert("Please fill in all profile fields before saving.");
+                return;
+            }
+
+            userProfile = { name, phone, whatsapp, email, address };
+            localStorage.setItem('instafood_profile', JSON.stringify(userProfile));
+            
+            document.getElementById('prof-display-name').innerText = name.toUpperCase();
+            updateHeaderAddress();
+            
+            alert("Profile Details Saved Successfully! 🎉");
+        };
+
+        // Update top-header address
+        function updateHeaderAddress() {
+            const addrEl = document.getElementById('header-address-text');
+            if (userProfile.address.includes('Maps Link:')) {
+                addrEl.innerText = "📍 GPS Location Captured";
+            } else {
+                addrEl.innerText = userProfile.address;
+            }
+        }
+
+        // Handle Live Search and Save Search History
+        const searchInput = document.getElementById('menu-search-input');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.food-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Save Search Term to History on Enter
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query.length > 1) {
+                    saveSearchHistory(query);
+                }
+            }
+        });
+
+        function saveSearchHistory(term) {
+            if (!searchHistory.includes(term)) {
+                searchHistory.unshift(term);
+                if (searchHistory.length > 8) searchHistory.pop(); 
+                localStorage.setItem('instafood_search_history', JSON.stringify(searchHistory));
+                renderSearchHistory();
+            }
+        }
+
+        // Render Search History in the History Tab
+        function renderSearchHistory() {
+            const histContainer = document.getElementById('search-history-container');
+            histContainer.innerHTML = '';
+
+            if (searchHistory.length === 0) {
+                histContainer.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">No search history found.</p>';
+                return;
+            }
+
+            searchHistory.forEach((term, index) => {
+                const row = `
+                    <div class="history-item" onclick="triggerHistorySearch('${term}')">
+                        <div class="history-item-left">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>${term}</span>
+                        </div>
+                        <button class="delete-hist-btn" onclick="deleteHistoryItem(${index}, event)">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+                histContainer.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        // Run Search from History Row
+        window.triggerHistorySearch = function(term) {
+            switchTab('delivery');
+            searchInput.value = term;
+            searchInput.dispatchEvent(new Event('input'));
+        }
+
+        window.deleteHistoryItem = function(index, event) {
+            event.stopPropagation(); 
+            searchHistory.splice(index, 1);
+            localStorage.setItem('instafood_search_history', JSON.stringify(searchHistory));
+            renderSearchHistory();
+        }
+
+        // Click Category to filter items
+        window.filterByCategory = function(category) {
+            switchTab('delivery');
+            searchInput.value = category;
+            searchInput.dispatchEvent(new Event('input'));
+            saveSearchHistory(category);
+        }
+
+        // Drawer Overlay Handlers
+        window.openCartModal = function() {
+            document.getElementById('cart-overlay').classList.add('show');
+            document.getElementById('cart-drawer').classList.add('show');
+            renderCartModal();
+        }
+
+        window.closeCartModal = function() {
+            document.getElementById('cart-overlay').classList.remove('show');
+            document.getElementById('cart-drawer').classList.remove('show');
+        }
+
+        // Bottom Nav Screen Switcher
+        window.switchTab = function(tabId, event = null) {
+            if (event) event.preventDefault();
+
+            // Hide all tab screens
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab screen
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            // Handle bottom menu highlighting
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            if (event) {
+                event.currentTarget.classList.add('active');
+            } else {
+                const matchingTab = Array.from(navItems).find(i => i.innerText.toLowerCase().includes(tabId));
+                if (matchingTab) matchingTab.classList.add('active');
+            }
+
+            // Specific Tab Action Hook
+            if (tabId === 'history') {
+                renderSearchHistory();
+            }
+        }
+
+        // Init history on startup
+        renderSearchHistory();
+    </script>
+</body>
+</html>
