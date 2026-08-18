@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +20,11 @@
             --text-main: #1c1c1c;
             --text-muted: #666666;
             --border-color: #e2e2e2;
-            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --premium-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             --glow-shadow: 0 8px 20px rgba(12, 131, 31, 0.2);
+            --3d-shadow: 0 4px 0 #086116, 0 8px 15px rgba(12, 131, 31, 0.2);
+            --district-color: #4f46e5;
+            --district-gradient: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
         }
 
         * {
@@ -36,6 +40,38 @@
             color: var(--text-main);
             transition: background-color 0.4s ease;
             overflow-x: hidden;
+        }
+
+        /* === 3D & SHINY METALLIC GLOBAL EFFECT === */
+        .shiny-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shiny-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 60px;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 30%,
+                rgba(255, 255, 255, 0.7) 50%,
+                rgba(255, 255, 255, 0.3) 70%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(25deg);
+            pointer-events: none;
+            animation: shiny-sweep 4.5s infinite linear;
+        }
+
+        @keyframes shiny-sweep {
+            0% { left: -120%; }
+            12% { left: 160%; }
+            100% { left: 160%; }
         }
 
         /* === SCREEN 1: WELCOME SCREEN === */
@@ -285,7 +321,7 @@
         }
         .header-profile-btn:active { transform: scale(0.95); }
 
-        /* === BLINKIT SEARCH BAR === */
+        /* === BLINKIT SEARCH BAR + 3D SEARCH ACTION BUTTON === */
         .search-container {
             margin: 10px 0 6px 0;
             position: relative;
@@ -295,16 +331,16 @@
             display: flex;
             align-items: center;
             background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 12px 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+            border-radius: 18px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .search-box:focus-within {
             border-color: var(--brand-color);
-            box-shadow: 0 4px 12px rgba(12, 131, 31, 0.1);
+            box-shadow: 0 6px 20px rgba(12, 131, 31, 0.15);
         }
 
         .search-box input {
@@ -312,17 +348,47 @@
             outline: none;
             background: transparent;
             width: 100%;
-            margin-left: 12px;
+            margin-left: 10px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-main);
         }
         .search-box input::placeholder {
             color: #888888;
+            font-weight: 500;
         }
 
         .search-box i.fa-magnifying-glass { color: #555555; font-size: 18px;}
+        
+        /* Premium 3D Search Button */
+        .search-action-btn {
+            background: var(--brand-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 0 #086116, 0 6px 14px rgba(12, 131, 31, 0.25);
+            transition: all 0.15s ease-in-out;
+            margin-left: 8px;
+            outline: none;
+            white-space: nowrap;
+        }
+        .search-action-btn:hover {
+            box-shadow: 0 4px 0 #054a10, 0 8px 18px rgba(12, 131, 31, 0.3);
+        }
+        .search-action-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0px 0 #086116, 0 2px 4px rgba(12, 131, 31, 0.1);
+        }
+
         .search-box i.fa-microphone { color: #222222; font-size: 18px; cursor: pointer;}
+        .search-box i.fa-microphone.fa-bounce { color: var(--brand-color); }
 
         /* === 16:9 Carousel Slider === */
         .promo-banner-slider {
@@ -440,6 +506,11 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease;
+        }
+        .promo-block-card:hover {
+            transform: translateY(-2px);
         }
         .promo-block-card.green-dark { background-color: #0c6a1a; }
         .promo-block-card.green-light { background-color: #128224; }
@@ -474,11 +545,11 @@
             z-index: 1;
         }
 
-        /* === Food Grid === */
+        /* === Food Grid with 3D Depth === */
         .food-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 18px;
             margin-top: 15px;
         }
 
@@ -497,13 +568,15 @@
             background: var(--bg-color);
             border: 1.5px solid var(--border-color);
             position: relative;
-            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.4s ease;
         }
         
         .food-card:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04); 
-            border-color: rgba(12, 131, 31, 0.15);
+            transform: translateY(-5px) rotateX(1deg) rotateY(1deg);
+            box-shadow: 0 15px 35px rgba(12, 131, 31, 0.1); 
+            border-color: rgba(12, 131, 31, 0.25);
         }
 
         .food-img-container {
@@ -523,7 +596,7 @@
             transition: transform 0.3s;
         }
         .food-card:hover .food-img-container img {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
         .veg-nonveg {
@@ -579,7 +652,7 @@
 
         .price { font-size: 15px; font-weight: 800; color: #1c1c1c; }
 
-        /* Dynamic Interactive Cart Button */
+        /* Dynamic Interactive 3D Cart Button */
         .add-btn-wrapper {
             position: relative;
             min-width: 80px;
@@ -596,14 +669,21 @@
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
-            box-shadow: 0 3px 6px rgba(12, 131, 31, 0.05);
-            transition: all 0.2s;
+            box-shadow: 0 3px 0 var(--brand-color), 0 3px 6px rgba(12, 131, 31, 0.15);
+            transition: all 0.15s ease-in-out;
+            transform: translateY(-2px);
         }
 
         .add-btn:hover {
             background: var(--brand-color);
             color: white;
-            box-shadow: var(--glow-shadow);
+            box-shadow: 0 3px 0 #096a18, 0 6px 12px rgba(12, 131, 31, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .add-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 0px 0 var(--brand-color), 0 1px 3px rgba(12, 131, 31, 0.1);
         }
 
         .qty-controller {
@@ -616,7 +696,13 @@
             border-radius: 10px;
             color: white;
             overflow: hidden;
-            box-shadow: var(--glow-shadow);
+            box-shadow: 0 3px 0 #096a18, 0 6px 12px rgba(12, 131, 31, 0.2);
+            transition: all 0.15s;
+            transform: translateY(-2px);
+        }
+        .qty-controller:active {
+            transform: translateY(1px);
+            box-shadow: 0 0px 0 #096a18, 0 2px 4px rgba(12, 131, 31, 0.1);
         }
 
         .qty-btn {
@@ -828,11 +914,13 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 6px 0 #128c3e, 0 8px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.15s;
+            transform: translateY(-2px);
         }
         .whatsapp-submit-btn:active {
-            transform: scale(0.97);
+            transform: translateY(1px);
+            box-shadow: 0 0px 0 #128c3e, 0 2px 4px rgba(37, 211, 102, 0.15);
         }
 
         /* === TAB SECTIONS === */
@@ -1028,15 +1116,17 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: var(--glow-shadow);
-            transition: transform 0.2s;
+            transition: transform 0.15s;
             margin-top: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transform: translateY(-2px);
         }
         .save-profile-btn:active {
-            transform: scale(0.98);
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(12, 131, 31, 0.15);
         }
 
         /* === BLINKIT MINIMAL NAVIGATION BAR === */
@@ -1086,13 +1176,20 @@
         /* Special Purple District Button styled exactly like Blinkit */
         .nav-item.district-tab {
             background: #eef2ff;
-            color: #4f46e5;
+            color: var(--district-color);
             padding: 4px 10px;
             border-radius: 10px;
             border: 1px solid #c7d2fe;
         }
         .nav-item.district-tab i {
-            color: #4f46e5;
+            color: var(--district-color);
+        }
+        .nav-item.district-tab.active {
+            background: var(--district-gradient);
+            color: #ffffff;
+        }
+        .nav-item.district-tab.active i {
+            color: #ffffff;
         }
 
         @media (min-width: 768px) {
@@ -1104,13 +1201,428 @@
                 box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
             }
         }
+
+        /* === NEW: RESTAURANT LIST STYLING === */
+        .restaurant-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 15px;
+        }
+        .restaurant-card-16-9 {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1.5px solid var(--border-color);
+            box-shadow: var(--premium-shadow);
+            transition: transform 0.25s ease;
+        }
+        .restaurant-card-16-9:active {
+            transform: scale(0.97);
+        }
+        .restaurant-card-16-9 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .restaurant-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 75%, transparent 100%);
+            padding: 16px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .restaurant-card-overlay h3 {
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        }
+        .restaurant-card-overlay p {
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* === NEW: RESTAURANT DETAIL SCREEN (FULL SUB-PAGE) === */
+        #restaurant-detail-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 1200;
+            overflow-y: auto;
+            display: none;
+            padding: 16px 16px 95px 16px;
+        }
+        #restaurant-detail-screen.show {
+            display: block;
+        }
+
+        .back-to-list-btn {
+            background: #f1f2f6;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .back-to-list-btn:active {
+            background: #e2e3e8;
+        }
+
+        /* Ultra Compact Unified Card Layout: 16:9 Video Box on Left, Info on Right */
+        .res-detail-hero-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1.5px solid var(--border-color);
+            padding: 12px;
+            margin-bottom: 16px;
+            box-shadow: var(--premium-shadow);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .res-mini-video-box {
+            width: 140px;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: #000;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .res-mini-video-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        /* Play Button Overlay on Thumbnail */
+        .res-mini-video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .res-mini-video-box:hover .res-mini-video-play-overlay {
+            background: rgba(0,0,0,0.4);
+        }
+        .res-mini-video-play-overlay i {
+            color: #ffffff;
+            font-size: 26px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            animation: pulsePlay 2s infinite;
+        }
+
+        @keyframes pulsePlay {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.3; transform: scale(0.9); }
+        }
+
+        .res-hero-text-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0; /* Prevents text overflow */
+        }
+        .res-hero-text-container h2 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .res-hero-text-container .tagline {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--brand-color);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .res-hero-text-container .purpose {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            background: #f8f9fa;
+            padding: 5px 8px;
+            border-radius: 8px;
+            border-left: 2px solid var(--brand-color);
+            margin: 2px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .res-hero-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .res-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 6px;
+            background: #fff8e6;
+            color: #d35400;
+            border: 1px solid #ffe8b3;
+            white-space: nowrap;
+        }
+        .res-hero-badge.chef-badge {
+            background: #f0f7ff;
+            color: #0066cc;
+            border: 1px solid #d4e6ff;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 360px) {
+            .res-mini-video-box { width: 110px; }
+            .res-hero-text-container h2 { font-size: 14px; }
+        }
+
+        /* Large Immersive Theater Video Modal */
+        #theater-video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #theater-video-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .theater-container {
+            width: 95%;
+            max-width: 850px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #000;
+        }
+        .theater-container iframe, .theater-container video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .close-theater-btn {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: rgba(255,255,255,0.25);
+            border: none;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(5px);
+            transition: background 0.2s;
+            z-index: 100;
+        }
+        .close-theater-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        @media (max-width: 480px) {
+            .close-theater-btn {
+                top: 10px;
+                right: 10px;
+                background: rgba(0,0,0,0.6);
+                z-index: 101;
+            }
+        }
+
+        .res-video-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border: none;
+        }
+        .res-video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Live making custom instructions area */
+        .live-making-section {
+            background: #fffdf0;
+            border: 1.5px dashed #ffd32c;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 22px;
+        }
+        .live-making-section h4 {
+            font-size: 13px;
+            font-weight: 800;
+            color: #1c1c1c;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .live-making-section textarea {
+            width: 100%;
+            border: 1.5px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            outline: none;
+            resize: none;
+            background: #ffffff;
+            color: var(--text-main);
+        }
+        .live-making-section textarea:focus {
+            border-color: #ffd32c;
+        }
+
+        /* Horizontal strip rows ("pattiya") */
+        .restaurant-food-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+        .restaurant-food-row:hover {
+            border-color: rgba(12, 131, 31, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .food-row-pic-box {
+            position: relative;
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #eeeeee;
+            flex-shrink: 0;
+        }
+        .food-row-pic-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .food-row-pic-box .label-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.65);
+            color: white;
+            font-size: 8px;
+            text-align: center;
+            padding: 1px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .food-row-details {
+            flex-grow: 1;
+        }
+        .food-row-details h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+        .food-row-details .price {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--brand-color);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .prep-video-btn {
+            background: #ebf3ff;
+            color: #0066cc;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .prep-video-btn:active {
+            background: #d4e6ff;
+        }
+
     </style>
 </head>
 <body>
 
     <!-- ================= SCREEN 1: WELCOME SCREEN ================= -->
     <div id="welcome-screen">
-        <div class="welcome-container">
+        <div class="welcome-container shiny-effect">
             <div class="image-section">
                 <img src="https://i.ibb.co/cK3Sx23H/file-00000000e1708211bfbd72dcf3decf46.png" alt="Instafood Poster">
             </div>
@@ -1129,7 +1641,7 @@
             </div>
 
             <div class="bottom-section">
-                <button class="btn-3d" id="btn-get-started">Get Started</button>
+                <button class="btn-3d shiny-effect" id="btn-get-started">Get Started</button>
             </div>
         </div>
     </div>
@@ -1151,9 +1663,9 @@
                     </div>
                     <div class="header-actions">
                         <!-- Rupee Wallet Badge -->
-                        <div class="wallet-badge-btn" onclick="switchTab('money')">
+                        <div class="wallet-badge-btn" onclick="switchTab('profile')">
                             <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Money Wallet Icon">
-                            <span id="wallet-balance-badge">₹480</span>
+                            <span id="wallet-balance-badge">₹480.50</span>
                         </div>
                         <!-- Profile Circular Button -->
                         <div class="header-profile-btn" onclick="switchTab('profile')">
@@ -1162,12 +1674,15 @@
                     </div>
                 </header>
 
-                <!-- BLINKIT SEARCH BOX -->
+                <!-- BLINKIT SEARCH BOX WITH EXPLICIT SEARCH BUTTON -->
                 <div class="search-container">
                     <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-magnifying-glass" style="color:#666;"></i>
                         <input type="text" id="menu-search-input" placeholder='Search "healthy snacks, biryani, or grocery"'>
-                        <div style="border-left: 1px solid #ddd; padding-left: 12px; margin-left: 6px;">
+                        <button id="search-action-btn" class="search-action-btn shiny-effect">
+                            <i class="fa-solid fa-arrow-right"></i> Search
+                        </button>
+                        <div style="border-left: 1px solid #ddd; padding-left: 12px; margin-left: 6px; display: flex; align-items:center;">
                             <i class="fa-solid fa-microphone"></i>
                         </div>
                     </div>
@@ -1179,42 +1694,7 @@
                 
                 <!-- Horizontal scrolling Categories -->
                 <div class="category-list">
-                    <div class="category-item" onclick="filterByCategory('Biryani')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150&q=80" alt="Biryani" class="category-img">
-                        </div>
-                        <span>Biryani</span>
-                    </div>
-                    <div class="category-item" onclick="filterByCategory('Pizza')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&q=80" alt="Pizza" class="category-img">
-                        </div>
-                        <span>Pizza</span>
-                    </div>
-                    <div class="category-item" onclick="filterByCategory('Burger')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&q=80" alt="Burger" class="category-img">
-                        </div>
-                        <span>Burger</span>
-                    </div>
-                    <div class="category-item" onclick="filterByCategory('Paneer')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150&q=80" alt="Paneer" class="category-img">
-                        </div>
-                        <span>Paneer</span>
-                    </div>
-                    <div class="category-item" onclick="filterByCategory('Chinese')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=150&q=80" alt="Chinese" class="category-img">
-                        </div>
-                        <span>Chinese</span>
-                    </div>
-                    <div class="category-item" onclick="filterByCategory('Desserts')">
-                        <div class="category-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150&q=80" alt="Desserts" class="category-img">
-                        </div>
-                        <span>Desserts</span>
-                    </div>
+                    <!-- Dynamic categories injected here from Firebase -->
                 </div>
 
                 <!-- 16:9 Banner Carousels -->
@@ -1228,7 +1708,7 @@
 
                 <!-- BLINKIT FESTIVE PROMOS CARDS GRID -->
                 <div class="blinkit-promos-grid">
-                    <div class="promo-block-card" onclick="filterByCategory('Desserts')">
+                    <div class="promo-block-card shiny-effect" onclick="filterByCategory('Desserts')">
                         <div>
                             <h4>Festive<br>checklist</h4>
                             <div class="price-badge">₹80</div>
@@ -1236,7 +1716,7 @@
                         <p style="font-size: 11px; font-weight: 700; z-index: 2;">Dessert Mix</p>
                         <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80" alt="Dessert Plate">
                     </div>
-                    <div class="promo-block-card green-dark" onclick="filterByCategory('Biryani')">
+                    <div class="promo-block-card green-dark shiny-effect" onclick="filterByCategory('Biryani')">
                         <div>
                             <h4>Sadhya<br>Specials</h4>
                             <div class="price-badge">From ₹120</div>
@@ -1261,26 +1741,28 @@
                 </div>
             </div>
 
-            <!-- ================= TAB 3: MONEY ================= -->
-            <div id="tab-money" class="tab-content">
-                <div class="section-title">InstaFood Wallet</div>
-                <div class="wallet-card">
-                    <div class="wallet-balance-label">Available Balance</div>
-                    <div class="wallet-balance" id="wallet-balance-text">₹480.50</div>
-                    <div class="wallet-footer">
-                        <span>SuperSaver Club Member</span>
-                        <i class="fa-solid fa-crown" style="color: #ffd700;"></i>
-                    </div>
-                </div>
-                <div style="margin-top: 25px; background: #fff; padding: 20px; border-radius: 16px; border: 1px solid var(--border-color);">
-                    <h4 style="margin-bottom: 15px;">Active Offers</h4>
-                    <p style="font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-percent" style="color:var(--brand-color); margin-right: 8px;"></i> Get 20% Cashback on ordering via InstaFood Wallet!</p>
+            <!-- ================= TAB 3: RESTAURANTS (PARTNERS TAB) ================= -->
+            <div id="tab-restaurants" class="tab-content">
+                <div class="section-title">Partner Restaurants</div>
+                <div class="restaurant-list" id="restaurant-list-container">
+                    <!-- Dynamic Restaurant list in 16:9 ratio -->
                 </div>
             </div>
 
-            <!-- ================= TAB 4: PROFILE (HIGHLY ADVANCED FORM) ================= -->
+            <!-- ================= TAB 4: PROFILE & WALLET (INTEGRATED) ================= -->
             <div id="tab-profile" class="tab-content">
                 <div class="profile-container">
+                    
+                    <!-- Wallet Merged at Top -->
+                    <div class="wallet-card" style="margin-top: 0; margin-bottom: 25px;">
+                        <div class="wallet-balance-label">Available Balance</div>
+                        <div class="wallet-balance" id="wallet-balance-text">₹480.50</div>
+                        <div class="wallet-footer">
+                            <span>SuperSaver Club Member</span>
+                            <i class="fa-solid fa-crown" style="color: #ffd700;"></i>
+                        </div>
+                    </div>
+
                     <div class="profile-avatar-big">
                         <i class="fa-solid fa-user-gear"></i>
                     </div>
@@ -1325,13 +1807,48 @@
                         </div>
 
                         <!-- Save Profile Button -->
-                        <button class="save-profile-btn" onclick="saveUserProfile()">
+                        <button class="save-profile-btn shiny-effect" onclick="saveUserProfile()">
                             <i class="fa-regular fa-circle-check"></i> Save Profile Details
                         </button>
                     </div>
                 </div>
             </div>
 
+            <!-- ================= TAB 5: DISTRICT SPECIALS (NEW 5TH TAB) ================= -->
+            <div id="tab-district" class="tab-content">
+                <div class="section-title">District Specials & Offers 💎</div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px; font-weight: 500;">
+                    Your local area's finest culinary treasures, compiled automatically from premium kitchens!
+                </p>
+                <div class="food-grid" id="district-grid-container">
+                    <!-- Dynamic local delicacies of District injected here -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= NEW: RESTAURANT DETAIL SCREEN (OVERLAY) ================= -->
+        <div id="restaurant-detail-screen">
+            <button class="back-to-list-btn" onclick="closeRestaurantDetail()">
+                <i class="fa-solid fa-arrow-left"></i> Back to Restaurants
+            </button>
+
+            <!-- Unified Compact Hero Card (Video Box + Metadata Info side-by-side) -->
+            <div class="res-detail-hero-card shiny-effect" id="res-detail-header-section">
+                <!-- Dynamic Hero Layout Content loaded here -->
+            </div>
+
+            <!-- "Live making according to you" custom panel -->
+            <div class="live-making-section">
+                <h4><i class="fa-solid fa-wand-magic-sparkles" style="color: #ffd32c;"></i> Live making according to you</h4>
+                <textarea id="custom-making-note" rows="2" placeholder="Write custom prep notes here... (e.g., Make it extra spicy, less oil, cut onions finely)"></textarea>
+            </div>
+
+            <!-- Food Rows List -->
+            <h3 class="restaurant-menu-title" style="margin-bottom: 12px; font-weight:800;">Chef Specials Menu</h3>
+            <div id="res-food-rows-container">
+                <!-- Dynamic Horizontal Food Rows loaded here -->
+            </div>
         </div>
 
         <!-- ================= BLINKIT-STYLE FLOATING GREEN CART PILL ================= -->
@@ -1351,7 +1868,7 @@
             </button>
         </div>
 
-        <!-- BOTTOM NAV BAR (Blinkit Clean Styling) -->
+        <!-- BOTTOM NAV BAR (Blinkit Clean 5 Tabs Styling) -->
         <nav class="bottom-nav">
             <a href="#" class="nav-item active" onclick="switchTab('delivery', event)">
                 <i class="fa-solid fa-house"></i> Home
@@ -1359,14 +1876,14 @@
             <a href="#" class="nav-item" onclick="switchTab('history', event)">
                 <i class="fa-solid fa-bag-shopping"></i> Order Again
             </a>
-            <a href="#" class="nav-item" onclick="switchTab('money', event)">
-                <i class="fa-solid fa-wallet"></i> Wallet
+            <a href="#" class="nav-item" onclick="switchTab('restaurants', event)">
+                <i class="fa-solid fa-store"></i> Partners
             </a>
             <a href="#" class="nav-item" onclick="switchTab('profile', event)">
                 <i class="fa-regular fa-user"></i> Profile
             </a>
-            <a href="#" class="nav-item district-tab" onclick="switchTab('delivery', event)">
-                <i class="fa-solid fa-gem"></i> district
+            <a href="#" class="nav-item district-tab" onclick="switchTab('district', event)">
+                <i class="fa-solid fa-gem"></i> District
             </a>
         </nav>
     </div>
@@ -1400,16 +1917,41 @@
             </div>
         </div>
         <div style="margin-top: 15px;">
-            <button class="whatsapp-submit-btn" onclick="sendOrderToWhatsApp()">
+            <button class="whatsapp-submit-btn shiny-effect" onclick="sendOrderToWhatsApp()">
                 <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> Order on WhatsApp
             </button>
+        </div>
+    </div>
+
+    <!-- PREPARING VIDEO MODAL -->
+    <div class="modal-overlay" id="prep-video-overlay" onclick="closePrepVideoModal()"></div>
+    <div class="modal-drawer" id="prep-video-drawer" style="max-height: 55vh; border-radius: 24px 24px 0 0;">
+        <div class="modal-header">
+            <h3>Preparing Live Preview</h3>
+            <button class="close-btn" onclick="closePrepVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="padding: 0;">
+            <div class="res-video-wrapper" style="aspect-ratio: 16/9; border-radius: 0; border: none;">
+                <iframe id="prep-video-iframe" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- THEATER VIDEO MODAL (LARGE FULL-SCREEN CINEMATIC PLAYBACK FOR WEBRTC AND YOUTUBE) -->
+    <div id="theater-video-modal" onclick="closeTheaterVideoModal()">
+        <div class="theater-container" onclick="event.stopPropagation()">
+            <button class="close-theater-btn" onclick="closeTheaterVideoModal()">
+                <i class="fa-solid fa-xmark"></i> Close Playback
+            </button>
+            <iframe id="theater-video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
+            <video id="theater-live-video" autoplay playsinline controls style="width: 100%; height: 100%; display: none; object-fit: cover;"></video>
         </div>
     </div>
 
     <!-- Firebase SDK Imports (v10 modular syntax) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, set, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -1428,9 +1970,14 @@
         const db = getDatabase(app);
 
         // Global States
-        let menuItems = {};
+        let standardFoodItems = {}; // General Delivery Store Items
+        let restaurantFoodItems = {}; // Merged Restaurant Specific Items
+        let globalMenuItems = {}; // Unified Complete Inventory (Standard + Restaurant Uploads)
         let cart = {};
+        let currentRestaurantKey = null;
         let searchHistory = JSON.parse(localStorage.getItem('instafood_search_history')) || [];
+        let userPeerConnection = null;
+        let userViewerId = null;
         
         // Load User Profile from local storage or set defaults
         let userProfile = JSON.parse(localStorage.getItem('instafood_profile')) || {
@@ -1441,10 +1988,129 @@
             address: "HOME - Sector 14, HSR Layout, Bengaluru"
         };
 
+        // Default beautiful restaurants mockup if Firebase node is empty
+        const defaultRestaurants = {
+            "res1": {
+                "name": "Instafood Kitchens",
+                "tagline": "“Freshness Dikhe, Taste Mehsoos Ho, Trust Khud Ban Jaye!” 🍽️✨",
+                "purpose": "Food delivery ko sirf fast nahi, transparent aur trustworthy banana.",
+                "chefName": "Head Chef",
+                "rating": "4.8 ★ Highly Recommended",
+                "imageUrl": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+                "youtubeUrl": "https://www.youtube.com/watch?v=oU_RzonA1yE",
+                "menu": {
+                    "res1_item1": {
+                        "title": "Royal Chicken Biryani",
+                        "price": "249",
+                        "imageUrl": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&q=80",
+                        "currentUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=150&q=80",
+                        "prepVideoUrl": "https://www.youtube.com/watch?v=oU_RzonA1yE",
+                        "description": "Succulent chicken layers cooked with premium basmati rice & secret spices.",
+                        "rating": "4.9",
+                        "type": "nonveg"
+                    },
+                    "res1_item2": {
+                        "title": "Garlic Paneer Tikka",
+                        "price": "189",
+                        "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80",
+                        "currentUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=150&q=80",
+                        "prepVideoUrl": "https://www.youtube.com/watch?v=oU_RzonA1yE",
+                        "description": "Clay oven roasted cottage cheese cubes marinated in rich garlic cream.",
+                        "rating": "4.8",
+                        "type": "veg"
+                    }
+                }
+            },
+            "res2": {
+                "name": "The Italian Crust Pizza",
+                "tagline": "Authentic Wood-Fired Slices",
+                "purpose": "Naples-style sourdough pizzas built with fresh basil & imported mozzarella.",
+                "chefName": "Chef Vikas Khanna",
+                "rating": "4.7 ★ Sourdough Experts",
+                "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+                "youtubeUrl": "https://www.youtube.com/watch?v=oU_RzonA1yE",
+                "menu": {
+                    "res2_item1": {
+                        "title": "Classic Margherita Pizza",
+                        "price": "299",
+                        "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80",
+                        "currentUrl": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=150&q=80",
+                        "prepVideoUrl": "https://www.youtube.com/watch?v=oU_RzonA1yE",
+                        "description": "San Marzano tomato spread, fresh basil leaves, and extra virgin olive oil.",
+                        "rating": "4.7",
+                        "type": "veg"
+                    }
+                }
+            }
+        };
+
+        // Helper function to safely convert any YouTube URL into an iframe compatible Embed link
+        function getEmbedUrl(url) {
+            if (!url) return '';
+            if (url.includes('/embed/')) return url;
+
+            let videoId = '';
+            // Match typical browser/short links
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            
+            if (match && match[2].length === 11) {
+                videoId = match[2];
+            } else {
+                try {
+                    const urlObj = new URL(url);
+                    if (urlObj.pathname.includes('/shorts/')) {
+                        const parts = urlObj.pathname.split('/shorts/');
+                        videoId = parts[1].split('/')[0].split('?')[0];
+                    } else if (urlObj.pathname.includes('/live/')) {
+                        const parts = urlObj.pathname.split('/live/');
+                        videoId = parts[1].split('/')[0].split('?')[0];
+                    }
+                } catch (e) {
+                    console.error("URL Parsing failed: ", e);
+                }
+            }
+
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            return url;
+        }
+
+        // Helper function to grab a clean YouTube high-res thumbnail dynamically
+        function getYoutubeThumbnail(url) {
+            if (!url) return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80';
+            
+            let videoId = '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            
+            if (match && match[2].length === 11) {
+                videoId = match[2];
+            } else {
+                try {
+                    const urlObj = new URL(url);
+                    if (urlObj.pathname.includes('/shorts/')) {
+                        const parts = urlObj.pathname.split('/shorts/');
+                        videoId = parts[1].split('/')[0].split('?')[0];
+                    } else if (urlObj.pathname.includes('/live/')) {
+                        const parts = urlObj.pathname.split('/live/');
+                        videoId = parts[1].split('/')[0].split('?')[0];
+                    }
+                } catch (e) {}
+            }
+
+            if (videoId) {
+                return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            }
+            return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80';
+        }
+
         // Initial setup on Window Load
         window.addEventListener('load', () => {
             initProfileForm();
             updateHeaderAddress();
+            initSpeechRecognition();
         });
 
         // Get Started Button Click Transition
@@ -1498,28 +2164,360 @@
             if (slides.length <= 1) return;
 
             sliderInterval = setInterval(() => {
-                slides[slideIndex].classList.remove('active');
+                if(slides[slideIndex]) slides[slideIndex].classList.remove('active');
                 slideIndex = (slideIndex + 1) % slides.length;
-                slides[slideIndex].classList.add('active');
+                if(slides[slideIndex]) slides[slideIndex].classList.add('active');
             }, 3000);
         }
 
-        // 2. Fetch Food Items dynamically from Firebase
-        const foodGrid = document.getElementById('food-grid-container');
-        onValue(ref(db, 'food_items'), (snapshot) => {
+        // Fetch Categories from Database Dynamically
+        onValue(ref(db, 'categories'), (snapshot) => {
+            const categoriesContainer = document.querySelector('.category-list');
+            categoriesContainer.innerHTML = '';
             const data = snapshot.val();
+            
+            const renderCategoryItem = (name, imageUrl) => {
+                const catHTML = `
+                    <div class="category-item" onclick="filterByCategory('${name}')">
+                        <div class="category-img-wrapper">
+                            <img src="${imageUrl}" alt="${name}" class="category-img">
+                        </div>
+                        <span>${name}</span>
+                    </div>
+                `;
+                categoriesContainer.insertAdjacentHTML('beforeend', catHTML);
+            };
+
             if (data) {
-                menuItems = data; // store globally
-                renderMenu(menuItems);
+                Object.keys(data).forEach(key => {
+                    const cat = data[key];
+                    renderCategoryItem(cat.name, cat.imageUrl);
+                });
             } else {
-                foodGrid.innerHTML = '<p style="text-align:center; color: #999; grid-column: 1/-1; padding: 20px;">No items available. Please add some from the Admin Panel.</p>';
+                // Default Fallbacks
+                const defaultCats = [
+                    { name: "Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150&q=80" },
+                    { name: "Pizza", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&q=80" },
+                    { name: "Burger", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150&q=80" },
+                    { name: "Paneer", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150&q=80" },
+                    { name: "Chinese", img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=150&q=80" },
+                    { name: "Desserts", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=150&q=80" }
+                ];
+                defaultCats.forEach(cat => renderCategoryItem(cat.name, cat.img));
             }
         });
 
-        // Render Menu with Cart Buttons
+        // 2. Fetch standard delivery items dynamically from Firebase
+        onValue(ref(db, 'food_items'), (snapshot) => {
+            const data = snapshot.val();
+            standardFoodItems = data ? data : {};
+            rebuildAndRenderMainMenu();
+        });
+
+        // 3. Load Restaurants Node
+        const resListContainer = document.getElementById('restaurant-list-container');
+        onValue(ref(db, 'restaurants'), (snapshot) => {
+            const data = snapshot.val();
+            const activeRestaurants = data ? data : defaultRestaurants;
+            
+            // Re-compile restaurant specific items
+            restaurantFoodItems = {};
+            Object.keys(activeRestaurants).forEach(resKey => {
+                const res = activeRestaurants[resKey];
+                if (res.menu) {
+                    Object.keys(res.menu).forEach(itemKey => {
+                        restaurantFoodItems[itemKey] = res.menu[itemKey];
+                    });
+                }
+            });
+
+            renderRestaurants(activeRestaurants);
+            rebuildAndRenderMainMenu();
+        });
+
+        // Compile Both Standard & Restaurant Uploads into Home and District tabs
+        function rebuildAndRenderMainMenu() {
+            // Merging both objects seamlessly
+            globalMenuItems = { ...standardFoodItems, ...restaurantFoodItems };
+            renderMenu(globalMenuItems);
+            renderDistrictSpecials(globalMenuItems);
+        }
+
+        // Render Restaurants on Restaurants list tab (16:9 Layout)
+        function renderRestaurants(restaurantsData) {
+            resListContainer.innerHTML = '';
+            Object.keys(restaurantsData).forEach(key => {
+                const res = restaurantsData[key];
+                const cardHTML = `
+                    <div class="restaurant-card-16-9 shiny-effect" onclick="openRestaurantDetail('${key}')">
+                        <img src="${res.imageUrl}" alt="${res.name}">
+                        <div class="restaurant-card-overlay">
+                            <h3>${res.name}</h3>
+                            <p><i class="fa-solid fa-pizza-slice"></i> ${res.tagline}</p>
+                        </div>
+                    </div>
+                `;
+                resListContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        // ================= WEBRTC CLIENT STREAM IMPLEMENTATION =================
+        async function connectWebRTCStream(restaurantKey) {
+            // Clear prior connection handle
+            disconnectWebRTC();
+
+            userViewerId = 'viewer_' + Math.random().toString(36).substring(2, 9);
+            userPeerConnection = new RTCPeerConnection({
+                iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+            });
+
+            const liveVideoEl = document.getElementById('theater-live-video');
+
+            // Capture remote tracks
+            userPeerConnection.ontrack = (event) => {
+                if (event.streams && event.streams[0]) {
+                    liveVideoEl.srcObject = event.streams[0];
+                }
+            };
+
+            // ICE Candidate Handshake
+            userPeerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    const candRef = push(ref(db, `streams/${restaurantKey}/connections/${userViewerId}/viewerCandidates`));
+                    set(candRef, event.candidate.toJSON());
+                }
+            };
+
+            // Create client SDP Offer
+            const offer = await userPeerConnection.createOffer();
+            await userPeerConnection.setLocalDescription(offer);
+
+            // Upload Client Offer to Database signaling node
+            await set(ref(db, `streams/${restaurantKey}/connections/${userViewerId}/offer`), {
+                type: offer.type,
+                sdp: offer.sdp
+            });
+
+            // Listen for answer SDP from Broadcaster
+            const answerRef = ref(db, `streams/${restaurantKey}/connections/${userViewerId}/answer`);
+            onValue(answerRef, async (snapshot) => {
+                const answer = snapshot.val();
+                if (answer && userPeerConnection) {
+                    await userPeerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+                }
+            });
+
+            // Listen for ICE candidates from Broadcaster
+            const broadcasterCandRef = ref(db, `streams/${restaurantKey}/connections/${userViewerId}/broadcasterCandidates`);
+            onValue(broadcasterCandRef, (snapshot) => {
+                snapshot.forEach(child => {
+                    const candidate = child.val();
+                    if (userPeerConnection) {
+                        userPeerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(err => {
+                            console.error("ICE Candidate Error: ", err);
+                        });
+                    }
+                });
+            });
+        }
+
+        function disconnectWebRTC() {
+            if (userPeerConnection) {
+                userPeerConnection.close();
+                userPeerConnection = null;
+            }
+            const liveVideoEl = document.getElementById('theater-live-video');
+            if (liveVideoEl) {
+                liveVideoEl.srcObject = null;
+            }
+            if (userViewerId && currentRestaurantKey) {
+                remove(ref(db, `streams/${currentRestaurantKey}/connections/${userViewerId}`));
+            }
+            userViewerId = null;
+        }
+
+        // Open Restaurant Details page sub-view
+        window.openRestaurantDetail = function(resKey) {
+            currentRestaurantKey = resKey;
+            
+            // Dynamic data load of restaurants (check Firebase or fallback)
+            onValue(ref(db, 'restaurants/' + resKey), (snapshot) => {
+                let res = snapshot.val();
+                if (!res) res = defaultRestaurants[resKey];
+                if (!res) return;
+
+                // Load dynamic YouTube high-res thumbnail to embed cleanly inside Card
+                const thumbUrl = getYoutubeThumbnail(res.youtubeUrl);
+
+                // Render detail header with unified compact layout
+                const headerSection = document.getElementById('res-detail-header-section');
+                headerSection.innerHTML = `
+                    <div class="res-mini-video-box" onclick="openRestaurantVideo('${res.youtubeUrl}', '${resKey}')">
+                        <img src="${thumbUrl}" alt="Chef Preview Video">
+                        <div class="res-mini-video-play-overlay">
+                            <i class="fa-solid fa-circle-play"></i>
+                        </div>
+                        <div class="live-stream-badge" id="detail-live-badge-${resKey}" style="display: none; position: absolute; top: 8px; left: 8px; background: #e74c3c; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; z-index: 15; letter-spacing: 0.5px; align-items: center; gap: 4px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: white; display: inline-block; animation: pulse 1s infinite;"></span> LIVE KITCHEN
+                        </div>
+                    </div>
+                    <div class="res-hero-text-container">
+                        <h2>${res.name}</h2>
+                        <span class="tagline">${res.tagline}</span>
+                        <p class="purpose">🎯 <b>Purpose:</b> ${res.purpose}</p>
+                        <div class="res-hero-meta-row">
+                            <span class="res-hero-badge">
+                                <i class="fa-solid fa-star"></i> ${res.rating}
+                            </span>
+                            <span class="res-hero-badge chef-badge">
+                                <i class="fa-solid fa-user-tie"></i> <b>Chef:</b> ${res.chefName}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                // Monitor Live signaling status node
+                onValue(ref(db, `streams/${resKey}/status`), (snap) => {
+                    const status = snap.val();
+                    const badge = document.getElementById(`detail-live-badge-${resKey}`);
+                    if (badge) {
+                        badge.style.display = (status && status.isLive) ? 'flex' : 'none';
+                    }
+                });
+
+                // Render dynamic food list strips ("pattiya")
+                const rowsContainer = document.getElementById('res-food-rows-container');
+                rowsContainer.innerHTML = '';
+
+                if (res.menu) {
+                    Object.keys(res.menu).forEach(itemKey => {
+                        const item = res.menu[itemKey];
+                        const cartQty = cart[itemKey] ? cart[itemKey].qty : 0;
+                        
+                        let actionBtnHTML = '';
+                        if (cartQty > 0) {
+                            actionBtnHTML = `
+                                <div class="qty-controller">
+                                    <button class="qty-btn" onclick="updateCartItem('${itemKey}', -1)">-</button>
+                                    <span class="qty-val">${cartQty}</span>
+                                    <button class="qty-btn" onclick="updateCartItem('${itemKey}', 1)">+</button>
+                                </div>
+                            `;
+                        } else {
+                            actionBtnHTML = `<button class="add-btn" onclick="updateCartItem('${itemKey}', 1)">ADD</button>`;
+                        }
+
+                        const rowHTML = `
+                            <div class="restaurant-food-row">
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <!-- Food Pic -->
+                                    <div class="food-row-pic-box">
+                                        <img src="${item.imageUrl}" alt="${item.title}">
+                                        <div class="label-badge">Food Pic</div>
+                                    </div>
+                                    <!-- Current Pic -->
+                                    <div class="food-row-pic-box">
+                                        <img src="${item.currentUrl}" alt="Current state">
+                                        <div class="label-badge">Current Pic</div>
+                                    </div>
+                                </div>
+                                <div class="food-row-details">
+                                    <h4>${item.title}</h4>
+                                    <span class="price">₹${item.price}</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                                    <!-- Prep Video Play Button -->
+                                    <button class="prep-video-btn" onclick="openPrepVideoModal('${item.prepVideoUrl}')">
+                                        <i class="fa-solid fa-circle-play"></i> Prep Video
+                                    </button>
+                                    <!-- Dynamic Add Cart button -->
+                                    <div class="add-btn-wrapper" style="width: 80px; height: 30px;">
+                                        ${actionBtnHTML}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        rowsContainer.insertAdjacentHTML('beforeend', rowHTML);
+                    });
+                } else {
+                    rowsContainer.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">No items found in Chef menu</p>';
+                }
+
+                // Display Restaurant Detail Screen Overlay
+                document.getElementById('restaurant-detail-screen').classList.add('show');
+            });
+        };
+
+        // Close Restaurant Detail page
+        window.closeRestaurantDetail = function() {
+            document.getElementById('restaurant-detail-screen').classList.remove('show');
+            currentRestaurantKey = null;
+        }
+
+        // Unified Theater Video Player (Dynamic WebRTC live stream or YouTube fallback)
+        window.openRestaurantVideo = function(videoUrl, resKey) {
+            onValue(ref(db, `streams/${resKey}/status`), (snapshot) => {
+                const streamStatus = snapshot.val();
+                const isLive = streamStatus && streamStatus.isLive;
+                
+                const iframe = document.getElementById('theater-video-iframe');
+                const video = document.getElementById('theater-live-video');
+                const modal = document.getElementById('theater-video-modal');
+
+                modal.style.display = 'flex';
+                setTimeout(() => { modal.classList.add('show'); }, 10);
+
+                if (isLive) {
+                    iframe.style.display = 'none';
+                    video.style.display = 'block';
+                    connectWebRTCStream(resKey);
+                } else {
+                    video.style.display = 'none';
+                    iframe.style.display = 'block';
+                    const embedUrl = getEmbedUrl(videoUrl);
+                    iframe.src = `${embedUrl}?autoplay=1`;
+                }
+            }, { onlyOnce: true });
+        };
+
+        // Close Theater Video Modal
+        window.closeTheaterVideoModal = function() {
+            const modal = document.getElementById('theater-video-modal');
+            modal.classList.remove('show');
+            disconnectWebRTC();
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.getElementById('theater-video-iframe').src = '';
+                document.getElementById('theater-live-video').srcObject = null;
+            }, 300);
+        };
+
+        // Prep Video Modal functions
+        window.openPrepVideoModal = function(videoUrl) {
+            const embedUrl = getEmbedUrl(videoUrl);
+            document.getElementById('prep-video-iframe').src = embedUrl;
+            document.getElementById('prep-video-overlay').classList.add('show');
+            document.getElementById('prep-video-drawer').classList.add('show');
+        }
+
+        window.closePrepVideoModal = function() {
+            document.getElementById('prep-video-iframe').src = '';
+            document.getElementById('prep-video-overlay').classList.remove('show');
+            document.getElementById('prep-video-drawer').classList.remove('show');
+        }
+
+        // Render Menu with Cart Buttons (Displays ALL uploaded items on Home Page)
         function renderMenu(items) {
+            const foodGrid = document.getElementById('food-grid-container');
             foodGrid.innerHTML = '';
-            Object.keys(items).forEach(key => {
+            
+            const keys = Object.keys(items);
+            if (keys.length === 0) {
+                foodGrid.innerHTML = '<p style="text-align:center; color: #999; grid-column: 1/-1; padding: 20px;">No items available. Please add some from the Admin Panel.</p>';
+                return;
+            }
+
+            keys.forEach(key => {
                 const item = items[key];
                 const cartQty = cart[key] ? cart[key].qty : 0;
                 
@@ -1537,7 +2535,7 @@
                 }
 
                 const itemHTML = `
-                    <div class="food-card" data-title="${item.title.toLowerCase()}" data-desc="${item.description.toLowerCase()}">
+                    <div class="food-card shiny-effect" data-title="${item.title.toLowerCase()}" data-desc="${item.description.toLowerCase()}">
                         <div class="food-img-container">
                             <img src="${item.imageUrl}" alt="${item.title}">
                             <div class="veg-nonveg ${item.type}"></div>
@@ -1561,9 +2559,66 @@
             });
         }
 
+        // Render District Specials Tab (Filter highly rated local items)
+        function renderDistrictSpecials(items) {
+            const districtContainer = document.getElementById('district-grid-container');
+            if (!districtContainer) return;
+            districtContainer.innerHTML = '';
+
+            const keys = Object.keys(items);
+            // Select local delicacies (items with rating >= 4.7)
+            const premiumKeys = keys.filter(key => parseFloat(items[key].rating) >= 4.7);
+
+            if (premiumKeys.length === 0) {
+                districtContainer.innerHTML = '<p style="text-align:center; color: #999; padding: 20px;">Curating localized district dishes for you...</p>';
+                return;
+            }
+
+            premiumKeys.forEach(key => {
+                const item = items[key];
+                const cartQty = cart[key] ? cart[key].qty : 0;
+                
+                let actionBtnHTML = '';
+                if (cartQty > 0) {
+                    actionBtnHTML = `
+                        <div class="qty-controller">
+                            <button class="qty-btn" onclick="updateCartItem('${key}', -1)">-</button>
+                            <span class="qty-val">${cartQty}</span>
+                            <button class="qty-btn" onclick="updateCartItem('${key}', 1)">+</button>
+                        </div>
+                    `;
+                } else {
+                    actionBtnHTML = `<button class="add-btn" onclick="updateCartItem('${key}', 1)">ADD</button>`;
+                }
+
+                const itemHTML = `
+                    <div class="food-card shiny-effect" data-title="${item.title.toLowerCase()}" data-desc="${item.description.toLowerCase()}">
+                        <div class="food-img-container">
+                            <img src="${item.imageUrl}" alt="${item.title}">
+                            <div class="veg-nonveg ${item.type}"></div>
+                        </div>
+                        <div class="food-details">
+                            <h4>${item.title} <span style="font-size: 10px; color: var(--district-color); font-weight:800;">★ Best Seller</span></h4>
+                            <div>
+                                <span class="rating-box" style="background: var(--district-gradient);">${item.rating} <i class="fa-solid fa-star" style="font-size: 9px;"></i></span>
+                            </div>
+                            <p>${item.description}</p>
+                            <div class="price-and-add">
+                                <span class="price">₹${item.price}</span>
+                                <div class="add-btn-wrapper">
+                                    ${actionBtnHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                districtContainer.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+
         // Cart Update Mechanism
         window.updateCartItem = function(key, val) {
-            const item = menuItems[key];
+            const item = globalMenuItems[key];
             if (!item) return;
 
             if (!cart[key]) {
@@ -1582,9 +2637,14 @@
             }
 
             // Sync with DOM and UI
-            renderMenu(menuItems);
+            rebuildAndRenderMainMenu();
             updateCartStrip();
             renderCartModal();
+            
+            // If the restaurant detail sub-page is open, reload its items live to sync button states
+            if (currentRestaurantKey) {
+                openRestaurantDetail(currentRestaurantKey);
+            }
         }
 
         // Dynamic Cart Strip with item Overlapping Thumbnails
@@ -1668,6 +2728,9 @@
                 return;
             }
 
+            // Get custom instructions note
+            const customMakingNote = document.getElementById('custom-making-note').value.trim();
+
             let message = "🍔 *New InstaFood Order Received!* 🍔\n";
             message += "======================================\n\n";
             message += `👤 *Receiver Name:* ${userProfile.name}\n`;
@@ -1675,6 +2738,11 @@
             message += `💬 *WhatsApp No:* ${userProfile.whatsapp}\n`;
             message += `📧 *Email Address:* ${userProfile.email}\n`;
             message += `📍 *Delivery Address:* \n_${userProfile.address}_\n\n`;
+            
+            if (customMakingNote) {
+                message += `🧑‍🍳 *Chef Prep Instructions:* \n_${customMakingNote}_\n\n`;
+            }
+            
             message += "======================================\n";
             message += `🛍️ *Order Items:*\n`;
 
@@ -1785,32 +2853,90 @@
             }
         }
 
-        // Handle Live Search and Save Search History
+        // Handle Live Search on Input
         const searchInput = document.getElementById('menu-search-input');
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.food-card');
+            filterSearchCards(query);
+        });
 
+        // Trigger manual search from explicit 3D search button click
+        document.getElementById('search-action-btn').addEventListener('click', () => {
+            triggerManualSearch();
+        });
+
+        // Save Search Term to History on Enter Key
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                triggerManualSearch();
+            }
+        });
+
+        function triggerManualSearch() {
+            const query = searchInput.value.trim();
+            filterSearchCards(query.toLowerCase());
+            if (query.length > 1) {
+                saveSearchHistory(query);
+            }
+        }
+
+        // HTML5 Speech Recognition (Voice Command Search)
+        function initSpeechRecognition() {
+            const micIcon = document.querySelector('.fa-microphone');
+            if (!micIcon) return;
+
+            micIcon.style.cursor = 'pointer';
+            micIcon.addEventListener('click', () => {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert("Voice search is not supported by your browser.");
+                    return;
+                }
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                micIcon.className = "fa-solid fa-microphone-lines fa-bounce";
+                micIcon.style.color = "var(--brand-color)";
+
+                recognition.start();
+
+                recognition.onresult = (event) => {
+                    const query = event.results[0][0].transcript;
+                    searchInput.value = query;
+                    filterSearchCards(query.toLowerCase());
+                    saveSearchHistory(query);
+                };
+
+                recognition.onspeechend = () => {
+                    recognition.stop();
+                    micIcon.className = "fa-solid fa-microphone";
+                    micIcon.style.color = "#222222";
+                };
+
+                recognition.onerror = (event) => {
+                    console.error("Speech Recognition Error: ", event.error);
+                    micIcon.className = "fa-solid fa-microphone";
+                    micIcon.style.color = "#222222";
+                };
+            });
+        }
+
+        function filterSearchCards(query) {
+            const cards = document.querySelectorAll('.food-card');
             cards.forEach(card => {
                 const title = card.getAttribute('data-title');
                 const desc = card.getAttribute('data-desc');
-                if (title.includes(query) || desc.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
+                if (title && desc) {
+                    if (title.includes(query) || desc.includes(query)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 }
             });
-        });
-
-        // Save Search Term to History on Enter
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const query = searchInput.value.trim();
-                if (query.length > 1) {
-                    saveSearchHistory(query);
-                }
-            }
-        });
+        }
 
         function saveSearchHistory(term) {
             if (!searchHistory.includes(term)) {
@@ -1824,6 +2950,7 @@
         // Render Search History in the History Tab
         function renderSearchHistory() {
             const histContainer = document.getElementById('search-history-container');
+            if (!histContainer) return;
             histContainer.innerHTML = '';
 
             if (searchHistory.length === 0) {
@@ -1851,7 +2978,7 @@
         window.triggerHistorySearch = function(term) {
             switchTab('delivery');
             searchInput.value = term;
-            searchInput.dispatchEvent(new Event('input'));
+            filterSearchCards(term.toLowerCase());
         }
 
         window.deleteHistoryItem = function(index, event) {
@@ -1865,7 +2992,7 @@
         window.filterByCategory = function(category) {
             switchTab('delivery');
             searchInput.value = category;
-            searchInput.dispatchEvent(new Event('input'));
+            filterSearchCards(category.toLowerCase());
             saveSearchHistory(category);
         }
 
@@ -1881,7 +3008,7 @@
             document.getElementById('cart-drawer').classList.remove('show');
         }
 
-        // Bottom Nav Screen Switcher
+        // Bottom Nav Screen Switcher (Updated to natively switch all 5 Tabs)
         window.switchTab = function(tabId, event = null) {
             if (event) event.preventDefault();
 
@@ -1890,7 +3017,10 @@
             tabs.forEach(tab => tab.classList.remove('active'));
 
             // Show selected tab screen
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            const activeTabContent = document.getElementById(`tab-${tabId}`);
+            if (activeTabContent) {
+                activeTabContent.classList.add('active');
+            }
 
             // Handle bottom menu highlighting
             const navItems = document.querySelectorAll('.nav-item');
@@ -1899,7 +3029,8 @@
             if (event) {
                 event.currentTarget.classList.add('active');
             } else {
-                const matchingTab = Array.from(navItems).find(i => i.innerText.toLowerCase().includes(tabId));
+                // Find matching tab by searching for matching switchTab arguments
+                const matchingTab = Array.from(navItems).find(i => i.getAttribute('onclick').includes(`'${tabId}'`));
                 if (matchingTab) matchingTab.classList.add('active');
             }
 
