@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2286,6 +2285,11 @@
                     <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 700;" data-en="RESERVATION ID" data-hi="आरक्षण संदर्भ संख्या">RESERVATION ID</span>
                     <strong style="color: var(--primary-red); letter-spacing: 2px; font-size: 1.1rem; font-weight: 800;" id="successBookingId">OOOO-654874</strong>
                 </div>
+                <div id="paymentGatewayButtonContainer" style="margin-bottom: 15px; display: none;">
+                    <a href="https://razorpay.me/@buildo1950" target="_blank" class="btn-luxury-app" style="width: 100%; border-radius: 12px; background: linear-gradient(135deg, #0C2340 0%, #1D4ED8 100%); box-shadow: 0 8px 20px rgba(29, 78, 216, 0.3); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa-solid fa-shield-halved" style="color: #60A5FA;"></i> <span data-en="Complete Payment via Razorpay" data-hi="रेज़रपे द्वारा भुगतान पूरा करें">Complete Payment via Razorpay</span>
+                    </a>
+                </div>
                 <button class="btn-luxury-app" style="width: 100%; border-radius: 12px;" onclick="closeSuccessOverlay()" data-en="Back to Home" data-hi="होम स्क्रीन पर जाएं">Back to Home</button>
             </div>
         </div>
@@ -3301,6 +3305,7 @@
             const randomId = "OOOO-" + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('successBookingId').innerText = randomId;
 
+            const selectedPaymentMethod = document.getElementById('paymentType').value;
             const bookingsRef = ref(db, 'bookings');
             const newBookingRef = push(bookingsRef);
             
@@ -3313,6 +3318,7 @@
                 dateTime: document.getElementById('bookDateTimeInput').value,
                 locationType: document.getElementById('bookLocationType').value,
                 therapist: appState.therapist,
+                paymentMethod: selectedPaymentMethod,
                 status: 'Pending Approval',
                 fcmToken: appState.fcmToken || null
             };
@@ -3479,6 +3485,7 @@
             document.getElementById('notice-home').style.display = 'none';
             document.getElementById('notice-hotel').style.display = 'none';
             document.getElementById('consentCheckboxContainer').style.display = 'none';
+            document.getElementById('paymentGatewayButtonContainer').style.display = 'none';
             updateWizardNavigationPanes();
             switchScreen('home');
         }
@@ -3614,6 +3621,15 @@
             if (splashTimerInterval) clearInterval(splashTimerInterval);
             document.getElementById('submitSplashOverlay').style.display = 'none';
             document.getElementById('successOverlay').style.display = 'flex';
+
+            const paymentChoice = document.getElementById('paymentType').value;
+            const razorpayBtnBox = document.getElementById('paymentGatewayButtonContainer');
+            if (paymentChoice === 'Online (UPI/Card)') {
+                if (razorpayBtnBox) razorpayBtnBox.style.display = 'block';
+                window.open('https://razorpay.me/@buildo1950', '_blank');
+            } else {
+                if (razorpayBtnBox) razorpayBtnBox.style.display = 'none';
+            }
         }
 
         function toggleFaq(header) {
